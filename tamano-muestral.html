@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TamañoMuestral·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:64ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .layout{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:22px;align-items:start}
+  @media(max-width:900px){.layout{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif;font-size:14px}
+  input:focus,select:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px;padding-top:2px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .bignum{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;border-left:3px solid var(--teal);padding-left:18px;margin-bottom:22px}
+  .bignum .n{font-family:'Spectral',serif;font-size:64px;font-weight:600;line-height:.95;color:var(--teal-deep)}
+  .bignum .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .bignum .lbl b{display:block;font-family:'Inter',sans-serif;font-size:15px;letter-spacing:0;text-transform:none;color:var(--ink);font-weight:400;margin-top:4px}
+  .split{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin-bottom:20px}
+  .split div{border-left:2px solid var(--line);padding-left:11px}
+  .split .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .split .v{font-family:'Spectral',serif;font-size:25px;font-weight:500;margin-top:1px}
+  .split .v small{font-family:'Inter',sans-serif;font-size:12px;color:var(--ink-soft);font-weight:400}
+
+  .formula{font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.9;background:#0F1E24;color:#D7E4E2;border-radius:3px;padding:18px;overflow-x:auto;white-space:pre;border:1px solid #0A171C}
+  .formula .c{color:#7F949A}
+  .steps-t{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px}
+  .steps-t td{padding:7px 0;border-bottom:1px solid var(--line-soft)}
+  .steps-t td:first-child{color:var(--ink-soft);width:55%}
+  .steps-t td:last-child{text-align:right;font-family:'JetBrains Mono',monospace}
+
+  .curve{margin-top:8px}
+  .curve svg{width:100%;height:auto;display:block}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gridl{stroke:var(--line-soft);stroke-width:1}
+  .curveline{fill:none;stroke:var(--teal);stroke-width:2}
+  .marker{stroke:var(--amber);stroke-width:1;stroke-dasharray:3 3}
+  .tick{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:var(--slate)}
+
+  .para{font-size:14.5px;line-height:1.7;background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:18px;font-family:'Spectral',serif}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">03 · Diseño del estudio y pregunta de investigación</div>
+    <h1>TamañoMuestral<em>·AI</em></h1>
+    <p class="lede">Cálculo del tamaño muestral y de la potencia con las fórmulas a la vista. Diez escenarios, ajuste por pérdidas, curva de potencia y párrafo listo para el protocolo.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="layout">
+
+  <div>
+    <section class="card">
+      <h2>Escenario</h2>
+      <p class="sub">Elige el contraste que planea tu estudio.</p>
+      <div class="fld">
+        <select id="esc"></select>
+        <div class="hint" id="esc-hint"></div>
+      </div>
+
+      <div class="divider"><span>Parámetros del contraste</span></div>
+      <div id="campos"></div>
+
+      <div class="divider"><span>Parámetros del test</span></div>
+      <div class="grid2">
+        <div class="fld"><label for="alpha">Alfa (α)</label><input type="number" id="alpha" value="0.05" step="0.005" min="0.0001" max="0.5"></div>
+        <div class="fld"><label for="pot">Potencia (1−β)</label><input type="number" id="pot" value="0.80" step="0.05" min="0.5" max="0.999"></div>
+      </div>
+      <div class="grid2">
+        <div class="fld" id="w-sided"><label for="sided">Contraste</label>
+          <select id="sided"><option value="2">Bilateral</option><option value="1">Unilateral</option></select>
+        </div>
+        <div class="fld" id="w-k"><label for="k">Razón n₂/n₁ (k)</label><input type="number" id="k" value="1" step="0.5" min="0.1" max="10"></div>
+      </div>
+      <div class="fld"><label for="perd">Pérdidas esperadas (%)</label><input type="number" id="perd" value="10" step="1" min="0" max="90">
+        <div class="hint">Ajuste n′ = n / (1 − pérdidas).</div>
+      </div>
+
+      <div class="divider"><span>Comprobar potencia</span></div>
+      <div class="fld"><label for="ndado">n disponible por grupo</label><input type="number" id="ndado" placeholder="Ej. 120" min="2">
+        <div class="hint">Si ya sabes cuántos sujetos puedes reclutar, aquí ves qué potencia alcanzas.</div>
+      </div>
+      <div class="actions">
+        <button id="btn-calc">Calcular</button>
+        <button class="ghost small" id="btn-demo">Valores de ejemplo</button>
+      </div>
+      <div class="err hidden" id="err"></div>
+    </section>
+  </div>
+
+  <div>
+    <section class="card" id="card-res">
+      <h2 id="res-title">Resultado</h2>
+      <p class="sub" id="res-sub">Introduce los parámetros y pulsa Calcular.</p>
+      <div id="res-body" class="hidden">
+        <div class="bignum" id="bignum"></div>
+        <div class="split" id="split"></div>
+        <div class="divider"><span>Fórmula aplicada</span></div>
+        <div class="formula" id="formula"></div>
+        <table class="steps-t" id="steps"></table>
+      </div>
+    </section>
+
+    <section class="card hidden" id="card-curve">
+      <h2>Curva de potencia</h2>
+      <p class="sub">Potencia alcanzada según el tamaño de la muestra, manteniendo fijos el efecto y α.</p>
+      <div class="curve" id="curve"></div>
+    </section>
+
+    <section class="card hidden" id="card-para">
+      <h2>Párrafo para el protocolo</h2>
+      <p class="sub">Redacción estándar del apartado «Tamaño muestral». Revísalo y adáptalo.</p>
+      <div class="para" id="para"></div>
+      <div class="actions">
+        <button class="ghost" id="btn-copy">Copiar párrafo</button>
+        <button class="ghost" id="btn-md">Descargar informe (.md)</button>
+        <span class="status" id="st"></span>
+      </div>
+      <div class="note">Todos los cálculos se ejecutan en tu navegador con fórmulas asintóticas de la aproximación normal. Para diseños complejos (medidas repetidas, conglomerados, análisis intermedios) corrige después por el efecto de diseño o el gasto de alfa.</div>
+    </section>
+  </div>
+
+</div>
+</main>
+
+<footer class="wrap">
+  <span>TamañoMuestral·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span>Determinista · sin IA · sin envío de datos</span>
+</footer>
+
+<script>
+"use strict";
+
+/* ================= Distribución normal ================= */
+function erf(x){
+  var s = x < 0 ? -1 : 1; x = Math.abs(x);
+  var a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+  var t = 1/(1+p*x);
+  var y = 1 - (((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x);
+  return s*y;
+}
+function pnorm(z){ return 0.5*(1+erf(z/Math.SQRT2)); }
+function qnorm(p){
+  if(p <= 0 || p >= 1) return NaN;
+  var a=[-3.969683028665376e+01,2.209460984245205e+02,-2.759285104469687e+02,1.383577518672690e+02,-3.066479806614716e+01,2.506628277459239e+00];
+  var b=[-5.447609879822406e+01,1.615858368580409e+02,-1.556989798598866e+02,6.680131188771972e+01,-1.328068155288572e+01];
+  var c=[-7.784894002430293e-03,-3.223964580411365e-01,-2.400758277161838e+00,-2.549732539343734e+00,4.374664141464968e+00,2.938163982698783e+00];
+  var d=[7.784695709041462e-03,3.224671290700398e-01,2.445134137142996e+00,3.754408661907416e+00];
+  var pl=0.02425, q, r;
+  if(p < pl){ q = Math.sqrt(-2*Math.log(p));
+    return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) / ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1); }
+  if(p > 1-pl){ q = Math.sqrt(-2*Math.log(1-p));
+    return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) / ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1); }
+  q = p-0.5; r = q*q;
+  return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q / (((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
+}
+var up = Math.ceil;
+function r2(x){ return Math.round(x*100)/100; }
+function r3(x){ return Math.round(x*1000)/1000; }
+
+/* ================= Escenarios ================= */
+/* Cada escenario: campos, n(v,za,zb), power(v,za,n1), fmt de fórmula, párrafo */
+var ESC = {
+  medias: {
+    nombre:"Comparación de dos medias independientes",
+    hint:"Ensayo o cohorte con desenlace continuo (t de Student para dos grupos).",
+    k:true, sided:true,
+    campos:[
+      {id:"m1", lbl:"Media grupo 1", def:120, hint:"Valor esperado en el grupo control."},
+      {id:"m2", lbl:"Media grupo 2", def:114, hint:"Valor esperado en el grupo experimental."},
+      {id:"sd", lbl:"Desviación típica común", def:15, hint:"Estimada de la literatura o de un estudio piloto."}
+    ],
+    n:function(v,za,zb){
+      var d = Math.abs(v.m1 - v.m2);
+      if(!(d > 0)) throw new Error("La diferencia entre medias debe ser distinta de cero.");
+      var n1 = (1 + 1/v.k) * Math.pow(za + zb, 2) * v.sd*v.sd / (d*d);
+      return { n1: up(n1), n2: up(n1*v.k), efecto: r3(d/v.sd), efLbl:"d de Cohen" };
+    },
+    power:function(v,za,n1){
+      var d = Math.abs(v.m1 - v.m2);
+      var zb = Math.sqrt(n1 / (1 + 1/v.k)) * d / v.sd - za;
+      return pnorm(zb);
+    },
+    formula:function(v,za,zb){
+      var d = Math.abs(v.m1 - v.m2);
+      return "        (1 + 1/k) · (z_{1-α/2} + z_{1-β})² · σ²\n n₁ = ────────────────────────────────────────\n                      Δ²\n\n" +
+        " Δ = |μ₁ − μ₂| = " + r3(d) + "        σ = " + v.sd + "        k = " + v.k + "\n" +
+        " z_{1-α/2} = " + r3(za) + "        z_{1-β} = " + r3(zb);
+    },
+    steps:function(v,za,zb,R){ return [
+      ["Diferencia a detectar (Δ)", r3(Math.abs(v.m1-v.m2))],
+      ["Tamaño del efecto (d de Cohen)", R.efecto],
+      ["Varianza común (σ²)", r3(v.sd*v.sd)],
+      ["(z_{1-α/2} + z_{1-β})²", r3(Math.pow(za+zb,2))]
+    ];},
+    para:function(v,g,R){
+      return "Para detectar una diferencia de " + r3(Math.abs(v.m1-v.m2)) + " unidades entre ambos grupos (medias esperadas de " + v.m1 + " y " + v.m2 + "), asumiendo una desviación típica común de " + v.sd + ", con un contraste " + (g.sided===2?"bilateral":"unilateral") + " de dos medias independientes, un nivel de significación α = " + g.alpha + " y una potencia del " + Math.round(g.pot*100) + " %, se precisan " + R.n1 + " sujetos en el grupo 1 y " + R.n2 + " en el grupo 2 (" + (R.n1+R.n2) + " en total). Previendo un " + g.perd + " % de pérdidas, el reclutamiento se eleva a " + R.aj1 + " y " + R.aj2 + " sujetos respectivamente (" + (R.aj1+R.aj2) + " en total).";
+    }
+  },
+
+  pareadas: {
+    nombre:"Comparación de dos medias pareadas",
+    hint:"Medidas antes-después en los mismos sujetos, o pares emparejados (t pareada).",
+    k:false, sided:true,
+    campos:[
+      {id:"d", lbl:"Diferencia media a detectar", def:5, hint:"Cambio clínicamente relevante intra-sujeto."},
+      {id:"sdd", lbl:"DT de las diferencias", def:12, hint:"σ_d = √(σ₁² + σ₂² − 2ρσ₁σ₂). Depende de la correlación entre medidas."}
+    ],
+    n:function(v,za,zb){
+      if(!(Math.abs(v.d) > 0)) throw new Error("La diferencia debe ser distinta de cero.");
+      var n = Math.pow(za + zb, 2) * v.sdd*v.sdd / (v.d*v.d);
+      return { n1: up(n), n2: 0, efecto: r3(Math.abs(v.d)/v.sdd), efLbl:"d_z" };
+    },
+    power:function(v,za,n){ return pnorm(Math.sqrt(n)*Math.abs(v.d)/v.sdd - za); },
+    formula:function(v,za,zb){
+      return "        (z_{1-α/2} + z_{1-β})² · σ_d²\n n = ──────────────────────────────\n                   Δ²\n\n Δ = " + v.d + "        σ_d = " + v.sdd + "\n z_{1-α/2} = " + r3(za) + "        z_{1-β} = " + r3(zb);
+    },
+    steps:function(v,za,zb,R){ return [
+      ["Diferencia intra-sujeto (Δ)", r3(v.d)],
+      ["DT de las diferencias (σ_d)", v.sdd],
+      ["Tamaño del efecto (d_z)", R.efecto]
+    ];},
+    para:function(v,g,R){
+      return "Para detectar un cambio intra-sujeto de " + v.d + " unidades, con una desviación típica de las diferencias de " + v.sdd + ", un contraste " + (g.sided===2?"bilateral":"unilateral") + " para datos pareados, α = " + g.alpha + " y potencia del " + Math.round(g.pot*100) + " %, se necesitan " + R.n1 + " sujetos. Considerando un " + g.perd + " % de pérdidas, el tamaño de reclutamiento asciende a " + R.aj1 + " sujetos.";
+    }
+  },
+
+  proporciones: {
+    nombre:"Comparación de dos proporciones independientes",
+    hint:"Desenlace binario en dos grupos: curación, mortalidad, recaída (χ² o z de dos proporciones).",
+    k:true, sided:true,
+    campos:[
+      {id:"p1", lbl:"Proporción grupo 1 (p₁)", def:0.30, step:0.01, hint:"Riesgo esperado en el grupo control (0–1)."},
+      {id:"p2", lbl:"Proporción grupo 2 (p₂)", def:0.18, step:0.01, hint:"Riesgo esperado en el grupo experimental (0–1)."}
+    ],
+    n:function(v,za,zb){
+      chkP(v.p1); chkP(v.p2);
+      var d = Math.abs(v.p1 - v.p2);
+      if(!(d > 0)) throw new Error("Las dos proporciones deben ser distintas.");
+      var pb = (v.p1 + v.k*v.p2) / (1 + v.k);
+      var A = za * Math.sqrt((1 + 1/v.k) * pb * (1-pb));
+      var B = zb * Math.sqrt(v.p1*(1-v.p1) + v.p2*(1-v.p2)/v.k);
+      var n1 = Math.pow(A + B, 2) / (d*d);
+      var rr = v.p2 / v.p1, or_ = (v.p2/(1-v.p2)) / (v.p1/(1-v.p1));
+      return { n1: up(n1), n2: up(n1*v.k), efecto: r3(rr), efLbl:"Riesgo relativo", extra:[["Odds Ratio", r3(or_)],["RAR", r3(d)],["NNT", d>0 ? up(1/d) : "—"]] };
+    },
+    power:function(v,za,n1){
+      var d = Math.abs(v.p1 - v.p2);
+      var pb = (v.p1 + v.k*v.p2) / (1 + v.k);
+      var num = d*Math.sqrt(n1) - za*Math.sqrt((1 + 1/v.k)*pb*(1-pb));
+      return pnorm(num / Math.sqrt(v.p1*(1-v.p1) + v.p2*(1-v.p2)/v.k));
+    },
+    formula:function(v,za,zb){
+      var pb = (v.p1 + v.k*v.p2)/(1+v.k);
+      return "       [ z_{1-α/2}·√((1+1/k)·p̄(1−p̄))  +  z_{1-β}·√(p₁(1−p₁) + p₂(1−p₂)/k) ]²\n n₁ = ──────────────────────────────────────────────────────────────────────\n                                  (p₁ − p₂)²\n\n p̄ = (p₁ + k·p₂)/(1+k) = " + r3(pb) + "        k = " + v.k + "\n z_{1-α/2} = " + r3(za) + "        z_{1-β} = " + r3(zb);
+    },
+    steps:function(v,za,zb,R){
+      var d = Math.abs(v.p1 - v.p2);
+      return [["Diferencia de riesgos (RAR)", r3(d)],["Riesgo relativo", r3(v.p2/v.p1)],["NNT", up(1/d)],["p̄ ponderada", r3((v.p1+v.k*v.p2)/(1+v.k))]];
+    },
+    para:function(v,g,R){
+      return "Asumiendo una proporción del desenlace del " + r2(v.p1*100) + " % en el grupo control y del " + r2(v.p2*100) + " % en el grupo experimental (reducción absoluta del riesgo de " + r2(Math.abs(v.p1-v.p2)*100) + " puntos porcentuales), un contraste " + (g.sided===2?"bilateral":"unilateral") + " con α = " + g.alpha + " y una potencia del " + Math.round(g.pot*100) + " %, se requieren " + R.n1 + " y " + R.n2 + " sujetos por grupo (" + (R.n1+R.n2) + " en total). Con un " + g.perd + " % de pérdidas previstas, el objetivo de reclutamiento es de " + (R.aj1+R.aj2) + " participantes.";
+    }
+  },
+
+  cc: {
+    nombre:"Casos y controles (Odds Ratio)",
+    hint:"Se parte del desenlace. k es el número de controles por caso.",
+    k:true, sided:true, kLabel:"Controles por caso (k)",
+    campos:[
+      {id:"p0", lbl:"Prevalencia de exposición en controles", def:0.25, step:0.01, hint:"Proporción de expuestos entre los controles (0–1)."},
+      {id:"or", lbl:"Odds Ratio a detectar", def:2.0, step:0.1, hint:"Magnitud mínima de asociación clínicamente relevante."}
+    ],
+    n:function(v,za,zb){
+      chkP(v.p0);
+      if(!(v.or > 0) || v.or === 1) throw new Error("La OR debe ser positiva y distinta de 1.");
+      var p1 = v.or*v.p0 / (1 + v.p0*(v.or - 1));
+      var d = Math.abs(p1 - v.p0);
+      var pb = (p1 + v.k*v.p0) / (1 + v.k);
+      var A = za*Math.sqrt((1 + 1/v.k)*pb*(1-pb));
+      var B = zb*Math.sqrt(p1*(1-p1) + v.p0*(1-v.p0)/v.k);
+      var n1 = Math.pow(A+B,2) / (d*d);
+      return { n1: up(n1), n2: up(n1*v.k), efecto: r3(v.or), efLbl:"Odds Ratio", lbl1:"casos", lbl2:"controles",
+               extra:[["Exposición esperada en casos (p₁)", r3(p1)]] };
+    },
+    power:function(v,za,n1){
+      var p1 = v.or*v.p0/(1 + v.p0*(v.or-1));
+      var d = Math.abs(p1 - v.p0);
+      var pb = (p1 + v.k*v.p0)/(1+v.k);
+      var num = d*Math.sqrt(n1) - za*Math.sqrt((1+1/v.k)*pb*(1-pb));
+      return pnorm(num / Math.sqrt(p1*(1-p1) + v.p0*(1-v.p0)/v.k));
+    },
+    formula:function(v,za,zb){
+      var p1 = v.or*v.p0/(1+v.p0*(v.or-1));
+      return "                 OR · p₀\n p₁ = ────────────────────────  = " + r3(p1) + "     <span class=\"c\">(exposición en casos)</span>\n           1 + p₀·(OR − 1)\n\n        [ z_{1-α/2}·√((1+1/k)·p̄(1−p̄)) + z_{1-β}·√(p₁(1−p₁) + p₀(1−p₀)/k) ]²\n n_casos = ────────────────────────────────────────────────────────────────\n                                 (p₁ − p₀)²\n\n p₀ = " + v.p0 + "   OR = " + v.or + "   k = " + v.k + " controles/caso";
+    },
+    steps:function(v,za,zb,R){
+      var p1 = v.or*v.p0/(1+v.p0*(v.or-1));
+      return [["Exposición en controles (p₀)", r3(v.p0)],["Exposición en casos (p₁)", r3(p1)],["Diferencia (p₁ − p₀)", r3(p1-v.p0)],["Razón controles/caso", v.k]];
+    },
+    para:function(v,g,R){
+      return "Para detectar una odds ratio de " + v.or + ", asumiendo una prevalencia de exposición del " + r2(v.p0*100) + " % entre los controles, con " + v.k + " control(es) por caso, α = " + g.alpha + " " + (g.sided===2?"bilateral":"unilateral") + " y una potencia del " + Math.round(g.pot*100) + " %, se necesitan " + R.n1 + " casos y " + R.n2 + " controles. Con un " + g.perd + " % de sujetos no evaluables, se reclutarán " + R.aj1 + " casos y " + R.aj2 + " controles.";
+    }
+  },
+
+  cohorte: {
+    nombre:"Cohortes (Riesgo Relativo)",
+    hint:"Se parte de la exposición. k es el número de no expuestos por expuesto.",
+    k:true, sided:true, kLabel:"No expuestos por expuesto (k)",
+    campos:[
+      {id:"p0", lbl:"Incidencia en no expuestos", def:0.10, step:0.01, hint:"Riesgo basal del desenlace (0–1)."},
+      {id:"rr", lbl:"Riesgo relativo a detectar", def:2.0, step:0.1, hint:"Incidencia en expuestos = RR × incidencia basal."}
+    ],
+    n:function(v,za,zb){
+      chkP(v.p0);
+      var p1 = v.rr * v.p0;
+      if(p1 >= 1) throw new Error("RR × incidencia basal supera 1. Baja el RR o la incidencia.");
+      var d = Math.abs(p1 - v.p0);
+      if(!(d > 0)) throw new Error("El RR debe ser distinto de 1.");
+      var pb = (p1 + v.k*v.p0)/(1+v.k);
+      var A = za*Math.sqrt((1+1/v.k)*pb*(1-pb));
+      var B = zb*Math.sqrt(p1*(1-p1) + v.p0*(1-v.p0)/v.k);
+      var n1 = Math.pow(A+B,2)/(d*d);
+      return { n1: up(n1), n2: up(n1*v.k), efecto: r3(v.rr), efLbl:"Riesgo relativo", lbl1:"expuestos", lbl2:"no expuestos",
+               extra:[["Incidencia esperada en expuestos", r3(p1)]] };
+    },
+    power:function(v,za,n1){
+      var p1 = v.rr*v.p0; if(p1 >= 1) return NaN;
+      var d = Math.abs(p1 - v.p0);
+      var pb = (p1 + v.k*v.p0)/(1+v.k);
+      var num = d*Math.sqrt(n1) - za*Math.sqrt((1+1/v.k)*pb*(1-pb));
+      return pnorm(num / Math.sqrt(p1*(1-p1) + v.p0*(1-v.p0)/v.k));
+    },
+    formula:function(v,za,zb){
+      return " p₁ = RR · p₀ = " + r3(v.rr*v.p0) + "     <span class=\"c\">(incidencia en expuestos)</span>\n\n            [ z_{1-α/2}·√((1+1/k)·p̄(1−p̄)) + z_{1-β}·√(p₁(1−p₁) + p₀(1−p₀)/k) ]²\n n_expuestos = ──────────────────────────────────────────────────────────────\n                                    (p₁ − p₀)²\n\n p₀ = " + v.p0 + "   RR = " + v.rr + "   k = " + v.k;
+    },
+    steps:function(v,za,zb,R){ return [
+      ["Incidencia en no expuestos (p₀)", r3(v.p0)],
+      ["Incidencia en expuestos (p₁)", r3(v.rr*v.p0)],
+      ["Diferencia de incidencias", r3(v.rr*v.p0 - v.p0)],
+      ["Razón no expuestos/expuesto", v.k]
+    ];},
+    para:function(v,g,R){
+      return "Partiendo de una incidencia del " + r2(v.p0*100) + " % en los no expuestos y de un riesgo relativo a detectar de " + v.rr + " (incidencia del " + r2(v.rr*v.p0*100) + " % en expuestos), con " + v.k + " no expuesto(s) por expuesto, α = " + g.alpha + " y potencia del " + Math.round(g.pot*100) + " %, se requieren " + R.n1 + " expuestos y " + R.n2 + " no expuestos. Ajustando por un " + g.perd + " % de pérdidas en el seguimiento, el reclutamiento previsto es de " + R.aj1 + " y " + R.aj2 + " sujetos.";
+    }
+  },
+
+  niMedias: {
+    nombre:"No inferioridad · variable continua",
+    hint:"Contraste unilateral: se demuestra que el nuevo tratamiento no es peor que el control en más de δ.",
+    k:true, sided:false,
+    campos:[
+      {id:"delta", lbl:"Margen de no inferioridad (δ)", def:5, hint:"Máxima pérdida clínicamente aceptable. Debe justificarse."},
+      {id:"dif", lbl:"Diferencia real esperada", def:0, hint:"Habitualmente 0 si se asume equivalencia real."},
+      {id:"sd", lbl:"Desviación típica común", def:15}
+    ],
+    n:function(v,za,zb){
+      var den = Math.abs(v.delta - v.dif);
+      if(!(den > 0)) throw new Error("El margen δ debe superar a la diferencia real esperada.");
+      var n1 = (1 + 1/v.k)*Math.pow(za+zb,2)*v.sd*v.sd/(den*den);
+      return { n1: up(n1), n2: up(n1*v.k), efecto: r3(v.delta/v.sd), efLbl:"δ estandarizado" };
+    },
+    power:function(v,za,n1){
+      var den = Math.abs(v.delta - v.dif);
+      return pnorm(Math.sqrt(n1/(1+1/v.k))*den/v.sd - za);
+    },
+    formula:function(v,za,zb){
+      return "        (1 + 1/k) · (z_{1-α} + z_{1-β})² · σ²\n n₁ = ──────────────────────────────────────\n                   (δ − d)²\n\n δ = " + v.delta + " (margen)    d = " + v.dif + " (diferencia real)    σ = " + v.sd + "\n z_{1-α} = " + r3(za) + "  <span class=\"c\">(siempre unilateral)</span>    z_{1-β} = " + r3(zb);
+    },
+    steps:function(v,za,zb,R){ return [
+      ["Margen de no inferioridad (δ)", v.delta],
+      ["Diferencia real asumida (d)", v.dif],
+      ["Denominador efectivo (δ − d)", r3(Math.abs(v.delta-v.dif))]
+    ];},
+    para:function(v,g,R){
+      return "Con un margen de no inferioridad de " + v.delta + " unidades, asumiendo una diferencia real de " + v.dif + " entre tratamientos y una desviación típica común de " + v.sd + ", un contraste unilateral con α = " + g.alpha + " y una potencia del " + Math.round(g.pot*100) + " %, se precisan " + R.n1 + " y " + R.n2 + " sujetos por grupo. Previendo un " + g.perd + " % de pérdidas, se reclutarán " + (R.aj1+R.aj2) + " participantes. El análisis principal será por protocolo, complementado con el análisis por intención de tratar.";
+    }
+  },
+
+  niProporciones: {
+    nombre:"No inferioridad · variable binaria",
+    hint:"Contraste unilateral sobre la diferencia de proporciones frente al margen δ.",
+    k:true, sided:false,
+    campos:[
+      {id:"p1", lbl:"Proporción de éxito · control", def:0.80, step:0.01},
+      {id:"p2", lbl:"Proporción de éxito · experimental", def:0.80, step:0.01},
+      {id:"delta", lbl:"Margen de no inferioridad (δ)", def:0.10, step:0.01, hint:"En puntos de proporción (0–1). Suele ser ≤ la mitad del efecto del control."}
+    ],
+    n:function(v,za,zb){
+      chkP(v.p1); chkP(v.p2);
+      var den = Math.abs(v.delta - (v.p1 - v.p2));
+      if(!(den > 0)) throw new Error("El margen δ debe superar a la diferencia esperada p₁ − p₂.");
+      var n1 = Math.pow(za+zb,2)*(v.p1*(1-v.p1) + v.p2*(1-v.p2)/v.k)/(den*den);
+      return { n1: up(n1), n2: up(n1*v.k), efecto: r3(v.delta), efLbl:"Margen δ" };
+    },
+    power:function(v,za,n1){
+      var den = Math.abs(v.delta - (v.p1 - v.p2));
+      return pnorm(den*Math.sqrt(n1)/Math.sqrt(v.p1*(1-v.p1) + v.p2*(1-v.p2)/v.k) - za);
+    },
+    formula:function(v,za,zb){
+      return "        (z_{1-α} + z_{1-β})² · [ p₁(1−p₁) + p₂(1−p₂)/k ]\n n₁ = ────────────────────────────────────────────────────\n                       [ δ − (p₁ − p₂) ]²\n\n p₁ = " + v.p1 + "   p₂ = " + v.p2 + "   δ = " + v.delta + "   k = " + v.k + "\n z_{1-α} = " + r3(za) + "        z_{1-β} = " + r3(zb);
+    },
+    steps:function(v,za,zb,R){ return [
+      ["Diferencia esperada (p₁ − p₂)", r3(v.p1-v.p2)],
+      ["Margen δ", v.delta],
+      ["Denominador efectivo", r3(Math.abs(v.delta-(v.p1-v.p2)))]
+    ];},
+    para:function(v,g,R){
+      return "Asumiendo una tasa de éxito del " + r2(v.p1*100) + " % con el tratamiento control y del " + r2(v.p2*100) + " % con el experimental, y fijando un margen de no inferioridad de " + r2(v.delta*100) + " puntos porcentuales, con un contraste unilateral de α = " + g.alpha + " y potencia del " + Math.round(g.pot*100) + " %, se necesitan " + R.n1 + " y " + R.n2 + " sujetos por grupo (" + (R.aj1+R.aj2) + " tras ajustar por un " + g.perd + " % de pérdidas).";
+    }
+  },
+
+  correlacion: {
+    nombre:"Correlación (coeficiente de Pearson)",
+    hint:"Contrasta H₀: ρ = 0 mediante la transformación z de Fisher.",
+    k:false, sided:true,
+    campos:[
+      {id:"r", lbl:"Correlación esperada (r)", def:0.3, step:0.05, hint:"Entre −1 y 1, distinta de cero. |r| = 0,10 pequeña · 0,30 media · 0,50 grande."}
+    ],
+    n:function(v,za,zb){
+      if(!(Math.abs(v.r) > 0) || Math.abs(v.r) >= 1) throw new Error("r debe estar entre −1 y 1 y ser distinto de 0.");
+      var C = 0.5*Math.log((1+Math.abs(v.r))/(1-Math.abs(v.r)));
+      var n = Math.pow((za+zb)/C, 2) + 3;
+      return { n1: up(n), n2: 0, efecto: r3(v.r), efLbl:"r de Pearson", extra:[["z de Fisher (C)", r3(C)]] };
+    },
+    power:function(v,za,n){
+      if(n <= 3) return 0;
+      var C = 0.5*Math.log((1+Math.abs(v.r))/(1-Math.abs(v.r)));
+      return pnorm(C*Math.sqrt(n-3) - za);
+    },
+    formula:function(v,za,zb){
+      var C = 0.5*Math.log((1+Math.abs(v.r))/(1-Math.abs(v.r)));
+      return "            1      1 + |r|\n C = z_F = ─── · ln ───────  = " + r3(C) + "\n            2      1 − |r|\n\n       ( z_{1-α/2} + z_{1-β} )²\n n = ───────────────────────── + 3   = " + up(Math.pow((za+zb)/C,2)+3) + "\n                C²\n\n r = " + v.r + "   z_{1-α/2} = " + r3(za) + "   z_{1-β} = " + r3(zb);
+    },
+    steps:function(v,za,zb,R){ return [
+      ["Correlación esperada", v.r],
+      ["Transformación z de Fisher", r3(0.5*Math.log((1+Math.abs(v.r))/(1-Math.abs(v.r))))],
+      ["Corrección por grados de libertad", "+3"]
+    ];},
+    para:function(v,g,R){
+      return "Para detectar una correlación de Pearson de " + v.r + " como significativamente distinta de cero, mediante la transformación z de Fisher, con un contraste " + (g.sided===2?"bilateral":"unilateral") + " de α = " + g.alpha + " y una potencia del " + Math.round(g.pot*100) + " %, se requiere una muestra de " + R.n1 + " sujetos, que asciende a " + R.aj1 + " previendo un " + g.perd + " % de datos no evaluables.";
+    }
+  },
+
+  supervivencia: {
+    nombre:"Supervivencia · test de log-rank (Schoenfeld)",
+    hint:"El cálculo primario es el número de eventos; el tamaño muestral se deriva de la probabilidad de evento.",
+    k:true, sided:true,
+    campos:[
+      {id:"hr", lbl:"Hazard Ratio a detectar", def:0.70, step:0.05, hint:"Distinto de 1. HR < 1 indica beneficio del grupo experimental."},
+      {id:"pe", lbl:"Probabilidad global de evento", def:0.45, step:0.01, hint:"Proporción de sujetos que se espera que presenten el evento durante el seguimiento (0–1)."}
+    ],
+    n:function(v,za,zb){
+      chkP(v.pe);
+      if(!(v.hr > 0) || v.hr === 1) throw new Error("El HR debe ser positivo y distinto de 1.");
+      var pA = 1/(1+v.k), pB = v.k/(1+v.k);
+      var E = Math.pow(za+zb,2) / (pA*pB*Math.pow(Math.log(v.hr),2));
+      var N = E / v.pe;
+      var n1 = N*pA;
+      return { n1: up(n1), n2: up(N*pB), efecto: r3(v.hr), efLbl:"Hazard Ratio",
+               extra:[["Eventos necesarios (E)", up(E)],["Muestra total (N = E / p_evento)", up(N)]], eventos: up(E) };
+    },
+    power:function(v,za,n1){
+      var pA = 1/(1+v.k), pB = v.k/(1+v.k);
+      var N = n1/pA, E = N*v.pe;
+      return pnorm(Math.sqrt(E*pA*pB)*Math.abs(Math.log(v.hr)) - za);
+    },
+    formula:function(v,za,zb){
+      var pA = 1/(1+v.k), pB = v.k/(1+v.k);
+      var E = Math.pow(za+zb,2)/(pA*pB*Math.pow(Math.log(v.hr),2));
+      return "         (z_{1-α/2} + z_{1-β})²\n E = ─────────────────────────────   = " + up(E) + " eventos\n         p_A · p_B · (ln HR)²\n\n              E\n N = ───────────────────  = " + up(E/v.pe) + " sujetos\n       P(evento global)\n\n HR = " + v.hr + "   ln HR = " + r3(Math.log(v.hr)) + "   p_A = " + r3(pA) + "   p_B = " + r3(pB) + "\n P(evento) = " + v.pe;
+    },
+    steps:function(v,za,zb,R){ return [
+      ["Eventos requeridos (log-rank)", R.eventos],
+      ["ln(HR)", r3(Math.log(v.hr))],
+      ["Probabilidad global de evento", v.pe],
+      ["Reparto de la asignación", r3(1/(1+v.k)) + " / " + r3(v.k/(1+v.k))]
+    ];},
+    para:function(v,g,R){
+      return "Para detectar un hazard ratio de " + v.hr + " mediante el test de log-rank, con un contraste " + (g.sided===2?"bilateral":"unilateral") + " de α = " + g.alpha + " y una potencia del " + Math.round(g.pot*100) + " %, se requieren " + R.eventos + " eventos. Asumiendo una probabilidad global de evento del " + r2(v.pe*100) + " % durante el seguimiento previsto, ello equivale a " + (R.n1+R.n2) + " sujetos (" + R.n1 + " y " + R.n2 + " por grupo). Considerando un " + g.perd + " % de pérdidas de seguimiento, se reclutarán " + (R.aj1+R.aj2) + " participantes.";
+    }
+  },
+
+  unaProporcion: {
+    nombre:"Estimar una proporción con precisión fijada",
+    hint:"Estudios descriptivos de prevalencia. No hay potencia: hay precisión.",
+    k:false, sided:false, noPower:true,
+    campos:[
+      {id:"p", lbl:"Prevalencia esperada (p)", def:0.30, step:0.01, hint:"Si no se conoce, usa 0,5 (escenario más conservador)."},
+      {id:"e", lbl:"Precisión absoluta (± e)", def:0.05, step:0.01, hint:"Semiamplitud del intervalo de confianza."},
+      {id:"N", lbl:"Población total (0 = infinita)", def:0, step:1, hint:"Si la población es finita, se aplica el factor de corrección."}
+    ],
+    n:function(v,za){
+      chkP(v.p);
+      if(!(v.e > 0)) throw new Error("La precisión debe ser mayor que cero.");
+      var n = za*za*v.p*(1-v.p)/(v.e*v.e);
+      var extra = [];
+      if(v.N > 0){ var nf = n / (1 + (n-1)/v.N); extra.push(["Sin corrección", up(n)]); extra.push(["Población finita (N)", v.N]); n = nf; }
+      return { n1: up(n), n2: 0, efecto: "± " + r3(v.e), efLbl:"Precisión", extra: extra, precision:true };
+    },
+    formula:function(v,za){
+      return "        z²_{1-α/2} · p · (1 − p)\n n = ─────────────────────────\n                  e²\n\n" + (v.N > 0 ? "                 n\n n_finita = ───────────────      <span class=\"c\">(corrección para población finita)</span>\n             1 + (n − 1)/N\n\n" : "") +
+      " p = " + v.p + "   e = ± " + v.e + "   z_{1-α/2} = " + r3(za);
+    },
+    steps:function(v,za,zb,R){ return [
+      ["Varianza máxima p(1−p)", r3(v.p*(1-v.p))],
+      ["Precisión (semiamplitud IC)", "± " + v.e],
+      ["Amplitud total del IC", r3(2*v.e)]
+    ];},
+    para:function(v,g,R){
+      return "Para estimar una prevalencia esperada del " + r2(v.p*100) + " % con una precisión absoluta de ± " + r2(v.e*100) + " puntos porcentuales y un nivel de confianza del " + Math.round((1-g.alpha)*100) + " %" + (v.N > 0 ? ", en una población finita de " + v.N + " individuos" : "") + ", se requiere una muestra de " + R.n1 + " sujetos. Previendo un " + g.perd + " % de no respuesta, se contactará con " + R.aj1 + " personas.";
+    }
+  },
+
+  unaMedia: {
+    nombre:"Estimar una media con precisión fijada",
+    hint:"Estudios descriptivos de una variable continua. No hay potencia: hay precisión.",
+    k:false, sided:false, noPower:true,
+    campos:[
+      {id:"sd", lbl:"Desviación típica esperada", def:15},
+      {id:"e", lbl:"Precisión absoluta (± e)", def:2, hint:"Semiamplitud del intervalo de confianza, en las unidades de la variable."}
+    ],
+    n:function(v,za){
+      if(!(v.e > 0)) throw new Error("La precisión debe ser mayor que cero.");
+      var n = Math.pow(za*v.sd/v.e, 2);
+      return { n1: up(n), n2: 0, efecto: "± " + v.e, efLbl:"Precisión", precision:true };
+    },
+    formula:function(v,za){
+      return "        ( z_{1-α/2} · σ )²\n n = ──────────────────\n              e²\n\n σ = " + v.sd + "   e = ± " + v.e + "   z_{1-α/2} = " + r3(za);
+    },
+    steps:function(v,za,zb,R){ return [
+      ["Desviación típica (σ)", v.sd],
+      ["Precisión (± e)", v.e],
+      ["Coeficiente de variación relativo", r3(v.e/v.sd)]
+    ];},
+    para:function(v,g,R){
+      return "Para estimar la media poblacional con una precisión de ± " + v.e + " unidades, asumiendo una desviación típica de " + v.sd + " y un nivel de confianza del " + Math.round((1-g.alpha)*100) + " %, se requieren " + R.n1 + " sujetos, que ascienden a " + R.aj1 + " previendo un " + g.perd + " % de datos no evaluables.";
+    }
+  }
+};
+
+function chkP(p){ if(!(p > 0 && p < 1)) throw new Error("Las proporciones deben estar entre 0 y 1 (exclusive)."); }
+
+/* ================= Interfaz ================= */
+var sel = document.getElementById("esc");
+Object.keys(ESC).forEach(function(id){
+  var o = document.createElement("option");
+  o.value = id; o.textContent = ESC[id].nombre;
+  sel.appendChild(o);
+});
+
+function campos(){
+  var e = ESC[sel.value];
+  document.getElementById("esc-hint").textContent = e.hint;
+  var box = document.getElementById("campos");
+  box.innerHTML = "";
+  e.campos.forEach(function(c){
+    var d = document.createElement("div");
+    d.className = "fld";
+    d.innerHTML = '<label for="f-' + c.id + '">' + c.lbl + '</label>' +
+      '<input type="number" id="f-' + c.id + '" value="' + c.def + '" step="' + (c.step || "any") + '">' +
+      (c.hint ? '<div class="hint">' + c.hint + '</div>' : "");
+    box.appendChild(d);
+  });
+  document.getElementById("w-k").style.display = e.k ? "" : "none";
+  if(e.k && e.kLabel) document.querySelector('label[for="k"]').textContent = e.kLabel;
+  else if(e.k) document.querySelector('label[for="k"]').textContent = "Razón n₂/n₁ (k)";
+  var ws = document.getElementById("w-sided");
+  if(e.sided === false){ document.getElementById("sided").value = "1"; ws.style.opacity = ".45"; document.getElementById("sided").disabled = true; }
+  else { ws.style.opacity = "1"; document.getElementById("sided").disabled = false; }
+  document.getElementById("ndado").parentElement.style.display = e.noPower ? "none" : "";
+}
+sel.onchange = function(){ campos(); hideRes(); };
+campos();
+
+function hideRes(){
+  document.getElementById("res-body").classList.add("hidden");
+  document.getElementById("card-curve").classList.add("hidden");
+  document.getElementById("card-para").classList.add("hidden");
+  document.getElementById("res-sub").textContent = "Introduce los parámetros y pulsa Calcular.";
+}
+function showErr(msg){
+  var e = document.getElementById("err");
+  if(!msg){ e.classList.add("hidden"); return; }
+  e.textContent = msg; e.classList.remove("hidden");
+}
+
+var LAST = null;
+
+document.getElementById("btn-calc").onclick = function(){
+  showErr(null);
+  var e = ESC[sel.value];
+  var g = {
+    alpha: parseFloat(document.getElementById("alpha").value),
+    pot: parseFloat(document.getElementById("pot").value),
+    sided: parseInt(document.getElementById("sided").value, 10),
+    k: e.k ? parseFloat(document.getElementById("k").value) : 1,
+    perd: parseFloat(document.getElementById("perd").value) || 0
+  };
+  if(!(g.alpha > 0 && g.alpha < 0.5)) return showErr("Alfa debe estar entre 0 y 0,5.");
+  if(!(g.pot > 0.5 && g.pot < 1)) return showErr("La potencia debe estar entre 0,5 y 1.");
+  if(!(g.k > 0)) return showErr("La razón k debe ser positiva.");
+  if(!(g.perd >= 0 && g.perd < 100)) return showErr("Las pérdidas deben estar entre 0 y 99 %.");
+
+  var v = { k: g.k };
+  e.campos.forEach(function(c){ v[c.id] = parseFloat(document.getElementById("f-" + c.id).value); });
+  for(var key in v){ if(isNaN(v[key])) return showErr("Revisa los parámetros: hay campos vacíos o no numéricos."); }
+
+  var za = qnorm(g.sided === 2 ? 1 - g.alpha/2 : 1 - g.alpha);
+  var zb = qnorm(g.pot);
+
+  var R;
+  try{ R = e.n(v, za, zb); }
+  catch(ex){ return showErr(ex.message); }
+
+  var f = 1 - g.perd/100;
+  R.aj1 = up(R.n1 / f);
+  R.aj2 = R.n2 ? up(R.n2 / f) : 0;
+
+  LAST = { e:e, v:v, g:g, za:za, zb:zb, R:R };
+  render();
+};
+
+function render(){
+  var e = LAST.e, v = LAST.v, g = LAST.g, R = LAST.R, za = LAST.za, zb = LAST.zb;
+  document.getElementById("res-title").textContent = e.nombre;
+  document.getElementById("res-sub").textContent = R.precision
+    ? "Muestra necesaria para la precisión solicitada."
+    : "Muestra necesaria para una potencia del " + Math.round(g.pot*100) + " %.";
+  document.getElementById("res-body").classList.remove("hidden");
+
+  var total = R.n1 + R.n2, totalAj = R.aj1 + R.aj2;
+  var big = document.getElementById("bignum");
+  big.innerHTML = '<span class="n">' + totalAj + '</span>' +
+    '<span class="lbl">sujetos a reclutar<b>' + total + ' evaluables + ' + g.perd + ' % de pérdidas</b></span>';
+
+  var sp = document.getElementById("split");
+  sp.innerHTML = "";
+  var l1 = R.lbl1 || (R.n2 ? "Grupo 1" : "Muestra"), l2 = R.lbl2 || "Grupo 2";
+  addSplit(sp, l1, R.n1, R.aj1 !== R.n1 ? "→ " + R.aj1 + " con pérdidas" : "");
+  if(R.n2) addSplit(sp, l2, R.n2, R.aj2 !== R.n2 ? "→ " + R.aj2 + " con pérdidas" : "");
+  addSplit(sp, R.efLbl, R.efecto, "");
+  if(!R.precision){
+    var pw = e.power(v, za, R.n1);
+    addSplit(sp, "Potencia real con n", r2(pw*100) + " %", "");
+  }
+  (R.extra || []).forEach(function(x){ addSplit(sp, x[0], x[1], ""); });
+
+  var nd = parseFloat(document.getElementById("ndado").value);
+  if(!e.noPower && nd > 1){
+    var p2 = e.power(v, za, nd);
+    addSplit(sp, "Potencia con n = " + nd, (isNaN(p2) ? "—" : r2(p2*100) + " %"), p2 < g.pot ? "insuficiente" : "suficiente");
+  }
+
+  document.getElementById("formula").innerHTML = e.formula(v, za, zb);
+
+  var st = document.getElementById("steps");
+  st.innerHTML = "";
+  e.steps(v, za, zb, R).forEach(function(row){
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + row[0] + "</td><td>" + row[1] + "</td>";
+    st.appendChild(tr);
+  });
+  var tr = document.createElement("tr");
+  tr.innerHTML = "<td>Nivel de significación / potencia</td><td>α = " + g.alpha + (e.sided === false ? " (unilateral)" : g.sided === 2 ? " (bilateral)" : " (unilateral)") + " · 1−β = " + g.pot + "</td>";
+  st.appendChild(tr);
+
+  if(!e.noPower) drawCurve(); else document.getElementById("card-curve").classList.add("hidden");
+
+  document.getElementById("card-para").classList.remove("hidden");
+  document.getElementById("para").textContent = e.para(v, g, R);
+}
+function addSplit(box, k, v, sub){
+  var d = document.createElement("div");
+  d.innerHTML = '<div class="k">' + k + '</div><div class="v">' + v + (sub ? ' <small>' + sub + '</small>' : "") + '</div>';
+  box.appendChild(d);
+}
+
+/* ================= Curva de potencia (SVG) ================= */
+function drawCurve(){
+  var e = LAST.e, v = LAST.v, R = LAST.R, za = LAST.za, g = LAST.g;
+  var W = 700, H = 300, mL = 46, mR = 16, mT = 14, mB = 34;
+  var nMax = Math.max(10, up(R.n1 * 2.4)), nMin = Math.max(2, up(R.n1 * 0.1));
+  var pts = [], i;
+  for(i = 0; i <= 120; i++){
+    var n = nMin + (nMax - nMin) * i/120;
+    var p = e.power(v, za, n);
+    if(isNaN(p)) p = 0;
+    pts.push([n, Math.min(1, Math.max(0, p))]);
+  }
+  var x = function(n){ return mL + (n - nMin)/(nMax - nMin) * (W - mL - mR); };
+  var y = function(p){ return mT + (1 - p) * (H - mT - mB); };
+
+  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Curva de potencia">';
+  [0, 0.2, 0.4, 0.6, 0.8, 1].forEach(function(p){
+    s += '<line class="gridl" x1="' + mL + '" y1="' + y(p) + '" x2="' + (W-mR) + '" y2="' + y(p) + '"/>';
+    s += '<text class="tick" x="' + (mL-8) + '" y="' + (y(p)+3) + '" text-anchor="end">' + Math.round(p*100) + '%</text>';
+  });
+  for(i = 0; i <= 4; i++){
+    var nn = nMin + (nMax-nMin)*i/4;
+    s += '<text class="tick" x="' + x(nn) + '" y="' + (H-12) + '" text-anchor="middle">' + up(nn) + '</text>';
+  }
+  s += '<line class="axis" x1="' + mL + '" y1="' + mT + '" x2="' + mL + '" y2="' + (H-mB) + '"/>';
+  s += '<line class="axis" x1="' + mL + '" y1="' + (H-mB) + '" x2="' + (W-mR) + '" y2="' + (H-mB) + '"/>';
+  s += '<path class="curveline" d="M' + pts.map(function(p){ return x(p[0]).toFixed(1) + ' ' + y(p[1]).toFixed(1); }).join(" L") + '"/>';
+  s += '<line class="marker" x1="' + mL + '" y1="' + y(g.pot) + '" x2="' + (W-mR) + '" y2="' + y(g.pot) + '"/>';
+  s += '<line class="marker" x1="' + x(R.n1) + '" y1="' + mT + '" x2="' + x(R.n1) + '" y2="' + (H-mB) + '"/>';
+  s += '<circle cx="' + x(R.n1) + '" cy="' + y(g.pot) + '" r="4" fill="#A76A16"/>';
+  s += '<text class="tick" x="' + (x(R.n1)+7) + '" y="' + (y(g.pot)-8) + '" fill="#A76A16">n₁ = ' + R.n1 + '</text>';
+  s += '<text class="tick" x="' + (W/2) + '" y="' + (H-1) + '" text-anchor="middle">n del grupo 1</text>';
+  s += '</svg>';
+  document.getElementById("curve").innerHTML = s;
+  document.getElementById("card-curve").classList.remove("hidden");
+}
+
+/* ================= Salidas ================= */
+document.getElementById("btn-copy").onclick = async function(){
+  try{ await navigator.clipboard.writeText(document.getElementById("para").textContent); msg("Párrafo copiado."); }
+  catch(err){ msg("El navegador bloqueó el portapapeles."); }
+};
+document.getElementById("btn-md").onclick = function(){
+  if(!LAST) return;
+  var e = LAST.e, g = LAST.g, R = LAST.R, v = LAST.v;
+  var t = "# Cálculo del tamaño muestral\n\n## " + e.nombre + "\n\n";
+  t += "### Parámetros\n";
+  e.campos.forEach(function(c){ t += "- " + c.lbl + ": " + v[c.id] + "\n"; });
+  t += "- Alfa: " + g.alpha + (g.sided === 2 ? " (bilateral)" : " (unilateral)") + "\n- Potencia: " + g.pot + "\n";
+  if(e.k) t += "- Razón k: " + g.k + "\n";
+  t += "- Pérdidas previstas: " + g.perd + " %\n\n";
+  t += "### Resultado\n- Grupo 1: " + R.n1 + " (reclutar " + R.aj1 + ")\n";
+  if(R.n2) t += "- Grupo 2: " + R.n2 + " (reclutar " + R.aj2 + ")\n";
+  t += "- Total a reclutar: " + (R.aj1 + R.aj2) + "\n";
+  if(R.eventos) t += "- Eventos necesarios: " + R.eventos + "\n";
+  t += "\n### Fórmula\n```\n" + e.formula(v, LAST.za, LAST.zb).replace(/<[^>]+>/g, "") + "\n```\n\n";
+  t += "### Párrafo para el protocolo\n" + e.para(v, g, R) + "\n\n_TamañoMuestral·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
+  var b = new Blob([t], {type:"text/markdown;charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b);
+  a.download = "tamano-muestral-" + sel.value + ".md"; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  msg("Informe descargado.");
+};
+function msg(m){ var s = document.getElementById("st"); s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 2400); }
+
+document.getElementById("btn-demo").onclick = function(){
+  ESC[sel.value].campos.forEach(function(c){ document.getElementById("f-" + c.id).value = c.def; });
+  document.getElementById("alpha").value = 0.05;
+  document.getElementById("pot").value = 0.80;
+  document.getElementById("k").value = 1;
+  document.getElementById("perd").value = 10;
+  document.getElementById("btn-calc").click();
+};
+</script>
+</body>
+</html>

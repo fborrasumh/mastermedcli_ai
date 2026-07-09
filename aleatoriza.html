@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aleatoriza·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:64ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .layout{display:grid;grid-template-columns:minmax(300px,370px) 1fr;gap:22px;align-items:start}
+  @media(max-width:900px){.layout{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif}
+  input:focus,select:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  button.danger{border-color:#E0C4C1;color:var(--red)}
+  button.danger:hover{background:#FBF2F1;border-color:var(--red)}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .arm-row,.fac-row{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+  .arm-row input:first-child{flex:2}
+  .arm-row input:last-of-type{flex:1}
+  .x{cursor:pointer;color:#9AA7AC;font-size:18px;line-height:1;padding:0 4px;background:none;border:none}
+  .x:hover{color:var(--red);background:none}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px;margin-bottom:20px}
+  .stats div{border-left:2px solid var(--line);padding-left:11px}
+  .stats .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .stats .v{font-family:'Spectral',serif;font-size:26px;font-weight:500;margin-top:1px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:500;position:sticky;top:0;background:var(--card)}
+  td{padding:7px 10px;border-bottom:1px solid var(--line-soft)}
+  td.mono{font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  .arm-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;padding:2px 8px;border-radius:2px;border:1px solid var(--line);background:#F1F8F7;color:var(--teal-deep)}
+  .arm-tag[data-i="1"]{background:#FBF6EC;color:var(--amber);border-color:#E5D6B9}
+  .arm-tag[data-i="2"]{background:#F2F3F6;color:var(--slate);border-color:#D6DAE0}
+  .arm-tag[data-i="3"]{background:#F7F1F1;color:var(--red);border-color:#E4CFCD}
+  .masked{color:#B7C0C3;letter-spacing:.18em;font-family:'JetBrains Mono',monospace}
+  .tbl-wrap{max-height:460px;overflow:auto;border:1px solid var(--line);border-radius:3px}
+  .blk{border-left:2px solid var(--teal);padding-left:6px}
+
+  .balance{margin-top:20px}
+  .balance table{font-size:13px}
+  .balance td:not(:first-child){text-align:center;font-family:'JetBrains Mono',monospace}
+  .warnbal{color:var(--amber)}
+
+  .log{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;background:#0F1E24;color:#D7E4E2;border-radius:3px;padding:16px;white-space:pre-wrap;word-break:break-word;border:1px solid #0A171C;max-height:220px;overflow:auto}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+
+  .sobres{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:8px}
+  .sobre{border:1px dashed var(--line);border-radius:3px;padding:12px;text-align:center}
+  .sobre .id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate)}
+  .sobre .cod{font-family:'Spectral',serif;font-size:19px;font-weight:600;letter-spacing:.05em;margin-top:2px}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media print{
+    header,footer,.card:not(#card-sobres),.actions{display:none!important}
+    .sobre{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">04 · Diseño del estudio y pregunta de investigación</div>
+    <h1>Aleatoriza<em>·AI</em></h1>
+    <p class="lede">Genera la secuencia de asignación reproducible: simple, por bloques, estratificada o balanceada. Con semilla, ocultación de la asignación y log de auditoría exportable.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="layout">
+
+  <div>
+    <section class="card">
+      <h2>Configuración</h2>
+      <p class="sub">La misma semilla y los mismos parámetros producen siempre la misma secuencia.</p>
+
+      <div class="fld">
+        <label for="metodo">Método de aleatorización</label>
+        <select id="metodo">
+          <option value="simple">Simple · moneda al aire</option>
+          <option value="bloques" selected>Bloques permutados</option>
+          <option value="estratificada">Estratificada por bloques</option>
+          <option value="balanceada">Balanceada · permutación global</option>
+        </select>
+        <div class="hint" id="met-hint"></div>
+      </div>
+
+      <div class="divider"><span>Brazos del estudio</span></div>
+      <div id="arms"></div>
+      <button class="ghost small" id="btn-add-arm">+ Añadir brazo</button>
+      <div class="hint" style="margin-top:8px">La segunda casilla es la parte de la razón de asignación (1:1, 2:1, 1:1:1…).</div>
+
+      <div class="divider"><span>Tamaño y semilla</span></div>
+      <div class="fld" id="w-n">
+        <label for="n" id="lbl-n">Sujetos totales</label>
+        <input type="number" id="n" value="120" min="2" step="1">
+      </div>
+      <div class="fld hidden" id="w-bloque">
+        <label for="bloque">Tamaño de bloque</label>
+        <select id="bloque">
+          <option value="auto">Aleatorio entre los válidos (recomendado)</option>
+        </select>
+        <div class="hint">Bloques de tamaño variable dificultan adivinar la siguiente asignación.</div>
+      </div>
+      <div class="fld">
+        <label for="semilla">Semilla</label>
+        <input type="text" id="semilla" value="UMH-2026-TFM">
+        <div class="hint">Consígnala en el protocolo: es lo que hace reproducible la secuencia.</div>
+      </div>
+
+      <div class="divider hidden" id="w-fac-div"><span>Factores de estratificación</span></div>
+      <div id="facs" class="hidden"></div>
+      <button class="ghost small hidden" id="btn-add-fac">+ Añadir factor</button>
+
+      <div class="actions">
+        <button id="btn-gen">Generar secuencia</button>
+        <button class="ghost small" id="btn-seed">Semilla al azar</button>
+      </div>
+      <div class="err hidden" id="err"></div>
+    </section>
+  </div>
+
+  <div>
+    <section class="card" id="card-res">
+      <h2>Secuencia</h2>
+      <p class="sub" id="res-sub">Configura los parámetros y pulsa Generar.</p>
+      <div id="res-body" class="hidden">
+        <div class="stats" id="stats"></div>
+        <div class="actions" style="margin-top:0;margin-bottom:16px">
+          <button class="ghost small" id="btn-mask">Ocultar asignación</button>
+          <button class="ghost small" id="btn-csv">Descargar CSV</button>
+          <button class="ghost small" id="btn-log">Descargar log de auditoría (.json)</button>
+          <button class="ghost small" id="btn-sobres">Ver sobres</button>
+          <span class="status" id="st"></span>
+        </div>
+        <div class="tbl-wrap">
+          <table id="tbl"><thead></thead><tbody></tbody></table>
+        </div>
+        <div class="balance" id="balance"></div>
+      </div>
+    </section>
+
+    <section class="card hidden" id="card-log">
+      <h2>Log de auditoría</h2>
+      <p class="sub">Registro reproducible del acto de aleatorización. Adjúntalo al protocolo y al informe final.</p>
+      <div class="log" id="logbox"></div>
+      <div class="note">La ocultación de la asignación (<em>allocation concealment</em>) exige que quien recluta no pueda anticipar el brazo siguiente. Usa sobres opacos numerados y sellados, o un servicio centralizado. La lista maestra la custodia una persona ajena al reclutamiento.</div>
+    </section>
+
+    <section class="card hidden" id="card-sobres">
+      <h2>Etiquetas de sobre</h2>
+      <p class="sub">Imprime, recorta y pega en sobres opacos numerados. El código no revela el brazo.</p>
+      <div class="actions" style="margin-top:0;margin-bottom:14px">
+        <button class="ghost small" id="btn-print">Imprimir etiquetas</button>
+        <button class="ghost small" id="btn-hide-sobres">Ocultar</button>
+      </div>
+      <div class="sobres" id="sobres"></div>
+    </section>
+  </div>
+
+</div>
+</main>
+
+<footer class="wrap">
+  <span>Aleatoriza·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span>Determinista · sin IA · sin envío de datos</span>
+</footer>
+
+<script>
+"use strict";
+
+/* ============ PRNG reproducible: cyrb128 + mulberry32 ============ */
+function cyrb128(str){
+  var h1 = 1779033703, h2 = 3144134277, h3 = 1013904242, h4 = 2773480762;
+  for(var i = 0, k; i < str.length; i++){
+    k = str.charCodeAt(i);
+    h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
+    h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
+    h3 = h4 ^ Math.imul(h3 ^ k, 951274213);
+    h4 = h1 ^ Math.imul(h4 ^ k, 2716044179);
+  }
+  h1 = Math.imul(h3 ^ (h1 >>> 18), 597399067);
+  h2 = Math.imul(h4 ^ (h2 >>> 22), 2869860233);
+  h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
+  h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
+  return [(h1^h2^h3^h4) >>> 0, (h2^h1) >>> 0, (h3^h1) >>> 0, (h4^h1) >>> 0];
+}
+function mulberry32(a){
+  return function(){
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    var t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function rngFrom(seedStr){ return mulberry32(cyrb128(seedStr)[0]); }
+function shuffle(arr, rnd){
+  for(var i = arr.length - 1; i > 0; i--){
+    var j = Math.floor(rnd() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+function gcd(a,b){ return b ? gcd(b, a % b) : a; }
+function checksum(str){ var h = cyrb128(str); return (h[0].toString(16) + h[1].toString(16)).slice(0,12).toUpperCase(); }
+
+/* ============ Estado de la interfaz ============ */
+var HINTS = {
+  simple:"Cada sujeto se asigna al azar de forma independiente. Impredecible, pero puede producir grupos desiguales en muestras pequeñas.",
+  bloques:"Dentro de cada bloque el reparto es exacto. Garantiza equilibrio a lo largo del reclutamiento.",
+  estratificada:"Bloques independientes dentro de cada estrato. Equilibra los factores pronósticos clave.",
+  balanceada:"Se reparte el total exacto y se permuta. Máximo equilibrio, pero la asignación final es predecible si se conoce el resto."
+};
+var arms = [{n:"Control", r:1}, {n:"Experimental", r:1}];
+var facs = [{n:"Sexo", niv:"Hombre, Mujer"}];
+var LAST = null, masked = false;
+
+function drawArms(){
+  var box = document.getElementById("arms");
+  box.innerHTML = "";
+  arms.forEach(function(a, i){
+    var d = document.createElement("div");
+    d.className = "arm-row";
+    d.innerHTML = '<input type="text" value="' + esc(a.n) + '" data-an="' + i + '" placeholder="Nombre del brazo">' +
+                  '<input type="number" value="' + a.r + '" min="1" step="1" data-ar="' + i + '">';
+    if(arms.length > 2){
+      var x = document.createElement("button"); x.className = "x"; x.textContent = "×"; x.title = "Quitar brazo";
+      x.onclick = function(){ arms.splice(i,1); drawArms(); bloqueOpts(); };
+      d.appendChild(x);
+    }
+    box.appendChild(d);
+  });
+  box.querySelectorAll("[data-an]").forEach(function(i){ i.oninput = function(){ arms[i.dataset.an].n = i.value; }; });
+  box.querySelectorAll("[data-ar]").forEach(function(i){ i.oninput = function(){ arms[i.dataset.ar].r = Math.max(1, parseInt(i.value,10) || 1); bloqueOpts(); }; });
+}
+document.getElementById("btn-add-arm").onclick = function(){
+  if(arms.length >= 4) return;
+  arms.push({n:"Brazo " + (arms.length+1), r:1}); drawArms(); bloqueOpts();
+};
+
+function drawFacs(){
+  var box = document.getElementById("facs");
+  box.innerHTML = "";
+  facs.forEach(function(f, i){
+    var d = document.createElement("div");
+    d.className = "fld";
+    d.innerHTML = '<div class="fac-row"><input type="text" value="' + esc(f.n) + '" data-fn="' + i + '" placeholder="Nombre del factor"></div>' +
+      '<input type="text" value="' + esc(f.niv) + '" data-fl="' + i + '" placeholder="Niveles separados por comas">';
+    var x = document.createElement("button"); x.className = "x"; x.textContent = "×";
+    x.onclick = function(){ facs.splice(i,1); drawFacs(); };
+    d.querySelector(".fac-row").appendChild(x);
+    box.appendChild(d);
+  });
+  box.querySelectorAll("[data-fn]").forEach(function(i){ i.oninput = function(){ facs[i.dataset.fn].n = i.value; }; });
+  box.querySelectorAll("[data-fl]").forEach(function(i){ i.oninput = function(){ facs[i.dataset.fl].niv = i.value; }; });
+}
+document.getElementById("btn-add-fac").onclick = function(){
+  if(facs.length >= 3) return;
+  facs.push({n:"Factor " + (facs.length+1), niv:"Nivel A, Nivel B"}); drawFacs();
+};
+
+function sumR(){ return arms.reduce(function(s,a){ return s + a.r; }, 0); }
+function unitBlock(){
+  var g = arms.map(function(a){ return a.r; }).reduce(gcd);
+  return sumR() / g;
+}
+function bloqueOpts(){
+  var sel = document.getElementById("bloque");
+  var u = unitBlock();
+  var prev = sel.value;
+  sel.innerHTML = '<option value="auto">Aleatorio entre los válidos (recomendado)</option>';
+  for(var m = 1; m <= 4; m++){
+    var s = u*m;
+    if(s > 24) break;
+    var o = document.createElement("option");
+    o.value = String(s);
+    o.textContent = s + " sujetos" + (m === 1 ? " (mínimo)" : "");
+    sel.appendChild(o);
+  }
+  if([].slice.call(sel.options).some(function(o){ return o.value === prev; })) sel.value = prev;
+}
+
+function metodo(){ return document.getElementById("metodo").value; }
+function syncMetodo(){
+  var m = metodo();
+  document.getElementById("met-hint").textContent = HINTS[m];
+  toggle("w-bloque", m === "bloques" || m === "estratificada");
+  toggle("w-fac-div", m === "estratificada");
+  toggle("facs", m === "estratificada");
+  toggle("btn-add-fac", m === "estratificada");
+  document.getElementById("lbl-n").textContent = m === "estratificada" ? "Sujetos por estrato" : "Sujetos totales";
+}
+function toggle(id, on){ document.getElementById(id).classList[on ? "remove" : "add"]("hidden"); }
+document.getElementById("metodo").onchange = function(){ syncMetodo(); hideRes(); };
+document.getElementById("btn-seed").onclick = function(){
+  var s = "SEM-" + Math.random().toString(36).slice(2,8).toUpperCase();
+  document.getElementById("semilla").value = s;
+};
+
+/* ============ Generación de la secuencia ============ */
+function armList(){
+  var l = [];
+  arms.forEach(function(a, i){ for(var j = 0; j < a.r; j++) l.push(i); });
+  return l;
+}
+function genSimple(n, rnd){
+  var tot = sumR(), out = [];
+  for(var i = 0; i < n; i++){
+    var u = rnd() * tot, acc = 0, pick = 0;
+    for(var a = 0; a < arms.length; a++){ acc += arms[a].r; if(u < acc){ pick = a; break; } }
+    out.push({ arm: pick, bloque: "—" });
+  }
+  return out;
+}
+function genBloques(n, rnd, tam){
+  var u = unitBlock(), out = [], b = 1;
+  var validos = [];
+  for(var m = 1; m*u <= 24 && m <= 4; m++) validos.push(u*m);
+  while(out.length < n){
+    var size = (tam === "auto") ? validos[Math.floor(rnd()*validos.length)] : parseInt(tam, 10);
+    var mult = size / u;
+    var base = [];
+    for(var r = 0; r < mult; r++) base = base.concat(armList());
+    shuffle(base, rnd);
+    for(var i = 0; i < base.length && out.length < n; i++) out.push({ arm: base[i], bloque: "B" + b + " (" + size + ")" });
+    b++;
+  }
+  return out;
+}
+function genBalanceada(n, rnd){
+  var tot = sumR(), out = [];
+  arms.forEach(function(a, i){
+    var cnt = Math.round(n * a.r / tot);
+    for(var j = 0; j < cnt; j++) out.push(i);
+  });
+  while(out.length < n) out.push(Math.floor(rnd()*arms.length));
+  while(out.length > n) out.pop();
+  shuffle(out, rnd);
+  return out.map(function(a){ return { arm: a, bloque: "—" }; });
+}
+function estratos(){
+  var levels = facs.map(function(f){ return f.niv.split(",").map(function(s){ return s.trim(); }).filter(Boolean); });
+  if(levels.some(function(l){ return l.length < 2; })) throw new Error("Cada factor necesita al menos dos niveles separados por comas.");
+  var out = [[]];
+  levels.forEach(function(l){
+    var nx = [];
+    out.forEach(function(pre){ l.forEach(function(v){ nx.push(pre.concat([v])); }); });
+    out = nx;
+  });
+  return out.map(function(combo){ return combo.join(" · "); });
+}
+
+function generar(){
+  showErr(null);
+  var n = parseInt(document.getElementById("n").value, 10);
+  var semilla = document.getElementById("semilla").value.trim();
+  var m = metodo();
+  if(!(n >= 2)) return showErr("El número de sujetos debe ser al menos 2.");
+  if(!semilla) return showErr("Indica una semilla: sin ella la secuencia no es reproducible.");
+  if(arms.some(function(a){ return !a.n.trim(); })) return showErr("Todos los brazos necesitan un nombre.");
+
+  var tam = document.getElementById("bloque").value;
+  var rows = [], id = 1;
+  try{
+    if(m === "estratificada"){
+      var strs = estratos();
+      strs.forEach(function(s, si){
+        var rnd = rngFrom(semilla + "::" + s);
+        genBloques(n, rnd, tam).forEach(function(r){
+          rows.push({ id: id++, estrato: s, arm: r.arm, bloque: r.bloque });
+        });
+      });
+    } else {
+      var rnd2 = rngFrom(semilla);
+      var seq = m === "simple" ? genSimple(n, rnd2) : m === "balanceada" ? genBalanceada(n, rnd2) : genBloques(n, rnd2, tam);
+      seq.forEach(function(r){ rows.push({ id: id++, estrato: "—", arm: r.arm, bloque: r.bloque }); });
+    }
+  }catch(ex){ return showErr(ex.message); }
+
+  var rndC = rngFrom(semilla + "::sobres");
+  rows.forEach(function(r){ r.codigo = codigo(rndC); });
+
+  LAST = {
+    metodo: m, semilla: semilla, n: n, tam: tam,
+    arms: arms.map(function(a){ return { nombre: a.n, ratio: a.r }; }),
+    factores: m === "estratificada" ? facs.map(function(f){ return { nombre: f.n, niveles: f.niv }; }) : [],
+    fecha: new Date().toISOString(),
+    rows: rows
+  };
+  LAST.huella = checksum(rows.map(function(r){ return r.arm; }).join("") + semilla);
+  masked = false;
+  render();
+}
+function codigo(rnd){
+  var A = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", s = "";
+  for(var i = 0; i < 6; i++) s += A[Math.floor(rnd()*A.length)];
+  return s.slice(0,3) + "-" + s.slice(3);
+}
+
+/* ============ Render ============ */
+function render(){
+  document.getElementById("res-body").classList.remove("hidden");
+  document.getElementById("card-log").classList.remove("hidden");
+  var R = LAST.rows;
+  document.getElementById("res-sub").textContent =
+    "Método " + document.querySelector("#metodo option:checked").textContent.toLowerCase() + " · semilla «" + LAST.semilla + "» · huella " + LAST.huella;
+
+  var counts = arms.map(function(){ return 0; });
+  R.forEach(function(r){ counts[r.arm]++; });
+  var s = document.getElementById("stats");
+  s.innerHTML = "";
+  stat(s, "Sujetos", R.length);
+  arms.forEach(function(a, i){ stat(s, a.n, counts[i]); });
+  if(LAST.metodo === "estratificada") stat(s, "Estratos", estratos().length);
+  stat(s, "Huella", LAST.huella);
+
+  var strat = LAST.metodo === "estratificada";
+  var thead = document.querySelector("#tbl thead");
+  thead.innerHTML = "<tr><th>ID</th>" + (strat ? "<th>Estrato</th>" : "") + "<th>Bloque</th><th>Brazo</th><th>Código de sobre</th></tr>";
+  var tb = document.querySelector("#tbl tbody");
+  tb.innerHTML = "";
+  R.forEach(function(r){
+    var tr = document.createElement("tr");
+    var brazo = masked ? '<span class="masked">■■■■■</span>' : '<span class="arm-tag" data-i="' + r.arm + '">' + esc(arms[r.arm].n) + '</span>';
+    tr.innerHTML = '<td class="mono">' + String(r.id).padStart(3,"0") + '</td>' +
+      (strat ? '<td>' + esc(r.estrato) + '</td>' : "") +
+      '<td class="mono blk">' + r.bloque + '</td><td>' + brazo + '</td><td class="mono">' + r.codigo + '</td>';
+    tb.appendChild(tr);
+  });
+
+  balance(strat);
+  document.getElementById("logbox").textContent = JSON.stringify(logObj(), null, 2);
+}
+function stat(box, k, v){
+  var d = document.createElement("div");
+  d.innerHTML = '<div class="k">' + esc(k) + '</div><div class="v">' + esc(v) + '</div>';
+  box.appendChild(d);
+}
+function balance(strat){
+  var box = document.getElementById("balance");
+  var R = LAST.rows;
+  var esperado = sumR();
+  var groups = {};
+  R.forEach(function(r){
+    var g = strat ? r.estrato : "Total";
+    if(!groups[g]) groups[g] = arms.map(function(){ return 0; });
+    groups[g][r.arm]++;
+  });
+  var h = '<div class="divider" style="margin-bottom:12px"><span>Balance de la asignación</span></div><table><thead><tr><th>' + (strat ? "Estrato" : "") + '</th>' +
+    arms.map(function(a){ return "<th>" + esc(a.n) + "</th>"; }).join("") + '<th>Razón</th></tr></thead><tbody>';
+  Object.keys(groups).forEach(function(g){
+    var c = groups[g];
+    var minC = Math.min.apply(null, c) || 1;
+    var razon = c.map(function(x){ return (x/minC).toFixed(1); }).join(" : ");
+    var ideal = arms.map(function(a){ return (a.r/Math.min.apply(null, arms.map(function(z){ return z.r; }))).toFixed(1); }).join(" : ");
+    var ok = razon === ideal;
+    h += "<tr><td>" + esc(g) + "</td>" + c.map(function(x){ return "<td>" + x + "</td>"; }).join("") +
+      '<td class="' + (ok ? "" : "warnbal") + '">' + razon + (ok ? "" : " (ideal " + ideal + ")") + "</td></tr>";
+  });
+  h += "</tbody></table>";
+  if(LAST.metodo === "simple") h += '<div class="note">En aleatorización simple el desequilibrio es esperable y no invalida el estudio; si te preocupa, usa bloques.</div>';
+  box.innerHTML = h;
+}
+
+/* ============ Ocultación, exportación, sobres ============ */
+document.getElementById("btn-mask").onclick = function(){
+  masked = !masked;
+  this.textContent = masked ? "Revelar asignación" : "Ocultar asignación";
+  render();
+  this.textContent = masked ? "Revelar asignación" : "Ocultar asignación";
+};
+function logObj(){
+  return {
+    herramienta: "Aleatoriza·AI · Kit Metodológico UMH",
+    version: "1.0",
+    fecha_generacion: LAST.fecha,
+    metodo: LAST.metodo,
+    semilla: LAST.semilla,
+    algoritmo_prng: "cyrb128 + mulberry32 (determinista)",
+    tamano_bloque: (LAST.metodo === "bloques" || LAST.metodo === "estratificada") ? LAST.tam : null,
+    brazos: LAST.arms,
+    factores_estratificacion: LAST.factores,
+    n_por_estrato_o_total: LAST.n,
+    n_asignaciones: LAST.rows.length,
+    huella_secuencia: LAST.huella,
+    reproducible: "La misma semilla y los mismos parámetros regeneran esta secuencia."
+  };
+}
+document.getElementById("btn-csv").onclick = function(){
+  var strat = LAST.metodo === "estratificada";
+  var head = ["id"].concat(strat ? ["estrato"] : []).concat(["bloque","brazo","codigo_sobre"]).join(";");
+  var lines = LAST.rows.map(function(r){
+    return [String(r.id).padStart(3,"0")].concat(strat ? [r.estrato] : []).concat([r.bloque, arms[r.arm].n, r.codigo]).join(";");
+  });
+  dl(head + "\n" + lines.join("\n"), "aleatorizacion-" + LAST.semilla + ".csv", "text/csv");
+  msg("CSV descargado. Custodia el archivo fuera del equipo reclutador.");
+};
+document.getElementById("btn-log").onclick = function(){
+  dl(JSON.stringify(logObj(), null, 2), "log-aleatorizacion-" + LAST.huella + ".json", "application/json");
+  msg("Log descargado.");
+};
+document.getElementById("btn-sobres").onclick = function(){
+  var box = document.getElementById("sobres");
+  box.innerHTML = "";
+  LAST.rows.forEach(function(r){
+    var d = document.createElement("div");
+    d.className = "sobre";
+    d.innerHTML = '<div class="id">Sujeto ' + String(r.id).padStart(3,"0") + (r.estrato !== "—" ? " · " + esc(r.estrato) : "") + '</div><div class="cod">' + r.codigo + '</div>';
+    box.appendChild(d);
+  });
+  document.getElementById("card-sobres").classList.remove("hidden");
+  document.getElementById("card-sobres").scrollIntoView({behavior:"smooth"});
+};
+document.getElementById("btn-hide-sobres").onclick = function(){ document.getElementById("card-sobres").classList.add("hidden"); };
+document.getElementById("btn-print").onclick = function(){ window.print(); };
+
+function dl(text, name, mime){
+  var b = new Blob([text], {type: mime + ";charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = name; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+}
+function msg(m){ var s = document.getElementById("st"); s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 3000); }
+function showErr(m){
+  var e = document.getElementById("err");
+  if(!m){ e.classList.add("hidden"); return; }
+  e.textContent = m; e.classList.remove("hidden");
+}
+function hideRes(){
+  document.getElementById("res-body").classList.add("hidden");
+  document.getElementById("card-log").classList.add("hidden");
+  document.getElementById("card-sobres").classList.add("hidden");
+  document.getElementById("res-sub").textContent = "Configura los parámetros y pulsa Generar.";
+}
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+document.getElementById("btn-gen").onclick = generar;
+drawArms(); drawFacs(); bloqueOpts(); syncMetodo();
+</script>
+</body>
+</html>

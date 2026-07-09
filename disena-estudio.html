@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DiseñaEstudio·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:64ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:6px}
+  textarea,input[type=text],select{width:100%;font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:11px 12px}
+  textarea{min-height:80px;resize:vertical}
+  textarea:focus,input:focus,select:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep);border-color:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+
+  /* --- wizard --- */
+  .steps{display:flex;gap:0;margin-bottom:22px;flex-wrap:wrap}
+  .step{flex:1;min-width:60px;height:3px;background:var(--line);position:relative}
+  .step.on{background:var(--teal)}
+  .qtext{font-family:'Spectral',serif;font-size:24px;font-weight:500;line-height:1.25;margin-bottom:6px}
+  .qhelp{color:var(--ink-soft);font-size:14px;margin-bottom:20px}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .opt{text-align:left;border:1px solid var(--line);background:#FCFDFC;border-radius:3px;padding:15px 16px;cursor:pointer;transition:.14s;color:var(--ink);font-weight:400}
+  .opt:hover{border-color:var(--teal);background:#F2F7F6;transform:translateY(-1px)}
+  .opt b{display:block;font-weight:500;font-size:15px;margin-bottom:3px}
+  .opt span{font-size:13px;color:var(--ink-soft);line-height:1.45}
+  .trail{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px}
+  .crumb{font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 8px;border:1px solid var(--line);border-radius:2px;color:var(--slate);background:#fff}
+  .crumb b{color:var(--teal-deep);font-weight:500}
+
+  /* --- resultado --- */
+  .verdict{border-left:3px solid var(--teal);padding-left:18px;margin-bottom:24px}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .verdict h3{font-family:'Spectral',serif;font-weight:500;font-size:31px;line-height:1.1;margin:5px 0 8px}
+  .verdict p{color:var(--ink-soft);font-size:15px;max-width:70ch}
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:6px}
+  .col h4{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+  .col.pro h4{color:var(--teal)}
+  .col.con h4{color:var(--red)}
+  .col.bias h4{color:var(--amber)}
+  .col ul{list-style:none}
+  .col li{font-size:14px;padding:6px 0 6px 15px;position:relative;color:var(--ink);border-bottom:1px solid var(--line-soft)}
+  .col li::before{content:"";position:absolute;left:0;top:14px;width:5px;height:1px;background:var(--slate)}
+  .col.pro li::before{background:var(--teal)}
+  .col.con li::before{background:var(--red)}
+  .col.bias li::before{background:var(--amber)}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0 4px;padding-top:20px;border-top:1px solid var(--line)}
+  .fact{border-left:2px solid var(--line);padding-left:11px}
+  .fact .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .fact .v{font-size:14.5px;margin-top:2px}
+  .alt{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-soft)}
+  .alt b{color:var(--ink);font-weight:500}
+
+  .ai-out{margin-top:18px;border:1px solid var(--line);border-radius:3px;background:#FCFDFC;padding:18px;font-size:14.5px;line-height:1.62}
+  .ai-out h4{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);margin:14px 0 7px}
+  .ai-out h4:first-child{margin-top:0}
+  .ai-out ul{margin-left:17px}
+  .ai-out li{margin:3px 0}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:14px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .status.err{color:var(--red)}
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}.opt:hover{transform:none}}
+  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%;box-shadow:0 20px 60px -20px rgba(23,38,46,.4)}
+  dialog::backdrop{background:rgba(23,38,46,.35)}
+  .dlg{padding:24px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+  .hidden{display:none}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">02 · Diseño del estudio y pregunta de investigación</div>
+    <h1>DiseñaEstudio<em>·AI</em></h1>
+    <p class="lede">Responde cinco preguntas sobre tu objetivo y obtén el diseño epidemiológico recomendado, con sus fortalezas, sesgos característicos y limitaciones.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card" id="card-obj">
+    <h2>Tu objetivo de investigación</h2>
+    <p class="sub">Opcional, pero permite que la IA critique después la recomendación aplicada a tu caso.</p>
+    <label for="obj">Objetivo</label>
+    <textarea id="obj" placeholder="Determinar si la exposición prolongada a pantallas se asocia con miopía incidente en escolares de 6 a 12 años."></textarea>
+  </section>
+
+  <section class="card" id="card-wiz">
+    <div class="steps" id="steps"></div>
+    <div id="q-area"></div>
+    <div class="trail" id="trail"></div>
+    <div class="actions">
+      <button class="ghost small" id="btn-back">← Atrás</button>
+      <button class="ghost small" id="btn-reset">Empezar de nuevo</button>
+    </div>
+  </section>
+
+  <section class="card hidden" id="card-res">
+    <div class="verdict">
+      <div class="k">Diseño recomendado</div>
+      <h3 id="d-name"></h3>
+      <p id="d-desc"></p>
+    </div>
+    <div class="cols">
+      <div class="col pro"><h4>Fortalezas</h4><ul id="d-pro"></ul></div>
+      <div class="col bias"><h4>Sesgos característicos</h4><ul id="d-bias"></ul></div>
+      <div class="col con"><h4>Limitaciones</h4><ul id="d-con"></ul></div>
+    </div>
+    <div class="facts" id="d-facts"></div>
+    <div class="alt" id="d-alt"></div>
+    <div class="actions">
+      <button id="btn-ai">Criticar mi objetivo con IA</button>
+      <button class="ghost" id="btn-md">Descargar informe (.md)</button>
+      <button class="ghost" id="btn-copy">Copiar resumen</button>
+      <span class="status" id="st"></span>
+    </div>
+    <div class="ai-out hidden" id="ai-out"></div>
+    <div class="note">La recomendación es determinista: procede del árbol de decisión, no del modelo de lenguaje. La IA solo comenta tu objetivo concreto.</div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>DiseñaEstudio·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span id="model-badge" style="cursor:pointer"></span>
+</footer>
+
+<dialog id="dlg-key">
+  <div class="dlg">
+    <h3>Clave de API de OpenAI</h3>
+    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit.</p>
+    <label for="k">Clave</label>
+    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
+    <div style="margin-top:14px"></div>
+    <label for="m">Modelo</label>
+    <select id="m">
+      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
+      <option value="gpt-4o">gpt-4o · más preciso</option>
+      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+      <option value="gpt-4.1">gpt-4.1</option>
+    </select>
+    <div class="actions">
+      <button id="k-save">Guardar</button>
+      <button class="ghost" id="k-cancel">Cancelar</button>
+      <button class="ghost small" id="k-clear">Borrar clave</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+
+/* ---------- Kernel: clave y modelo ---------- */
+var KEY = "ia_openai_key", MODEL = "ia_openai_model";
+function getKey(){ return localStorage.getItem(KEY) || ""; }
+function getModel(){ return localStorage.getItem(MODEL) || "gpt-4o-mini"; }
+function badge(){ document.getElementById("model-badge").textContent = "modelo: " + getModel(); }
+var dlg = document.getElementById("dlg-key");
+function askKey(){ document.getElementById("k").value = getKey(); document.getElementById("m").value = getModel(); dlg.showModal(); }
+document.getElementById("k-save").onclick = function(){
+  var v = document.getElementById("k").value.trim();
+  if(v) localStorage.setItem(KEY, v);
+  localStorage.setItem(MODEL, document.getElementById("m").value);
+  badge(); dlg.close();
+};
+document.getElementById("k-cancel").onclick = function(){ dlg.close(); };
+document.getElementById("k-clear").onclick = function(){ localStorage.removeItem(KEY); document.getElementById("k").value=""; };
+document.getElementById("model-badge").onclick = askKey;
+
+async function askAI(system, user){
+  var key = getKey();
+  if(!key){ askKey(); throw new Error("Falta la clave de API."); }
+  var res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
+    body: JSON.stringify({ model:getModel(), temperature:0.3, response_format:{type:"json_object"},
+      messages:[{role:"system",content:system},{role:"user",content:user}] })
+  });
+  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,160)); }
+  var data = await res.json();
+  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
+}
+
+/* ---------- Base de conocimiento de diseños ---------- */
+var DB = {
+  eca: {
+    nombre:"Ensayo clínico aleatorizado (ECA)",
+    desc:"El investigador asigna la intervención al azar. Es el único diseño que equilibra en promedio los factores de confusión conocidos y desconocidos, y por tanto el patrón de referencia para inferir causalidad sobre la eficacia de una intervención.",
+    pro:["Control de la confusión conocida y desconocida por aleatorización","Permite establecer causalidad","Secuencia temporal inequívoca","Cegamiento posible: reduce sesgos de medición","Base de las guías de práctica clínica"],
+    bias:["Sesgo de selección si la ocultación de la asignación falla","Sesgo de desgaste (pérdidas diferenciales)","Sesgo de realización si no hay cegamiento","Sesgo de notificación selectiva de desenlaces"],
+    con:["Coste y duración elevados","Problemas éticos si la intervención puede dañar","Validez externa limitada por criterios de inclusión estrictos","Poco eficiente para desenlaces raros o muy tardíos"],
+    medida:"RR, RAR, NNT, HR", reporte:"CONSORT", registro:"ClinicalTrials.gov o EudraCT (previo)", nivel:"Oxford 1b · GRADE alta de partida",
+    alt:"Si la aleatorización individual no es viable, considera un ensayo aleatorizado por conglomerados (clusters) o un diseño escalonado (stepped-wedge)."
+  },
+  cuasi: {
+    nombre:"Estudio cuasi-experimental",
+    desc:"Hay intervención asignada por el investigador o por una política, pero sin aleatorización. La comparabilidad de los grupos debe defenderse con el diseño y el análisis, no con el azar.",
+    pro:["Viable cuando aleatorizar no es ético o factible","Buena validez externa: contextos reales","Aprovecha intervenciones ya implantadas","Diseños antes-después con serie temporal muy informativos"],
+    bias:["Confusión residual por factores no medidos","Regresión a la media en diseños antes-después","Efecto de maduración y de historia","Sesgo de selección de los grupos de comparación"],
+    con:["Inferencia causal más débil que el ECA","Exige métodos de ajuste (puntuación de propensión, diferencias en diferencias)","Difícil descartar explicaciones alternativas"],
+    medida:"Diferencia de medias, RR ajustado, DiD", reporte:"TREND · SQUIRE (mejora de calidad)", registro:"Recomendable", nivel:"Oxford 2b",
+    alt:"Refuerza el diseño añadiendo múltiples mediciones previas (serie temporal interrumpida) o un grupo control no equivalente."
+  },
+  cohorte: {
+    nombre:"Estudio de cohortes",
+    desc:"Se parte de la exposición y se sigue a los sujetos en el tiempo hasta la aparición del desenlace. Permite estimar incidencia y riesgo, y establece la secuencia temporal.",
+    pro:["Secuencia temporal clara: la exposición precede al desenlace","Mide incidencia, riesgo relativo y tasas","Permite estudiar varios desenlaces de una misma exposición","Adecuado para exposiciones raras","Menos sesgo de recuerdo si es prospectivo"],
+    bias:["Sesgo de selección al inicio","Sesgo de pérdidas en el seguimiento (attrition)","Confusión por indicación","Sesgo del trabajador sano en cohortes ocupacionales","Sesgo de tiempo inmortal si el diseño está mal especificado"],
+    con:["Coste alto y seguimiento largo si es prospectiva","Ineficiente para desenlaces raros","Las cohortes retrospectivas dependen de la calidad de los registros"],
+    medida:"Incidencia, RR, HR, densidad de incidencia", reporte:"STROBE", registro:"Recomendable", nivel:"Oxford 2b",
+    alt:"Si el desenlace es raro pero la cohorte existe, un diseño de casos y controles anidado o de cohorte-caso gana eficiencia sin perder la base poblacional."
+  },
+  cc: {
+    nombre:"Estudio de casos y controles",
+    desc:"Se parte del desenlace: se seleccionan casos y controles y se investiga hacia atrás la exposición previa. Es el diseño eficiente cuando el evento es raro o de latencia larga.",
+    pro:["Muy eficiente para enfermedades raras","Rápido y barato","Permite estudiar varias exposiciones de un mismo desenlace","Tamaño muestral pequeño"],
+    bias:["Sesgo de recuerdo (memoria diferencial de la exposición)","Sesgo de selección de los controles (Berkson, controles hospitalarios)","Sesgo del entrevistador","Confusión si no se emparejan o ajustan los factores"],
+    con:["No estima incidencia ni riesgo absoluto (salvo diseño anidado o base poblacional)","Secuencia temporal a veces ambigua","La medida es la Odds Ratio, no el riesgo relativo","Selección de controles es la parte más delicada"],
+    medida:"Odds Ratio (OR)", reporte:"STROBE", registro:"Recomendable", nivel:"Oxford 3b",
+    alt:"Si dispones de una cohorte o de un registro poblacional, el diseño de casos y controles anidado reduce el sesgo de selección y permite estimar tasas."
+  },
+  transversal: {
+    nombre:"Estudio transversal",
+    desc:"Exposición y desenlace se miden a la vez, en un único momento. Sirve para describir prevalencia y para generar hipótesis de asociación, no para confirmarlas.",
+    pro:["Rápido y económico","Ideal para estimar prevalencia y planificar servicios","Sin pérdidas de seguimiento","Permite explorar varias exposiciones y desenlaces a la vez"],
+    bias:["Sesgo de prevalencia-incidencia (falacia de Neyman): sobrerrepresenta los casos de larga duración","Sesgo de no respuesta","Causalidad reversa indistinguible"],
+    con:["No establece la secuencia temporal","No sirve para inferir causalidad","Poco eficiente para condiciones raras"],
+    medida:"Prevalencia, razón de prevalencias, OR de prevalencia", reporte:"STROBE", registro:"Opcional", nivel:"Oxford 4",
+    alt:"Si puedes repetir la medición en la misma muestra, un diseño de panel o transversal repetido añade información temporal a bajo coste."
+  },
+  diagnostico: {
+    nombre:"Estudio de pruebas diagnósticas (precisión)",
+    desc:"Compara la prueba índice frente a un patrón de referencia aplicado a todos los sujetos de una serie consecutiva o aleatoria, con lectura ciega e independiente.",
+    pro:["Estima sensibilidad, especificidad y cocientes de probabilidad","Permite calcular la probabilidad post-test para la práctica clínica","Diseño transversal: rápido"],
+    bias:["Sesgo de verificación parcial: no todos reciben el patrón de referencia","Sesgo de incorporación: la prueba índice forma parte del patrón","Sesgo de revisión: lectura no ciega","Sesgo de espectro: muestra de casos extremos frente a controles sanos infla la validez"],
+    con:["Los valores predictivos dependen de la prevalencia local","No mide el impacto de la prueba sobre el desenlace del paciente","Exige un patrón de referencia aceptado"],
+    medida:"Sensibilidad, especificidad, VPP, VPN, CP+, CP−, AUC", reporte:"STARD", registro:"Recomendable", nivel:"Oxford 1b si es una serie consecutiva",
+    alt:"Para saber si la prueba mejora los desenlaces del paciente, y no solo su clasificación, hace falta un ensayo aleatorizado de estrategias diagnósticas."
+  },
+  pronostico: {
+    nombre:"Estudio de pronóstico o modelo predictivo",
+    desc:"Cohorte inceptiva seguida desde un punto común del curso de la enfermedad para cuantificar el riesgo de desenlaces y, en su caso, derivar y validar un modelo de predicción.",
+    pro:["Cuantifica el riesgo absoluto en el tiempo","Base de las reglas de predicción clínica","Permite estratificar pacientes y personalizar decisiones"],
+    bias:["Sesgo de tiempo cero heterogéneo (cohorte no inceptiva)","Sobreajuste del modelo si no hay validación","Pérdidas informativas en el seguimiento","Datos ausentes tratados de forma ingenua"],
+    con:["Exige validación interna (bootstrap) y externa","Muestras grandes: ~10 eventos por variable candidata","La calibración se degrada al trasladar el modelo"],
+    medida:"Incidencia acumulada, HR, discriminación (c-index), calibración", reporte:"TRIPOD + STROBE", registro:"Recomendable", nivel:"Oxford 1b si hay validación externa",
+    alt:"Si el objetivo es el impacto clínico del modelo y no solo su rendimiento, planifica un estudio de impacto o un ensayo aleatorizado por conglomerados."
+  },
+  revision: {
+    nombre:"Revisión sistemática (con o sin meta-análisis)",
+    desc:"Síntesis reproducible de toda la evidencia disponible que responde a una pregunta PICO, con búsqueda exhaustiva, selección por pares, evaluación del riesgo de sesgo y, si procede, combinación cuantitativa.",
+    pro:["Mayor precisión al combinar estudios","Evalúa la consistencia entre estudios","Método explícito y reproducible","Nivel más alto de evidencia si los estudios primarios son válidos"],
+    bias:["Sesgo de publicación (estudios negativos no publicados)","Sesgo de idioma y de bases de datos","Heterogeneidad clínica y metodológica no reconocida","Solapamiento de poblaciones entre estudios"],
+    con:["La calidad no supera la de los estudios primarios (garbage in, garbage out)","Requiere al menos dos revisores independientes","Trabajo intensivo: 6-12 meses"],
+    medida:"Efecto combinado (RR, OR, DM, HR), I², τ²", reporte:"PRISMA 2020", registro:"PROSPERO (obligatorio de facto)", nivel:"Oxford 1a · GRADE por desenlace",
+    alt:"Si hay pocos estudios y muy heterogéneos, una síntesis narrativa estructurada (SWiM) es más honesta que un meta-análisis forzado."
+  },
+  cualitativo: {
+    nombre:"Estudio cualitativo",
+    desc:"Explora significados, vivencias y procesos mediante entrevistas, grupos focales u observación, con muestreo intencional hasta la saturación teórica y análisis temático o de contenido.",
+    pro:["Comprende el porqué de las conductas y las decisiones","Genera hipótesis y explica resultados cuantitativos inesperados","Da voz a pacientes y profesionales","Imprescindible en investigación de servicios y adherencia"],
+    bias:["Sesgo del investigador (reflexividad no explicitada)","Sesgo de deseabilidad social del informante","Muestreo intencional poco justificado"],
+    con:["No generaliza estadísticamente: transferibilidad, no representatividad","Análisis lento y dependiente del analista","Exige triangulación y verificación con los participantes"],
+    medida:"Categorías, temas, saturación", reporte:"COREQ o SRQR", registro:"Opcional", nivel:"Fuera de las escalas jerárquicas clásicas",
+    alt:"Si necesitas magnitud y significado a la vez, plantea un diseño mixto secuencial explicativo (cuantitativo → cualitativo)."
+  },
+  descriptivo: {
+    nombre:"Estudio descriptivo (series de casos, ecológico, registro)",
+    desc:"Describe la ocurrencia de un fenómeno por persona, lugar y tiempo, sin grupo de comparación individual. Genera hipótesis; no las contrasta.",
+    pro:["Muy rápido y barato","Útil para señales de seguridad y enfermedades emergentes","Aprovecha registros y datos ya existentes"],
+    bias:["Falacia ecológica: la asociación agregada no aplica al individuo","Ausencia total de control de la confusión","Sesgo de selección de los casos notificados"],
+    con:["Sin grupo de comparación no hay inferencia causal","No estima riesgo relativo individual"],
+    medida:"Prevalencia, incidencia, tasas, proporciones", reporte:"CARE (casos) · STROBE (registros)", registro:"No", nivel:"Oxford 4-5",
+    alt:"En cuanto tengas un grupo de comparación adecuado, un transversal analítico o un casos y controles multiplica el valor de los mismos datos."
+  }
+};
+
+/* ---------- Árbol de decisión determinista ---------- */
+var Q = {
+  q1: {
+    t:"¿Cuál es la finalidad principal de tu estudio?",
+    h:"Elige lo que quieres saber, no la técnica que quieres usar.",
+    o:[
+      {b:"Evaluar el efecto de una intervención", s:"Un fármaco, un programa, una técnica quirúrgica.", n:"q2"},
+      {b:"Medir una asociación exposición–desenlace", s:"Un factor de riesgo o protector que tú no asignas.", n:"q3"},
+      {b:"Estimar la frecuencia de un problema", s:"Cuántos lo tienen, dónde y cuándo.", n:"q6"},
+      {b:"Valorar una prueba diagnóstica", s:"Sensibilidad, especificidad, capacidad de clasificar.", r:"diagnostico"},
+      {b:"Predecir el curso de la enfermedad", s:"Pronóstico, modelos de predicción de riesgo.", r:"pronostico"},
+      {b:"Sintetizar la evidencia existente", s:"Responder a partir de estudios ya publicados.", r:"revision"},
+      {b:"Comprender vivencias y significados", s:"Por qué las personas hacen lo que hacen.", r:"cualitativo"}
+    ]
+  },
+  q2: {
+    t:"¿Puedes asignar la intervención al azar?",
+    h:"Piensa en la equipoise clínica, la aceptabilidad ética y la viabilidad logística.",
+    o:[
+      {b:"Sí, la asignación es aleatoria", s:"Existe incertidumbre genuina sobre cuál es mejor.", r:"eca"},
+      {b:"No, asigno pero sin azar", s:"Grupos por centro, por preferencia o por calendario.", r:"cuasi"},
+      {b:"No asigno nada: solo observo", s:"La intervención la deciden el clínico o el paciente.", n:"q3"}
+    ]
+  },
+  q3: {
+    t:"¿En qué momento vas a medir exposición y desenlace?",
+    h:"La dirección temporal define el diseño observacional.",
+    o:[
+      {b:"Parto de la exposición y sigo hasta el desenlace", s:"Prospectivo o con registros históricos.", n:"q4"},
+      {b:"Parto del desenlace y miro atrás la exposición", s:"Ya tengo identificados los casos.", r:"cc"},
+      {b:"Mido las dos cosas a la vez", s:"Una única visita o encuesta.", r:"transversal"},
+      {b:"Todavía no lo sé", s:"Deja que la frecuencia del evento decida.", n:"q4"}
+    ]
+  },
+  q4: {
+    t:"¿Con qué frecuencia aparece el desenlace?",
+    h:"Un evento raro hace inviable la cohorte prospectiva.",
+    o:[
+      {b:"Frecuente (más del 5 %)", s:"Se acumulan eventos suficientes en un seguimiento razonable.", n:"q5"},
+      {b:"Raro (menos del 1 %) o de latencia larga", s:"Necesitarías miles de personas durante años.", r:"cc"},
+      {b:"Intermedio", s:"Depende del tamaño de la cohorte disponible.", n:"q5"}
+    ]
+  },
+  q5: {
+    t:"¿Dispones de seguimiento en el tiempo?",
+    h:"Ya sea prospectivo o reconstruido a partir de historias clínicas y registros.",
+    o:[
+      {b:"Sí, puedo seguir a los sujetos", s:"Cohorte prospectiva o retrospectiva.", r:"cohorte"},
+      {b:"No, solo una foto fija", s:"Una única medición por sujeto.", r:"transversal"}
+    ]
+  },
+  q6: {
+    t:"¿Tienes un grupo de comparación individual?",
+    h:"Sin comparación no hay asociación, solo descripción.",
+    o:[
+      {b:"Sí, comparo expuestos y no expuestos", s:"Aunque sea en la misma encuesta.", r:"transversal"},
+      {b:"No, solo describo el fenómeno", s:"Serie de casos, registro, datos agregados.", r:"descriptivo"}
+    ]
+  }
+};
+
+var path = [], current = "q1", result = null;
+
+function drawSteps(){
+  var box = document.getElementById("steps");
+  box.innerHTML = "";
+  var total = 5;
+  for(var i = 0; i < total; i++){
+    var s = document.createElement("div");
+    s.className = "step" + ((i < path.length || result) ? " on" : "");
+    box.appendChild(s);
+  }
+}
+function drawTrail(){
+  var box = document.getElementById("trail");
+  box.innerHTML = "";
+  path.forEach(function(p){
+    var c = document.createElement("span");
+    c.className = "crumb";
+    c.innerHTML = esc(p.q) + " <b>" + esc(p.a) + "</b>";
+    box.appendChild(c);
+  });
+}
+function drawQ(){
+  drawSteps(); drawTrail();
+  var area = document.getElementById("q-area");
+  if(result){ area.innerHTML = '<div class="qtext">Recomendación emitida</div><div class="qhelp">Puedes retroceder para explorar otra rama.</div>'; return; }
+  var q = Q[current];
+  area.innerHTML = '<div class="qtext">' + esc(q.t) + '</div><div class="qhelp">' + esc(q.h) + '</div>';
+  var opts = document.createElement("div");
+  opts.className = "opts";
+  q.o.forEach(function(o){
+    var b = document.createElement("button");
+    b.className = "opt";
+    b.innerHTML = "<b>" + esc(o.b) + "</b><span>" + esc(o.s) + "</span>";
+    b.onclick = function(){
+      path.push({ q: shortQ(current), a: o.b, key: current });
+      if(o.r){ result = o.r; showResult(); }
+      else { current = o.n; }
+      drawQ();
+    };
+    opts.appendChild(b);
+  });
+  area.appendChild(opts);
+}
+function shortQ(k){ return { q1:"Finalidad", q2:"Asignación", q3:"Temporalidad", q4:"Frecuencia", q5:"Seguimiento", q6:"Comparación" }[k]; }
+
+function showResult(){
+  var d = DB[result];
+  document.getElementById("card-res").classList.remove("hidden");
+  document.getElementById("ai-out").classList.add("hidden");
+  document.getElementById("d-name").textContent = d.nombre;
+  document.getElementById("d-desc").textContent = d.desc;
+  fill("d-pro", d.pro); fill("d-bias", d.bias); fill("d-con", d.con);
+  var f = document.getElementById("d-facts");
+  f.innerHTML = "";
+  [["Medida de efecto", d.medida],["Guía de publicación", d.reporte],["Registro previo", d.registro],["Nivel de evidencia", d.nivel]].forEach(function(p){
+    var e = document.createElement("div"); e.className = "fact";
+    e.innerHTML = '<div class="k">' + p[0] + '</div><div class="v">' + esc(p[1]) + '</div>';
+    f.appendChild(e);
+  });
+  document.getElementById("d-alt").innerHTML = "<b>Alternativa a considerar. </b>" + esc(d.alt);
+  document.getElementById("card-res").scrollIntoView({behavior:"smooth", block:"start"});
+}
+function fill(id, arr){
+  var ul = document.getElementById(id); ul.innerHTML = "";
+  arr.forEach(function(x){ var li = document.createElement("li"); li.textContent = x; ul.appendChild(li); });
+}
+
+document.getElementById("btn-back").onclick = function(){
+  if(!path.length) return;
+  var last = path.pop();
+  current = last.key; result = null;
+  document.getElementById("card-res").classList.add("hidden");
+  drawQ();
+};
+document.getElementById("btn-reset").onclick = function(){
+  path = []; current = "q1"; result = null;
+  document.getElementById("card-res").classList.add("hidden");
+  drawQ();
+};
+
+/* ---------- Crítica con IA ---------- */
+var SYS = [
+  "Eres metodólogo senior de investigación clínica y revisas propuestas de estudio.",
+  "Te doy el objetivo de investigación de un estudiante y el diseño que un árbol de decisión determinista le ha recomendado.",
+  "No cuestiones el diseño recomendado salvo que el objetivo sea claramente incompatible con él; en ese caso dilo con claridad.",
+  "Responde EXCLUSIVAMENTE con JSON, sin markdown, con este esquema:",
+  '{"coherencia":"alta|media|baja","comentario":"2-3 frases","poblacion":"cómo definirías la población y el marco muestral",',
+  '"variables":{"independiente":"...","dependiente":"...","confusoras":["...","..."]},',
+  '"amenazas":["sesgo concreto de ESTE objetivo y cómo prevenirlo","..."],',
+  '"siguiente_paso":["acción concreta","..."]}',
+  "Todo en español, específico para el objetivo dado, sin generalidades de libro de texto."
+].join(" ");
+
+document.getElementById("btn-ai").onclick = async function(){
+  var obj = document.getElementById("obj").value.trim();
+  if(obj.length < 20){ st("Escribe primero tu objetivo, arriba del todo.", true); document.getElementById("obj").focus(); return; }
+  var btn = this; btn.disabled = true;
+  st('<span class="spin"></span>Analizando tu objetivo…');
+  try{
+    var j = await askAI(SYS, "OBJETIVO: " + obj + "\n\nDISEÑO RECOMENDADO: " + DB[result].nombre + "\n\nRUTA DEL ÁRBOL: " + path.map(function(p){ return p.q + " = " + p.a; }).join(" | "));
+    var out = document.getElementById("ai-out");
+    var v = j.variables || {};
+    out.innerHTML =
+      '<h4>Coherencia objetivo–diseño: ' + esc(j.coherencia || "—") + '</h4><p>' + esc(j.comentario || "") + '</p>' +
+      '<h4>Población y marco muestral</h4><p>' + esc(j.poblacion || "—") + '</p>' +
+      '<h4>Variables</h4><ul>' +
+        '<li><b>Independiente:</b> ' + esc(v.independiente || "—") + '</li>' +
+        '<li><b>Dependiente:</b> ' + esc(v.dependiente || "—") + '</li>' +
+        '<li><b>Confusoras:</b> ' + esc((v.confusoras || []).join("; ") || "—") + '</li></ul>' +
+      '<h4>Amenazas a la validez en tu caso</h4><ul>' + (j.amenazas || []).map(function(a){ return "<li>" + esc(a) + "</li>"; }).join("") + '</ul>' +
+      '<h4>Siguientes pasos</h4><ul>' + (j.siguiente_paso || []).map(function(a){ return "<li>" + esc(a) + "</li>"; }).join("") + '</ul>';
+    out.classList.remove("hidden");
+    st("Análisis completado.");
+  }catch(e){ st(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+function st(msg, err){ var e = document.getElementById("st"); e.className = "status" + (err ? " err" : ""); e.innerHTML = msg; }
+
+/* ---------- Salidas ---------- */
+function resumen(){
+  var d = DB[result];
+  var t = "# Diseño recomendado: " + d.nombre + "\n\n";
+  if(document.getElementById("obj").value.trim()) t += "**Objetivo:** " + document.getElementById("obj").value.trim() + "\n\n";
+  t += "**Ruta de decisión:** " + path.map(function(p){ return p.q + " → " + p.a; }).join(" · ") + "\n\n";
+  t += d.desc + "\n\n";
+  t += "## Fortalezas\n" + d.pro.map(function(x){ return "- " + x; }).join("\n") + "\n\n";
+  t += "## Sesgos característicos\n" + d.bias.map(function(x){ return "- " + x; }).join("\n") + "\n\n";
+  t += "## Limitaciones\n" + d.con.map(function(x){ return "- " + x; }).join("\n") + "\n\n";
+  t += "## Ficha\n- Medida de efecto: " + d.medida + "\n- Guía de publicación: " + d.reporte + "\n- Registro previo: " + d.registro + "\n- Nivel de evidencia: " + d.nivel + "\n\n";
+  t += "**Alternativa:** " + d.alt + "\n\n_DiseñaEstudio·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
+  return t;
+}
+document.getElementById("btn-md").onclick = function(){
+  var b = new Blob([resumen()], {type:"text/markdown;charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b);
+  a.download = "diseno-" + result + ".md"; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+};
+document.getElementById("btn-copy").onclick = async function(){
+  try{ await navigator.clipboard.writeText(resumen()); st("Resumen copiado."); }
+  catch(e){ st("El navegador bloqueó el portapapeles.", true); }
+};
+
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+badge(); drawQ();
+</script>
+</body>
+</html>

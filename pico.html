@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PICO·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:64ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:6px}
+  textarea,input[type=text],input[type=number],select{width:100%;font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:11px 12px}
+  textarea{min-height:96px;resize:vertical;line-height:1.5}
+  textarea:focus,input:focus,select:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .row{display:flex;gap:14px;flex-wrap:wrap}
+  .row>div{flex:1;min-width:180px}
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep);border-color:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+
+  .blocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:6px}
+  .block{border:1px solid var(--line);border-radius:3px;padding:14px;background:#FCFDFC}
+  .block-head{display:flex;align-items:baseline;gap:9px;margin-bottom:9px}
+  .block-let{font-family:'Spectral',serif;font-size:26px;font-weight:600;color:var(--teal);line-height:1}
+  .block-name{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--slate)}
+  .block textarea{min-height:56px;font-size:14px;margin-bottom:10px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px;min-height:8px}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 7px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--slate)}
+  .chip.mesh{border-color:#BFD9D6;background:#F1F8F7;color:var(--teal-deep)}
+  .chip.tiab{border-color:#E5D6B9;background:#FBF6EC;color:var(--amber)}
+  .chip b{font-weight:500}
+  .chip .x{cursor:pointer;color:#9AA7AC;font-size:13px;line-height:1}
+  .chip .x:hover{color:#B4453C}
+  .addterm{display:flex;gap:6px}
+  .addterm input{font-size:13px;padding:7px 9px}
+  .addterm select{width:auto;font-size:12px;padding:7px 6px;font-family:'JetBrains Mono',monospace}
+
+  .query{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.75;background:#0F1E24;color:#D7E4E2;border-radius:3px;padding:18px;white-space:pre-wrap;word-break:break-word;border:1px solid #0A171C}
+  .query .op{color:#E2B45E}
+  .query .tag{color:#7FC9C1}
+  .query .par{color:#94A6AB}
+
+  .filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:16px}
+  .pt-list{display:flex;flex-wrap:wrap;gap:8px}
+  .pt-list label{display:inline-flex;align-items:center;gap:6px;text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);margin:0;cursor:pointer}
+
+  .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:4px}
+  .meta div{border-left:2px solid var(--line);padding-left:11px}
+  .meta .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .meta .v{font-size:14.5px;margin-top:2px}
+
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:14px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .status.err{color:#B4453C}
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+
+  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%;box-shadow:0 20px 60px -20px rgba(23,38,46,.4)}
+  dialog::backdrop{background:rgba(23,38,46,.35)}
+  .dlg{padding:24px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+  .hist{margin-top:10px;border-top:1px solid var(--line-soft)}
+  .hist-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-soft);font-size:13.5px;align-items:center}
+  .hist-item span{color:var(--ink-soft);font-family:'JetBrains Mono',monospace;font-size:11.5px}
+  .hidden{display:none}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">01 · Diseño del estudio y pregunta de investigación</div>
+    <h1>PICO<em>·AI</em></h1>
+    <p class="lede">Convierte una pregunta clínica en formato PICO/PECO estructurado y construye la estrategia de búsqueda con términos MeSH y operadores booleanos para PubMed.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="card">
+    <h2>1 · Tu pregunta clínica</h2>
+    <p class="sub">Escríbela en lenguaje natural, tal como se la plantearías a un compañero.</p>
+    <label for="q">Pregunta</label>
+    <textarea id="q" placeholder="En pacientes adultos con insuficiencia cardíaca con fracción de eyección reducida, ¿la dapagliflozina añadida al tratamiento estándar reduce la mortalidad cardiovascular y los ingresos por insuficiencia cardíaca frente a placebo?"></textarea>
+    <div class="actions">
+      <button id="btn-run">Estructurar con IA</button>
+      <button class="ghost small" id="btn-demo">Cargar ejemplo</button>
+      <button class="ghost small" id="btn-manual">Rellenar a mano</button>
+      <span class="status" id="st"></span>
+    </div>
+    <div class="note">La clave de OpenAI se guarda solo en este navegador (<code>localStorage</code>) y se envía directamente a la API. Nada pasa por servidores intermedios.</div>
+  </section>
+
+  <section class="card hidden" id="card-res">
+    <h2>2 · Marco estructurado</h2>
+    <p class="sub">Edita cualquier componente. Los términos alimentan la estrategia de búsqueda en tiempo real.</p>
+    <div class="meta" id="meta"></div>
+    <div class="blocks" id="blocks"></div>
+    <div class="note" id="coment"></div>
+  </section>
+
+  <section class="card hidden" id="card-q">
+    <h2>3 · Estrategia de búsqueda</h2>
+    <p class="sub">Construida de forma determinista: OR dentro de cada bloque, AND entre bloques.</p>
+    <div class="filters">
+      <div>
+        <label for="f-y1">Desde el año</label>
+        <input type="number" id="f-y1" min="1900" max="2100" placeholder="2015">
+      </div>
+      <div>
+        <label for="f-y2">Hasta el año</label>
+        <input type="number" id="f-y2" min="1900" max="2100" placeholder="2026">
+      </div>
+      <div>
+        <label for="f-lang">Idioma</label>
+        <select id="f-lang">
+          <option value="">Sin filtro</option>
+          <option value="english[lang]">Inglés</option>
+          <option value="spanish[lang]">Español</option>
+          <option value="(english[lang] OR spanish[lang])">Inglés o español</option>
+        </select>
+      </div>
+      <div>
+        <label for="f-hum">Especie</label>
+        <select id="f-hum">
+          <option value="">Sin filtro</option>
+          <option value="humans[Filter]" selected>Humanos</option>
+        </select>
+      </div>
+    </div>
+    <label>Tipo de publicación</label>
+    <div class="pt-list" id="pt-list"></div>
+    <div style="margin-top:18px"></div>
+    <div class="query" id="query"></div>
+    <div class="actions">
+      <button id="btn-pubmed">Abrir en PubMed</button>
+      <button class="ghost" id="btn-copy">Copiar estrategia</button>
+      <button class="ghost" id="btn-md">Descargar informe (.md)</button>
+      <button class="ghost" id="btn-save">Guardar en el historial</button>
+      <span class="status" id="st2"></span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Historial</h2>
+    <p class="sub">Preguntas guardadas en este navegador.</p>
+    <div class="hist" id="hist"></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>PICO·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span id="model-badge"></span>
+</footer>
+
+<dialog id="dlg-key">
+  <div class="dlg">
+    <h3>Clave de API de OpenAI</h3>
+    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit.</p>
+    <label for="k">Clave</label>
+    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
+    <div style="margin-top:14px"></div>
+    <label for="m">Modelo</label>
+    <select id="m">
+      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
+      <option value="gpt-4o">gpt-4o · más preciso</option>
+      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+      <option value="gpt-4.1">gpt-4.1</option>
+    </select>
+    <div class="actions">
+      <button id="k-save">Guardar</button>
+      <button class="ghost" id="k-cancel">Cancelar</button>
+      <button class="ghost small" id="k-clear">Borrar clave</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+
+/* ---------- Kernel compartido: clave y modelo ---------- */
+var KEY = "ia_openai_key", MODEL = "ia_openai_model";
+function getKey(){ return localStorage.getItem(KEY) || ""; }
+function getModel(){ return localStorage.getItem(MODEL) || "gpt-4o-mini"; }
+function badge(){ document.getElementById("model-badge").textContent = "modelo: " + getModel(); }
+
+var dlg = document.getElementById("dlg-key");
+function askKey(){
+  document.getElementById("k").value = getKey();
+  document.getElementById("m").value = getModel();
+  dlg.showModal();
+}
+document.getElementById("k-save").onclick = function(){
+  var v = document.getElementById("k").value.trim();
+  if(v) localStorage.setItem(KEY, v);
+  localStorage.setItem(MODEL, document.getElementById("m").value);
+  badge(); dlg.close();
+};
+document.getElementById("k-cancel").onclick = function(){ dlg.close(); };
+document.getElementById("k-clear").onclick = function(){
+  localStorage.removeItem(KEY); document.getElementById("k").value = ""; setStatus("Clave borrada.");
+};
+document.getElementById("model-badge").onclick = askKey;
+document.getElementById("model-badge").style.cursor = "pointer";
+
+async function askAI(system, user, temperature){
+  var key = getKey();
+  if(!key){ askKey(); throw new Error("Falta la clave de API."); }
+  var res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
+    body: JSON.stringify({
+      model: getModel(),
+      temperature: (temperature === undefined ? 0.2 : temperature),
+      response_format: { type: "json_object" },
+      messages: [{role:"system", content:system},{role:"user", content:user}]
+    })
+  });
+  if(!res.ok){
+    var t = await res.text();
+    throw new Error("La API respondió " + res.status + ". " + t.slice(0,180));
+  }
+  var data = await res.json();
+  var raw = data.choices[0].message.content.replace(/```json|```/g, "").trim();
+  return JSON.parse(raw);
+}
+
+/* ---------- Estado ---------- */
+var LETTERS = { P:"Población / Problema", I:"Intervención / Exposición", C:"Comparador", O:"Outcome · Desenlace" };
+var state = {
+  marco:"PICO", tipo:"", diseno:"", comentario:"",
+  comp:{ P:{texto:"",terms:[]}, I:{texto:"",terms:[]}, C:{texto:"",terms:[]}, O:{texto:"",terms:[]} }
+};
+
+var PTS = [
+  ["randomizedcontrolledtrial[pt]","Ensayo clínico aleatorizado"],
+  ["meta-analysis[pt]","Meta-análisis"],
+  ["systematicreview[pt]","Revisión sistemática"],
+  ["observationalstudy[pt]","Estudio observacional"],
+  ["practiceguideline[pt]","Guía de práctica clínica"],
+  ["review[pt]","Revisión narrativa"]
+];
+
+function setStatus(msg, err){
+  var el = document.getElementById("st");
+  el.className = "status" + (err ? " err" : "");
+  el.innerHTML = msg;
+}
+function setStatus2(msg){ document.getElementById("st2").textContent = msg; setTimeout(function(){ document.getElementById("st2").textContent = ""; }, 2600); }
+
+/* ---------- IA: estructurar ---------- */
+var SYS = [
+  "Eres metodólogo de investigación clínica y documentalista biomédico.",
+  "Recibes una pregunta clínica en lenguaje natural y devuelves su estructura PICO (si la exposición es una intervención) o PECO (si es una exposición no asignada).",
+  "Para cada componente propones descriptores MeSH exactos (tal como existen en el tesauro de la NLM) y sinónimos de texto libre en inglés para buscar en título/resumen.",
+  "El comparador puede quedar vacío si la pregunta no lo especifica.",
+  "Responde EXCLUSIVAMENTE con un objeto JSON, sin preámbulo ni markdown, con este esquema:",
+  '{"marco":"PICO|PECO","tipo_pregunta":"tratamiento|etiologia o daño|diagnostico|pronostico|frecuencia",',
+  '"diseno_ideal":"texto breve","comentario":"1-2 frases sobre la calidad de la pregunta o lo que falta",',
+  '"componentes":{"P":{"texto":"...","mesh":["..."],"libres":["..."]},"I":{...},"C":{...},"O":{...}}}',
+  "Los términos mesh y libres van en inglés. El campo texto va en español."
+].join(" ");
+
+async function run(){
+  var q = document.getElementById("q").value.trim();
+  if(q.length < 15){ setStatus("Escribe una pregunta algo más completa.", true); return; }
+  document.getElementById("btn-run").disabled = true;
+  setStatus('<span class="spin"></span>Estructurando la pregunta…');
+  try{
+    var j = await askAI(SYS, q, 0.2);
+    state.marco = j.marco || "PICO";
+    state.tipo = j.tipo_pregunta || "";
+    state.diseno = j.diseno_ideal || "";
+    state.comentario = j.comentario || "";
+    ["P","I","C","O"].forEach(function(L){
+      var c = (j.componentes && j.componentes[L]) || {};
+      state.comp[L] = { texto: c.texto || "", terms: [] };
+      (c.mesh || []).forEach(function(t){ state.comp[L].terms.push({t:t, tipo:"mesh"}); });
+      (c.libres || []).forEach(function(t){ state.comp[L].terms.push({t:t, tipo:"tiab"}); });
+    });
+    render(); setStatus("Listo. Revisa y ajusta los términos.");
+  }catch(e){
+    setStatus(e.message, true);
+  }finally{
+    document.getElementById("btn-run").disabled = false;
+  }
+}
+
+/* ---------- Render ---------- */
+function render(){
+  document.getElementById("card-res").classList.remove("hidden");
+  document.getElementById("card-q").classList.remove("hidden");
+
+  var meta = document.getElementById("meta");
+  meta.innerHTML = "";
+  [["Marco", state.marco],["Tipo de pregunta", state.tipo || "—"],["Diseño ideal", state.diseno || "—"]].forEach(function(p){
+    var d = document.createElement("div");
+    d.innerHTML = '<div class="k">' + p[0] + '</div><div class="v">' + esc(p[1]) + '</div>';
+    meta.appendChild(d);
+  });
+  document.getElementById("coment").textContent = state.comentario || "Ajusta los términos MeSH si conoces descriptores más precisos.";
+
+  var letters = state.marco === "PECO" ? {P:LETTERS.P, I:"Exposición", C:LETTERS.C, O:LETTERS.O} : LETTERS;
+  var box = document.getElementById("blocks");
+  box.innerHTML = "";
+  ["P","I","C","O"].forEach(function(L){
+    var c = state.comp[L];
+    var el = document.createElement("div");
+    el.className = "block";
+    var letra = (state.marco === "PECO" && L === "I") ? "E" : L;
+    el.innerHTML =
+      '<div class="block-head"><span class="block-let">' + letra + '</span><span class="block-name">' + letters[L] + '</span></div>' +
+      '<textarea data-tx="' + L + '" placeholder="Descripción en español">' + esc(c.texto) + '</textarea>' +
+      '<div class="chips" data-chips="' + L + '"></div>' +
+      '<div class="addterm">' +
+        '<input type="text" data-add="' + L + '" placeholder="Añadir término">' +
+        '<select data-tipo="' + L + '"><option value="mesh">MeSH</option><option value="tiab">tiab</option></select>' +
+      '</div>';
+    box.appendChild(el);
+    chips(L);
+  });
+
+  box.querySelectorAll("textarea[data-tx]").forEach(function(t){
+    t.oninput = function(){ state.comp[t.dataset.tx].texto = t.value; };
+  });
+  box.querySelectorAll("input[data-add]").forEach(function(inp){
+    inp.onkeydown = function(e){
+      if(e.key !== "Enter") return;
+      var L = inp.dataset.add, v = inp.value.trim();
+      if(!v) return;
+      var tipo = box.querySelector('select[data-tipo="' + L + '"]').value;
+      state.comp[L].terms.push({t:v, tipo:tipo});
+      inp.value = ""; chips(L); buildQuery();
+    };
+  });
+
+  ptList();
+  buildQuery();
+}
+
+function chips(L){
+  var box = document.querySelector('[data-chips="' + L + '"]');
+  box.innerHTML = "";
+  state.comp[L].terms.forEach(function(term, i){
+    var c = document.createElement("span");
+    c.className = "chip " + term.tipo;
+    c.innerHTML = '<b>' + esc(term.t) + '</b><span class="x" title="Quitar">×</span>';
+    c.querySelector(".x").onclick = function(){
+      state.comp[L].terms.splice(i,1); chips(L); buildQuery();
+    };
+    box.appendChild(c);
+  });
+}
+
+function ptList(){
+  var box = document.getElementById("pt-list");
+  if(box.dataset.done) return;
+  box.dataset.done = "1";
+  PTS.forEach(function(p){
+    var l = document.createElement("label");
+    l.innerHTML = '<input type="checkbox" value="' + p[0] + '"> ' + p[1];
+    l.querySelector("input").onchange = buildQuery;
+    box.appendChild(l);
+  });
+}
+
+/* ---------- Construcción determinista de la estrategia ---------- */
+function fmtTerm(term){
+  var t = term.t.replace(/"/g, "");
+  return term.tipo === "mesh" ? '"' + t + '"[Mesh]' : '"' + t + '"[tiab]';
+}
+function blockQuery(L){
+  var ts = state.comp[L].terms;
+  if(!ts.length) return "";
+  return "(" + ts.map(fmtTerm).join(" OR ") + ")";
+}
+function buildQuery(){
+  var parts = [];
+  ["P","I","C","O"].forEach(function(L){
+    var b = blockQuery(L);
+    if(b) parts.push(b);
+  });
+  var q = parts.join(" AND ");
+
+  var y1 = document.getElementById("f-y1").value.trim();
+  var y2 = document.getElementById("f-y2").value.trim();
+  if(y1 || y2){
+    var a = y1 || "1900", b = y2 || "3000";
+    q += (q ? " AND " : "") + '("' + a + '"[Date - Publication] : "' + b + '"[Date - Publication])';
+  }
+  var lang = document.getElementById("f-lang").value;
+  if(lang) q += (q ? " AND " : "") + lang;
+  var hum = document.getElementById("f-hum").value;
+  if(hum) q += (q ? " AND " : "") + hum;
+
+  var pts = [].slice.call(document.querySelectorAll("#pt-list input:checked")).map(function(i){ return i.value; });
+  if(pts.length) q += (q ? " AND " : "") + (pts.length > 1 ? "(" + pts.join(" OR ") + ")" : pts[0]);
+
+  state.query = q;
+  document.getElementById("query").innerHTML = q
+    ? esc(q).replace(/ (AND|OR) /g, ' <span class="op">$1</span> ')
+            .replace(/\[(Mesh|tiab|lang|Filter|pt|Date - Publication)\]/g, '<span class="tag">[$1]</span>')
+    : '<span class="par">Añade términos a algún bloque para construir la estrategia.</span>';
+}
+["f-y1","f-y2","f-lang","f-hum"].forEach(function(id){
+  document.getElementById(id).addEventListener("input", buildQuery);
+  document.getElementById(id).addEventListener("change", buildQuery);
+});
+
+/* ---------- Salidas ---------- */
+document.getElementById("btn-pubmed").onclick = function(){
+  if(!state.query){ setStatus2("No hay estrategia que abrir."); return; }
+  window.open("https://pubmed.ncbi.nlm.nih.gov/?term=" + encodeURIComponent(state.query), "_blank", "noopener");
+};
+document.getElementById("btn-copy").onclick = async function(){
+  try{ await navigator.clipboard.writeText(state.query || ""); setStatus2("Estrategia copiada."); }
+  catch(e){ setStatus2("El navegador bloqueó el portapapeles."); }
+};
+document.getElementById("btn-md").onclick = function(){
+  var L = state.marco === "PECO" ? ["P","E","C","O"] : ["P","I","C","O"];
+  var keys = ["P","I","C","O"];
+  var md = "# Pregunta estructurada " + state.marco + "\n\n";
+  md += "**Pregunta original:** " + document.getElementById("q").value.trim() + "\n\n";
+  md += "- Tipo de pregunta: " + (state.tipo || "—") + "\n- Diseño ideal: " + (state.diseno || "—") + "\n\n";
+  md += "## Componentes\n\n| | Componente | Descripción | Términos |\n|---|---|---|---|\n";
+  keys.forEach(function(k,i){
+    var c = state.comp[k];
+    md += "| **" + L[i] + "** | " + LETTERS[k] + " | " + (c.texto || "—") + " | " + (c.terms.map(fmtTerm).join(", ") || "—") + " |\n";
+  });
+  md += "\n## Estrategia de búsqueda (PubMed)\n\n```\n" + (state.query || "") + "\n```\n\n";
+  md += "> " + (state.comentario || "") + "\n\n_Generado con PICO·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
+  download(md, "pico-" + Date.now() + ".md", "text/markdown");
+  setStatus2("Informe descargado.");
+};
+function download(text, name, mime){
+  var b = new Blob([text], {type: mime + ";charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(b); a.download = name; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+}
+
+/* ---------- Historial ---------- */
+var HKEY = "pico_ai_hist";
+function hist(){ try{ return JSON.parse(localStorage.getItem(HKEY) || "[]"); }catch(e){ return []; } }
+function drawHist(){
+  var box = document.getElementById("hist");
+  var h = hist();
+  if(!h.length){ box.innerHTML = '<p class="sub" style="padding-top:12px">Todavía no has guardado ninguna pregunta.</p>'; return; }
+  box.innerHTML = "";
+  h.forEach(function(item, i){
+    var d = document.createElement("div");
+    d.className = "hist-item";
+    d.innerHTML = '<div>' + esc(item.q.slice(0,110)) + (item.q.length > 110 ? "…" : "") + '<br><span>' + item.fecha + '</span></div>';
+    var wrapBtns = document.createElement("div");
+    var b1 = document.createElement("button"); b1.className = "ghost small"; b1.textContent = "Cargar";
+    b1.onclick = function(){ state = item.state; document.getElementById("q").value = item.q; render(); window.scrollTo({top:0,behavior:"smooth"}); };
+    var b2 = document.createElement("button"); b2.className = "ghost small"; b2.textContent = "Borrar"; b2.style.marginLeft = "6px";
+    b2.onclick = function(){ var a = hist(); a.splice(i,1); localStorage.setItem(HKEY, JSON.stringify(a)); drawHist(); };
+    wrapBtns.appendChild(b1); wrapBtns.appendChild(b2);
+    d.appendChild(wrapBtns);
+    box.appendChild(d);
+  });
+}
+document.getElementById("btn-save").onclick = function(){
+  var a = hist();
+  a.unshift({ q: document.getElementById("q").value.trim(), fecha: new Date().toLocaleString("es-ES"), state: state });
+  localStorage.setItem(HKEY, JSON.stringify(a.slice(0,20)));
+  drawHist(); setStatus2("Guardada en el historial.");
+};
+
+/* ---------- Utilidades y arranque ---------- */
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+document.getElementById("btn-run").onclick = run;
+document.getElementById("btn-manual").onclick = function(){
+  state.marco = "PICO"; state.tipo = "por definir"; state.diseno = "por definir"; state.comentario = "Estructura rellenada a mano.";
+  render();
+};
+document.getElementById("btn-demo").onclick = function(){
+  document.getElementById("q").value = "En pacientes adultos con insuficiencia cardíaca con fracción de eyección reducida, ¿la dapagliflozina añadida al tratamiento estándar reduce la mortalidad cardiovascular y los ingresos por insuficiencia cardíaca frente a placebo?";
+};
+badge(); drawHist();
+if(!getKey()) setStatus("Sin clave de API. Pulsa el modelo abajo a la derecha para configurarla.");
+</script>
+</body>
+</html>
