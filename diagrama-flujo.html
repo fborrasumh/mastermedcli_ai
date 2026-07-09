@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DiagramaFlujo·AI · Kit Metodológico · UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --bad:#B23A3A;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 28px}
+  a{color:var(--teal-deep)}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);text-decoration:none;letter-spacing:.03em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;letter-spacing:-.01em;font-size:clamp(26px,4vw,38px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:15.5px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:16px}
+  .t{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--line);color:var(--slate)}
+  .t.det{border-color:#CBD4CE}.t.ia{border-color:#E3CFA6;color:var(--amber);background:#FBF6EC}
+  main{padding:30px 0 60px}
+  .layout{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+  @media(max-width:880px){.layout{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:20px;box-shadow:var(--shadow)}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:18px;margin-bottom:12px}
+  label{display:block;font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.03em;text-transform:uppercase;color:var(--slate);margin:12px 0 4px}
+  select,input,textarea{width:100%;border:1px solid var(--line);border-radius:4px;padding:8px 10px;font-family:inherit;font-size:13.5px;background:#fff;color:var(--ink)}
+  textarea{resize:vertical;min-height:70px;font-size:13px}
+  select:focus,input:focus,textarea:focus{outline:2px solid #B9DAD5;border-color:var(--teal)}
+  .fields{max-height:none}
+  .fld{margin-bottom:2px}
+  .num{font-family:'JetBrains Mono',monospace}
+  .btn{font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;border:1px solid var(--teal);background:var(--teal);color:#fff;border-radius:4px;padding:9px 15px;cursor:pointer;transition:filter .15s}
+  .btn:hover{filter:brightness(1.08)}.btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn.ghost{background:#fff;color:var(--teal-deep);border-color:var(--line)}
+  .btn.ghost:hover{border-color:var(--teal);filter:none}
+  .btn.sm{padding:6px 11px;font-size:12.5px}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+  .preview{background:#fff;border:1px solid var(--line);border-radius:5px;padding:16px;overflow:auto;box-shadow:var(--shadow)}
+  .preview svg{display:block;margin:0 auto;max-width:100%;height:auto}
+  .status{font-size:12.5px;color:var(--ink-soft);margin-top:10px;min-height:1.1em}
+  .status.err{color:var(--bad)}
+  .sub{font-size:11.5px;color:var(--ink-soft);margin:2px 0 8px}
+  .divider{border:none;border-top:1px solid var(--line-soft);margin:14px 0}
+  .ia-note{font-size:11.5px;color:var(--amber);font-family:'JetBrains Mono',monospace;margin-top:4px}
+  dialog{border:none;border-radius:6px;padding:0;max-width:520px;width:92%;box-shadow:0 24px 60px rgba(23,38,46,.25)}
+  dialog::backdrop{background:rgba(23,38,46,.4)}.dlg{padding:22px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:18px;margin-bottom:8px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:10px}
+  code{font-family:'JetBrains Mono',monospace;font-size:.9em;background:var(--line-soft);padding:1px 5px;border-radius:3px}
+  .hidden{display:none!important}
+  footer{border-top:1px solid var(--line);margin-top:26px;padding:26px 0 50px;color:var(--ink-soft);font-size:12.5px;font-family:'JetBrains Mono',monospace;line-height:1.8}
+</style>
+</head>
+<body>
+<header><div class="wrap masthead">
+  <a class="back" href="index.html">← Kit metodológico</a>
+  <div class="eyebrow">Proyecto, documentación y publicación · TFM</div>
+  <h1>Diagrama de <em>flujo</em> de participantes</h1>
+  <p class="lede">Genera el diagrama de flujo exigido por las guías de publicación: <b>CONSORT</b> (ensayo aleatorizado), <b>PRISMA 2020</b> (revisión sistemática) y <b>STROBE</b> (estudio observacional). Rellena las cifras, previsualiza y exporta en SVG (vectorial) o PNG para tu manuscrito o tu TFM.</p>
+  <div class="tags"><span class="t det">Determinista</span><span class="t ia">IA opcional</span><span class="t">reemplaza · complementa CheckReporting</span></div>
+</div></header>
+
+<main class="wrap">
+  <div class="layout">
+    <!-- CONTROLES -->
+    <div class="card">
+      <h2>Configuración</h2>
+      <label>Tipo de diagrama</label>
+      <select id="tipo">
+        <option value="consort">CONSORT · ensayo aleatorizado (2 brazos)</option>
+        <option value="prisma">PRISMA 2020 · revisión sistemática</option>
+        <option value="strobe">STROBE · estudio observacional</option>
+      </select>
+      <div class="toolbar">
+        <button class="btn ghost sm" id="btnIa">✦ Rellenar desde texto (IA)</button>
+        <button class="btn ghost sm" id="btnKey">🔑</button>
+      </div>
+      <div class="ia-note" id="iaNote"></div>
+      <hr class="divider">
+      <div class="fields" id="fields"></div>
+      <hr class="divider">
+      <div class="toolbar">
+        <button class="btn" id="btnSvg">⬇ SVG</button>
+        <button class="btn ghost" id="btnPng">⬇ PNG</button>
+      </div>
+      <div class="status" id="st"></div>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="preview" id="preview"></div>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  DiagramaFlujo·AI · Kit Metodológico · Máster U. en Investigación en Medicina Clínica · UMH<br>
+  Plantillas conformes a CONSORT 2010, PRISMA 2020 y recomendaciones STROBE · salida vectorial editable<br>
+  Herramienta docente · las cifras deben cuadrar con tu base de datos real
+</div></footer>
+
+<dialog id="dlgIa"><div class="dlg">
+  <h3>Rellenar desde un texto</h3>
+  <p>Pega el párrafo de métodos/resultados que describa el reclutamiento. La IA extraerá las cifras y rellenará el formulario. Revísalas siempre: la IA puede equivocarse.</p>
+  <textarea id="iaText" style="min-height:130px" placeholder="Se evaluaron 320 pacientes, de los que 74 fueron excluidos (48 no cumplían criterios, 20 rechazaron participar, 6 otras causas). Se aleatorizaron 246: 123 a intervención y 123 a control…"></textarea>
+  <div class="toolbar"><button class="btn sm" id="iaRun">Extraer cifras</button><button class="btn ghost sm" id="iaClose">Cerrar</button></div>
+  <div class="status" id="iaSt"></div>
+</div></dialog>
+
+<dialog id="dlgKey"><div class="dlg">
+  <h3>Clave de API de OpenAI</h3>
+  <p>Solo para la extracción opcional de cifras desde texto. Se guarda en <code>localStorage</code> (<code>ia_openai_key</code>) y se envía directamente a OpenAI.</p>
+  <input type="text" id="inKey" placeholder="sk-...">
+  <div class="toolbar"><button class="btn sm" id="saveKey">Guardar</button><button class="btn ghost sm" id="closeKey">Cerrar</button><button class="btn ghost sm" id="delKey" style="color:var(--bad)">Borrar</button></div>
+</div></dialog>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+
+/* ============ Plantillas de campos ============ */
+const TEMPLATES={
+  consort:{
+    fields:[
+      {id:"eval",label:"Evaluados para elegibilidad",def:320,type:"num"},
+      {id:"excl",label:"Excluidos (total)",def:74,type:"num"},
+      {id:"excl_crit",label:"— No cumplían criterios",def:48,type:"num"},
+      {id:"excl_rech",label:"— Rechazaron participar",def:20,type:"num"},
+      {id:"excl_otr",label:"— Otras razones",def:6,type:"num"},
+      {id:"rand",label:"Aleatorizados",def:246,type:"num"},
+      {id:"a1_name",label:"Nombre brazo 1",def:"Intervención",type:"txt"},
+      {id:"a1_asig",label:"Brazo 1 · asignados",def:123,type:"num"},
+      {id:"a1_rec",label:"Brazo 1 · recibieron",def:118,type:"num"},
+      {id:"a1_nrec",label:"Brazo 1 · no recibieron",def:5,type:"num"},
+      {id:"a1_lost",label:"Brazo 1 · pérdidas seguimiento",def:8,type:"num"},
+      {id:"a1_anal",label:"Brazo 1 · analizados",def:115,type:"num"},
+      {id:"a1_exan",label:"Brazo 1 · excluidos del análisis",def:3,type:"num"},
+      {id:"a2_name",label:"Nombre brazo 2",def:"Control",type:"txt"},
+      {id:"a2_asig",label:"Brazo 2 · asignados",def:123,type:"num"},
+      {id:"a2_rec",label:"Brazo 2 · recibieron",def:120,type:"num"},
+      {id:"a2_nrec",label:"Brazo 2 · no recibieron",def:3,type:"num"},
+      {id:"a2_lost",label:"Brazo 2 · pérdidas seguimiento",def:6,type:"num"},
+      {id:"a2_anal",label:"Brazo 2 · analizados",def:119,type:"num"},
+      {id:"a2_exan",label:"Brazo 2 · excluidos del análisis",def:1,type:"num"},
+    ]
+  },
+  prisma:{
+    fields:[
+      {id:"db",label:"Registros identificados en bases de datos",def:1420,type:"num"},
+      {id:"other",label:"Registros de otras fuentes",def:35,type:"num"},
+      {id:"dup",label:"Duplicados eliminados",def:310,type:"num"},
+      {id:"screen",label:"Registros cribados",def:1145,type:"num"},
+      {id:"screen_ex",label:"Registros excluidos (cribado)",def:1020,type:"num"},
+      {id:"full",label:"Textos completos evaluados",def:125,type:"num"},
+      {id:"full_ex",label:"Textos completos excluidos",def:98,type:"num"},
+      {id:"full_reason",label:"Razones de exclusión (texto libre)",def:"Diseño inadecuado; sin desenlace de interés; muestra insuficiente",type:"txt"},
+      {id:"inc_qual",label:"Estudios en síntesis cualitativa",def:27,type:"num"},
+      {id:"inc_quant",label:"Estudios en metaanálisis",def:19,type:"num"},
+    ]
+  },
+  strobe:{
+    fields:[
+      {id:"elig",label:"Población elegible",def:540,type:"num"},
+      {id:"excl",label:"Excluidos (total)",def:90,type:"num"},
+      {id:"excl_reason",label:"Razones de exclusión (texto libre)",def:"No cumplían criterios; datos incompletos; pérdida de contacto",type:"txt"},
+      {id:"incl",label:"Incluidos en el estudio",def:450,type:"num"},
+      {id:"lost",label:"Pérdidas de seguimiento",def:35,type:"num"},
+      {id:"anal",label:"Analizados",def:415,type:"num"},
+    ]
+  }
+};
+let VALS={};
+
+function buildForm(){
+  const t=$("tipo").value;const f=TEMPLATES[t].fields;
+  VALS={};f.forEach(x=>VALS[x.id]=x.def);
+  $("fields").innerHTML=f.map(x=>`<div class="fld"><label for="f_${x.id}">${x.label}</label>
+    <input id="f_${x.id}" ${x.type==="num"?'type="number" class="num"':'type="text"'} value="${x.def}"></div>`).join("");
+  f.forEach(x=>{$("f_"+x.id).addEventListener("input",e=>{VALS[x.id]=x.type==="num"?(parseFloat(e.target.value)||0):e.target.value;render();});});
+  render();
+}
+
+/* ============ Motor SVG ============ */
+const NS="http://www.w3.org/2000/svg";
+function wrapText(s,max){ // envuelve por número de caracteres aproximado
+  const words=String(s).split(/\s+/);const lines=[];let cur="";
+  words.forEach(w=>{if((cur+" "+w).trim().length>max){if(cur)lines.push(cur);cur=w;}else cur=(cur+" "+w).trim();});
+  if(cur)lines.push(cur);return lines.length?lines:[""];
+}
+function box(x,y,w,lines,opt={}){
+  const lh=16,pad=10;const h=lines.length*lh+pad*2;
+  const fill=opt.fill||"#FFFFFF";const stroke=opt.stroke||"#42525A";
+  let t=`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${fill}" stroke="${stroke}" stroke-width="1.2"/>`;
+  lines.forEach((ln,i)=>{
+    const bold=opt.boldFirst&&i===0;
+    t+=`<text x="${x+w/2}" y="${y+pad+lh*(i+1)-4}" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12.5" ${bold?'font-weight="600"':''} fill="#17262E">${escapeXml(ln)}</text>`;
+  });
+  return {svg:t,x,y,w,h,cx:x+w/2,cy:y+h/2,bottom:y+h,right:x+w,top:y,left:x};
+}
+function escapeXml(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function vArrow(x,y1,y2){return `<line x1="${x}" y1="${y1}" x2="${x}" y2="${y2-6}" stroke="#42525A" stroke-width="1.2" marker-end="url(#ah)"/>`;}
+function hArrow(x1,x2,y){const d=x2>x1?-6:6;return `<line x1="${x1}" y1="${y}" x2="${x2+d}" y2="${y}" stroke="#42525A" stroke-width="1.2" marker-end="url(#ah)"/>`;}
+function elbow(x1,y1,x2,y2){ // vertical desde (x1,y1) hasta y2 luego horizontal a x2 (con punta)
+  const d=x2>x1?-6:6;
+  return `<path d="M ${x1} ${y1} V ${y2} H ${x2+d}" fill="none" stroke="#42525A" stroke-width="1.2" marker-end="url(#ah)"/>`;}
+
+function defs(){return `<defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L7,3 L0,6 Z" fill="#42525A"/></marker></defs>`;}
+function band(y,txt){return `<text x="6" y="${y}" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="1" fill="#0E7C74" text-transform="uppercase">${txt}</text>`;}
+
+function renderConsort(V){
+  const W=860;let s="";const cx=W*0.36;const bw=270;
+  let parts=[];
+  const b1=box(cx-bw/2,34,bw,[`Evaluados para elegibilidad (n = ${V.eval})`],{boldFirst:true});
+  const exLines=[`Excluidos (n = ${V.excl})`,`· No cumplían criterios (n = ${V.excl_crit})`,`· Rechazaron participar (n = ${V.excl_rech})`,`· Otras razones (n = ${V.excl_otr})`];
+  const bx=box(cx+bw/2+70,34,300,exLines);
+  const b2=box(cx-bw/2,b1.bottom+46,bw,[`Aleatorizados (n = ${V.rand})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
+  // dos brazos
+  const armW=300;const lx=W*0.22, rx=W*0.72;
+  const y3=b2.bottom+52;
+  const la=box(lx-armW/2,y3,armW,[`Asignados a ${V.a1_name} (n = ${V.a1_asig})`,`· Recibieron (n = ${V.a1_rec})`,`· No recibieron (n = ${V.a1_nrec})`],{boldFirst:true});
+  const ra=box(rx-armW/2,y3,armW,[`Asignados a ${V.a2_name} (n = ${V.a2_asig})`,`· Recibieron (n = ${V.a2_rec})`,`· No recibieron (n = ${V.a2_nrec})`],{boldFirst:true});
+  const y4=Math.max(la.bottom,ra.bottom)+46;
+  const lf=box(lx-armW/2,y4,armW,[`Seguimiento`,`· Pérdidas (n = ${V.a1_lost})`],{boldFirst:true});
+  const rf=box(rx-armW/2,y4,armW,[`Seguimiento`,`· Pérdidas (n = ${V.a2_lost})`],{boldFirst:true});
+  const y5=Math.max(lf.bottom,rf.bottom)+46;
+  const lan=box(lx-armW/2,y5,armW,[`Analizados (n = ${V.a1_anal})`,`· Excluidos del análisis (n = ${V.a1_exan})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
+  const ran=box(rx-armW/2,y5,armW,[`Analizados (n = ${V.a2_anal})`,`· Excluidos del análisis (n = ${V.a2_exan})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
+  const H=Math.max(lan.bottom,ran.bottom)+24;
+
+  parts.push(band(24,"RECLUTAMIENTO"));
+  parts.push(b1.svg,bx.svg,b2.svg);
+  parts.push(vArrow(b1.cx,b1.bottom,b2.top));
+  parts.push(elbow(b1.cx,b1.bottom+18,bx.left,bx.cy)); // codo hacia excluidos
+  // reclutamiento -> asignación: baja y se bifurca
+  const midY=b2.bottom+26;
+  parts.push(`<line x1="${b2.cx}" y1="${b2.bottom}" x2="${b2.cx}" y2="${midY}" stroke="#42525A" stroke-width="1.2"/>`);
+  parts.push(`<line x1="${la.cx}" y1="${midY}" x2="${ra.cx}" y2="${midY}" stroke="#42525A" stroke-width="1.2"/>`);
+  parts.push(vArrow(la.cx,midY,la.top),vArrow(ra.cx,midY,ra.top));
+  parts.push(band(y3-12,"ASIGNACIÓN"));
+  parts.push(la.svg,ra.svg);
+  parts.push(vArrow(la.cx,la.bottom,lf.top),vArrow(ra.cx,ra.bottom,rf.top));
+  parts.push(band(y4-12,"SEGUIMIENTO"));
+  parts.push(lf.svg,rf.svg);
+  parts.push(vArrow(la.cx,lf.bottom,lan.top),vArrow(ra.cx,rf.bottom,ran.top));
+  parts.push(band(y5-12,"ANÁLISIS"));
+  parts.push(lan.svg,ran.svg);
+  return svgWrap(W,H,parts.join(""));
+}
+
+function renderPrisma(V){
+  const W=760;const cx=W*0.42;const bw=330;let parts=[];
+  const b1=box(cx-bw/2,34,bw,[`Registros identificados (n = ${V.db})`,`De otras fuentes (n = ${V.other})`],{boldFirst:true});
+  const dup=box(cx+bw/2+50,34,260,[`Duplicados eliminados (n = ${V.dup})`]);
+  const b2=box(cx-bw/2,b1.bottom+44,bw,[`Registros cribados (n = ${V.screen})`],{boldFirst:true});
+  const ex1=box(cx+bw/2+50,b2.top,260,[`Excluidos (n = ${V.screen_ex})`]);
+  const b3=box(cx-bw/2,b2.bottom+44,bw,[`Textos completos evaluados (n = ${V.full})`],{boldFirst:true});
+  const exLines=[`Excluidos (n = ${V.full_ex})`].concat(wrapText(V.full_reason,34).map(l=>"· "+l));
+  const ex2=box(cx+bw/2+50,b3.top,260,exLines);
+  const b4=box(cx-bw/2,b3.bottom+44,bw,[`Incluidos en síntesis cualitativa (n = ${V.inc_qual})`,`Incluidos en metaanálisis (n = ${V.inc_quant})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
+  const H=Math.max(b4.bottom,ex2.bottom)+24;
+  parts.push(band(24,"IDENTIFICACIÓN"));
+  parts.push(b1.svg,dup.svg,b2.svg,ex1.svg,b3.svg,ex2.svg,b4.svg);
+  parts.push(vArrow(b1.cx,b1.bottom,b2.top));
+  parts.push(hArrow(b1.right,dup.left,b1.bottom-14));
+  parts.push(band(b2.top-12,"CRIBADO"));
+  parts.push(vArrow(b2.cx,b2.bottom,b3.top));
+  parts.push(hArrow(b2.right,ex1.left,b2.cy));
+  parts.push(vArrow(b3.cx,b3.bottom,b4.top));
+  parts.push(hArrow(b3.right,ex2.left,b3.cy));
+  parts.push(band(b4.top-12,"INCLUIDOS"));
+  return svgWrap(W,H,parts.join(""));
+}
+
+function renderStrobe(V){
+  const W=720;const cx=W*0.40;const bw=320;let parts=[];
+  const b1=box(cx-bw/2,34,bw,[`Población elegible (n = ${V.elig})`],{boldFirst:true});
+  const exLines=[`Excluidos (n = ${V.excl})`].concat(wrapText(V.excl_reason,34).map(l=>"· "+l));
+  const ex=box(cx+bw/2+50,34,260,exLines);
+  const b2=box(cx-bw/2,b1.bottom+46,bw,[`Incluidos en el estudio (n = ${V.incl})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
+  const lost=box(cx+bw/2+50,b2.bottom+46,260,[`Pérdidas de seguimiento (n = ${V.lost})`]);
+  const b3=box(cx-bw/2,b2.bottom+46,bw,[`Analizados (n = ${V.anal})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
+  const H=Math.max(b3.bottom,lost.bottom)+24;
+  parts.push(b1.svg,ex.svg,b2.svg,lost.svg,b3.svg);
+  parts.push(vArrow(b1.cx,b1.bottom,b2.top));
+  parts.push(hArrow(b1.right,ex.left,b1.cy));
+  parts.push(vArrow(b2.cx,b2.bottom,b3.top));
+  parts.push(hArrow(b2.right,lost.left,b3.cy));
+  return svgWrap(W,H,parts.join(""));
+}
+
+function svgWrap(w,h,inner){
+  return `<svg xmlns="${NS}" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">${defs()}<rect width="${w}" height="${h}" fill="#FFFFFF"/>${inner}</svg>`;
+}
+function currentSvg(){
+  const t=$("tipo").value;
+  if(t==="consort")return renderConsort(VALS);
+  if(t==="prisma")return renderPrisma(VALS);
+  return renderStrobe(VALS);
+}
+function render(){$("preview").innerHTML=currentSvg();}
+
+/* ============ export ============ */
+$("btnSvg").onclick=()=>{const b=new Blob([currentSvg()],{type:"image/svg+xml"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="diagrama_"+$("tipo").value+".svg";a.click();};
+$("btnPng").onclick=()=>{
+  const svg=currentSvg();const m=svg.match(/width="(\d+)" height="(\d+)"/);const w=+m[1],h=+m[2];const scale=2;
+  const img=new Image();const blob=new Blob([svg],{type:"image/svg+xml"});const url=URL.createObjectURL(blob);
+  img.onload=()=>{const c=document.createElement("canvas");c.width=w*scale;c.height=h*scale;const ctx=c.getContext("2d");
+    ctx.setTransform(scale,0,0,scale,0,0);ctx.drawImage(img,0,0);URL.revokeObjectURL(url);
+    c.toBlob(bb=>{const a=document.createElement("a");a.href=URL.createObjectURL(bb);a.download="diagrama_"+$("tipo").value+".png";a.click();});};
+  img.onerror=()=>{$("st").classList.add("err");$("st").textContent="⚠ No se pudo generar el PNG; usa la exportación SVG.";};
+  img.src=url;
+};
+
+/* ============ IA opcional ============ */
+function getKey(){return localStorage.getItem("ia_openai_key")||"";}
+$("btnKey").onclick=()=>{$("inKey").value=getKey();$("dlgKey").showModal();};
+$("saveKey").onclick=()=>{const v=$("inKey").value.trim();if(v)localStorage.setItem("ia_openai_key",v);$("dlgKey").close();};
+$("delKey").onclick=()=>{localStorage.removeItem("ia_openai_key");$("inKey").value="";};
+$("closeKey").onclick=()=>$("dlgKey").close();
+$("btnIa").onclick=()=>{ if(!getKey()){$("dlgKey").showModal();return;} $("dlgIa").showModal(); };
+$("iaClose").onclick=()=>$("dlgIa").close();
+$("iaRun").onclick=async()=>{
+  const key=getKey();if(!key){$("dlgKey").showModal();return;}
+  const txt=$("iaText").value.trim();if(!txt){$("iaSt").textContent="Pega un texto primero.";return;}
+  const t=$("tipo").value;const flds=TEMPLATES[t].fields;
+  $("iaSt").textContent="Extrayendo…";
+  const schema=flds.map(f=>`"${f.id}": ${f.type==="num"?"número":"texto"} (${f.label})`).join(", ");
+  const prompt=`Extrae del siguiente texto las cifras para un diagrama de flujo ${t.toUpperCase()}. Devuelve SOLO un objeto JSON con estas claves (usa 0 o "" si un dato no aparece, no inventes): {${schema}}. Texto:\n"""${txt}"""`;
+  try{
+    const r=await fetch("https://api.openai.com/v1/chat/completions",{method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},
+      body:JSON.stringify({model:"gpt-4o-mini",temperature:0.1,response_format:{type:"json_object"},messages:[{role:"user",content:prompt}]})});
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||("HTTP "+r.status));}
+    const d=await r.json();const obj=JSON.parse(d.choices[0].message.content.replace(/```json|```/g,"").trim());
+    flds.forEach(f=>{if(obj[f.id]!==undefined&&obj[f.id]!==null){VALS[f.id]=f.type==="num"?(parseFloat(obj[f.id])||0):String(obj[f.id]);const el=$("f_"+f.id);if(el)el.value=VALS[f.id];}});
+    render();$("iaSt").textContent="✓ Cifras rellenadas. Revísalas.";$("iaNote").textContent="⚠ Cifras extraídas por IA — verifícalas.";
+    setTimeout(()=>$("dlgIa").close(),700);
+  }catch(e){$("iaSt").textContent="⚠ "+e.message;}
+};
+
+/* init */
+$("tipo").onchange=buildForm;
+buildForm();
+</script>
+</body>
+</html>

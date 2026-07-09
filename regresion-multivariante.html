@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegresiónMultivariante·AI · Kit Metodológico · UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A;
+    --bad:#B23A3A; --ok:#0E7C74;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 28px}
+  a{color:var(--teal-deep)}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);text-decoration:none;letter-spacing:.03em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;letter-spacing:-.01em;font-size:clamp(26px,4vw,38px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:15.5px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:16px}
+  .t{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--line);color:var(--slate)}
+  .t.det{border-color:#CBD4CE}.t.ia{border-color:#E3CFA6;color:var(--amber);background:#FBF6EC}
+  main{padding:32px 0 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:4px}
+  .card .hint{font-size:13px;color:var(--ink-soft);margin-bottom:14px}
+  label{display:block;font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:.03em;text-transform:uppercase;color:var(--slate);margin:12px 0 5px}
+  select,input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:4px;padding:9px 11px;font-family:inherit;font-size:14px;background:#fff;color:var(--ink)}
+  textarea{resize:vertical;min-height:90px;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  select:focus,input:focus,textarea:focus{outline:2px solid #B9DAD5;border-color:var(--teal)}
+  .row{display:flex;gap:16px;flex-wrap:wrap}.row>div{flex:1;min-width:180px}
+  .btn{font-family:'Inter',sans-serif;font-weight:600;font-size:14px;border:1px solid var(--teal);background:var(--teal);color:#fff;border-radius:4px;padding:10px 18px;cursor:pointer;transition:filter .15s}
+  .btn:hover{filter:brightness(1.08)}.btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn.ghost{background:#fff;color:var(--teal-deep);border-color:var(--line)}
+  .btn.ghost:hover{border-color:var(--teal);filter:none}
+  .btn.sm{padding:6px 12px;font-size:12.5px}
+  .toolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:16px}
+  .chks{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:6px}
+  .chk{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:3px;padding:5px 10px;cursor:pointer}
+  .chk input{accent-color:var(--teal)}
+  .status{font-size:13px;color:var(--ink-soft);margin-top:12px;min-height:1.2em}
+  .status.err{color:var(--bad)}
+  table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13.5px}
+  th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--slate);border-bottom:1px solid var(--line)}
+  td.est{font-family:'JetBrains Mono',monospace}
+  tr.sig td{background:#F1F7F5}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .fp{display:flex;align-items:center;height:12px;margin:6px 0 18px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}.fp .ci{position:relative;height:1px;background:var(--teal);width:70px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}.fp .dot{width:8px;height:8px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+  .meta{font-size:12.5px;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;margin-top:12px;line-height:1.8}
+  .note{font-size:12px;color:var(--ink-soft);border-left:2px solid var(--line);padding-left:12px;margin-top:14px}
+  .ia-box{white-space:pre-wrap;font-size:14px;line-height:1.6;background:#FBF6EC;border:1px solid #E3CFA6;border-radius:4px;padding:16px;margin-top:8px}
+  dialog{border:none;border-radius:6px;padding:0;max-width:520px;width:92%;box-shadow:0 24px 60px rgba(23,38,46,.25)}
+  dialog::backdrop{background:rgba(23,38,46,.4)}.dlg{padding:22px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:18px;margin-bottom:8px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:10px}
+  .hidden{display:none!important}
+  code{font-family:'JetBrains Mono',monospace;font-size:.9em;background:var(--line-soft);padding:1px 5px;border-radius:3px}
+  footer{border-top:1px solid var(--line);padding:26px 0 50px;color:var(--ink-soft);font-size:12.5px;font-family:'JetBrains Mono',monospace;line-height:1.8}
+</style>
+</head>
+<body>
+<header><div class="wrap masthead">
+  <a class="back" href="index.html">← Kit metodológico</a>
+  <div class="eyebrow">Análisis y gestión de datos · Metodología II</div>
+  <h1>Regresión <em>multivariante</em></h1>
+  <p class="lede">Ajusta por factores de confusión y estima efectos independientes. Regresión <b>logística</b> (Odds Ratio ajustada) para desenlaces binarios y regresión de <b>Cox</b> (Hazard Ratio ajustada) para tiempo hasta el evento — con IC 95 %, valor p y las medidas de ajuste del modelo. El cálculo se ejecuta íntegro en tu navegador.</p>
+  <div class="tags"><span class="t det">Determinista</span><span class="t ia">IA opcional</span><span class="t">reemplaza SPSS · R</span></div>
+</div></header>
+
+<main class="wrap">
+  <!-- 1. DATOS -->
+  <section class="card">
+    <h2>1 · Datos</h2>
+    <div class="hint">Pega o carga un CSV con cabecera. Las variables categóricas deben venir ya codificadas numéricamente (p. ej. sexo 0/1). Usa punto decimal.</div>
+    <div class="toolbar">
+      <input type="file" id="file" accept=".csv,text/csv" class="hidden">
+      <button class="btn ghost sm" id="btnFile">📄 Cargar CSV</button>
+      <button class="btn ghost sm" id="btnDemoLogit">Ejemplo logística</button>
+      <button class="btn ghost sm" id="btnDemoCox">Ejemplo Cox</button>
+    </div>
+    <label for="csv">CSV</label>
+    <textarea id="csv" placeholder="edad,sexo,biomarcador,evento&#10;61.2,1,4.8,1&#10;58.0,0,5.3,0&#10;..."></textarea>
+    <div class="status" id="stData"></div>
+  </section>
+
+  <!-- 2. MODELO -->
+  <section class="card hidden" id="cardModel">
+    <h2>2 · Modelo</h2>
+    <div class="hint">Elige el tipo de regresión y las variables. El modelo estima el efecto de cada predictor ajustado por los demás.</div>
+    <div class="row">
+      <div>
+        <label>Tipo de modelo</label>
+        <select id="tipo">
+          <option value="logit">Logística — desenlace binario (OR ajustada)</option>
+          <option value="cox">Cox — tiempo hasta el evento (HR ajustada)</option>
+        </select>
+      </div>
+      <div id="wrapY">
+        <label id="lblY">Variable desenlace (0/1)</label>
+        <select id="y"></select>
+      </div>
+      <div id="wrapTime" class="hidden">
+        <label>Variable tiempo</label>
+        <select id="time"></select>
+      </div>
+      <div id="wrapStatus" class="hidden">
+        <label>Estado (1=evento, 0=censura)</label>
+        <select id="status"></select>
+      </div>
+    </div>
+    <label>Predictores (covariables a ajustar)</label>
+    <div class="chks" id="preds"></div>
+    <div class="toolbar">
+      <button class="btn" id="btnRun">▶ Ajustar modelo</button>
+      <button class="btn ghost" id="btnAll">Seleccionar todas</button>
+      <button class="btn ghost" id="btnNone">Ninguna</button>
+    </div>
+    <div class="status" id="stModel"></div>
+  </section>
+
+  <!-- 3. RESULTADOS -->
+  <section class="card hidden" id="cardOut">
+    <h2 id="outTitle">3 · Resultados</h2>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+    <div style="overflow-x:auto"><table id="tbl"></table></div>
+    <div class="meta" id="fit"></div>
+    <div class="note" id="note"></div>
+    <div class="toolbar">
+      <button class="btn ghost sm" id="btnCopy">⧉ Copiar tabla</button>
+      <button class="btn ghost sm" id="btnCsv">⬇ CSV de resultados</button>
+      <button class="btn ghost sm" id="btnIa">✦ Interpretar con IA</button>
+      <button class="btn ghost sm" id="btnKey">🔑 Clave API</button>
+    </div>
+    <div id="iaWrap" class="hidden"><div class="ia-box" id="iaOut"></div></div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  RegresiónMultivariante·AI · Kit Metodológico · Máster U. en Investigación en Medicina Clínica · UMH<br>
+  Logística IRLS · Cox Newton-Raphson (Breslow) · IC de Wald · validado contra statsmodels y lifelines<br>
+  Herramienta docente · verifica los supuestos del modelo antes de publicar
+</div></footer>
+
+<dialog id="dlgKey"><div class="dlg">
+  <h3>Clave de API de OpenAI</h3>
+  <p>Solo se usa para la interpretación opcional en lenguaje natural. Se guarda en <code>localStorage</code> (<code>ia_openai_key</code>) y se envía directamente a OpenAI. El cálculo estadístico NO usa IA.</p>
+  <input type="text" id="inKey" placeholder="sk-...">
+  <div class="toolbar"><button class="btn sm" id="saveKey">Guardar</button><button class="btn ghost sm" id="closeKey">Cerrar</button><button class="btn ghost sm" id="delKey" style="color:var(--bad)">Borrar</button></div>
+</div></dialog>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+let DATA=null; // {head:[], rows:[{}], numeric:{col:bool}}
+let RESULT=null;
+
+/* ---------- álgebra ---------- */
+function matInv(A){const n=A.length;const M=A.map((r,i)=>r.concat(Array.from({length:n},(_,j)=>i===j?1:0)));
+  for(let c=0;c<n;c++){let p=c;for(let r=c+1;r<n;r++)if(Math.abs(M[r][c])>Math.abs(M[p][c]))p=r;
+    if(Math.abs(M[p][c])<1e-12)throw new Error("Matriz singular: hay predictores colineales o una variable constante. Revisa las covariables.");
+    [M[c],M[p]]=[M[p],M[c]];const d=M[c][c];for(let j=0;j<2*n;j++)M[c][j]/=d;
+    for(let r=0;r<n;r++){if(r===c)continue;const f=M[r][c];for(let j=0;j<2*n;j++)M[r][j]-=f*M[c][j];}}
+  return M.map(r=>r.slice(n));}
+function matVec(A,x){return A.map(r=>r.reduce((s,v,j)=>s+v*x[j],0));}
+
+/* ---------- p-valor normal (dos colas) ---------- */
+function erf(x){const t=1/(1+0.3275911*Math.abs(x));
+  const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);
+  return x>=0?y:-y;}
+function pnorm(z){return 0.5*(1+erf(z/Math.SQRT2));}
+function pval2(z){return 2*(1-pnorm(Math.abs(z)));}
+
+/* ---------- logística IRLS ---------- */
+function logistic(X,y){const n=X.length,p=X[0].length;let b=new Array(p).fill(0);
+  for(let it=0;it<60;it++){
+    const mu=X.map(r=>{const e=r.reduce((s,v,j)=>s+v*b[j],0);return 1/(1+Math.exp(-e));});
+    const g=new Array(p).fill(0),H=Array.from({length:p},()=>new Array(p).fill(0));
+    for(let i=0;i<n;i++){const w=Math.max(mu[i]*(1-mu[i]),1e-9),res=y[i]-mu[i];
+      for(let a=0;a<p;a++){g[a]+=X[i][a]*res;for(let c=0;c<p;c++)H[a][c]+=X[i][a]*w*X[i][c];}}
+    const step=matVec(matInv(H),g);let m=0;for(let a=0;a<p;a++){b[a]+=step[a];m=Math.max(m,Math.abs(step[a]));}
+    if(m<1e-8)break;}
+  const mu=X.map(r=>{const e=r.reduce((s,v,j)=>s+v*b[j],0);return 1/(1+Math.exp(-e));});
+  const H=Array.from({length:p},()=>new Array(p).fill(0));
+  for(let i=0;i<n;i++){const w=Math.max(mu[i]*(1-mu[i]),1e-9);for(let a=0;a<p;a++)for(let c=0;c<p;c++)H[a][c]+=X[i][a]*w*X[i][c];}
+  const cov=matInv(H);const se=b.map((_,a)=>Math.sqrt(cov[a][a]));
+  let ll=0;for(let i=0;i<n;i++){const pi=mu[i];ll+=y[i]*Math.log(pi+1e-12)+(1-y[i])*Math.log(1-pi+1e-12);}
+  return {b,se,ll,n};}
+
+/* ---------- Cox PH (Breslow) ---------- */
+function cox(X,time,status){const n=X.length,p=X[0].length;
+  const idx=[...Array(n).keys()].sort((i,j)=>time[i]-time[j]);
+  let b=new Array(p).fill(0);
+  function grads(bb){const g=new Array(p).fill(0),H=Array.from({length:p},()=>new Array(p).fill(0));
+    let r0=0;const r1=new Array(p).fill(0);const r2=Array.from({length:p},()=>new Array(p).fill(0));let ll=0;
+    for(let k=n-1;k>=0;k--){const i=idx[k];const xb=X[i].reduce((s,v,j)=>s+v*bb[j],0);const w=Math.exp(xb);
+      r0+=w;for(let a=0;a<p;a++){r1[a]+=w*X[i][a];for(let c=0;c<p;c++)r2[a][c]+=w*X[i][a]*X[i][c];}
+      if(status[i]===1){ll+=xb-Math.log(r0);for(let a=0;a<p;a++){const ea=r1[a]/r0;g[a]+=X[i][a]-ea;
+        for(let c=0;c<p;c++)H[a][c]+=(r2[a][c]/r0)-ea*(r1[c]/r0);}}}
+    return {g,H,ll};}
+  for(let it=0;it<60;it++){const {g,H}=grads(b);const step=matVec(matInv(H),g);
+    let m=0;for(let a=0;a<p;a++){b[a]+=step[a];m=Math.max(m,Math.abs(step[a]));}if(m<1e-9)break;}
+  const {H,ll}=grads(b);const cov=matInv(H);const se=b.map((_,a)=>Math.sqrt(cov[a][a]));
+  const nev=status.reduce((s,v)=>s+v,0);
+  return {b,se,ll,n,nev};}
+
+/* ---------- CSV ---------- */
+function parseCSV(txt){
+  const lines=txt.trim().split(/\r?\n/).filter(l=>l.trim()!=="");
+  if(lines.length<2) throw new Error("Se necesitan al menos una cabecera y una fila de datos.");
+  const sep=(lines[0].match(/;/g)||[]).length>(lines[0].match(/,/g)||[]).length?";":",";
+  const head=lines[0].split(sep).map(h=>h.trim());
+  const rows=[];
+  for(let i=1;i<lines.length;i++){const c=lines[i].split(sep);const o={};
+    head.forEach((h,j)=>{const raw=(c[j]||"").trim().replace(",",".");const num=parseFloat(raw);o[h]=(raw!==""&&!isNaN(num)&&/^-?\d*\.?\d+$/.test(raw))?num:raw;});
+    rows.push(o);}
+  const numeric={};head.forEach(h=>{numeric[h]=rows.every(r=>typeof r[h]==="number");});
+  return {head,rows,numeric};
+}
+function loadData(txt){
+  DATA=parseCSV(txt);
+  const numCols=DATA.head.filter(h=>DATA.numeric[h]);
+  $("stData").textContent=`✓ ${DATA.rows.length} filas · ${DATA.head.length} columnas (${numCols.length} numéricas). Columnas numéricas usables: ${numCols.join(", ")}`;
+  $("stData").classList.remove("err");
+  // poblar selects
+  const opts=numCols.map(h=>`<option value="${h}">${h}</option>`).join("");
+  $("y").innerHTML=opts;$("time").innerHTML=opts;$("status").innerHTML=opts;
+  // predictores como checks (todas las numéricas)
+  $("preds").innerHTML=numCols.map(h=>`<label class="chk"><input type="checkbox" value="${h}">${h}</label>`).join("");
+  $("cardModel").classList.remove("hidden");
+  syncTipo();
+}
+function syncTipo(){const t=$("tipo").value;
+  $("wrapY").classList.toggle("hidden",t!=="logit");
+  $("wrapTime").classList.toggle("hidden",t!=="cox");
+  $("wrapStatus").classList.toggle("hidden",t!=="cox");}
+
+/* ---------- ejecutar ---------- */
+function selectedPreds(){return [...document.querySelectorAll("#preds input:checked")].map(c=>c.value);}
+function run(){
+  try{
+    $("stModel").classList.remove("err");$("stModel").textContent="Ajustando…";
+    const tipo=$("tipo").value;const preds=selectedPreds();
+    if(preds.length===0) throw new Error("Selecciona al menos un predictor.");
+    let rows=DATA.rows;
+    if(tipo==="logit"){
+      const yv=$("y").value;
+      if(preds.includes(yv)) throw new Error("El desenlace no puede estar también entre los predictores.");
+      rows=rows.filter(r=>preds.every(p=>typeof r[p]==="number")&&typeof r[yv]==="number");
+      const ys=[...new Set(rows.map(r=>r[yv]))].sort((a,b)=>a-b);
+      if(ys.length!==2||ys[0]!==0||ys[1]!==1) throw new Error(`El desenlace "${yv}" debe ser binario 0/1 (valores encontrados: ${ys.join(", ")}).`);
+      const X=rows.map(r=>[1,...preds.map(p=>r[p])]);
+      const y=rows.map(r=>r[yv]);
+      const fit=logistic(X,y);
+      RESULT={tipo,names:["(Intercepto)",...preds],fit,ratioLabel:"OR",yv};
+    } else {
+      const tv=$("time").value,sv=$("status").value;
+      if(preds.includes(tv)||preds.includes(sv)) throw new Error("Tiempo y estado no pueden ser predictores.");
+      rows=rows.filter(r=>preds.every(p=>typeof r[p]==="number")&&typeof r[tv]==="number"&&typeof r[sv]==="number"&&r[tv]>0);
+      const ss=[...new Set(rows.map(r=>r[sv]))].sort((a,b)=>a-b);
+      if(!(ss.length<=2&&ss.every(v=>v===0||v===1))) throw new Error(`El estado "${sv}" debe ser 0/1.`);
+      const X=rows.map(r=>preds.map(p=>r[p]));
+      const fit=cox(X,rows.map(r=>r[tv]),rows.map(r=>r[sv]));
+      RESULT={tipo,names:[...preds],fit,ratioLabel:"HR",tv,sv};
+    }
+    render();
+    $("cardOut").classList.remove("hidden");
+    $("cardOut").scrollIntoView({behavior:"smooth"});
+    $("stModel").textContent=`✓ Modelo ajustado sobre ${RESULT.fit.n} observaciones completas.`;
+  }catch(e){$("stModel").classList.add("err");$("stModel").textContent="⚠ "+e.message;}
+}
+function fmt(x,d=3){if(!isFinite(x))return "—";return x.toFixed(d);}
+function render(){
+  const R=RESULT,f=R.fit,isL=R.tipo==="logit";
+  const z=f.b.map((bi,i)=>bi/f.se[i]);
+  const rows=R.names.map((nm,i)=>{
+    const isInt=isL&&i===0;
+    const ratio=Math.exp(f.b[i]);
+    const lo=Math.exp(f.b[i]-1.96*f.se[i]),hi=Math.exp(f.b[i]+1.96*f.se[i]);
+    const p=pval2(z[i]);
+    const sig=(!isInt)&&p<0.05;
+    const pT=p<0.001?"&lt;0.001":fmt(p,3);
+    return `<tr class="${sig?'sig':''}"><td>${nm}</td>
+      <td class="est">${fmt(f.b[i])}</td><td class="est">${fmt(f.se[i])}</td>
+      <td class="est">${isInt?'—':fmt(ratio)}</td>
+      <td class="est">${isInt?'—':fmt(lo)+' – '+fmt(hi)}</td>
+      <td class="est">${fmt(z[i],2)}</td><td class="est">${pT}</td></tr>`;
+  }).join("");
+  $("outTitle").textContent = isL? "3 · Regresión logística — OR ajustada" : "3 · Regresión de Cox — HR ajustada";
+  $("tbl").innerHTML=`<thead><tr><th>Variable</th><th>β</th><th>EE</th><th>${R.ratioLabel}</th><th>IC 95 %</th><th>z</th><th>p</th></tr></thead><tbody>${rows}</tbody>`;
+  if(isL){
+    const k=f.b.length;const aic=-2*f.ll+2*k;
+    $("fit").innerHTML=`n = ${f.n} · log-verosimilitud = ${fmt(f.ll,2)} · AIC = ${fmt(aic,2)} · nº parámetros = ${k}`;
+    $("note").innerHTML="OR &gt; 1: el predictor aumenta las probabilidades del desenlace; OR &lt; 1: las reduce. Los IC de Wald asumen n suficiente. Comprueba la ausencia de separación perfecta y de colinealidad.";
+  } else {
+    const aic=-2*f.ll+2*f.b.length;
+    $("fit").innerHTML=`n = ${f.n} · eventos = ${f.nev} · log-verosimilitud parcial = ${fmt(f.ll,2)} · AIC = ${fmt(aic,2)}`;
+    $("note").innerHTML="HR &gt; 1: mayor riesgo instantáneo del evento; HR &lt; 1: menor. El modelo asume riesgos proporcionales — conviene verificar este supuesto (p. ej. residuos de Schoenfeld) antes de concluir.";
+  }
+}
+
+/* ---------- export / copy ---------- */
+function tableText(){
+  const R=RESULT,f=R.fit,isL=R.tipo==="logit";
+  const hdr=["Variable","beta","EE",R.ratioLabel,"IC95_inf","IC95_sup","z","p"];
+  const lines=[hdr.join(",")];
+  R.names.forEach((nm,i)=>{const isInt=isL&&i===0;const z=f.b[i]/f.se[i];const p=pval2(z);
+    lines.push([nm,fmt(f.b[i],5),fmt(f.se[i],5),isInt?"":fmt(Math.exp(f.b[i]),5),
+      isInt?"":fmt(Math.exp(f.b[i]-1.96*f.se[i]),5),isInt?"":fmt(Math.exp(f.b[i]+1.96*f.se[i]),5),
+      fmt(z,3),fmt(p,5)].join(","));});
+  return lines.join("\n");
+}
+$("btnCopy").onclick=()=>{navigator.clipboard.writeText(tableText());$("btnCopy").textContent="✓ Copiado";setTimeout(()=>$("btnCopy").textContent="⧉ Copiar tabla",1500);};
+$("btnCsv").onclick=()=>{const b=new Blob([tableText()],{type:"text/csv"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="regresion_"+RESULT.tipo+".csv";a.click();};
+
+/* ---------- IA ---------- */
+function getKey(){return localStorage.getItem("ia_openai_key")||"";}
+$("btnKey").onclick=()=>{$("inKey").value=getKey();$("dlgKey").showModal();};
+$("saveKey").onclick=()=>{const v=$("inKey").value.trim();if(v)localStorage.setItem("ia_openai_key",v);$("dlgKey").close();};
+$("delKey").onclick=()=>{localStorage.removeItem("ia_openai_key");$("inKey").value="";};
+$("closeKey").onclick=()=>$("dlgKey").close();
+$("btnIa").onclick=async()=>{
+  if(!RESULT){return;}
+  const key=getKey();if(!key){$("dlgKey").showModal();return;}
+  $("iaWrap").classList.remove("hidden");$("iaOut").textContent="Interpretando…";
+  try{
+    const prompt="Eres un metodólogo de investigación clínica. Interpreta en español, de forma didáctica y prudente, esta tabla de "+(RESULT.tipo==="logit"?"regresión logística (Odds Ratio ajustadas)":"regresión de Cox (Hazard Ratio ajustadas)")+". Explica qué predictores son estadísticamente significativos, la dirección y magnitud del efecto ajustado, y recuerda los supuestos y limitaciones. No inventes datos. Máximo 220 palabras.\n\n"+tableText();
+    const r=await fetch("https://api.openai.com/v1/chat/completions",{method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},
+      body:JSON.stringify({model:"gpt-4o-mini",temperature:0.4,messages:[{role:"user",content:prompt}]})});
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||("HTTP "+r.status));}
+    const d=await r.json();$("iaOut").textContent=d.choices[0].message.content;
+  }catch(e){$("iaOut").textContent="⚠ "+e.message;}
+};
+
+/* ---------- ejemplos ---------- */
+const DEMO_LOGIT=`edad,sexo,biomarcador,evento
+61.2,1,4.8,1
+58.0,0,5.3,0
+72.5,1,6.1,1
+45.3,0,3.9,0
+66.8,1,5.0,1
+53.1,0,4.2,0
+70.0,1,7.2,1
+49.6,0,4.7,0
+63.4,1,5.5,1
+55.9,0,3.1,0
+68.2,0,6.0,1
+51.0,1,4.4,0
+74.1,1,5.8,1
+47.7,0,4.9,0
+60.5,1,5.2,1
+57.3,0,3.6,0
+71.8,1,6.4,1
+44.2,0,4.1,0
+65.0,1,5.7,1
+52.6,0,3.8,0`;
+const DEMO_COX=`edad,sexo,tiempo,estado
+61,1,12.4,1
+58,0,40.1,0
+72,1,6.2,1
+45,0,55.0,0
+66,1,18.7,1
+53,0,44.3,0
+70,1,9.1,1
+49,0,50.5,1
+63,1,22.0,1
+55,0,38.9,0
+68,0,15.6,1
+51,1,47.2,0
+74,1,5.5,1
+47,0,52.1,0
+60,1,28.3,1
+57,0,33.4,1
+71,1,8.0,1
+44,0,58.0,0
+65,1,19.9,1
+52,0,41.7,0`;
+$("btnDemoLogit").onclick=()=>{$("csv").value=DEMO_LOGIT;loadData(DEMO_LOGIT);$("tipo").value="logit";syncTipo();$("y").value="evento";document.querySelectorAll("#preds input").forEach(c=>c.checked=["edad","sexo","biomarcador"].includes(c.value));};
+$("btnDemoCox").onclick=()=>{$("csv").value=DEMO_COX;loadData(DEMO_COX);$("tipo").value="cox";syncTipo();$("time").value="tiempo";$("status").value="estado";document.querySelectorAll("#preds input").forEach(c=>c.checked=["edad","sexo"].includes(c.value));};
+
+/* ---------- eventos base ---------- */
+$("btnFile").onclick=()=>$("file").click();
+$("file").onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{$("csv").value=rd.result;try{loadData(rd.result);}catch(err){$("stData").classList.add("err");$("stData").textContent="⚠ "+err.message;}};rd.readAsText(f);};
+$("csv").addEventListener("change",()=>{try{loadData($("csv").value);}catch(err){$("stData").classList.add("err");$("stData").textContent="⚠ "+err.message;}});
+$("tipo").onchange=syncTipo;
+$("btnRun").onclick=run;
+$("btnAll").onclick=()=>document.querySelectorAll("#preds input").forEach(c=>c.checked=true);
+$("btnNone").onclick=()=>document.querySelectorAll("#preds input").forEach(c=>c.checked=false);
+</script>
+</body>
+</html>

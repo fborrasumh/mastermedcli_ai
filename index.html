@@ -3,114 +3,363 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laboratorio IA · Investigación en Medicina Clínica UMH — 13 simuladores metodológicos</title>
+<title>Kit Metodológico · Investigación en Medicina Clínica · UMH</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#101828;--ink2:#475467;--ink3:#98A2B3;--paper:#F2F4F7;--card:#fff;--line:#E4E7EC}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink)}
-h1,h2,h3{font-family:'Space Grotesk',sans-serif}
-.hero{background:#0E7490;color:#fff;padding:56px 22px 46px;text-align:left}
-.hero .wrap{max-width:1040px;margin:0 auto}
-.hero .eyebrow{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:#A5F3FC;font-weight:600}
-.hero h1{font-size:clamp(1.7rem,4.5vw,2.7rem);line-height:1.15;margin:12px 0 14px;max-width:820px}
-.hero p{color:#CFFAFE;max-width:720px;line-height:1.6;font-size:.95rem}
-.hero .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
-.hero .chip{border:1px solid #22D3EE;border-radius:999px;padding:5px 13px;font-size:.75rem;color:#CFFAFE}
-main{max-width:1040px;margin:0 auto;padding:36px 18px 70px}
-.mod{margin-bottom:34px}
-.mod-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.mod-head .dot{width:12px;height:12px;border-radius:4px;background:var(--mc)}
-.mod-head h2{font-size:1.02rem}
-.mod-head .count{font-size:.72rem;color:var(--ink3);font-weight:600;margin-left:auto}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-.app{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--mc);border-radius:14px;padding:18px;text-decoration:none;color:var(--ink);transition:transform .12s, box-shadow .12s}
-.app:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(16,24,40,.10)}
-.app .icon{width:44px;height:44px;border-radius:11px;background:var(--mc);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.app b{display:block;font-family:'Space Grotesk';font-size:1rem}
-.app span{display:block;font-size:.76rem;color:var(--mc);font-weight:600;margin:2px 0 7px}
-.app p{font-size:.79rem;color:var(--ink2);line-height:1.5}
-.notice{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:34px;font-size:.85rem;color:var(--ink2);line-height:1.6}
-.notice.warn{border-color:#FEC84B;background:#FFFCF5}
-footer{text-align:center;font-size:.72rem;color:var(--ink3);padding:22px;line-height:1.6}
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+
+  /* ---------- Header ---------- */
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB, var(--paper));}
+  .masthead{padding:52px 0 40px}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{
+    font-family:'Spectral',serif;font-weight:500;letter-spacing:-.01em;
+    font-size:clamp(30px,5vw,50px);line-height:1.05;margin:18px 0 0;max-width:16ch;
+  }
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:20px;max-width:60ch;color:var(--ink-soft);font-size:17px}
+  .meta-row{
+    display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:26px;
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--slate);
+  }
+  .meta-row b{color:var(--ink);font-weight:500}
+
+  /* forest-plot signature divider */
+  .fp{display:flex;align-items:center;gap:0;margin:34px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  /* ---------- Legend ---------- */
+  .legend{
+    display:flex;flex-wrap:wrap;gap:14px 22px;padding:16px 0 0;margin-top:22px;
+    font-size:13px;color:var(--ink-soft);
+  }
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:.03em;padding:3px 9px;border-radius:2px;border:1px solid var(--line);
+    text-transform:uppercase;color:var(--slate);background:#fff;white-space:nowrap;
+  }
+  .chip .sq{width:8px;height:8px;border-radius:1px}
+  .chip.det .sq{background:var(--slate)}
+  .chip.mix .sq{background:linear-gradient(90deg,var(--slate) 50%,var(--teal) 50%)}
+  .chip.ia .sq{background:var(--amber)}
+  .chip.api .sq{background:var(--teal)}
+
+  /* ---------- Modules ---------- */
+  main{padding:56px 0 20px}
+  .module{margin-bottom:56px;scroll-margin-top:24px}
+  .mod-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--line)}
+  .mod-num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--teal);font-weight:500}
+  .mod-title{font-family:'Spectral',serif;font-size:23px;font-weight:500;letter-spacing:-.01em}
+  .mod-sub{font-size:13px;color:var(--ink-soft);margin-left:auto;font-family:'JetBrains Mono',monospace}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:22px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+
+  .app{
+    position:relative;display:flex;flex-direction:column;background:var(--card);
+    border:1px solid var(--line);border-radius:5px;padding:20px 20px 18px;
+    text-decoration:none;color:inherit;transition:border-color .18s, box-shadow .18s, transform .18s;
+    overflow:hidden;
+  }
+  .app::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal);
+    transform:scaleY(0);transform-origin:top;transition:transform .2s ease;
+  }
+  .app:hover{border-color:#C4CDC6;box-shadow:var(--shadow);transform:translateY(-2px)}
+  .app:hover::before{transform:scaleY(1)}
+  .app:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  .app-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .app-id{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft)}
+  .app-name{font-family:'Spectral',serif;font-size:20px;font-weight:500;margin:8px 0 0;letter-spacing:-.01em;line-height:1.15}
+  .app-name .ai{color:var(--teal-deep);font-style:italic;font-size:.82em}
+  .app-desc{font-size:14px;color:var(--ink-soft);margin-top:9px;flex:1}
+  .app-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;padding-top:13px;border-top:1px solid var(--line-soft)}
+  .tags{display:flex;gap:6px;flex-wrap:wrap}
+  .t{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--line);color:var(--slate)}
+  .t.det{border-color:#CBD4CE}
+  .t.ia{border-color:#E3CFA6;color:var(--amber);background:#FBF6EC}
+  .t.api{border-color:#B9DAD5;color:var(--teal-deep);background:#EDF6F4}
+  .t.replaces{color:var(--ink-soft)}
+  .arrow{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--teal);opacity:.5;transition:opacity .18s,transform .18s}
+  .app:hover .arrow{opacity:1;transform:translateX(3px)}
+
+  /* obligatorio marker (forest-plot diamond) */
+  .oblig{position:relative;width:10px;height:10px;flex:none}
+  .oblig .d{position:absolute;inset:1px;background:var(--teal);transform:rotate(45deg);border-radius:1px}
+  .oblig .l{position:absolute;top:50%;left:-6px;width:5px;height:1px;background:var(--teal);opacity:.4}
+  .oblig .r{position:absolute;top:50%;right:-6px;width:5px;height:1px;background:var(--teal);opacity:.4}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--line);margin-top:20px;padding:36px 0 60px;color:var(--ink-soft);font-size:13px}
+  .foot-grid{display:flex;flex-wrap:wrap;gap:26px 48px;align-items:flex-start}
+  .foot-grid .col b{color:var(--ink);font-weight:600;display:block;margin-bottom:6px;font-size:12px;letter-spacing:.03em;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+  .stack{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.9}
+  a.plain{color:var(--teal-deep);text-decoration:none;border-bottom:1px solid var(--line)}
+  a.plain:hover{border-color:var(--teal)}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div class="hero"><div class="wrap">
-<div class="eyebrow">Máster Universitario en Investigación en Medicina Clínica · Universidad Miguel Hernández de Elche</div>
-<h1>Laboratorio de simulación con IA: 13 tutores metodológicos</h1>
-<p>Cada app es un simulador de práctica deliberada vinculado a una asignatura del plan de estudios oficial: genera un caso metodológico realista, te sitúa en el rol de investigador/a, te enfrenta a tutores, editores, monitores y metodólogos de IA que retan tus decisiones, y evalúa tu desempeño con una rúbrica exportable. Todo funciona en el navegador, sin servidor: solo necesitas tu clave de API de OpenAI (botón 🔑 dentro de cada app).</p>
-<div class="chips"><span class="chip">60 ECTS · online</span><span class="chip">Metodología de investigación</span><span class="chip">Rúbrica exportable</span><span class="chip">gpt-4o-mini</span><span class="chip">Sin backend · GitHub Pages</span></div>
-</div></div>
-<main>
-<div class="notice warn"><b>⚠ Aviso docente y de uso responsable:</b> estas herramientas son <b>simuladores formativos</b> para el aprendizaje de la metodología de investigación. <b>No sustituyen la formación reglada, la supervisión del tutor/a de TFM ni el dictamen de un comité de ética de la investigación (CEIm)</b>. Ningún contenido, diseño o análisis generado debe emplearse en investigación real sin verificarlo con las guías vigentes (CONSORT, STROBE, PRISMA, SPIRIT, GRADE, Declaración de Helsinki, ICH-GCP) y con tu equipo investigador.</div>
-<div class="notice"><b>Cómo se usa en la evaluación continua:</b> el estudiante realiza las sesiones indicadas por cada asignatura, exporta el informe (.md, .docx o PDF) con la transcripción y la rúbrica, y lo entrega como evidencia. El historial de sesiones se guarda en el propio navegador (IndexedDB). La clave de API se almacena solo en <code>localStorage</code> del estudiante y las llamadas van directas a la API de OpenAI; ningún dato pasa por servidores intermedios. La nota de la rúbrica es orientativa: la calificación final la fija el profesorado.</div>
+<header>
+  <div class="wrap masthead">
+    <div class="eyebrow">Máster U. Investigación en Medicina Clínica · UMH</div>
+    <h1>Del proyecto al TFM: el <em>instrumental</em> metodológico del investigador clínico</h1>
+    <p class="lede">Veintidós herramientas web de uso obligado para diseñar, analizar, valorar y comunicar un estudio de investigación en ciencias de la salud. Cada una cubre un paso real del itinerario del máster — de la pregunta PICO al informe CONSORT.</p>
+    <div class="meta-row">
+      <span><b>60</b> ECTS</span>
+      <span>TFM <b>18</b> ECTS</span>
+      <span><b>22</b> herramientas</span>
+      <span>Ejecución <b>en el navegador</b></span>
+      <span>Sin instalación · <b>GitHub Pages</b></span>
+    </div>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+    <div class="legend">
+      <span class="chip det"><span class="sq"></span>Determinista</span>
+      <span class="chip mix"><span class="sq"></span>Mixta</span>
+      <span class="chip ia"><span class="sq"></span>IA generativa</span>
+      <span class="chip api"><span class="sq"></span>API científica real</span>
+      <span style="margin-left:6px;display:inline-flex;align-items:center;gap:8px"><span class="oblig"><span class="d"></span></span>&nbsp;Obligatoria para el TFM</span>
+    </div>
+  </div>
+</header>
 
-<section class="mod"><div class="mod-head" style="--mc:#0E7490"><span class="dot"></span><h2>Asignaturas obligatorias · 1er semestre (7,5 ECTS c/u)</h2><span class="count">4 apps</span></div><div class="grid">
-<a class="app" style="--mc:#0E7490" href="metodologia-investigacion-1.html">
-<div class="icon">🔬</div>
-<div><b>MetodoLab·I·AI</b><span>De la idea a la pregunta contestable</span><p>Convierte un problema clínico difuso en una pregunta PICO, elige el diseño adecuado y define variables. Un tutor de IA guía el planteamiento con método socrático.</p></div>
-</a>
-<a class="app" style="--mc:#0369A1" href="metodologia-investigacion-2.html">
-<div class="icon">📐</div>
-<div><b>MetodoLab·II·AI</b><span>Muestreo, sesgos y análisis</span><p>Calcula el tamaño muestral, anticipa sesgos y confusión y elige el análisis estadístico. El tutor reta cada decisión con datos ambiguos.</p></div>
-</a>
-<a class="app" style="--mc:#7C3AED" href="documentacion-cientifica.html">
-<div class="icon">📚</div>
-<div><b>DocScience·AI</b><span>Busca, gestiona y proyecta</span><p>Diseña una búsqueda bibliográfica reproducible y estructura la memoria de un proyecto de investigación. La IA audita tu ecuación de búsqueda y la coherencia del proyecto.</p></div>
-</a>
-<a class="app" style="--mc:#B45309" href="evidencia-cientifica.html">
-<div class="icon">⚖</div>
-<div><b>EvidencIA·AI</b><span>Lectura crítica y decisión</span><p>Aplica el ciclo de la MBE: localiza el estudio, léelo críticamente (validez, efecto, aplicabilidad) y decide. La IA esconde trampas metodológicas.</p></div>
-</a>
-</div></section>
+<main class="wrap">
 
-<section class="mod"><div class="mod-head" style="--mc:#15803D"><span class="dot"></span><h2>Asignaturas optativas · 2º semestre (4,5 ECTS c/u)</h2><span class="count">4 apps</span></div><div class="grid">
-<a class="app" style="--mc:#15803D" href="articulo-cientifico.html">
-<div class="icon">✍</div>
-<div><b>Manuscript·AI</b><span>Del resultado al paper publicable</span><p>Redacta y pule un artículo con estructura IMRyD, elige revista y responde a revisores. Un editor de IA critica el manuscrito sección a sección.</p></div>
-</a>
-<a class="app" style="--mc:#0891B2" href="comunicacion-herramientas-web.html">
-<div class="icon">🌐</div>
-<div><b>SciComm·AI</b><span>Comunica y difunde tu ciencia</span><p>Prepara una comunicación a congreso, gestiona tu identidad digital (ORCID) y difunde con herramientas web. Un mentor de IA reta mensaje y formato.</p></div>
-</a>
-<a class="app" style="--mc:#BE123C" href="ensayos-clinicos.html">
-<div class="icon">🧪</div>
-<div><b>TrialLab·AI</b><span>Diseña un ensayo con rigor</span><p>Aleatorización, cegamiento, variable principal, análisis por ITT y marco GCP-ICH y ético (CEIm). Un monitor de IA audita la integridad del ensayo.</p></div>
-</a>
-<a class="app" style="--mc:#9333EA" href="investigacion-cualitativa.html">
-<div class="icon">🗣</div>
-<div><b>QualiLab·AI</b><span>Comprender, no solo medir</span><p>Elige el enfoque cualitativo, diseña muestreo y entrevistas y analiza con rigor y reflexividad. Un metodólogo de IA reta tu diseño y análisis.</p></div>
-</a>
-</div></section>
+  <!-- MÓDULO 1 -->
+  <section class="module" id="m1">
+    <div class="mod-head">
+      <span class="mod-num">M·01</span>
+      <span class="mod-title">Diseño del estudio y pregunta de investigación</span>
+      <span class="mod-sub">Metodología I · Documentación Científica</span>
+    </div>
+    <div class="grid">
+      <a class="app" href="pico.html">
+        <div class="app-top"><span class="app-id">01</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">PICO<span class="ai">·AI</span></div>
+        <div class="app-desc">Convierte una pregunta clínica en formato PICO/PECO estructurado y genera la estrategia de búsqueda con términos MeSH y operadores booleanos para PubMed.</div>
+        <div class="app-foot"><div class="tags"><span class="t ia">IA</span><span class="t replaces">MeSH · PubMed</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="disena-estudio.html">
+        <div class="app-top"><span class="app-id">02</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">DiseñaEstudio<span class="ai">·AI</span></div>
+        <div class="app-desc">Asistente de selección del diseño epidemiológico. A partir de tu objetivo recomienda ECA, cohorte, casos-controles o transversal, con fortalezas, sesgos y limitaciones.</div>
+        <div class="app-foot"><div class="tags"><span class="t ia">IA</span><span class="t replaces">Árbol de decisión</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="tamano-muestral.html">
+        <div class="app-top"><span class="app-id">03</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">TamañoMuestral<span class="ai">·AI</span></div>
+        <div class="app-desc">Cálculo del tamaño muestral y potencia: comparación de medias y proporciones, casos-controles, cohortes, no inferioridad, correlación y supervivencia. Con fórmulas visibles.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t replaces">G*Power</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="aleatoriza.html">
+        <div class="app-top"><span class="app-id">04</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">Aleatoriza<span class="ai">·AI</span></div>
+        <div class="app-desc">Genera la secuencia de aleatorización reproducible: simple, por bloques, estratificada y balanceada, con semilla, ocultación de la asignación y log exportable.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t replaces">randomizer</span></div><span class="arrow">→</span></div>
+      </a>
+    </div>
+  </section>
 
-<section class="mod"><div class="mod-head" style="--mc:#1D4ED8"><span class="dot"></span><h2>Asignaturas optativas · 2º semestre (3 ECTS c/u)</h2><span class="count">4 apps</span></div><div class="grid">
-<a class="app" style="--mc:#0F766E" href="in-vivo-in-vitro.html">
-<div class="icon">🧫</div>
-<div><b>BioTech·AI</b><span>Del banco a la clínica</span><p>Diseña experimentos in vitro e in vivo con controles, réplicas y las 3R, evitando lo que rompe la reproducibilidad. Un investigador de IA reta el diseño.</p></div>
-</a>
-<a class="app" style="--mc:#1D4ED8" href="inteligencia-artificial-salud.html">
-<div class="icon">🤖</div>
-<div><b>MedAI·Lab</b><span>Modelos que ayudan (y sus trampas)</span><p>Plantea un problema clínico como tarea de ML, valida sin fuga de datos y evalúa con métricas correctas, atendiendo al sesgo algorítmico. Un data scientist de IA reta tu planteamiento.</p></div>
-</a>
-<a class="app" style="--mc:#B91C1C" href="gestion-clinica.html">
-<div class="icon">📊</div>
-<div><b>GestClinLab·AI</b><span>Investigar para mejorar el sistema</span><p>Diseña estudios de resultados en salud, define indicadores y valora coste-efectividad y calidad. Un gestor-investigador de IA reta tu interpretación.</p></div>
-</a>
-<a class="app" style="--mc:#4338CA" href="revisiones-metaanalisis.html">
-<div class="icon">🔎</div>
-<div><b>MetaLab·AI</b><span>Sintetizar toda la evidencia</span><p>Revisión sistemática según PRISMA: protocolo, búsqueda, riesgo de sesgo y metaanálisis con heterogeneidad. Un metodólogo de IA audita cada fase.</p></div>
-</a>
-</div></section>
+  <!-- MÓDULO 2 -->
+  <section class="module" id="m2">
+    <div class="mod-head">
+      <span class="mod-num">M·02</span>
+      <span class="mod-title">Análisis y gestión de datos</span>
+      <span class="mod-sub">Metodología II · Curso SPSS/Excel</span>
+    </div>
+    <div class="grid">
+      <a class="app" href="exploracion-datos.html">
+        <div class="app-top"><span class="app-id">05</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">ExploraDatos<span class="ai">·AI</span></div>
+        <div class="app-desc">Análisis exploratorio de tu CSV: descriptivos, histogramas, Q-Q plot, test de normalidad (Shapiro-Wilk), detección de valores atípicos y sugerencia de transformación.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t replaces">SPSS · Excel</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="bioestadistica.html">
+        <div class="app-top"><span class="app-id">06</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">BioEstadística<span class="ai">·AI</span></div>
+        <div class="app-desc">Batería de contrastes desde CSV: t de Student, ANOVA, χ², Mann-Whitney, Wilcoxon, correlación de Pearson/Spearman y regresión lineal, con supuestos y tamaño del efecto.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t replaces">SPSS</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="medidas-asociacion.html">
+        <div class="app-top"><span class="app-id">07</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">MedidasAsociación<span class="ai">·AI</span></div>
+        <div class="app-desc">Desde una tabla 2×2: Odds Ratio, Riesgo Relativo, RAR, RRR, NNT y NNH con sus intervalos de confianza al 95 %. Interpretación clínica automática.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t replaces">Epidat</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="test-diagnostico.html">
+        <div class="app-top"><span class="app-id">08</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">TestDiagnóstico<span class="ai">·AI</span></div>
+        <div class="app-desc">Evaluación de pruebas diagnósticas: sensibilidad, especificidad, VPP, VPN, cocientes de probabilidad, curva ROC y nomograma de Fagan para la probabilidad post-test.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t replaces">MedCalc</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="supervivencia.html">
+        <div class="app-top"><span class="app-id">09</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">Supervivencia<span class="ai">·AI</span></div>
+        <div class="app-desc">Análisis de supervivencia desde CSV: curvas de Kaplan-Meier, tabla de sujetos en riesgo, mediana de supervivencia y comparación de grupos con el test de log-rank.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t replaces">SPSS · R</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="concordancia.html">
+        <div class="app-top"><span class="app-id">10</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">Concordancia<span class="ai">·AI</span></div>
+        <div class="app-desc">Acuerdo entre observadores y métodos: kappa de Cohen (simple y ponderado), coeficiente de correlación intraclase y gráfico de Bland-Altman con límites de acuerdo.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t replaces">MedCalc</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="regresion-multivariante.html">
+        <div class="app-top"><span class="app-id">11</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">RegresiónMultivariante<span class="ai">·AI</span></div>
+        <div class="app-desc">Ajuste por factores de confusión: regresión logística (Odds Ratio ajustada) y de Cox (Hazard Ratio ajustada) desde CSV, con IC 95 %, valor p y medidas del modelo. Interpretación opcional con IA.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t ia">IA</span><span class="t replaces">SPSS · R</span></div><span class="arrow">→</span></div>
+      </a>
+    </div>
+  </section>
 
-<section class="mod"><div class="mod-head" style="--mc:#101828"><span class="dot"></span><h2>Trabajo Fin de Máster</h2><span class="count">1 app</span></div><div class="grid">
-<a class="app" style="--mc:#101828" href="tfm-coach.html">
-<div class="icon">🎓</div>
-<div><b>TFM·Coach·Clínica</b><span>Tu TFM de investigación, sesión a sesión</span><p>Un tutor de IA te acompaña: pregunta e hipótesis, metodología, análisis, estructura IMRyD y defensa, con evaluación por rúbrica en cada sesión.</p></div>
-</a>
-</div></section>
+  <!-- MÓDULO 3 -->
+  <section class="module" id="m3">
+    <div class="mod-head">
+      <span class="mod-num">M·03</span>
+      <span class="mod-title">Evidencia científica y lectura crítica</span>
+      <span class="mod-sub">Aplicación de la Evidencia · Ensayos Clínicos</span>
+    </div>
+    <div class="grid">
+      <a class="app" href="lectura-critica.html">
+        <div class="app-top"><span class="app-id">12</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">LecturaCrítica<span class="ai">·AI</span></div>
+        <div class="app-desc">Fichas de lectura crítica CASPe según el tipo de estudio (ECA, cohorte, casos-controles, revisión). Checklist guiado por ítems y síntesis asistida de la validez.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t ia">IA</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="metaanalisis.html">
+        <div class="app-top"><span class="app-id">13</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">MetaAnálisis<span class="ai">·AI</span></div>
+        <div class="app-desc">Meta-análisis básico: modelos de efectos fijos y aleatorios, forest plot, heterogeneidad (I², Q de Cochran), funnel plot y test de sesgo de publicación de Egger.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t replaces">RevMan</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="nivel-evidencia.html">
+        <div class="app-top"><span class="app-id">14</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">NivelEvidencia<span class="ai">·AI</span></div>
+        <div class="app-desc">Clasifica el nivel de evidencia y el grado de recomendación según el diseño del estudio, con las escalas de Oxford (CEBM) y SIGN. Justificación paso a paso.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t replaces">CEBM · SIGN</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="grade.html">
+        <div class="app-top"><span class="app-id">15</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">GRADE<span class="ai">·AI</span></div>
+        <div class="app-desc">Evaluación de la certeza de la evidencia GRADE: tabla de decisiones con los cinco dominios de descenso y tres de ascenso, y asistente que justifica cada rebaja.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t ia">IA</span></div><span class="arrow">→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- MÓDULO 4 -->
+  <section class="module" id="m4">
+    <div class="mod-head">
+      <span class="mod-num">M·04</span>
+      <span class="mod-title">Proyecto, documentación y publicación</span>
+      <span class="mod-sub">Documentación Científica · TFM</span>
+    </div>
+    <div class="grid">
+      <a class="app" href="protocolo.html">
+        <div class="app-top"><span class="app-id">16</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">Protocolo<span class="ai">·AI</span></div>
+        <div class="app-desc">Estructura y redacta el protocolo de investigación siguiendo los ítems SPIRIT: hipótesis, objetivos, variables, plan de análisis y cronograma. Exporta a Word.</div>
+        <div class="app-foot"><div class="tags"><span class="t ia">IA</span><span class="t replaces">SPIRIT · docx</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="check-reporting.html">
+        <div class="app-top"><span class="app-id">17</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">CheckReporting<span class="ai">·AI</span></div>
+        <div class="app-desc">Verificador interactivo de guías de publicación: CONSORT, STROBE, PRISMA, SPIRIT, STARD, CARE y ARRIVE. Marca cada ítem y exporta el checklist firmado en PDF.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t ia">IA</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="ref-biblio.html">
+        <div class="app-top"><span class="app-id">18</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">RefBiblio<span class="ai">·AI</span></div>
+        <div class="app-desc">Búsqueda bibliográfica real en PubMed (E-utilities) y CrossRef. Formatea citas en Vancouver y APA, detecta duplicados y exporta a BibTeX y RIS.</div>
+        <div class="app-foot"><div class="tags"><span class="t api">API real</span><span class="t replaces">Zotero</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="abstract-imryd.html">
+        <div class="app-top"><span class="app-id">19</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">AbstractIMRyD<span class="ai">·AI</span></div>
+        <div class="app-desc">Asistente de redacción del resumen estructurado (Introducción-Métodos-Resultados-Discusión) y del título, con control de límite de palabras y palabras clave.</div>
+        <div class="app-foot"><div class="tags"><span class="t ia">IA</span><span class="t replaces">docx</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="diagrama-flujo.html">
+        <div class="app-top"><span class="app-id">20</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">DiagramaFlujo<span class="ai">·AI</span></div>
+        <div class="app-desc">Genera el diagrama de flujo de participantes CONSORT (ensayo), PRISMA 2020 (revisión) y STROBE (observacional). Rellena las cifras — o extráelas de un texto con IA — y exporta en SVG y PNG.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t ia">IA</span><span class="t replaces">SVG · PNG</span></div><span class="arrow">→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- MÓDULO 5 -->
+  <section class="module" id="m5">
+    <div class="mod-head">
+      <span class="mod-num">M·05</span>
+      <span class="mod-title">Metodología cualitativa y ética de la investigación</span>
+      <span class="mod-sub">Metodología Cualitativa · Ensayos Clínicos</span>
+    </div>
+    <div class="grid">
+      <a class="app" href="cualitativa.html">
+        <div class="app-top"><span class="app-id">21</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">Cualitativa<span class="ai">·AI</span></div>
+        <div class="app-desc">Apoyo al análisis cualitativo: guion de grupo focal, codificación temática asistida, mapa de categorías, evaluación de la saturación y checklist COREQ.</div>
+        <div class="app-foot"><div class="tags"><span class="t det">Determinista</span><span class="t ia">IA</span></div><span class="arrow">→</span></div>
+      </a>
+      <a class="app" href="comite-etico.html">
+        <div class="app-top"><span class="app-id">22</span><span class="oblig"><span class="l"></span><span class="d"></span><span class="r"></span></span></div>
+        <div class="app-name">ComitéÉtico<span class="ai">·AI</span></div>
+        <div class="app-desc">Genera la hoja de información al paciente y el consentimiento informado, y verifica la documentación exigida por el CEIm antes de presentar el proyecto.</div>
+        <div class="app-foot"><div class="tags"><span class="t ia">IA</span><span class="t replaces">CEIm · docx</span></div><span class="arrow">→</span></div>
+      </a>
+    </div>
+  </section>
+
 </main>
-<footer>Laboratorio IA · Máster Universitario en Investigación en Medicina Clínica · Universidad Miguel Hernández de Elche<br>Simuladores docentes de uso interno · No sustituyen la formación reglada, la supervisión del tutor/a ni el dictamen del CEIm</footer>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="col" style="max-width:34ch">
+      <b>Sobre el kit</b>
+      Herramientas de un solo archivo, sin backend ni instalación, pensadas para acompañar cada etapa del proyecto de investigación y del TFM. Los cálculos deterministas se ejecutan íntegramente en el navegador.
+    </div>
+    <div class="col stack">
+      <b>Stack</b>
+      Vanilla HTML/JS · sin dependencias de servidor<br>
+      Chart.js · KaTeX · docx.js · jsPDF<br>
+      IndexedDB / localStorage para el historial<br>
+      OpenAI gpt-4o-mini · clave <code>ia_openai_key</code><br>
+      PubMed E-utilities · CrossRef (APIs abiertas)
+    </div>
+    <div class="col stack">
+      <b>Titulación</b>
+      Máster U. en Investigación en Medicina Clínica<br>
+      Universidad Miguel Hernández de Elche<br>
+      60 ECTS · Modalidad en línea<br>
+      <a class="plain" href="https://www.umh.es/contenido/Estudios/:tit_m_193/datos_es.html">Ficha oficial del título ↗</a>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
