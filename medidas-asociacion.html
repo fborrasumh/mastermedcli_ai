@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RegresiónMultivariante·AI · Kit Metodológico UMH</title>
+<title>MedidasAsociación·AI · Kit Metodológico UMH</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -102,46 +102,40 @@
   footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
   @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
 
-  .layout{display:grid;grid-template-columns:minmax(280px,350px) 1fr;gap:22px;align-items:start}
-  .modes{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;margin-bottom:18px}
-  .modes button{flex:1;border:none;border-radius:0;background:#FCFDFC;color:var(--slate);font-size:13px;padding:9px}
-  .modes button.on{background:var(--teal);color:#fff}
-  .covlist label{display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-size:13.5px;color:var(--ink);margin-bottom:6px}
-  .covlist input{width:auto}
-  .covlist .tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--slate);border:1px solid var(--line);border-radius:2px;padding:1px 5px}
-  .coef-tbl td.est{font-family:'Spectral',serif;font-size:16px;font-weight:500}
-  .coef-tbl tr.sig td.est{color:var(--teal-deep)}
+  .layout{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:22px;align-items:start}
+  .tab2{border-collapse:collapse;width:100%;margin-top:6px}
+  .tab2 th{background:#FCFDFC}
+  .tab2 td,.tab2 th{border:1px solid var(--line);padding:0;text-align:center}
+  .tab2 th{padding:9px 6px;font-size:10px}
+  .tab2 .rh{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);padding:9px 10px;text-align:left;background:#FCFDFC;width:34%}
+  .tab2 input{border:none;background:transparent;text-align:center;font-family:'Spectral',serif;font-size:22px;font-weight:500;padding:14px 4px;border-radius:0}
+  .tab2 input:focus{outline:2px solid var(--teal);outline-offset:-2px;background:#F2F7F6}
+  .tab2 .tot{background:#FBFCFB;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--slate);padding:10px}
+  .cellname{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#A9B4B8;display:block;margin-top:-8px;padding-bottom:6px;letter-spacing:.1em}
+
+  .measures{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+  .measure{padding:16px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#FCFDFC}
+  .measure .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .measure .v{font-family:'Spectral',serif;font-size:33px;font-weight:600;line-height:1.1;margin:3px 0 2px;color:var(--teal-deep)}
+  .measure .v.neutral{color:var(--slate)}
+  .measure .ic{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-soft)}
+  .measure .exp{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.45;border-top:1px solid var(--line-soft);padding-top:7px}
+
   .forest svg{width:100%;height:auto}
-  .fline{stroke:var(--teal);stroke-width:1.3}
+  .fline{stroke:var(--teal);stroke-width:1.4}
   .fdot{fill:var(--teal)}
-  .fdot.ns{fill:var(--slate)}
-  .fline.ns{stroke:var(--slate)}
   .fnull{stroke:var(--slate);stroke-width:1;stroke-dasharray:3 3}
-  .fit{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:6px}
-  .fit div{border-left:2px solid var(--line);padding-left:11px}
-  .fit .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
-  .fit .v{font-family:'Spectral',serif;font-size:23px;font-weight:500}
-  .ai-out{border:1px solid var(--line);border-radius:3px;background:#FCFDFC;padding:18px;font-size:14.5px;line-height:1.65;margin-top:16px}
-  .ai-out h4{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);margin:15px 0 7px}
-  .ai-out h4:first-child{margin-top:0}
-  .ai-out ul{margin-left:18px}
-  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
-  @keyframes sp{to{transform:rotate(360deg)}}
-  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
-  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%;box-shadow:0 20px 60px -20px rgba(23,38,46,.4)}
-  dialog::backdrop{background:rgba(23,38,46,.35)}
-  .dlg{padding:24px}
-  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
-  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+  .flabel{font-family:'JetBrains Mono',monospace;font-size:11px;fill:var(--ink)}
+  .fval{font-family:'JetBrains Mono',monospace;font-size:10.5px;fill:var(--slate)}
 </style>
 </head>
 <body>
 <header>
   <div class="wrap masthead">
     <a class="back" href="index.html">← Kit Metodológico</a>
-    <div class="eyebrow">11 · Análisis y gestión de datos</div>
-    <h1>RegresiónMultivariante<em>·AI</em></h1>
-    <p class="lede">Ajuste por factores de confusión: regresión logística (Odds Ratio ajustada) y regresión de Cox (Hazard Ratio ajustada) desde CSV, con IC 95 %, valor p y medidas del modelo. Interpretación opcional con IA.</p>
+    <div class="eyebrow">07 · Análisis y gestión de datos</div>
+    <h1>MedidasAsociación<em>·AI</em></h1>
+    <p class="lede">Desde una tabla 2×2: Odds Ratio, Riesgo Relativo, reducción absoluta y relativa del riesgo, NNT y NNH con sus intervalos de confianza al 95 %, más la interpretación clínica.</p>
     <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
   </div>
 </header>
@@ -150,95 +144,88 @@
 <div class="layout">
   <div>
     <section class="card">
-      <h2>Modelo</h2>
-      <div class="modes">
-        <button id="m-log" class="on">Logística</button>
-        <button id="m-cox">Cox</button>
+      <h2>Diseño y tabla 2×2</h2>
+      <p class="sub">El diseño determina qué medidas son interpretables.</p>
+      <div class="fld">
+        <label for="dis">Diseño del estudio</label>
+        <select id="dis">
+          <option value="cohorte">Ensayo clínico o cohorte (parte de la exposición)</option>
+          <option value="cc">Casos y controles (parte del desenlace)</option>
+          <option value="trans">Transversal (mide todo a la vez)</option>
+        </select>
+        <div class="hint" id="dis-hint"></div>
       </div>
-      <p class="sub" id="mode-hint">Desenlace binario. Estima la Odds Ratio ajustada de cada covariable.</p>
-      <div class="drop" id="drop"><b>Arrastra tu CSV aquí</b>o haz clic para elegir el archivo</div>
-      <input type="file" id="file" accept=".csv,.txt,.tsv" class="hidden">
-      <div class="actions">
-        <button class="ghost small" id="btn-demo">Datos de ejemplo</button>
+      <div class="grid2">
+        <div class="fld"><label for="e1">Nombre del grupo 1</label><input type="text" id="e1" value="Expuestos"></div>
+        <div class="fld"><label for="e0">Nombre del grupo 0</label><input type="text" id="e0" value="No expuestos"></div>
       </div>
-      <div class="err hidden" id="err"></div>
+      <div class="grid2">
+        <div class="fld"><label for="o1">Desenlace presente</label><input type="text" id="o1" value="Evento"></div>
+        <div class="fld"><label for="o0">Desenlace ausente</label><input type="text" id="o0" value="Sin evento"></div>
+      </div>
 
-      <div class="hidden" id="cfg">
-        <div class="divider"><span>Variables</span></div>
-        <div class="fld hidden" id="w-time"><label for="v-t">Tiempo hasta el evento</label><select id="v-t"></select></div>
-        <div class="fld"><label for="v-y" id="lbl-y">Desenlace (binario)</label><select id="v-y"></select></div>
-        <div class="fld"><label for="v-pos">Valor que indica evento</label><select id="v-pos"></select></div>
-        <div class="divider"><span>Covariables del modelo</span></div>
-        <div class="covlist" id="covs"></div>
-        <div class="hint">Las variables categóricas se codifican con variables indicadoras tomando el primer nivel como referencia.</div>
-        <div class="actions">
-          <button id="btn-run">Ajustar modelo</button>
-        </div>
-        <div class="hint" style="margin-top:8px" id="epv"></div>
+      <table class="tab2">
+        <thead><tr><th></th><th id="h-o1">Evento</th><th id="h-o0">Sin evento</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="rh" id="h-e1">Expuestos</td>
+            <td><input type="number" id="a" value="15" min="0" step="1"><span class="cellname">a</span></td>
+            <td><input type="number" id="b" value="85" min="0" step="1"><span class="cellname">b</span></td>
+            <td class="tot" id="t1">100</td>
+          </tr>
+          <tr>
+            <td class="rh" id="h-e0">No expuestos</td>
+            <td><input type="number" id="c" value="5" min="0" step="1"><span class="cellname">c</span></td>
+            <td><input type="number" id="d" value="95" min="0" step="1"><span class="cellname">d</span></td>
+            <td class="tot" id="t0">100</td>
+          </tr>
+          <tr>
+            <td class="rh">Total</td>
+            <td class="tot" id="tc1">20</td><td class="tot" id="tc0">180</td><td class="tot" id="tn">200</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="actions">
+        <button id="btn-calc">Calcular</button>
+        <button class="ghost small" id="btn-hald">Corrección de Haldane (+0,5)</button>
       </div>
+      <div class="hint" style="margin-top:8px">Si alguna casilla vale 0, la OR y el RR no están definidos: la corrección de continuidad suma 0,5 a las cuatro casillas.</div>
+      <div class="err hidden" id="err"></div>
     </section>
   </div>
 
   <div>
-    <section class="card hidden" id="card-res">
-      <h2 id="res-title">Modelo ajustado</h2>
-      <p class="sub" id="res-sub"></p>
-      <div class="tbl-wrap" style="max-height:none">
-        <table class="coef-tbl" id="coef-tbl"><thead></thead><tbody></tbody></table>
-      </div>
-      <div class="divider"><span>Bondad de ajuste</span></div>
-      <div class="fit" id="fit"></div>
-    </section>
+    <section class="card" id="card-res">
+      <h2>Medidas de asociación</h2>
+      <p class="sub" id="res-sub">Introduce las frecuencias y pulsa Calcular.</p>
+      <div id="res-body" class="hidden">
+        <div class="measures" id="measures"></div>
 
-    <section class="card hidden" id="card-forest">
-      <h2>Efectos ajustados</h2>
-      <p class="sub" id="forest-sub"></p>
-      <div class="forest plot" id="forest"></div>
-    </section>
+        <div class="divider"><span>Contraste de hipótesis</span></div>
+        <table id="test-tbl"><thead></thead><tbody></tbody></table>
 
-    <section class="card hidden" id="card-out">
-      <h2>Redacción e interpretación</h2>
-      <p class="sub">Texto generado a partir de los coeficientes calculados en tu navegador.</p>
-      <div class="para" id="para"></div>
-      <div class="actions">
-        <button id="btn-ai">Interpretar con IA</button>
-        <button class="ghost" id="btn-copy">Copiar</button>
-        <button class="ghost" id="btn-md">Descargar informe (.md)</button>
-        <span class="status" id="st"></span>
+        <div class="divider"><span>Representación del efecto</span></div>
+        <div class="forest plot" id="forest"></div>
+
+        <div class="divider"><span>Interpretación clínica</span></div>
+        <div class="para" id="interp"></div>
+        <div class="actions">
+          <button class="ghost" id="btn-copy">Copiar interpretación</button>
+          <button class="ghost" id="btn-md">Descargar informe (.md)</button>
+          <span class="status" id="st"></span>
+        </div>
+        <div class="note" id="nota"></div>
       </div>
-      <div class="ai-out hidden" id="ai-out"></div>
-      <div class="note">Los coeficientes se estiman en tu navegador por máxima verosimilitud (Newton-Raphson). La IA no calcula nada: solo comenta las cifras. Regla práctica: al menos 10 eventos por covariable estimada, o los coeficientes estarán sobreajustados.</div>
     </section>
   </div>
 </div>
 </main>
 
 <footer class="wrap">
-  <span>RegresiónMultivariante·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
-  <span id="model-badge" style="cursor:pointer"></span>
+  <span>MedidasAsociación·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span>Determinista · sin IA · sin envío de datos</span>
 </footer>
-
-<dialog id="dlg-key">
-  <div class="dlg">
-    <h3>Clave de API de OpenAI</h3>
-    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit. Tus datos nunca se envían: solo la tabla de coeficientes.</p>
-    <label for="k">Clave</label>
-    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
-    <div style="margin-top:14px"></div>
-    <label for="m">Modelo</label>
-    <select id="m">
-      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
-      <option value="gpt-4o">gpt-4o · más preciso</option>
-      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
-      <option value="gpt-4.1">gpt-4.1</option>
-    </select>
-    <div class="actions">
-      <button id="k-save">Guardar</button>
-      <button class="ghost" id="k-cancel">Cancelar</button>
-      <button class="ghost small" id="k-clear">Borrar clave</button>
-    </div>
-  </div>
-</dialog>
 
 <script>
 /* ============ NÚCLEO ESTADÍSTICO · Kit Metodológico UMH ============ */
@@ -1008,293 +995,150 @@ function coxLL(X, time, event, b, ord){
 }
 
 
-/* ---------- clave y modelo ---------- */
-var KEY = "ia_openai_key", MODEL = "ia_openai_model";
-function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
-function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
-function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
-function getKey(){ return lsGet(KEY) || ""; }
-function getModel(){ return lsGet(MODEL) || "gpt-4o-mini"; }
-function badge(){ document.getElementById("model-badge").textContent = "modelo: " + getModel(); }
-var dlg = document.getElementById("dlg-key");
-function askKey(){ document.getElementById("k").value = getKey(); document.getElementById("m").value = getModel(); dlg.showModal(); }
-document.getElementById("k-save").onclick = function(){
-  var v = document.getElementById("k").value.trim();
-  if(v) lsSet(KEY, v);
-  lsSet(MODEL, document.getElementById("m").value);
-  badge(); dlg.close();
+var HINTS = {
+  cohorte:"Puedes estimar riesgos: RR, RAR, RRR, NNT y NNH. La OR también es válida pero menos intuitiva.",
+  cc:"Solo la Odds Ratio es interpretable. Los riesgos no pueden estimarse porque el muestreo fija el número de casos y controles.",
+  trans:"Se estiman razones de prevalencia y odds de prevalencia. No hay secuencia temporal: cuidado con la causalidad reversa."
 };
-document.getElementById("k-cancel").onclick = function(){ dlg.close(); };
-document.getElementById("k-clear").onclick = function(){ lsDel(KEY); document.getElementById("k").value = ""; };
-document.getElementById("model-badge").onclick = askKey;
-badge();
+var LAST = null;
 
-async function askAI(system, user){
-  var key = getKey();
-  if(!key){ askKey(); throw new Error("Falta la clave de API."); }
-  var res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
-    body: JSON.stringify({ model:getModel(), temperature:0.25, response_format:{type:"json_object"},
-      messages:[{role:"system",content:system},{role:"user",content:user}] })
-  });
-  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,150)); }
-  var data = await res.json();
-  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
+function sync(){
+  document.getElementById("dis-hint").textContent = HINTS[document.getElementById("dis").value];
+  document.getElementById("h-e1").textContent = document.getElementById("e1").value || "Grupo 1";
+  document.getElementById("h-e0").textContent = document.getElementById("e0").value || "Grupo 0";
+  document.getElementById("h-o1").textContent = document.getElementById("o1").value || "Evento";
+  document.getElementById("h-o0").textContent = document.getElementById("o0").value || "Sin evento";
+  var v = cells();
+  document.getElementById("t1").textContent = fmtN(v.a + v.b);
+  document.getElementById("t0").textContent = fmtN(v.c + v.d);
+  document.getElementById("tc1").textContent = fmtN(v.a + v.c);
+  document.getElementById("tc0").textContent = fmtN(v.b + v.d);
+  document.getElementById("tn").textContent = fmtN(v.a + v.b + v.c + v.d);
 }
-
-/* ---------- estado ---------- */
-var MODE = "log", D = null, RES = null;
-document.getElementById("m-log").onclick = function(){ setMode("log"); };
-document.getElementById("m-cox").onclick = function(){ setMode("cox"); };
-function setMode(m){
-  MODE = m;
-  document.getElementById("m-log").className = m === "log" ? "on" : "";
-  document.getElementById("m-cox").className = m === "cox" ? "on" : "";
-  document.getElementById("mode-hint").textContent = m === "log"
-    ? "Desenlace binario. Estima la Odds Ratio ajustada de cada covariable."
-    : "Tiempo hasta el evento con censura. Estima el Hazard Ratio ajustado (riesgos proporcionales, método de Breslow).";
-  document.getElementById("w-time").classList[m === "cox" ? "remove" : "add"]("hidden");
-  document.getElementById("lbl-y").textContent = m === "cox" ? "Indicador de evento" : "Desenlace (binario)";
-  ["card-res","card-forest","card-out"].forEach(function(id){ document.getElementById(id).classList.add("hidden"); });
-  if(D) cfg();
+function fmtN(x){ return Number.isInteger(x) ? x : nm(x,1); }
+function cells(){
+  return { a: +document.getElementById("a").value, b: +document.getElementById("b").value,
+           c: +document.getElementById("c").value, d: +document.getElementById("d").value };
 }
-
-/* ---------- carga ---------- */
-var drop = document.getElementById("drop"), file = document.getElementById("file");
-drop.onclick = function(){ file.click(); };
-drop.ondragover = function(e){ e.preventDefault(); drop.classList.add("over"); };
-drop.ondragleave = function(){ drop.classList.remove("over"); };
-drop.ondrop = function(e){ e.preventDefault(); drop.classList.remove("over"); if(e.dataTransfer.files[0]) rd(e.dataTransfer.files[0]); };
-file.onchange = function(){ if(file.files[0]) rd(file.files[0]); };
-function rd(f){ var r = new FileReader(); r.onload = function(){ load(r.result); }; r.readAsText(f, "UTF-8"); }
-
-document.getElementById("btn-demo").onclick = function(){
-  var rnd = mb(3), rows = ["tiempo;evento;tratamiento;edad;sexo;estadio"];
-  for(var i = 0; i < 180; i++){
-    var trt = rnd() < 0.5 ? 1 : 0;
-    var edad = Math.round(58 + 11*gs(rnd));
-    var sexo = rnd() < 0.5 ? "Hombre" : "Mujer";
-    var est = ["I","II","III"][Math.floor(rnd()*3)];
-    var lp = -0.85*trt + 0.035*(edad-58) + (est === "II" ? 0.55 : est === "III" ? 1.25 : 0);
-    var haz = Math.exp(lp)*0.045;
-    var t = -Math.log(1-rnd())/haz;
-    var cens = 36;
-    var ev = t <= cens ? 1 : 0;
-    rows.push([Math.min(t, cens).toFixed(1).replace(".",","), ev, trt ? "Nuevo" : "Estándar", edad, sexo, est].join(";"));
-  }
-  load(rows.join("\n"));
+["e1","e0","o1","o0","a","b","c","d","dis"].forEach(function(id){
+  document.getElementById(id).addEventListener("input", sync);
+  document.getElementById(id).addEventListener("change", sync);
+});
+document.getElementById("btn-hald").onclick = function(){
+  var v = cells();
+  ["a","b","c","d"].forEach(function(k){ document.getElementById(k).value = v[k] + 0.5; });
+  sync(); calc();
 };
-function mb(a){ return function(){ a|=0; a=(a+0x6D2B79F5)|0; var t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; }; }
-function gs(r){ return Math.sqrt(-2*Math.log(1-r()))*Math.cos(2*Math.PI*r()); }
 
-function load(text){
+function calc(){
   showErr(null);
-  try{ D = parseCSV(text); if(D.n < 15) throw new Error("Se necesitan al menos 15 sujetos para ajustar un modelo multivariante."); }
-  catch(e){ return showErr(e.message); }
-  D.nums = D.head.filter(function(h){ return isNumericCol(D.cols[h]); });
-  D.bins = D.head.filter(function(h){ return uniq(D.cols[h]).length === 2; });
-  D.cats = D.head.filter(function(h){ var u = uniq(D.cols[h]); return u.length >= 2 && u.length <= 6; });
-  if(!D.bins.length) return showErr("No hay ninguna columna con dos niveles para el desenlace.");
-  document.getElementById("cfg").classList.remove("hidden");
-  cfg();
-}
-function uniq(a){ return a.filter(function(v,i,s){ return v !== "" && s.indexOf(v) === i; }); }
+  var v = cells();
+  if([v.a,v.b,v.c,v.d].some(function(x){ return isNaN(x) || x < 0; })) return showErr("Todas las casillas deben ser números no negativos.");
+  if(v.a + v.b === 0 || v.c + v.d === 0) return showErr("Las filas no pueden estar vacías.");
+  if([v.a,v.b,v.c,v.d].some(function(x){ return x === 0; }))
+    return showErr("Hay al menos una casilla con cero: la OR y el RR no están definidos. Aplica la corrección de Haldane.");
 
-function cfg(){
-  fill("v-y", D.bins);
-  if(MODE === "cox") fill("v-t", D.nums);
-  document.getElementById("v-y").onchange = function(){ posLv(); covs(); };
-  posLv(); covs();
-  guess();
-}
-function guess(){
-  var t = D.head.find(function(h){ return /^(tiempo|time|t|seguimiento)$/i.test(h); });
-  if(t && MODE === "cox") document.getElementById("v-t").value = t;
-  var e = D.head.find(function(h){ return /^(evento|event|status|desenlace|muerte)$/i.test(h); });
-  if(e){ document.getElementById("v-y").value = e; posLv(); covs(); }
-}
-function fill(id, arr){
-  document.getElementById(id).innerHTML = arr.map(function(h){ return '<option value="' + esc(h) + '">' + esc(h) + '</option>'; }).join("");
-}
-function posLv(){
-  var lv = uniq(D.cols[document.getElementById("v-y").value]);
-  var s = document.getElementById("v-pos");
-  s.innerHTML = lv.map(function(l){ return '<option value="' + esc(l) + '">' + esc(l) + '</option>'; }).join("");
-  var one = lv.find(function(l){ return l === "1" || /^(s[ií]|yes|evento|muerte)$/i.test(l); });
-  if(one) s.value = one;
-}
-function covs(){
-  var y = document.getElementById("v-y").value;
-  var t = MODE === "cox" ? document.getElementById("v-t").value : null;
-  var cand = D.head.filter(function(h){
-    if(h === y || h === t) return false;
-    return D.nums.indexOf(h) >= 0 || D.cats.indexOf(h) >= 0;
-  });
-  document.getElementById("covs").innerHTML = cand.map(function(h){
-    var isNum = D.nums.indexOf(h) >= 0 && uniq(D.cols[h]).length > 6;
-    return '<label><input type="checkbox" value="' + esc(h) + '" checked> ' + esc(h) +
-      '<span class="tag">' + (isNum ? "continua" : uniq(D.cols[h]).length + " niveles") + '</span></label>';
-  }).join("");
-  document.querySelectorAll("#covs input").forEach(function(i){ i.onchange = epv; });
-  epv();
-}
-function epv(){
-  var y = document.getElementById("v-y").value, pos = document.getElementById("v-pos").value;
-  var ev = D.cols[y].filter(function(v){ return v === pos; }).length;
-  var p = 0;
-  document.querySelectorAll("#covs input:checked").forEach(function(i){
-    var h = i.value;
-    var isNum = D.nums.indexOf(h) >= 0 && uniq(D.cols[h]).length > 6;
-    p += isNum ? 1 : (uniq(D.cols[h]).length - 1);
-  });
-  var r = p ? ev/p : 0;
-  document.getElementById("epv").innerHTML = "Eventos: <b>" + ev + "</b> · parámetros a estimar: <b>" + p + "</b> · eventos por variable: <b>" +
-    nm(r,1) + "</b> " + (r >= 10 ? '<span class="pill ok">adecuado</span>' : r >= 5 ? '<span class="pill mid">justo</span>' : '<span class="pill no">insuficiente</span>');
-}
-document.getElementById("v-pos").onchange = epv;
-
-/* ---------- diseño de la matriz ---------- */
-function design(cols){
-  var names = [], build = [];
-  cols.forEach(function(h){
-    var isNum = D.nums.indexOf(h) >= 0 && uniq(D.cols[h]).length > 6;
-    if(isNum){
-      names.push(h);
-      build.push({ h:h, tipo:"num" });
-    } else {
-      var lv = uniq(D.cols[h]).sort();
-      lv.slice(1).forEach(function(l){
-        names.push(h + " = " + l);
-        build.push({ h:h, tipo:"dummy", nivel:l, ref:lv[0] });
-      });
-    }
-  });
-  return { names: names, build: build };
-}
-
-/* ---------- ajuste ---------- */
-document.getElementById("btn-run").onclick = function(){
-  showErr(null);
-  try{ MODE === "log" ? runLog() : runCox(); }
-  catch(e){ showErr(e.message); }
-};
-
-function rowsMatrix(dz, filtro){
-  var X = [], keep = [];
-  for(var i = 0; i < D.n; i++){
-    var row = dz.build.map(function(b){
-      if(b.tipo === "num") return toNum([D.cols[b.h][i]])[0];
-      return D.cols[b.h][i] === b.nivel ? 1 : 0;
-    });
-    if(row.some(isNaN) || !filtro(i)) continue;
-    X.push(row); keep.push(i);
-  }
-  return { X:X, keep:keep };
-}
-
-function runLog(){
-  var y = document.getElementById("v-y").value, pos = document.getElementById("v-pos").value;
-  var cols = [].slice.call(document.querySelectorAll("#covs input:checked")).map(function(i){ return i.value; });
-  if(!cols.length) throw new Error("Marca al menos una covariable.");
-  var dz = design(cols);
-  var M = rowsMatrix(dz, function(){ return true; });
-  var Y = M.keep.map(function(i){ return D.cols[y][i] === pos ? 1 : 0; });
-  var ev = Y.filter(function(v){ return v === 1; }).length;
-  if(ev < 5 || Y.length - ev < 5) throw new Error("Se necesitan al menos 5 eventos y 5 no eventos.");
-  var Xi = M.X.map(function(r){ return [1].concat(r); });
-  var fit = logistic(Xi, Y);
-  if(fit.err) throw new Error(fit.err);
-  RES = { tipo:"log", fit:fit, names:["Constante"].concat(dz.names), dz:dz, n:Y.length, eventos:ev, y:y, pos:pos };
+  var A = assoc2x2(v.a, v.b, v.c, v.d);
+  var dis = document.getElementById("dis").value;
+  LAST = { v:v, A:A, dis:dis,
+    e1: document.getElementById("e1").value, e0: document.getElementById("e0").value,
+    o1: document.getElementById("o1").value, o0: document.getElementById("o0").value };
   render();
 }
+document.getElementById("btn-calc").onclick = calc;
 
-function runCox(){
-  var y = document.getElementById("v-y").value, pos = document.getElementById("v-pos").value;
-  var ct = document.getElementById("v-t").value;
-  var cols = [].slice.call(document.querySelectorAll("#covs input:checked")).map(function(i){ return i.value; });
-  if(!cols.length) throw new Error("Marca al menos una covariable.");
-  var tt = toNum(D.cols[ct]);
-  var dz = design(cols);
-  var M = rowsMatrix(dz, function(i){ return !isNaN(tt[i]) && tt[i] >= 0; });
-  var time = M.keep.map(function(i){ return tt[i]; });
-  var ev = M.keep.map(function(i){ return D.cols[y][i] === pos ? 1 : 0; });
-  var nev = ev.filter(function(v){ return v === 1; }).length;
-  if(nev < 5) throw new Error("Se necesitan al menos 5 eventos observados.");
-  var fit = cox(M.X, time, ev);
-  if(fit.err) throw new Error(fit.err);
-  RES = { tipo:"cox", fit:fit, names:dz.names, dz:dz, n:time.length, eventos:nev, y:y, pos:pos, ct:ct };
-  render();
-}
-
-/* ---------- render ---------- */
 function render(){
-  var F = RES.fit, esOR = RES.tipo === "log";
-  ["card-res","card-forest","card-out"].forEach(function(id){ document.getElementById(id).classList.remove("hidden"); });
-  document.getElementById("res-title").textContent = esOR ? "Regresión logística binaria" : "Regresión de Cox de riesgos proporcionales";
-  document.getElementById("res-sub").textContent = RES.n + " sujetos · " + RES.eventos + " eventos · " +
-    (esOR ? "Odds Ratio ajustadas" : "Hazard Ratio ajustados (Breslow)") + " · " + nm(RES.eventos/(F.coef.length - (esOR?1:0)),1) + " eventos por variable";
+  var A = LAST.A, dis = LAST.dis, v = LAST.v;
+  document.getElementById("res-body").classList.remove("hidden");
+  document.getElementById("res-sub").textContent = dis === "cc" ? "Diseño de casos y controles · solo la OR es interpretable"
+    : dis === "trans" ? "Diseño transversal · razones de prevalencia" : "Diseño de cohorte o ensayo · riesgos estimables";
 
-  var est = esOR ? "OR ajustada" : "HR ajustado";
-  document.querySelector("#coef-tbl thead").innerHTML =
-    "<tr><th>Variable</th><th class='num'>β</th><th class='num'>EE</th><th class='num'>" + est + "</th><th class='num'>IC 95 %</th><th class='num'>z</th><th class='num'>p</th></tr>";
-  document.querySelector("#coef-tbl tbody").innerHTML = F.coef.map(function(c, i){
-    var e = esOR ? c.or : c.hr;
-    var cte = esOR && i === 0;
-    var sig = c.p < 0.05 && !cte;
-    return "<tr" + (sig ? " class='sig'" : "") + "><td>" + esc(RES.names[i]) + "</td>" +
-      "<td class='num'>" + nm(c.b,4) + "</td><td class='num'>" + nm(c.se,4) + "</td>" +
-      "<td class='num est'>" + (cte ? "—" : nm(e,3)) + "</td>" +
-      "<td class='num'>" + (cte ? "—" : nm(c.ic[0],3) + " – " + nm(c.ic[1],3)) + "</td>" +
-      "<td class='num'>" + nm(c.z,3) + "</td><td class='num'>" + fmtP(c.p) + "</td></tr>";
-  }).join("");
+  var protector = A.rar < 0;
+  var M = document.getElementById("measures");
+  M.innerHTML = "";
 
-  var fb = document.getElementById("fit");
-  fb.innerHTML = "";
-  ft(fb, "Log-verosimilitud", nm(F.ll,2));
-  ft(fb, "Razón de verosimilitudes", "χ²(" + F.lrDf + ") = " + nm(F.lr,2));
-  ft(fb, "p del modelo", fmtP(F.lrP));
-  ft(fb, "AIC", nm(F.aic,2));
-  if(esOR){ ft(fb, "R² de Cox-Snell", nm(F.r2cs,3)); ft(fb, "R² de Nagelkerke", nm(F.r2n,3)); }
+  if(dis !== "cc"){
+    med(M, dis === "trans" ? "Prevalencia · " + LAST.e1 : "Riesgo · " + LAST.e1, nm(100*A.r1,1) + " %", "", v.a + " de " + (v.a+v.b));
+    med(M, dis === "trans" ? "Prevalencia · " + LAST.e0 : "Riesgo · " + LAST.e0, nm(100*A.r0,1) + " %", "", v.c + " de " + (v.c+v.d));
+    med(M, dis === "trans" ? "Razón de prevalencias" : "Riesgo relativo (RR)", nm(A.rr,3),
+        "IC 95 % " + nm(A.icRR[0],3) + " – " + nm(A.icRR[1],3),
+        interpRatio(A.rr, A.icRR, dis === "trans" ? "la prevalencia" : "el riesgo"), sig(A.icRR,1));
+  }
+  med(M, "Odds Ratio (OR)", nm(A.or,3), "IC 95 % " + nm(A.icOR[0],3) + " – " + nm(A.icOR[1],3),
+      interpRatio(A.or, A.icOR, "las odds"), sig(A.icOR,1));
+
+  if(dis === "cohorte"){
+    med(M, protector ? "Reducción absoluta del riesgo (RAR)" : "Aumento absoluto del riesgo",
+        nm(100*Math.abs(A.rar),1) + " pp", "IC 95 % " + nm(100*Math.abs(A.icRAR[1]),1) + " – " + nm(100*Math.abs(A.icRAR[0]),1) + " pp",
+        "Diferencia absoluta entre los dos riesgos, en puntos porcentuales.", sig(A.icRAR,0));
+    med(M, protector ? "Reducción relativa del riesgo (RRR)" : "Incremento relativo del riesgo",
+        nm(100*Math.abs(A.rrr),1) + " %", "",
+        "Proporción del riesgo basal que " + (protector ? "se elimina" : "se añade") + " con la exposición.");
+    var esNNT = protector;
+    var ic = [A.icNNT[0], A.icNNT[1]].map(Math.abs).sort(function(x,y){ return x-y; });
+    med(M, esNNT ? "NNT · número necesario a tratar" : "NNH · número necesario para dañar",
+        Math.ceil(Math.abs(A.nnt)),
+        sig(A.icRAR,0) ? "IC 95 % " + Math.ceil(ic[0]) + " – " + Math.ceil(ic[1]) : "IC incluye el infinito",
+        esNNT ? "Pacientes que hay que tratar para evitar un evento adicional." : "Pacientes expuestos para producir un evento adicional.");
+  }
+
+  var thead = document.querySelector("#test-tbl thead");
+  thead.innerHTML = "<tr><th>Prueba</th><th class='num'>Estadístico</th><th class='num'>gl</th><th class='num'>p</th></tr>";
+  var ct = A.chi2;
+  document.querySelector("#test-tbl tbody").innerHTML =
+    "<tr><td>χ² de Pearson</td><td class='num'>" + nm(ct.chi2,3) + "</td><td class='num'>1</td><td class='num'>" + fmtP(ct.p) + "</td></tr>" +
+    "<tr><td>χ² con corrección de Yates</td><td class='num'>" + nm(ct.yates,3) + "</td><td class='num'>1</td><td class='num'>" + fmtP(ct.pYates) + "</td></tr>" +
+    "<tr" + (ct.minExp < 5 ? " class='hl'" : "") + "><td>Prueba exacta de Fisher (bilateral)</td><td class='num'>—</td><td class='num'>—</td><td class='num'>" + fmtP(ct.fisher.p) + "</td></tr>" +
+    "<tr><td>Mínima frecuencia esperada</td><td class='num'>" + nm(ct.minExp,2) + "</td><td class='num'>—</td><td class='num'>" +
+      (ct.minExp < 5 ? '<span class="pill no">usa Fisher</span>' : '<span class="pill ok">χ² válido</span>') + "</td></tr>";
 
   forest();
-  texto();
+  interpretacion();
+  document.getElementById("nota").innerHTML = dis === "cc"
+    ? "En un diseño de casos y controles el investigador fija cuántos casos y cuántos controles estudia, de modo que las proporciones de fila no estiman riesgos. Solo la OR es válida; se aproxima al RR cuando el desenlace es raro (regla del 10 %)."
+    : "La significación estadística no equivale a relevancia clínica. Un RR de 1,02 puede ser significativo con n grande y carecer de interés; un NNT de 3 puede cambiar la práctica aunque el IC sea amplio.";
 }
-function ft(box, k, v){
+function med(box, k, v, ic, exp, sigOK){
   var d = document.createElement("div");
-  d.innerHTML = '<div class="k">' + k + '</div><div class="v">' + v + '</div>';
+  d.className = "measure";
+  d.innerHTML = '<div class="k">' + esc(k) + '</div><div class="v' + (sigOK === false ? " neutral" : "") + '">' + v + '</div>' +
+    (ic ? '<div class="ic">' + ic + '</div>' : "") + (exp ? '<div class="exp">' + exp + '</div>' : "");
   box.appendChild(d);
 }
+function sig(ic, nulo){ return !(ic[0] <= nulo && ic[1] >= nulo); }
+function interpRatio(r, ic, que){
+  if(!sig(ic,1)) return "El intervalo de confianza incluye el 1: no se descarta la ausencia de asociación.";
+  if(r > 1) return "La exposición multiplica " + que + " por " + nm(r,2) + ".";
+  return "La exposición reduce " + que + " un " + nm(100*(1-r),1) + " %.";
+}
 
+/* ---------- forest plot ---------- */
 function forest(){
-  var F = RES.fit, esOR = RES.tipo === "log";
+  var A = LAST.A, dis = LAST.dis;
   var items = [];
-  F.coef.forEach(function(c, i){
-    if(esOR && i === 0) return;
-    items.push({ n: RES.names[i], e: esOR ? c.or : c.hr, ic: c.ic, sig: c.p < 0.05 });
-  });
-  document.getElementById("forest-sub").textContent = (esOR ? "Odds Ratio" : "Hazard Ratio") + " ajustadas con su intervalo de confianza al 95 %, en escala logarítmica.";
+  if(dis !== "cc") items.push({ n: dis === "trans" ? "Razón de prevalencias" : "Riesgo relativo", e:A.rr, ic:A.icRR });
+  items.push({ n:"Odds Ratio", e:A.or, ic:A.icOR });
 
-  var W = 820, H = 56 + items.length*46, mL = 230, mR = 130;
-  var all = items.reduce(function(s,i){ return s.concat([Math.max(i.ic[0],0.02), Math.min(i.ic[1],50)]); }, [1]);
-  var lo = Math.max(0.02, Math.min.apply(null, all)*0.8), hi = Math.min(60, Math.max.apply(null, all)*1.25);
-  var X = function(v){ return mL + (Math.log(Math.max(Math.min(v,hi),lo)) - Math.log(lo))/(Math.log(hi)-Math.log(lo))*(W-mL-mR); };
+  var W = 760, H = 60 + items.length*54, mL = 190, mR = 90;
+  var all = items.reduce(function(s,i){ return s.concat([i.ic[0], i.ic[1], i.e]); }, [1]);
+  var lo = Math.max(0.05, Math.min.apply(null, all)*0.75), hi = Math.max.apply(null, all)*1.3;
+  var X = function(v){ return mL + (Math.log(Math.max(v,lo)) - Math.log(lo))/(Math.log(hi)-Math.log(lo))*(W-mL-mR); };
 
-  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Efectos ajustados">';
-  s += '<line class="fnull" x1="' + X(1) + '" y1="14" x2="' + X(1) + '" y2="' + (H-30) + '"/>';
+  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Efecto y su intervalo de confianza">';
+  s += '<line class="fnull" x1="' + X(1) + '" y1="18" x2="' + X(1) + '" y2="' + (H-30) + '"/>';
   items.forEach(function(it, i){
-    var y = 30 + i*46, cls = it.sig ? "" : " ns";
-    s += '<text class="tick" x="' + (mL-12) + '" y="' + (y+4) + '" text-anchor="end" style="font-size:11.5px;fill:#17262E">' + esc(it.n) + '</text>';
-    s += '<line class="fline' + cls + '" x1="' + X(it.ic[0]) + '" y1="' + y + '" x2="' + X(it.ic[1]) + '" y2="' + y + '"/>';
-    s += '<line class="fline' + cls + '" x1="' + X(it.ic[0]) + '" y1="' + (y-4) + '" x2="' + X(it.ic[0]) + '" y2="' + (y+4) + '"/>';
-    s += '<line class="fline' + cls + '" x1="' + X(it.ic[1]) + '" y1="' + (y-4) + '" x2="' + X(it.ic[1]) + '" y2="' + (y+4) + '"/>';
-    s += '<rect class="fdot' + cls + '" x="' + (X(it.e)-4.5) + '" y="' + (y-4.5) + '" width="9" height="9" transform="rotate(45 ' + X(it.e) + ' ' + y + ')"/>';
-    s += '<text class="tick" x="' + (W-mR+12) + '" y="' + (y+4) + '">' + nm(it.e,2) + ' (' + nm(it.ic[0],2) + '–' + nm(it.ic[1],2) + ')</text>';
+    var y = 34 + i*54;
+    s += '<text class="flabel" x="' + (mL-12) + '" y="' + (y+4) + '" text-anchor="end">' + esc(it.n) + '</text>';
+    s += '<line class="fline" x1="' + X(it.ic[0]) + '" y1="' + y + '" x2="' + X(it.ic[1]) + '" y2="' + y + '"/>';
+    s += '<line class="fline" x1="' + X(it.ic[0]) + '" y1="' + (y-5) + '" x2="' + X(it.ic[0]) + '" y2="' + (y+5) + '"/>';
+    s += '<line class="fline" x1="' + X(it.ic[1]) + '" y1="' + (y-5) + '" x2="' + X(it.ic[1]) + '" y2="' + (y+5) + '"/>';
+    s += '<rect class="fdot" x="' + (X(it.e)-5) + '" y="' + (y-5) + '" width="10" height="10" transform="rotate(45 ' + X(it.e) + ' ' + y + ')"/>';
+    s += '<text class="fval" x="' + (W-mR+10) + '" y="' + (y+4) + '">' + nm(it.e,2) + ' (' + nm(it.ic[0],2) + '–' + nm(it.ic[1],2) + ')</text>';
   });
   s += '<line class="axis" x1="' + mL + '" y1="' + (H-30) + '" x2="' + (W-mR) + '" y2="' + (H-30) + '"/>';
-  [0.05,0.1,0.25,0.5,1,2,4,10,25].filter(function(t){ return t >= lo && t <= hi; }).forEach(function(t){
+  [0.1,0.25,0.5,1,2,4,10].filter(function(t){ return t >= lo && t <= hi; }).forEach(function(t){
     s += '<line class="axis" x1="' + X(t) + '" y1="' + (H-30) + '" x2="' + X(t) + '" y2="' + (H-25) + '"/>';
-    s += '<text class="tick" x="' + X(t) + '" y="' + (H-13) + '" text-anchor="middle">' + nm(t,2) + '</text>';
+    s += '<text class="tick" x="' + X(t) + '" y="' + (H-13) + '" text-anchor="middle">' + t + '</text>';
   });
   s += '<text class="tick" x="' + (X(1)-8) + '" y="' + (H-1) + '" text-anchor="end">← protector</text>';
   s += '<text class="tick" x="' + (X(1)+8) + '" y="' + (H-1) + '">de riesgo →</text>';
@@ -1302,101 +1146,69 @@ function forest(){
   document.getElementById("forest").innerHTML = s;
 }
 
-function texto(){
-  var F = RES.fit, esOR = RES.tipo === "log";
-  var t = "Se ajustó un modelo de " + (esOR ? "regresión logística binaria" : "regresión de Cox de riesgos proporcionales") +
-    " sobre " + RES.n + " sujetos con " + RES.eventos + " eventos, incluyendo " + (F.coef.length - (esOR?1:0)) + " parámetros. " +
-    "El modelo global " + (F.lrP < 0.05 ? "resultó significativo" : "no alcanzó la significación") +
-    " (razón de verosimilitudes χ²(" + F.lrDf + ") = " + nm(F.lr,2) + "; p = " + fmtP(F.lrP) + ")" +
-    (esOR ? ", con una R² de Nagelkerke de " + nm(F.r2n,3) : "") + ". ";
-  var sigs = [];
-  F.coef.forEach(function(c, i){
-    if(esOR && i === 0) return;
-    if(c.p < 0.05) sigs.push({ n: RES.names[i], e: esOR ? c.or : c.hr, ic: c.ic, p: c.p });
-  });
-  if(sigs.length){
-    t += "Tras el ajuste mutuo por las demás covariables, resultaron asociadas de forma independiente al desenlace: ";
-    t += sigs.map(function(s){
-      return s.n + " (" + (esOR ? "OR" : "HR") + " = " + nm(s.e,2) + "; IC 95 % " + nm(s.ic[0],2) + " a " + nm(s.ic[1],2) + "; p = " + fmtP(s.p) + ")";
-    }).join("; ") + ". ";
-    var pr = sigs.filter(function(s){ return s.e < 1; });
-    if(pr.length) t += "Los efectos con estimador inferior a 1 se comportan como factores protectores. ";
+/* ---------- interpretación ---------- */
+function interpretacion(){
+  var A = LAST.A, v = LAST.v, dis = LAST.dis, t = "";
+  var sigOR = sig(A.icOR, 1);
+  if(dis === "cc"){
+    t = "Entre los casos, la odds de exposición fue " + nm(A.or,2) + " veces la observada entre los controles (OR = " + nm(A.or,2) +
+        "; IC 95 % " + nm(A.icOR[0],2) + " a " + nm(A.icOR[1],2) + "; p = " + fmtP(A.chi2.fisher.p) + "). " +
+        (sigOR ? (A.or > 1 ? "La exposición se asocia a mayor probabilidad de ser caso." : "La exposición se asocia a menor probabilidad de ser caso.")
+               : "El intervalo de confianza incluye la unidad, de modo que no puede descartarse la ausencia de asociación.") +
+        " Al tratarse de un diseño de casos y controles, no procede estimar riesgos ni NNT.";
   } else {
-    t += "Ninguna covariable alcanzó la significación estadística tras el ajuste mutuo. ";
+    var r1 = 100*A.r1, r0 = 100*A.r0, prot = A.rar < 0;
+    var pal = dis === "trans" ? "prevalencia" : "riesgo";
+    t = "La " + pal + " del desenlace fue del " + nm(r1,1) + " % en " + LAST.e1 + " (" + v.a + "/" + (v.a+v.b) + ") frente al " +
+        nm(r0,1) + " % en " + LAST.e0 + " (" + v.c + "/" + (v.c+v.d) + "). El " + (dis === "trans" ? "cociente de prevalencias" : "riesgo relativo") +
+        " fue de " + nm(A.rr,2) + " (IC 95 % " + nm(A.icRR[0],2) + " a " + nm(A.icRR[1],2) + "), con una diferencia absoluta de " +
+        nm(Math.abs(100*A.rar),1) + " puntos porcentuales" +
+        (sig(A.icRAR,0) ? " (IC 95 % " + nm(Math.abs(100*A.icRAR[1]),1) + " a " + nm(Math.abs(100*A.icRAR[0]),1) + ")" : "") + ". ";
+    if(dis === "cohorte"){
+      t += prot
+        ? "Sería necesario tratar a " + Math.ceil(Math.abs(A.nnt)) + " pacientes (NNT) para evitar un evento adicional. "
+        : "Bastaría con exponer a " + Math.ceil(Math.abs(A.nnt)) + " personas (NNH) para producir un evento adicional. ";
+    }
+    t += sig(A.icRR,1)
+      ? "La asociación alcanzó la significación estadística (χ² = " + nm(A.chi2.chi2,2) + "; p = " + fmtP(A.chi2.p) + ")."
+      : "La asociación no alcanzó la significación estadística (χ² = " + nm(A.chi2.chi2,2) + "; p = " + fmtP(A.chi2.p) + "); el intervalo de confianza incluye la unidad.";
+    if(A.chi2.minExp < 5) t += " Como alguna frecuencia esperada es inferior a 5, se toma como referencia la prueba exacta de Fisher (p = " + fmtP(A.chi2.fisher.p) + ").";
   }
-  t += "El resto de covariables no mostró asociación independiente con el desenlace.";
-  document.getElementById("para").textContent = t;
-  RES.texto = t;
+  document.getElementById("interp").textContent = t;
+  LAST.texto = t;
 }
-
-/* ---------- IA ---------- */
-var SYS = [
-  "Eres bioestadístico y revisor de artículos biomédicos.",
-  "Recibes la tabla de coeficientes ya calculados de un modelo (logístico o de Cox) y debes interpretarlos.",
-  "No recalcules nada ni inventes cifras: usa exactamente las que se te dan.",
-  "Responde EXCLUSIVAMENTE con JSON, sin markdown, con este esquema:",
-  '{"lectura":"2-3 frases sobre lo que dice el modelo en términos clínicos",',
-  '"efecto_principal":"interpretación de la covariable con mayor efecto significativo, explicando la escala (odds u hazard)",',
-  '"confusion":"qué sugiere el ajuste sobre la confusión entre covariables",',
-  '"limitaciones":["limitación concreta de ESTE modelo","..."],',
-  '"comprobaciones":["comprobación estadística pendiente, p. ej. riesgos proporcionales, linealidad del logit, colinealidad","..."]}',
-  "Todo en español, específico y sin generalidades de libro de texto."
-].join(" ");
-
-document.getElementById("btn-ai").onclick = async function(){
-  if(!RES) return;
-  var btn = this; btn.disabled = true;
-  st('<span class="spin"></span>Interpretando…');
-  var esOR = RES.tipo === "log";
-  var payload = {
-    modelo: esOR ? "regresión logística" : "regresión de Cox",
-    n: RES.n, eventos: RES.eventos,
-    ajuste: { lr: nm(RES.fit.lr,3), p: fmtP(RES.fit.lrP), aic: nm(RES.fit.aic,2), r2_nagelkerke: esOR ? nm(RES.fit.r2n,3) : null },
-    coeficientes: RES.fit.coef.map(function(c, i){
-      return { variable: RES.names[i], beta: nm(c.b,4), estimador: esOR ? nm(c.or,3) : nm(c.hr,3),
-               ic95: nm(c.ic[0],3) + "-" + nm(c.ic[1],3), p: fmtP(c.p) };
-    })
-  };
-  try{
-    var j = await askAI(SYS, JSON.stringify(payload));
-    var out = document.getElementById("ai-out");
-    out.innerHTML =
-      '<h4>Lectura del modelo</h4><p>' + esc(j.lectura || "—") + '</p>' +
-      '<h4>Efecto principal</h4><p>' + esc(j.efecto_principal || "—") + '</p>' +
-      '<h4>Confusión y ajuste</h4><p>' + esc(j.confusion || "—") + '</p>' +
-      '<h4>Limitaciones</h4><ul>' + (j.limitaciones || []).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' +
-      '<h4>Comprobaciones pendientes</h4><ul>' + (j.comprobaciones || []).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>';
-    out.classList.remove("hidden");
-    st("Interpretación completada.");
-  }catch(e){ st(e.message, true); }
-  finally{ btn.disabled = false; }
-};
-function st(m, err){ var s = document.getElementById("st"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; }
 
 /* ---------- salidas ---------- */
 document.getElementById("btn-copy").onclick = async function(){
-  try{ await navigator.clipboard.writeText(RES.texto); st("Copiado."); }catch(e){ st("El navegador bloqueó el portapapeles.", true); }
+  try{ await navigator.clipboard.writeText(LAST.texto); msg("Copiado."); }catch(e){ msg("El navegador bloqueó el portapapeles."); }
 };
 document.getElementById("btn-md").onclick = function(){
-  var F = RES.fit, esOR = RES.tipo === "log";
-  var t = "# " + (esOR ? "Regresión logística binaria" : "Regresión de Cox") + "\n\n";
-  t += "- Sujetos: " + RES.n + "\n- Eventos: " + RES.eventos + "\n- Desenlace: " + RES.y + " = " + RES.pos + "\n\n";
-  t += "| Variable | β | EE | " + (esOR ? "OR" : "HR") + " ajustada | IC 95 % | p |\n|---|---|---|---|---|---|\n";
-  F.coef.forEach(function(c, i){
-    var cte = esOR && i === 0;
-    t += "| " + RES.names[i] + " | " + nm(c.b,4) + " | " + nm(c.se,4) + " | " + (cte ? "—" : nm(esOR ? c.or : c.hr,3)) +
-      " | " + (cte ? "—" : nm(c.ic[0],3) + " – " + nm(c.ic[1],3)) + " | " + fmtP(c.p) + " |\n";
-  });
-  t += "\nRazón de verosimilitudes: χ²(" + F.lrDf + ") = " + nm(F.lr,3) + "; p = " + fmtP(F.lrP) + " · AIC = " + nm(F.aic,2);
-  if(esOR) t += " · R² Nagelkerke = " + nm(F.r2n,3);
-  t += "\n\n## Redacción\n" + RES.texto + "\n\n_RegresiónMultivariante·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
+  var A = LAST.A, v = LAST.v;
+  var t = "# Medidas de asociación\n\n";
+  t += "| | " + LAST.o1 + " | " + LAST.o0 + " |\n|---|---|---|\n";
+  t += "| **" + LAST.e1 + "** | " + v.a + " | " + v.b + " |\n| **" + LAST.e0 + "** | " + v.c + " | " + v.d + " |\n\n";
+  t += "| Medida | Valor | IC 95 % |\n|---|---|---|\n";
+  if(LAST.dis !== "cc"){
+    t += "| Riesgo en " + LAST.e1 + " | " + nm(100*A.r1,1) + " % | — |\n";
+    t += "| Riesgo en " + LAST.e0 + " | " + nm(100*A.r0,1) + " % | — |\n";
+    t += "| Riesgo relativo | " + nm(A.rr,3) + " | " + nm(A.icRR[0],3) + " – " + nm(A.icRR[1],3) + " |\n";
+    t += "| RAR | " + nm(100*A.rar,2) + " pp | " + nm(100*A.icRAR[0],2) + " – " + nm(100*A.icRAR[1],2) + " |\n";
+    t += "| RRR | " + nm(100*A.rrr,1) + " % | — |\n";
+    t += "| NNT / NNH | " + Math.ceil(Math.abs(A.nnt)) + " | — |\n";
+  }
+  t += "| Odds Ratio | " + nm(A.or,3) + " | " + nm(A.icOR[0],3) + " – " + nm(A.icOR[1],3) + " |\n\n";
+  t += "χ² = " + nm(A.chi2.chi2,3) + " (p = " + fmtP(A.chi2.p) + ") · Yates p = " + fmtP(A.chi2.pYates) + " · Fisher p = " + fmtP(A.chi2.fisher.p) + "\n\n";
+  t += "## Interpretación\n" + LAST.texto + "\n\n_MedidasAsociación·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
   var b = new Blob([t], {type:"text/markdown;charset=utf-8"});
-  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "regresion-" + RES.tipo + ".md"; a.click();
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "medidas-asociacion.md"; a.click();
   setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
-  st("Descargado.");
+  msg("Descargado.");
 };
+function msg(m){ var s = document.getElementById("st"); s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 2200); }
 function showErr(m){ var e = document.getElementById("err"); if(!m){ e.classList.add("hidden"); return; } e.textContent = m; e.classList.remove("hidden"); }
 function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+sync(); calc();
 </script>
 </body>
 </html>

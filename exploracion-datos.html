@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RegresiónMultivariante·AI · Kit Metodológico UMH</title>
+<title>ExploraDatos·AI · Kit Metodológico UMH</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -102,46 +102,24 @@
   footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
   @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
 
-  .layout{display:grid;grid-template-columns:minmax(280px,350px) 1fr;gap:22px;align-items:start}
-  .modes{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;margin-bottom:18px}
-  .modes button{flex:1;border:none;border-radius:0;background:#FCFDFC;color:var(--slate);font-size:13px;padding:9px}
-  .modes button.on{background:var(--teal);color:#fff}
-  .covlist label{display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-size:13.5px;color:var(--ink);margin-bottom:6px}
-  .covlist input{width:auto}
-  .covlist .tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--slate);border:1px solid var(--line);border-radius:2px;padding:1px 5px}
-  .coef-tbl td.est{font-family:'Spectral',serif;font-size:16px;font-weight:500}
-  .coef-tbl tr.sig td.est{color:var(--teal-deep)}
-  .forest svg{width:100%;height:auto}
-  .fline{stroke:var(--teal);stroke-width:1.3}
-  .fdot{fill:var(--teal)}
-  .fdot.ns{fill:var(--slate)}
-  .fline.ns{stroke:var(--slate)}
-  .fnull{stroke:var(--slate);stroke-width:1;stroke-dasharray:3 3}
-  .fit{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:6px}
-  .fit div{border-left:2px solid var(--line);padding-left:11px}
-  .fit .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
-  .fit .v{font-family:'Spectral',serif;font-size:23px;font-weight:500}
-  .ai-out{border:1px solid var(--line);border-radius:3px;background:#FCFDFC;padding:18px;font-size:14.5px;line-height:1.65;margin-top:16px}
-  .ai-out h4{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);margin:15px 0 7px}
-  .ai-out h4:first-child{margin-top:0}
-  .ai-out ul{margin-left:18px}
-  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
-  @keyframes sp{to{transform:rotate(360deg)}}
-  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
-  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%;box-shadow:0 20px 60px -20px rgba(23,38,46,.4)}
-  dialog::backdrop{background:rgba(23,38,46,.35)}
-  .dlg{padding:24px}
-  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
-  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+  .layout{display:grid;grid-template-columns:minmax(280px,340px) 1fr;gap:22px;align-items:start}
+  .plots{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:820px){.plots{grid-template-columns:1fr}}
+  .box-out{fill:#CDE2E0;stroke:var(--teal);stroke-width:1}
+  .whisk{stroke:var(--teal);stroke-width:1}
+  .medl{stroke:var(--teal-deep);stroke-width:2}
+  .outl{fill:none;stroke:var(--red);stroke-width:1}
+  .trans-t td:first-child{font-weight:500}
+  .best{background:#F1F8F7}
 </style>
 </head>
 <body>
 <header>
   <div class="wrap masthead">
     <a class="back" href="index.html">← Kit Metodológico</a>
-    <div class="eyebrow">11 · Análisis y gestión de datos</div>
-    <h1>RegresiónMultivariante<em>·AI</em></h1>
-    <p class="lede">Ajuste por factores de confusión: regresión logística (Odds Ratio ajustada) y regresión de Cox (Hazard Ratio ajustada) desde CSV, con IC 95 %, valor p y medidas del modelo. Interpretación opcional con IA.</p>
+    <div class="eyebrow">05 · Análisis y gestión de datos</div>
+    <h1>ExploraDatos<em>·AI</em></h1>
+    <p class="lede">Análisis exploratorio de tu CSV: descriptivos, histograma, Q-Q plot, diagrama de caja, test de normalidad de Shapiro-Wilk, detección de valores atípicos y sugerencia de transformación.</p>
     <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
   </div>
 </header>
@@ -150,95 +128,112 @@
 <div class="layout">
   <div>
     <section class="card">
-      <h2>Modelo</h2>
-      <div class="modes">
-        <button id="m-log" class="on">Logística</button>
-        <button id="m-cox">Cox</button>
+      <h2>Datos</h2>
+      <p class="sub">Todo se procesa en tu navegador. Ningún dato sale del equipo.</p>
+      <div class="drop" id="drop">
+        <b>Arrastra tu CSV aquí</b>
+        o haz clic para elegir el archivo
       </div>
-      <p class="sub" id="mode-hint">Desenlace binario. Estima la Odds Ratio ajustada de cada covariable.</p>
-      <div class="drop" id="drop"><b>Arrastra tu CSV aquí</b>o haz clic para elegir el archivo</div>
       <input type="file" id="file" accept=".csv,.txt,.tsv" class="hidden">
       <div class="actions">
+        <button class="ghost small" id="btn-paste">Pegar datos</button>
         <button class="ghost small" id="btn-demo">Datos de ejemplo</button>
+      </div>
+      <div class="hidden" id="paste-box" style="margin-top:14px">
+        <label for="ta">Pega el contenido del CSV</label>
+        <textarea id="ta" placeholder="edad;imc;grupo&#10;45;24,5;A"></textarea>
+        <div class="actions"><button class="small" id="btn-load-ta">Cargar</button></div>
       </div>
       <div class="err hidden" id="err"></div>
 
-      <div class="hidden" id="cfg">
+      <div class="hidden" id="varsel">
         <div class="divider"><span>Variables</span></div>
-        <div class="fld hidden" id="w-time"><label for="v-t">Tiempo hasta el evento</label><select id="v-t"></select></div>
-        <div class="fld"><label for="v-y" id="lbl-y">Desenlace (binario)</label><select id="v-y"></select></div>
-        <div class="fld"><label for="v-pos">Valor que indica evento</label><select id="v-pos"></select></div>
-        <div class="divider"><span>Covariables del modelo</span></div>
-        <div class="covlist" id="covs"></div>
-        <div class="hint">Las variables categóricas se codifican con variables indicadoras tomando el primer nivel como referencia.</div>
-        <div class="actions">
-          <button id="btn-run">Ajustar modelo</button>
+        <div class="fld">
+          <label for="v-num">Variable numérica</label>
+          <select id="v-num"></select>
         </div>
-        <div class="hint" style="margin-top:8px" id="epv"></div>
+        <div class="fld">
+          <label for="v-grp">Agrupar por (opcional)</label>
+          <select id="v-grp"><option value="">Sin agrupar</option></select>
+        </div>
+        <div class="fld">
+          <label for="bins">Intervalos del histograma</label>
+          <select id="bins">
+            <option value="auto">Automático (Freedman-Diaconis)</option>
+            <option value="sturges">Sturges</option>
+            <option value="8">8</option><option value="12">12</option><option value="20">20</option>
+          </select>
+        </div>
       </div>
+    </section>
+
+    <section class="card hidden" id="card-file">
+      <h2>Archivo</h2>
+      <div class="stats" id="finfo"></div>
+      <div class="divider"><span>Columnas detectadas</span></div>
+      <div id="cols" style="font-size:13.5px"></div>
     </section>
   </div>
 
   <div>
-    <section class="card hidden" id="card-res">
-      <h2 id="res-title">Modelo ajustado</h2>
-      <p class="sub" id="res-sub"></p>
-      <div class="tbl-wrap" style="max-height:none">
-        <table class="coef-tbl" id="coef-tbl"><thead></thead><tbody></tbody></table>
+    <section class="card hidden" id="card-desc">
+      <h2 id="desc-title">Descriptivos</h2>
+      <p class="sub" id="desc-sub"></p>
+      <div class="stats" id="desc"></div>
+      <div class="tbl-wrap" id="desc-tbl-wrap" style="max-height:none">
+        <table id="desc-tbl"><thead></thead><tbody></tbody></table>
       </div>
-      <div class="divider"><span>Bondad de ajuste</span></div>
-      <div class="fit" id="fit"></div>
     </section>
 
-    <section class="card hidden" id="card-forest">
-      <h2>Efectos ajustados</h2>
-      <p class="sub" id="forest-sub"></p>
-      <div class="forest plot" id="forest"></div>
+    <section class="card hidden" id="card-norm">
+      <h2>Normalidad</h2>
+      <p class="sub">Shapiro-Wilk (Royston, AS R94). Con n grande el test rechaza desviaciones triviales: mira también los gráficos.</p>
+      <div id="norm-verdict"></div>
+      <div class="tbl-wrap" style="max-height:none">
+        <table id="norm-tbl"><thead></thead><tbody></tbody></table>
+      </div>
+    </section>
+
+    <section class="card hidden" id="card-plots">
+      <h2>Gráficos</h2>
+      <p class="sub">Histograma con densidad normal ajustada, Q-Q plot, diagrama de caja.</p>
+      <div class="plots">
+        <div><h3>Histograma</h3><div class="plot" id="p-hist"></div></div>
+        <div><h3>Q-Q plot normal</h3><div class="plot" id="p-qq"></div></div>
+      </div>
+      <h3>Diagrama de caja</h3>
+      <div class="plot" id="p-box"></div>
     </section>
 
     <section class="card hidden" id="card-out">
-      <h2>Redacción e interpretación</h2>
-      <p class="sub">Texto generado a partir de los coeficientes calculados en tu navegador.</p>
-      <div class="para" id="para"></div>
+      <h2>Valores atípicos</h2>
+      <p class="sub">Criterio de Tukey (1,5 y 3 rangos intercuartílicos) y puntuación z estandarizada.</p>
+      <div id="out-verdict"></div>
+      <div class="tbl-wrap" id="out-tbl-wrap">
+        <table id="out-tbl"><thead></thead><tbody></tbody></table>
+      </div>
+      <div class="note">No elimines un dato solo por ser atípico. Comprueba si es un error de registro; si es un valor real, documéntalo y valora un análisis de sensibilidad con y sin él.</div>
+    </section>
+
+    <section class="card hidden" id="card-trans">
+      <h2>Sugerencia de transformación</h2>
+      <p class="sub">Se aplica cada transformación y se recalcula Shapiro-Wilk. Se recomienda la que mejor normaliza sin complicar la interpretación.</p>
+      <table class="trans-t" id="trans-tbl"><thead></thead><tbody></tbody></table>
+      <div id="trans-verdict"></div>
       <div class="actions">
-        <button id="btn-ai">Interpretar con IA</button>
-        <button class="ghost" id="btn-copy">Copiar</button>
         <button class="ghost" id="btn-md">Descargar informe (.md)</button>
+        <button class="ghost" id="btn-csv">Descargar descriptivos (.csv)</button>
         <span class="status" id="st"></span>
       </div>
-      <div class="ai-out hidden" id="ai-out"></div>
-      <div class="note">Los coeficientes se estiman en tu navegador por máxima verosimilitud (Newton-Raphson). La IA no calcula nada: solo comenta las cifras. Regla práctica: al menos 10 eventos por covariable estimada, o los coeficientes estarán sobreajustados.</div>
     </section>
   </div>
 </div>
 </main>
 
 <footer class="wrap">
-  <span>RegresiónMultivariante·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
-  <span id="model-badge" style="cursor:pointer"></span>
+  <span>ExploraDatos·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span>Determinista · sin IA · sin envío de datos</span>
 </footer>
-
-<dialog id="dlg-key">
-  <div class="dlg">
-    <h3>Clave de API de OpenAI</h3>
-    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit. Tus datos nunca se envían: solo la tabla de coeficientes.</p>
-    <label for="k">Clave</label>
-    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
-    <div style="margin-top:14px"></div>
-    <label for="m">Modelo</label>
-    <select id="m">
-      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
-      <option value="gpt-4o">gpt-4o · más preciso</option>
-      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
-      <option value="gpt-4.1">gpt-4.1</option>
-    </select>
-    <div class="actions">
-      <button id="k-save">Guardar</button>
-      <button class="ghost" id="k-cancel">Cancelar</button>
-      <button class="ghost small" id="k-clear">Borrar clave</button>
-    </div>
-  </div>
-</dialog>
 
 <script>
 /* ============ NÚCLEO ESTADÍSTICO · Kit Metodológico UMH ============ */
@@ -1008,394 +1003,396 @@ function coxLL(X, time, event, b, ord){
 }
 
 
-/* ---------- clave y modelo ---------- */
-var KEY = "ia_openai_key", MODEL = "ia_openai_model";
-function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
-function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
-function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
-function getKey(){ return lsGet(KEY) || ""; }
-function getModel(){ return lsGet(MODEL) || "gpt-4o-mini"; }
-function badge(){ document.getElementById("model-badge").textContent = "modelo: " + getModel(); }
-var dlg = document.getElementById("dlg-key");
-function askKey(){ document.getElementById("k").value = getKey(); document.getElementById("m").value = getModel(); dlg.showModal(); }
-document.getElementById("k-save").onclick = function(){
-  var v = document.getElementById("k").value.trim();
-  if(v) lsSet(KEY, v);
-  lsSet(MODEL, document.getElementById("m").value);
-  badge(); dlg.close();
-};
-document.getElementById("k-cancel").onclick = function(){ dlg.close(); };
-document.getElementById("k-clear").onclick = function(){ lsDel(KEY); document.getElementById("k").value = ""; };
-document.getElementById("model-badge").onclick = askKey;
-badge();
+/* ================= Estado ================= */
+var D = null, VAR = null, GRP = null;
 
-async function askAI(system, user){
-  var key = getKey();
-  if(!key){ askKey(); throw new Error("Falta la clave de API."); }
-  var res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
-    body: JSON.stringify({ model:getModel(), temperature:0.25, response_format:{type:"json_object"},
-      messages:[{role:"system",content:system},{role:"user",content:user}] })
-  });
-  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,150)); }
-  var data = await res.json();
-  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
-}
-
-/* ---------- estado ---------- */
-var MODE = "log", D = null, RES = null;
-document.getElementById("m-log").onclick = function(){ setMode("log"); };
-document.getElementById("m-cox").onclick = function(){ setMode("cox"); };
-function setMode(m){
-  MODE = m;
-  document.getElementById("m-log").className = m === "log" ? "on" : "";
-  document.getElementById("m-cox").className = m === "cox" ? "on" : "";
-  document.getElementById("mode-hint").textContent = m === "log"
-    ? "Desenlace binario. Estima la Odds Ratio ajustada de cada covariable."
-    : "Tiempo hasta el evento con censura. Estima el Hazard Ratio ajustado (riesgos proporcionales, método de Breslow).";
-  document.getElementById("w-time").classList[m === "cox" ? "remove" : "add"]("hidden");
-  document.getElementById("lbl-y").textContent = m === "cox" ? "Indicador de evento" : "Desenlace (binario)";
-  ["card-res","card-forest","card-out"].forEach(function(id){ document.getElementById(id).classList.add("hidden"); });
-  if(D) cfg();
-}
-
-/* ---------- carga ---------- */
+/* ================= Carga de datos ================= */
 var drop = document.getElementById("drop"), file = document.getElementById("file");
 drop.onclick = function(){ file.click(); };
 drop.ondragover = function(e){ e.preventDefault(); drop.classList.add("over"); };
 drop.ondragleave = function(){ drop.classList.remove("over"); };
-drop.ondrop = function(e){ e.preventDefault(); drop.classList.remove("over"); if(e.dataTransfer.files[0]) rd(e.dataTransfer.files[0]); };
-file.onchange = function(){ if(file.files[0]) rd(file.files[0]); };
-function rd(f){ var r = new FileReader(); r.onload = function(){ load(r.result); }; r.readAsText(f, "UTF-8"); }
-
+drop.ondrop = function(e){
+  e.preventDefault(); drop.classList.remove("over");
+  if(e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]);
+};
+file.onchange = function(){ if(file.files[0]) readFile(file.files[0]); };
+function readFile(f){
+  var r = new FileReader();
+  r.onload = function(){ load(r.result); };
+  r.readAsText(f, "UTF-8");
+}
+document.getElementById("btn-paste").onclick = function(){ document.getElementById("paste-box").classList.toggle("hidden"); };
+document.getElementById("btn-load-ta").onclick = function(){ load(document.getElementById("ta").value); };
 document.getElementById("btn-demo").onclick = function(){
-  var rnd = mb(3), rows = ["tiempo;evento;tratamiento;edad;sexo;estadio"];
-  for(var i = 0; i < 180; i++){
-    var trt = rnd() < 0.5 ? 1 : 0;
-    var edad = Math.round(58 + 11*gs(rnd));
-    var sexo = rnd() < 0.5 ? "Hombre" : "Mujer";
-    var est = ["I","II","III"][Math.floor(rnd()*3)];
-    var lp = -0.85*trt + 0.035*(edad-58) + (est === "II" ? 0.55 : est === "III" ? 1.25 : 0);
-    var haz = Math.exp(lp)*0.045;
-    var t = -Math.log(1-rnd())/haz;
-    var cens = 36;
-    var ev = t <= cens ? 1 : 0;
-    rows.push([Math.min(t, cens).toFixed(1).replace(".",","), ev, trt ? "Nuevo" : "Estándar", edad, sexo, est].join(";"));
+  var rows = ["edad;imc;pas;grupo"], rnd = mulberry32seed(42);
+  for(var i = 0; i < 90; i++){
+    var g = i % 3 === 0 ? "Control" : (i % 3 === 1 ? "Dieta" : "Dieta+Ejercicio");
+    var edad = Math.round(45 + 12*gauss(rnd));
+    var imc = 27 + 3.4*gauss(rnd) + (g === "Control" ? 1.6 : 0) + (i === 7 ? 14 : 0);
+    var pas = 128 + 14*gauss(rnd) + 0.8*(imc-27);
+    rows.push(edad + ";" + imc.toFixed(1).replace(".", ",") + ";" + Math.round(pas) + ";" + g);
   }
   load(rows.join("\n"));
 };
-function mb(a){ return function(){ a|=0; a=(a+0x6D2B79F5)|0; var t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; }; }
-function gs(r){ return Math.sqrt(-2*Math.log(1-r()))*Math.cos(2*Math.PI*r()); }
+function mulberry32seed(a){ return function(){ a |= 0; a = (a + 0x6D2B79F5)|0; var t = Math.imul(a ^ (a>>>15), 1|a); t = (t + Math.imul(t ^ (t>>>7), 61|t)) ^ t; return ((t ^ (t>>>14))>>>0)/4294967296; }; }
+function gauss(rnd){ var u = 1-rnd(), v = rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
 
 function load(text){
   showErr(null);
-  try{ D = parseCSV(text); if(D.n < 15) throw new Error("Se necesitan al menos 15 sujetos para ajustar un modelo multivariante."); }
-  catch(e){ return showErr(e.message); }
-  D.nums = D.head.filter(function(h){ return isNumericCol(D.cols[h]); });
-  D.bins = D.head.filter(function(h){ return uniq(D.cols[h]).length === 2; });
-  D.cats = D.head.filter(function(h){ var u = uniq(D.cols[h]); return u.length >= 2 && u.length <= 6; });
-  if(!D.bins.length) return showErr("No hay ninguna columna con dos niveles para el desenlace.");
-  document.getElementById("cfg").classList.remove("hidden");
-  cfg();
+  try{
+    if(!text || text.trim().length < 5) throw new Error("El archivo está vacío.");
+    D = parseCSV(text);
+    if(D.head.length < 1 || D.n < 3) throw new Error("Se necesitan al menos 3 filas de datos y una columna.");
+  }catch(e){ return showErr(e.message); }
+
+  var nums = D.head.filter(function(h){ return isNumericCol(D.cols[h]); });
+  if(!nums.length) return showErr("No se ha detectado ninguna columna numérica. Revisa el separador decimal.");
+  var cats = D.head.filter(function(h){ return nums.indexOf(h) < 0 || uniq(D.cols[h]).length <= 8; });
+
+  var fi = document.getElementById("finfo");
+  fi.innerHTML = "";
+  st2(fi, "Filas", D.n); st2(fi, "Columnas", D.head.length);
+  st2(fi, "Separador", D.sep === "\t" ? "tabulador" : '"' + D.sep + '"');
+  st2(fi, "Numéricas", nums.length);
+  document.getElementById("card-file").classList.remove("hidden");
+
+  var cb = document.getElementById("cols");
+  cb.innerHTML = D.head.map(function(h){
+    var isN = nums.indexOf(h) >= 0;
+    var miss = D.cols[h].filter(function(v){ return v === "" || v.toUpperCase() === "NA"; }).length;
+    return '<div style="padding:5px 0;border-bottom:1px solid var(--line-soft)">' + esc(h) +
+      '<span class="pill ' + (isN ? "ok" : "") + '">' + (isN ? "numérica" : "categórica · " + uniq(D.cols[h]).length + " niveles") + '</span>' +
+      (miss ? '<span class="pill mid">' + miss + ' ausentes</span>' : "") + '</div>';
+  }).join("");
+
+  fillSel("v-num", nums);
+  fillSel("v-grp", cats, true);
+  document.getElementById("varsel").classList.remove("hidden");
+  analizar();
 }
 function uniq(a){ return a.filter(function(v,i,s){ return v !== "" && s.indexOf(v) === i; }); }
-
-function cfg(){
-  fill("v-y", D.bins);
-  if(MODE === "cox") fill("v-t", D.nums);
-  document.getElementById("v-y").onchange = function(){ posLv(); covs(); };
-  posLv(); covs();
-  guess();
+function fillSel(id, arr, blank){
+  var s = document.getElementById(id);
+  s.innerHTML = blank ? '<option value="">Sin agrupar</option>' : "";
+  arr.forEach(function(h){ var o = document.createElement("option"); o.value = h; o.textContent = h; s.appendChild(o); });
+  s.onchange = analizar;
 }
-function guess(){
-  var t = D.head.find(function(h){ return /^(tiempo|time|t|seguimiento)$/i.test(h); });
-  if(t && MODE === "cox") document.getElementById("v-t").value = t;
-  var e = D.head.find(function(h){ return /^(evento|event|status|desenlace|muerte)$/i.test(h); });
-  if(e){ document.getElementById("v-y").value = e; posLv(); covs(); }
-}
-function fill(id, arr){
-  document.getElementById(id).innerHTML = arr.map(function(h){ return '<option value="' + esc(h) + '">' + esc(h) + '</option>'; }).join("");
-}
-function posLv(){
-  var lv = uniq(D.cols[document.getElementById("v-y").value]);
-  var s = document.getElementById("v-pos");
-  s.innerHTML = lv.map(function(l){ return '<option value="' + esc(l) + '">' + esc(l) + '</option>'; }).join("");
-  var one = lv.find(function(l){ return l === "1" || /^(s[ií]|yes|evento|muerte)$/i.test(l); });
-  if(one) s.value = one;
-}
-function covs(){
-  var y = document.getElementById("v-y").value;
-  var t = MODE === "cox" ? document.getElementById("v-t").value : null;
-  var cand = D.head.filter(function(h){
-    if(h === y || h === t) return false;
-    return D.nums.indexOf(h) >= 0 || D.cats.indexOf(h) >= 0;
-  });
-  document.getElementById("covs").innerHTML = cand.map(function(h){
-    var isNum = D.nums.indexOf(h) >= 0 && uniq(D.cols[h]).length > 6;
-    return '<label><input type="checkbox" value="' + esc(h) + '" checked> ' + esc(h) +
-      '<span class="tag">' + (isNum ? "continua" : uniq(D.cols[h]).length + " niveles") + '</span></label>';
-  }).join("");
-  document.querySelectorAll("#covs input").forEach(function(i){ i.onchange = epv; });
-  epv();
-}
-function epv(){
-  var y = document.getElementById("v-y").value, pos = document.getElementById("v-pos").value;
-  var ev = D.cols[y].filter(function(v){ return v === pos; }).length;
-  var p = 0;
-  document.querySelectorAll("#covs input:checked").forEach(function(i){
-    var h = i.value;
-    var isNum = D.nums.indexOf(h) >= 0 && uniq(D.cols[h]).length > 6;
-    p += isNum ? 1 : (uniq(D.cols[h]).length - 1);
-  });
-  var r = p ? ev/p : 0;
-  document.getElementById("epv").innerHTML = "Eventos: <b>" + ev + "</b> · parámetros a estimar: <b>" + p + "</b> · eventos por variable: <b>" +
-    nm(r,1) + "</b> " + (r >= 10 ? '<span class="pill ok">adecuado</span>' : r >= 5 ? '<span class="pill mid">justo</span>' : '<span class="pill no">insuficiente</span>');
-}
-document.getElementById("v-pos").onchange = epv;
-
-/* ---------- diseño de la matriz ---------- */
-function design(cols){
-  var names = [], build = [];
-  cols.forEach(function(h){
-    var isNum = D.nums.indexOf(h) >= 0 && uniq(D.cols[h]).length > 6;
-    if(isNum){
-      names.push(h);
-      build.push({ h:h, tipo:"num" });
-    } else {
-      var lv = uniq(D.cols[h]).sort();
-      lv.slice(1).forEach(function(l){
-        names.push(h + " = " + l);
-        build.push({ h:h, tipo:"dummy", nivel:l, ref:lv[0] });
-      });
-    }
-  });
-  return { names: names, build: build };
-}
-
-/* ---------- ajuste ---------- */
-document.getElementById("btn-run").onclick = function(){
-  showErr(null);
-  try{ MODE === "log" ? runLog() : runCox(); }
-  catch(e){ showErr(e.message); }
-};
-
-function rowsMatrix(dz, filtro){
-  var X = [], keep = [];
-  for(var i = 0; i < D.n; i++){
-    var row = dz.build.map(function(b){
-      if(b.tipo === "num") return toNum([D.cols[b.h][i]])[0];
-      return D.cols[b.h][i] === b.nivel ? 1 : 0;
-    });
-    if(row.some(isNaN) || !filtro(i)) continue;
-    X.push(row); keep.push(i);
-  }
-  return { X:X, keep:keep };
-}
-
-function runLog(){
-  var y = document.getElementById("v-y").value, pos = document.getElementById("v-pos").value;
-  var cols = [].slice.call(document.querySelectorAll("#covs input:checked")).map(function(i){ return i.value; });
-  if(!cols.length) throw new Error("Marca al menos una covariable.");
-  var dz = design(cols);
-  var M = rowsMatrix(dz, function(){ return true; });
-  var Y = M.keep.map(function(i){ return D.cols[y][i] === pos ? 1 : 0; });
-  var ev = Y.filter(function(v){ return v === 1; }).length;
-  if(ev < 5 || Y.length - ev < 5) throw new Error("Se necesitan al menos 5 eventos y 5 no eventos.");
-  var Xi = M.X.map(function(r){ return [1].concat(r); });
-  var fit = logistic(Xi, Y);
-  if(fit.err) throw new Error(fit.err);
-  RES = { tipo:"log", fit:fit, names:["Constante"].concat(dz.names), dz:dz, n:Y.length, eventos:ev, y:y, pos:pos };
-  render();
-}
-
-function runCox(){
-  var y = document.getElementById("v-y").value, pos = document.getElementById("v-pos").value;
-  var ct = document.getElementById("v-t").value;
-  var cols = [].slice.call(document.querySelectorAll("#covs input:checked")).map(function(i){ return i.value; });
-  if(!cols.length) throw new Error("Marca al menos una covariable.");
-  var tt = toNum(D.cols[ct]);
-  var dz = design(cols);
-  var M = rowsMatrix(dz, function(i){ return !isNaN(tt[i]) && tt[i] >= 0; });
-  var time = M.keep.map(function(i){ return tt[i]; });
-  var ev = M.keep.map(function(i){ return D.cols[y][i] === pos ? 1 : 0; });
-  var nev = ev.filter(function(v){ return v === 1; }).length;
-  if(nev < 5) throw new Error("Se necesitan al menos 5 eventos observados.");
-  var fit = cox(M.X, time, ev);
-  if(fit.err) throw new Error(fit.err);
-  RES = { tipo:"cox", fit:fit, names:dz.names, dz:dz, n:time.length, eventos:nev, y:y, pos:pos, ct:ct };
-  render();
-}
-
-/* ---------- render ---------- */
-function render(){
-  var F = RES.fit, esOR = RES.tipo === "log";
-  ["card-res","card-forest","card-out"].forEach(function(id){ document.getElementById(id).classList.remove("hidden"); });
-  document.getElementById("res-title").textContent = esOR ? "Regresión logística binaria" : "Regresión de Cox de riesgos proporcionales";
-  document.getElementById("res-sub").textContent = RES.n + " sujetos · " + RES.eventos + " eventos · " +
-    (esOR ? "Odds Ratio ajustadas" : "Hazard Ratio ajustados (Breslow)") + " · " + nm(RES.eventos/(F.coef.length - (esOR?1:0)),1) + " eventos por variable";
-
-  var est = esOR ? "OR ajustada" : "HR ajustado";
-  document.querySelector("#coef-tbl thead").innerHTML =
-    "<tr><th>Variable</th><th class='num'>β</th><th class='num'>EE</th><th class='num'>" + est + "</th><th class='num'>IC 95 %</th><th class='num'>z</th><th class='num'>p</th></tr>";
-  document.querySelector("#coef-tbl tbody").innerHTML = F.coef.map(function(c, i){
-    var e = esOR ? c.or : c.hr;
-    var cte = esOR && i === 0;
-    var sig = c.p < 0.05 && !cte;
-    return "<tr" + (sig ? " class='sig'" : "") + "><td>" + esc(RES.names[i]) + "</td>" +
-      "<td class='num'>" + nm(c.b,4) + "</td><td class='num'>" + nm(c.se,4) + "</td>" +
-      "<td class='num est'>" + (cte ? "—" : nm(e,3)) + "</td>" +
-      "<td class='num'>" + (cte ? "—" : nm(c.ic[0],3) + " – " + nm(c.ic[1],3)) + "</td>" +
-      "<td class='num'>" + nm(c.z,3) + "</td><td class='num'>" + fmtP(c.p) + "</td></tr>";
-  }).join("");
-
-  var fb = document.getElementById("fit");
-  fb.innerHTML = "";
-  ft(fb, "Log-verosimilitud", nm(F.ll,2));
-  ft(fb, "Razón de verosimilitudes", "χ²(" + F.lrDf + ") = " + nm(F.lr,2));
-  ft(fb, "p del modelo", fmtP(F.lrP));
-  ft(fb, "AIC", nm(F.aic,2));
-  if(esOR){ ft(fb, "R² de Cox-Snell", nm(F.r2cs,3)); ft(fb, "R² de Nagelkerke", nm(F.r2n,3)); }
-
-  forest();
-  texto();
-}
-function ft(box, k, v){
+function st2(box, k, v){
   var d = document.createElement("div");
-  d.innerHTML = '<div class="k">' + k + '</div><div class="v">' + v + '</div>';
+  d.innerHTML = '<div class="k">' + esc(k) + '</div><div class="v">' + esc(v) + '</div>';
   box.appendChild(d);
 }
-
-function forest(){
-  var F = RES.fit, esOR = RES.tipo === "log";
-  var items = [];
-  F.coef.forEach(function(c, i){
-    if(esOR && i === 0) return;
-    items.push({ n: RES.names[i], e: esOR ? c.or : c.hr, ic: c.ic, sig: c.p < 0.05 });
-  });
-  document.getElementById("forest-sub").textContent = (esOR ? "Odds Ratio" : "Hazard Ratio") + " ajustadas con su intervalo de confianza al 95 %, en escala logarítmica.";
-
-  var W = 820, H = 56 + items.length*46, mL = 230, mR = 130;
-  var all = items.reduce(function(s,i){ return s.concat([Math.max(i.ic[0],0.02), Math.min(i.ic[1],50)]); }, [1]);
-  var lo = Math.max(0.02, Math.min.apply(null, all)*0.8), hi = Math.min(60, Math.max.apply(null, all)*1.25);
-  var X = function(v){ return mL + (Math.log(Math.max(Math.min(v,hi),lo)) - Math.log(lo))/(Math.log(hi)-Math.log(lo))*(W-mL-mR); };
-
-  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Efectos ajustados">';
-  s += '<line class="fnull" x1="' + X(1) + '" y1="14" x2="' + X(1) + '" y2="' + (H-30) + '"/>';
-  items.forEach(function(it, i){
-    var y = 30 + i*46, cls = it.sig ? "" : " ns";
-    s += '<text class="tick" x="' + (mL-12) + '" y="' + (y+4) + '" text-anchor="end" style="font-size:11.5px;fill:#17262E">' + esc(it.n) + '</text>';
-    s += '<line class="fline' + cls + '" x1="' + X(it.ic[0]) + '" y1="' + y + '" x2="' + X(it.ic[1]) + '" y2="' + y + '"/>';
-    s += '<line class="fline' + cls + '" x1="' + X(it.ic[0]) + '" y1="' + (y-4) + '" x2="' + X(it.ic[0]) + '" y2="' + (y+4) + '"/>';
-    s += '<line class="fline' + cls + '" x1="' + X(it.ic[1]) + '" y1="' + (y-4) + '" x2="' + X(it.ic[1]) + '" y2="' + (y+4) + '"/>';
-    s += '<rect class="fdot' + cls + '" x="' + (X(it.e)-4.5) + '" y="' + (y-4.5) + '" width="9" height="9" transform="rotate(45 ' + X(it.e) + ' ' + y + ')"/>';
-    s += '<text class="tick" x="' + (W-mR+12) + '" y="' + (y+4) + '">' + nm(it.e,2) + ' (' + nm(it.ic[0],2) + '–' + nm(it.ic[1],2) + ')</text>';
-  });
-  s += '<line class="axis" x1="' + mL + '" y1="' + (H-30) + '" x2="' + (W-mR) + '" y2="' + (H-30) + '"/>';
-  [0.05,0.1,0.25,0.5,1,2,4,10,25].filter(function(t){ return t >= lo && t <= hi; }).forEach(function(t){
-    s += '<line class="axis" x1="' + X(t) + '" y1="' + (H-30) + '" x2="' + X(t) + '" y2="' + (H-25) + '"/>';
-    s += '<text class="tick" x="' + X(t) + '" y="' + (H-13) + '" text-anchor="middle">' + nm(t,2) + '</text>';
-  });
-  s += '<text class="tick" x="' + (X(1)-8) + '" y="' + (H-1) + '" text-anchor="end">← protector</text>';
-  s += '<text class="tick" x="' + (X(1)+8) + '" y="' + (H-1) + '">de riesgo →</text>';
-  s += '</svg>';
-  document.getElementById("forest").innerHTML = s;
+function showErr(m){
+  var e = document.getElementById("err");
+  if(!m){ e.classList.add("hidden"); return; }
+  e.textContent = m; e.classList.remove("hidden");
 }
 
-function texto(){
-  var F = RES.fit, esOR = RES.tipo === "log";
-  var t = "Se ajustó un modelo de " + (esOR ? "regresión logística binaria" : "regresión de Cox de riesgos proporcionales") +
-    " sobre " + RES.n + " sujetos con " + RES.eventos + " eventos, incluyendo " + (F.coef.length - (esOR?1:0)) + " parámetros. " +
-    "El modelo global " + (F.lrP < 0.05 ? "resultó significativo" : "no alcanzó la significación") +
-    " (razón de verosimilitudes χ²(" + F.lrDf + ") = " + nm(F.lr,2) + "; p = " + fmtP(F.lrP) + ")" +
-    (esOR ? ", con una R² de Nagelkerke de " + nm(F.r2n,3) : "") + ". ";
-  var sigs = [];
-  F.coef.forEach(function(c, i){
-    if(esOR && i === 0) return;
-    if(c.p < 0.05) sigs.push({ n: RES.names[i], e: esOR ? c.or : c.hr, ic: c.ic, p: c.p });
-  });
-  if(sigs.length){
-    t += "Tras el ajuste mutuo por las demás covariables, resultaron asociadas de forma independiente al desenlace: ";
-    t += sigs.map(function(s){
-      return s.n + " (" + (esOR ? "OR" : "HR") + " = " + nm(s.e,2) + "; IC 95 % " + nm(s.ic[0],2) + " a " + nm(s.ic[1],2) + "; p = " + fmtP(s.p) + ")";
-    }).join("; ") + ". ";
-    var pr = sigs.filter(function(s){ return s.e < 1; });
-    if(pr.length) t += "Los efectos con estimador inferior a 1 se comportan como factores protectores. ";
-  } else {
-    t += "Ninguna covariable alcanzó la significación estadística tras el ajuste mutuo. ";
+/* ================= Análisis ================= */
+function analizar(){
+  VAR = document.getElementById("v-num").value;
+  GRP = document.getElementById("v-grp").value;
+  if(!VAR) return;
+  var x = clean(D.cols[VAR]);
+  if(x.length < 3) return showErr("La variable seleccionada tiene menos de 3 valores válidos.");
+
+  var series = [{ name: "Total", v: x }];
+  if(GRP && GRP !== VAR){
+    var levels = uniq(D.cols[GRP]);
+    if(levels.length >= 2 && levels.length <= 8){
+      series = levels.map(function(l){
+        var vals = [];
+        D.cols[GRP].forEach(function(g, i){ if(g === l){ var n = toNum([D.cols[VAR][i]])[0]; if(!isNaN(n)) vals.push(n); } });
+        return { name: l, v: vals };
+      }).filter(function(s){ return s.v.length >= 3; });
+      series.unshift({ name: "Total", v: x });
+    }
   }
-  t += "El resto de covariables no mostró asociación independiente con el desenlace.";
-  document.getElementById("para").textContent = t;
-  RES.texto = t;
+
+  ["card-desc","card-norm","card-plots","card-out","card-trans"].forEach(function(id){ document.getElementById(id).classList.remove("hidden"); });
+  document.getElementById("desc-title").textContent = "Descriptivos · " + VAR;
+  document.getElementById("desc-sub").textContent = GRP ? "Estratificado por " + GRP : "Muestra completa";
+
+  descriptivos(x, series);
+  normalidad(series);
+  hist(x); qq(x); boxplot(series);
+  outliers(x);
+  transformaciones(x);
+  LAST = { x:x, series:series };
+}
+var LAST = null;
+
+function descriptivos(x, series){
+  var box = document.getElementById("desc");
+  box.innerHTML = "";
+  var m = mean(x), s = sd(x), n = x.length, se = s/Math.sqrt(n), tc = qt(0.05, n-1);
+  st2(box, "n", n);
+  st2(box, "Media", nm(m,2) + '<small>IC 95 % ' + nm(m-tc*se,2) + " – " + nm(m+tc*se,2) + '</small>');
+  st2(box, "DT", nm(s,2) + '<small>EE ' + nm(se,3) + '</small>');
+  st2(box, "Mediana", nm(median(x),2) + '<small>IQR ' + nm(quantile(x,0.25),2) + " – " + nm(quantile(x,0.75),2) + '</small>');
+  st2(box, "Rango", nm(Math.min.apply(null,x),2) + " – " + nm(Math.max.apply(null,x),2));
+  st2(box, "CV", nm(100*s/Math.abs(m),1) + " %");
+
+  var thead = document.querySelector("#desc-tbl thead");
+  thead.innerHTML = "<tr><th>Grupo</th><th class='num'>n</th><th class='num'>Media</th><th class='num'>DT</th><th class='num'>EE</th><th class='num'>Mediana</th><th class='num'>Q1</th><th class='num'>Q3</th><th class='num'>Mín</th><th class='num'>Máx</th><th class='num'>Asimetría</th><th class='num'>Curtosis</th></tr>";
+  var tb = document.querySelector("#desc-tbl tbody");
+  tb.innerHTML = "";
+  series.forEach(function(g){
+    var v = g.v, tr = document.createElement("tr");
+    if(g.name === "Total") tr.className = "hl";
+    var sk = v.length >= 3 ? nm(skewness(v),2) : "—";
+    var ku = v.length >= 4 ? nm(kurtosis(v),2) : "—";
+    tr.innerHTML = "<td>" + esc(g.name) + "</td>" +
+      [v.length, nm(mean(v),2), nm(sd(v),2), nm(sd(v)/Math.sqrt(v.length),3), nm(median(v),2),
+       nm(quantile(v,0.25),2), nm(quantile(v,0.75),2), nm(Math.min.apply(null,v),2), nm(Math.max.apply(null,v),2), sk, ku]
+      .map(function(c){ return "<td class='num'>" + c + "</td>"; }).join("");
+    tb.appendChild(tr);
+  });
 }
 
-/* ---------- IA ---------- */
-var SYS = [
-  "Eres bioestadístico y revisor de artículos biomédicos.",
-  "Recibes la tabla de coeficientes ya calculados de un modelo (logístico o de Cox) y debes interpretarlos.",
-  "No recalcules nada ni inventes cifras: usa exactamente las que se te dan.",
-  "Responde EXCLUSIVAMENTE con JSON, sin markdown, con este esquema:",
-  '{"lectura":"2-3 frases sobre lo que dice el modelo en términos clínicos",',
-  '"efecto_principal":"interpretación de la covariable con mayor efecto significativo, explicando la escala (odds u hazard)",',
-  '"confusion":"qué sugiere el ajuste sobre la confusión entre covariables",',
-  '"limitaciones":["limitación concreta de ESTE modelo","..."],',
-  '"comprobaciones":["comprobación estadística pendiente, p. ej. riesgos proporcionales, linealidad del logit, colinealidad","..."]}',
-  "Todo en español, específico y sin generalidades de libro de texto."
-].join(" ");
-
-document.getElementById("btn-ai").onclick = async function(){
-  if(!RES) return;
-  var btn = this; btn.disabled = true;
-  st('<span class="spin"></span>Interpretando…');
-  var esOR = RES.tipo === "log";
-  var payload = {
-    modelo: esOR ? "regresión logística" : "regresión de Cox",
-    n: RES.n, eventos: RES.eventos,
-    ajuste: { lr: nm(RES.fit.lr,3), p: fmtP(RES.fit.lrP), aic: nm(RES.fit.aic,2), r2_nagelkerke: esOR ? nm(RES.fit.r2n,3) : null },
-    coeficientes: RES.fit.coef.map(function(c, i){
-      return { variable: RES.names[i], beta: nm(c.b,4), estimador: esOR ? nm(c.or,3) : nm(c.hr,3),
-               ic95: nm(c.ic[0],3) + "-" + nm(c.ic[1],3), p: fmtP(c.p) };
-    })
-  };
-  try{
-    var j = await askAI(SYS, JSON.stringify(payload));
-    var out = document.getElementById("ai-out");
-    out.innerHTML =
-      '<h4>Lectura del modelo</h4><p>' + esc(j.lectura || "—") + '</p>' +
-      '<h4>Efecto principal</h4><p>' + esc(j.efecto_principal || "—") + '</p>' +
-      '<h4>Confusión y ajuste</h4><p>' + esc(j.confusion || "—") + '</p>' +
-      '<h4>Limitaciones</h4><ul>' + (j.limitaciones || []).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' +
-      '<h4>Comprobaciones pendientes</h4><ul>' + (j.comprobaciones || []).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>';
-    out.classList.remove("hidden");
-    st("Interpretación completada.");
-  }catch(e){ st(e.message, true); }
-  finally{ btn.disabled = false; }
-};
-function st(m, err){ var s = document.getElementById("st"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; }
-
-/* ---------- salidas ---------- */
-document.getElementById("btn-copy").onclick = async function(){
-  try{ await navigator.clipboard.writeText(RES.texto); st("Copiado."); }catch(e){ st("El navegador bloqueó el portapapeles.", true); }
-};
-document.getElementById("btn-md").onclick = function(){
-  var F = RES.fit, esOR = RES.tipo === "log";
-  var t = "# " + (esOR ? "Regresión logística binaria" : "Regresión de Cox") + "\n\n";
-  t += "- Sujetos: " + RES.n + "\n- Eventos: " + RES.eventos + "\n- Desenlace: " + RES.y + " = " + RES.pos + "\n\n";
-  t += "| Variable | β | EE | " + (esOR ? "OR" : "HR") + " ajustada | IC 95 % | p |\n|---|---|---|---|---|---|\n";
-  F.coef.forEach(function(c, i){
-    var cte = esOR && i === 0;
-    t += "| " + RES.names[i] + " | " + nm(c.b,4) + " | " + nm(c.se,4) + " | " + (cte ? "—" : nm(esOR ? c.or : c.hr,3)) +
-      " | " + (cte ? "—" : nm(c.ic[0],3) + " – " + nm(c.ic[1],3)) + " | " + fmtP(c.p) + " |\n";
+function normalidad(series){
+  var thead = document.querySelector("#norm-tbl thead");
+  thead.innerHTML = "<tr><th>Grupo</th><th class='num'>n</th><th class='num'>W</th><th class='num'>p</th><th>Interpretación</th><th class='num'>Asimetría</th></tr>";
+  var tb = document.querySelector("#norm-tbl tbody");
+  tb.innerHTML = "";
+  var tot = null;
+  series.forEach(function(g){
+    var sw = shapiroWilk(g.v);
+    if(g.name === "Total") tot = sw;
+    var tr = document.createElement("tr");
+    if(g.name === "Total") tr.className = "hl";
+    var v = sw.err ? "—" : (sw.p >= 0.05 ? '<span class="pill ok">compatible con normalidad</span>' : '<span class="pill no">se rechaza la normalidad</span>');
+    tr.innerHTML = "<td>" + esc(g.name) + "</td><td class='num'>" + g.v.length + "</td>" +
+      "<td class='num'>" + (sw.err ? "—" : nm(sw.W,4)) + "</td><td class='num'>" + (sw.err ? "—" : fmtP(sw.p)) + "</td>" +
+      "<td>" + v + "</td><td class='num'>" + nm(skewness(g.v),2) + "</td>";
+    tb.appendChild(tr);
   });
-  t += "\nRazón de verosimilitudes: χ²(" + F.lrDf + ") = " + nm(F.lr,3) + "; p = " + fmtP(F.lrP) + " · AIC = " + nm(F.aic,2);
-  if(esOR) t += " · R² Nagelkerke = " + nm(F.r2n,3);
-  t += "\n\n## Redacción\n" + RES.texto + "\n\n_RegresiónMultivariante·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
-  var b = new Blob([t], {type:"text/markdown;charset=utf-8"});
-  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "regresion-" + RES.tipo + ".md"; a.click();
-  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
-  st("Descargado.");
+  var vd = document.getElementById("norm-verdict");
+  if(!tot || tot.err){ vd.innerHTML = ""; return; }
+  var n = LAST_N(series);
+  var ok = tot.p >= 0.05;
+  var texto;
+  if(ok) texto = "La distribución es compatible con la normalidad (W = " + nm(tot.W,4) + "; p = " + fmtP(tot.p) + "). Puedes emplear pruebas paramétricas.";
+  else if(n > 100) texto = "Shapiro-Wilk rechaza la normalidad (W = " + nm(tot.W,4) + "; p = " + fmtP(tot.p) + "), pero con n = " + n + " el test detecta desviaciones irrelevantes. Por el teorema central del límite, la media muestral sigue siendo aproximadamente normal: revisa el Q-Q plot antes de renunciar a las pruebas paramétricas.";
+  else texto = "Se rechaza la normalidad (W = " + nm(tot.W,4) + "; p = " + fmtP(tot.p) + "). Considera una prueba no paramétrica o una transformación de la variable.";
+  vd.innerHTML = '<div class="verdict ' + (ok ? "" : (n > 100 ? "warn" : "bad")) + '"><div class="k">Shapiro-Wilk · muestra completa</div><p>' + texto + '</p></div>';
+}
+function LAST_N(series){ return series[0].v.length; }
+
+/* ================= Gráficos ================= */
+function hist(x){
+  var W = 480, H = 300, mL = 44, mR = 12, mT = 12, mB = 34;
+  var n = x.length, k;
+  var sel = document.getElementById("bins").value;
+  if(sel === "auto"){
+    var iqr = quantile(x,0.75) - quantile(x,0.25);
+    var bw = iqr > 0 ? 2*iqr/Math.cbrt(n) : 0;
+    k = bw > 0 ? Math.max(4, Math.min(30, Math.ceil((Math.max.apply(null,x)-Math.min.apply(null,x))/bw))) : Math.ceil(Math.sqrt(n));
+  } else if(sel === "sturges") k = Math.ceil(Math.log2(n)) + 1;
+  else k = parseInt(sel, 10);
+
+  var mn = Math.min.apply(null,x), mx = Math.max.apply(null,x), bw2 = (mx-mn)/k || 1;
+  var counts = new Array(k).fill(0);
+  x.forEach(function(v){ var i = Math.min(k-1, Math.floor((v-mn)/bw2)); counts[i]++; });
+  var maxC = Math.max.apply(null, counts);
+  var X = function(v){ return mL + (v-mn)/(mx-mn) * (W-mL-mR); };
+  var Y = function(c){ return mT + (1 - c/maxC) * (H-mT-mB); };
+
+  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Histograma">';
+  for(var i = 0; i <= 4; i++){
+    var c = maxC*i/4;
+    s += '<line class="gridl" x1="' + mL + '" y1="' + Y(c) + '" x2="' + (W-mR) + '" y2="' + Y(c) + '"/>';
+    s += '<text class="tick" x="' + (mL-6) + '" y="' + (Y(c)+3) + '" text-anchor="end">' + Math.round(c) + '</text>';
+  }
+  counts.forEach(function(c, i){
+    var x0 = X(mn + i*bw2), x1 = X(mn + (i+1)*bw2);
+    s += '<rect class="bar" x="' + (x0+0.5) + '" y="' + Y(c) + '" width="' + Math.max(1,(x1-x0-1)) + '" height="' + (Y(0)-Y(c)) + '"/>';
+  });
+  var m = mean(x), sdx = sd(x), pts = [];
+  for(i = 0; i <= 100; i++){
+    var v = mn + (mx-mn)*i/100;
+    var dens = dnorm((v-m)/sdx)/sdx * n * bw2;
+    pts.push(X(v).toFixed(1) + " " + Y(Math.min(dens, maxC*1.15)).toFixed(1));
+  }
+  s += '<path class="curveline" d="M' + pts.join(" L") + '"/>';
+  s += '<line class="axis" x1="' + mL + '" y1="' + Y(0) + '" x2="' + (W-mR) + '" y2="' + Y(0) + '"/>';
+  s += '<line class="axis" x1="' + mL + '" y1="' + mT + '" x2="' + mL + '" y2="' + Y(0) + '"/>';
+  for(i = 0; i <= 4; i++){
+    var vv = mn + (mx-mn)*i/4;
+    s += '<text class="tick" x="' + X(vv) + '" y="' + (H-14) + '" text-anchor="middle">' + nm(vv,1) + '</text>';
+  }
+  s += '<text class="tick" x="' + (W/2) + '" y="' + (H-2) + '" text-anchor="middle">' + esc(VAR) + ' · ' + k + ' intervalos</text>';
+  s += '</svg>';
+  document.getElementById("p-hist").innerHTML = s;
+}
+
+function qq(x){
+  var W = 480, H = 300, mL = 44, mR = 12, mT = 12, mB = 34;
+  var s0 = sortNum(x), n = s0.length, th = [], i;
+  for(i = 1; i <= n; i++) th.push(qnorm((i - 0.375)/(n + 0.25)));
+  var m = mean(x), sdx = sd(x);
+  var tmin = th[0], tmax = th[n-1];
+  var ymin = Math.min(s0[0], m + tmin*sdx), ymax = Math.max(s0[n-1], m + tmax*sdx);
+  var X = function(t){ return mL + (t-tmin)/(tmax-tmin)*(W-mL-mR); };
+  var Y = function(v){ return mT + (1-(v-ymin)/(ymax-ymin))*(H-mT-mB); };
+  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Q-Q plot">';
+  s += '<line class="refline" x1="' + X(tmin) + '" y1="' + Y(m+tmin*sdx) + '" x2="' + X(tmax) + '" y2="' + Y(m+tmax*sdx) + '"/>';
+  for(i = 0; i < n; i++) s += '<circle class="pt" cx="' + X(th[i]).toFixed(1) + '" cy="' + Y(s0[i]).toFixed(1) + '" r="2.6"/>';
+  s += '<line class="axis" x1="' + mL + '" y1="' + (H-mB) + '" x2="' + (W-mR) + '" y2="' + (H-mB) + '"/>';
+  s += '<line class="axis" x1="' + mL + '" y1="' + mT + '" x2="' + mL + '" y2="' + (H-mB) + '"/>';
+  for(i = 0; i <= 4; i++){
+    var t = tmin + (tmax-tmin)*i/4, v = ymin + (ymax-ymin)*i/4;
+    s += '<text class="tick" x="' + X(t) + '" y="' + (H-16) + '" text-anchor="middle">' + nm(t,1) + '</text>';
+    s += '<text class="tick" x="' + (mL-6) + '" y="' + (Y(v)+3) + '" text-anchor="end">' + nm(v,1) + '</text>';
+  }
+  s += '<text class="tick" x="' + (W/2) + '" y="' + (H-2) + '" text-anchor="middle">Cuantiles teóricos normales</text>';
+  s += '</svg>';
+  document.getElementById("p-qq").innerHTML = s;
+}
+
+function boxplot(series){
+  var gs = series.filter(function(g){ return g.name !== "Total" || series.length === 1; });
+  var W = 980, H = 60 + gs.length*70, mL = 130, mR = 30, mT = 16;
+  var all = [].concat.apply([], gs.map(function(g){ return g.v; }));
+  var mn = Math.min.apply(null, all), mx = Math.max.apply(null, all), pad = (mx-mn)*0.05 || 1;
+  var X = function(v){ return mL + (v-(mn-pad))/((mx+pad)-(mn-pad))*(W-mL-mR); };
+  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Diagrama de caja">';
+  gs.forEach(function(g, i){
+    var y = mT + 22 + i*70, h = 26;
+    var v = g.v, q1 = quantile(v,0.25), q3 = quantile(v,0.75), md = median(v), iqr = q3-q1;
+    var lo = v.filter(function(z){ return z >= q1 - 1.5*iqr; }), hi = v.filter(function(z){ return z <= q3 + 1.5*iqr; });
+    var wLo = Math.min.apply(null, lo), wHi = Math.max.apply(null, hi);
+    s += '<text class="tick" x="' + (mL-10) + '" y="' + (y+h/2+3) + '" text-anchor="end" style="font-size:11px">' + esc(g.name) + ' (n=' + v.length + ')</text>';
+    s += '<line class="whisk" x1="' + X(wLo) + '" y1="' + (y+h/2) + '" x2="' + X(q1) + '" y2="' + (y+h/2) + '"/>';
+    s += '<line class="whisk" x1="' + X(q3) + '" y1="' + (y+h/2) + '" x2="' + X(wHi) + '" y2="' + (y+h/2) + '"/>';
+    s += '<line class="whisk" x1="' + X(wLo) + '" y1="' + y + '" x2="' + X(wLo) + '" y2="' + (y+h) + '"/>';
+    s += '<line class="whisk" x1="' + X(wHi) + '" y1="' + y + '" x2="' + X(wHi) + '" y2="' + (y+h) + '"/>';
+    s += '<rect class="box-out" x="' + X(q1) + '" y="' + y + '" width="' + (X(q3)-X(q1)) + '" height="' + h + '"/>';
+    s += '<line class="medl" x1="' + X(md) + '" y1="' + y + '" x2="' + X(md) + '" y2="' + (y+h) + '"/>';
+    v.forEach(function(z){ if(z < q1-1.5*iqr || z > q3+1.5*iqr) s += '<circle class="outl" cx="' + X(z) + '" cy="' + (y+h/2) + '" r="3"/>'; });
+  });
+  s += '<line class="axis" x1="' + mL + '" y1="' + (H-24) + '" x2="' + (W-mR) + '" y2="' + (H-24) + '"/>';
+  for(var i = 0; i <= 6; i++){
+    var vv = (mn-pad) + ((mx+pad)-(mn-pad))*i/6;
+    s += '<text class="tick" x="' + X(vv) + '" y="' + (H-10) + '" text-anchor="middle">' + nm(vv,1) + '</text>';
+  }
+  s += '</svg>';
+  document.getElementById("p-box").innerHTML = s;
+}
+
+/* ================= Atípicos ================= */
+function outliers(x){
+  var q1 = quantile(x,0.25), q3 = quantile(x,0.75), iqr = q3-q1;
+  var m = mean(x), s = sd(x);
+  var rows = [];
+  var idxMap = [];
+  toNum(D.cols[VAR]).forEach(function(v, i){ if(!isNaN(v)) idxMap.push([v, i]); });
+  idxMap.forEach(function(p){
+    var v = p[0], z = (v-m)/s;
+    var leve = v < q1-1.5*iqr || v > q3+1.5*iqr;
+    var ext = v < q1-3*iqr || v > q3+3*iqr;
+    if(leve || Math.abs(z) > 3) rows.push({ fila: p[1]+2, valor: v, z: z, tipo: ext ? "extremo" : (leve ? "leve" : "z > 3") });
+  });
+  var vd = document.getElementById("out-verdict");
+  vd.innerHTML = '<div class="verdict ' + (rows.length ? "warn" : "") + '"><div class="k">Límites de Tukey</div><p>' +
+    'Bigote inferior ' + nm(q1-1.5*iqr,2) + ' · bigote superior ' + nm(q3+1.5*iqr,2) + '. ' +
+    (rows.length ? "Se han identificado <b>" + rows.length + "</b> observaciones atípicas (" + nm(100*rows.length/x.length,1) + " % de la muestra)." : "No se detectan valores atípicos.") + '</p></div>';
+
+  document.querySelector("#out-tbl thead").innerHTML = "<tr><th class='num'>Fila del CSV</th><th class='num'>Valor</th><th class='num'>z</th><th>Clasificación</th></tr>";
+  var tb = document.querySelector("#out-tbl tbody");
+  tb.innerHTML = rows.length ? "" : "<tr><td colspan='4' style='color:var(--ink-soft)'>Sin atípicos según los criterios aplicados.</td></tr>";
+  rows.sort(function(a,b){ return Math.abs(b.z) - Math.abs(a.z); }).slice(0,60).forEach(function(r){
+    var tr = document.createElement("tr");
+    var pill = r.tipo === "extremo" ? '<span class="pill no">extremo (3 IQR)</span>' : '<span class="pill mid">' + r.tipo + '</span>';
+    tr.innerHTML = "<td class='num'>" + r.fila + "</td><td class='num'>" + nm(r.valor,2) + "</td><td class='num'>" + nm(r.z,2) + "</td><td>" + pill + "</td>";
+    tb.appendChild(tr);
+  });
+  document.getElementById("out-tbl-wrap").style.display = rows.length ? "" : "";
+}
+
+/* ================= Transformaciones ================= */
+var TRANS = [
+  { n:"Ninguna (original)", f:function(v){ return v; }, ok:function(){ return true; }, use:"Interpretación directa." },
+  { n:"Logaritmo natural · ln(x)", f:Math.log, ok:function(x){ return Math.min.apply(null,x) > 0; }, use:"Asimetría positiva; el efecto pasa a ser multiplicativo." },
+  { n:"Logaritmo · ln(x + 1)", f:function(v){ return Math.log(v+1); }, ok:function(x){ return Math.min.apply(null,x) > -1; }, use:"Asimetría positiva con ceros (recuentos)." },
+  { n:"Raíz cuadrada · √x", f:Math.sqrt, ok:function(x){ return Math.min.apply(null,x) >= 0; }, use:"Recuentos y varianza proporcional a la media." },
+  { n:"Inversa · 1/x", f:function(v){ return 1/v; }, ok:function(x){ return Math.min.apply(null,x) > 0; }, use:"Asimetría positiva muy marcada (tiempos, tasas)." },
+  { n:"Cuadrado · x²", f:function(v){ return v*v; }, ok:function(){ return true; }, use:"Asimetría negativa." }
+];
+function transformaciones(x){
+  var rows = [];
+  TRANS.forEach(function(t){
+    if(!t.ok(x)) return rows.push({ n:t.n, W:null, p:null, sk:null, use:t.use, na:true });
+    var y = x.map(t.f).filter(isFinite);
+    if(y.length < 3) return;
+    var sw = shapiroWilk(y);
+    rows.push({ n:t.n, W:sw.W, p:sw.p, sk:skewness(y), use:t.use });
+  });
+  var valid = rows.filter(function(r){ return !r.na && isFinite(r.W); });
+  var best = valid.reduce(function(b,r){ return (!b || r.W > b.W) ? r : b; }, null);
+
+  document.querySelector("#trans-tbl thead").innerHTML = "<tr><th>Transformación</th><th class='num'>W</th><th class='num'>p</th><th class='num'>Asimetría</th><th>Cuándo usarla</th></tr>";
+  var tb = document.querySelector("#trans-tbl tbody");
+  tb.innerHTML = "";
+  rows.forEach(function(r){
+    var tr = document.createElement("tr");
+    if(best && r.n === best.n && r.n !== "Ninguna (original)") tr.className = "best";
+    tr.innerHTML = "<td>" + r.n + "</td>" +
+      (r.na ? "<td class='num'>—</td><td class='num'>—</td><td class='num'>—</td>"
+            : "<td class='num'>" + nm(r.W,4) + "</td><td class='num'>" + fmtP(r.p) + "</td><td class='num'>" + nm(r.sk,2) + "</td>") +
+      "<td style='color:var(--ink-soft);font-size:13px'>" + (r.na ? "No aplicable a estos datos (valores no positivos)." : r.use) + "</td>";
+    tb.appendChild(tr);
+  });
+
+  var orig = rows[0];
+  var vd = document.getElementById("trans-verdict");
+  var txt;
+  if(orig && orig.p >= 0.05) txt = "La variable original ya es compatible con la normalidad. <b>No transformes</b>: perderías interpretabilidad sin ganar nada.";
+  else if(best && best.n !== "Ninguna (original)" && best.p >= 0.05) txt = "La transformación <b>" + best.n + "</b> normaliza la variable (W = " + nm(best.W,4) + "; p = " + fmtP(best.p) + "). Recuerda que los resultados se interpretan en la escala transformada y que la retrotransformación de la media produce la media geométrica, no la aritmética.";
+  else if(best && best.n !== "Ninguna (original)") txt = "Ninguna transformación consigue normalizar la variable. La que más se acerca es <b>" + best.n + "</b> (W = " + nm(best.W,4) + "). Considera una prueba no paramétrica o un modelo que no asuma normalidad de los residuos.";
+  else txt = "Ninguna transformación aplicable mejora la normalidad. Usa pruebas no paramétricas.";
+  vd.innerHTML = '<div class="verdict ' + (orig && orig.p >= 0.05 ? "" : "warn") + '" style="margin-top:18px"><div class="k">Recomendación</div><p>' + txt + '</p></div>';
+  BEST = best;
+}
+var BEST = null;
+
+/* ================= Exportación ================= */
+document.getElementById("btn-md").onclick = function(){
+  if(!LAST) return;
+  var x = LAST.x, m = mean(x), s = sd(x), n = x.length, se = s/Math.sqrt(n), tc = qt(0.05,n-1);
+  var sw = shapiroWilk(x);
+  var t = "# Análisis exploratorio · " + VAR + "\n\n";
+  t += "- n = " + n + "\n- Media (DT): " + nm(m,2) + " (" + nm(s,2) + ")\n";
+  t += "- IC 95 % de la media: " + nm(m-tc*se,2) + " a " + nm(m+tc*se,2) + "\n";
+  t += "- Mediana [Q1–Q3]: " + nm(median(x),2) + " [" + nm(quantile(x,0.25),2) + "–" + nm(quantile(x,0.75),2) + "]\n";
+  t += "- Rango: " + nm(Math.min.apply(null,x),2) + " a " + nm(Math.max.apply(null,x),2) + "\n";
+  t += "- Asimetría: " + nm(skewness(x),2) + " · Curtosis: " + nm(kurtosis(x),2) + "\n";
+  t += "- Shapiro-Wilk: W = " + nm(sw.W,4) + ", p = " + fmtP(sw.p) + "\n\n";
+  if(BEST) t += "**Transformación recomendada:** " + BEST.n + " (W = " + nm(BEST.W,4) + ", p = " + fmtP(BEST.p) + ")\n\n";
+  t += "## Descriptivos por grupo\n\n| Grupo | n | Media | DT | Mediana | Q1 | Q3 |\n|---|---|---|---|---|---|---|\n";
+  LAST.series.forEach(function(g){
+    t += "| " + g.name + " | " + g.v.length + " | " + nm(mean(g.v),2) + " | " + nm(sd(g.v),2) + " | " + nm(median(g.v),2) + " | " + nm(quantile(g.v,0.25),2) + " | " + nm(quantile(g.v,0.75),2) + " |\n";
+  });
+  t += "\n_ExploraDatos·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
+  dl(t, "exploracion-" + VAR + ".md", "text/markdown");
 };
-function showErr(m){ var e = document.getElementById("err"); if(!m){ e.classList.add("hidden"); return; } e.textContent = m; e.classList.remove("hidden"); }
+document.getElementById("btn-csv").onclick = function(){
+  var head = "grupo;n;media;dt;ee;mediana;q1;q3;min;max;asimetria;curtosis";
+  var lines = LAST.series.map(function(g){
+    var v = g.v;
+    return [g.name, v.length, mean(v), sd(v), sd(v)/Math.sqrt(v.length), median(v), quantile(v,0.25), quantile(v,0.75),
+            Math.min.apply(null,v), Math.max.apply(null,v), skewness(v), kurtosis(v)]
+      .map(function(c){ return typeof c === "number" ? c.toFixed(4).replace(".", ",") : c; }).join(";");
+  });
+  dl(head + "\n" + lines.join("\n"), "descriptivos-" + VAR + ".csv", "text/csv");
+};
+function dl(text, name, mime){
+  var b = new Blob([text], {type: mime + ";charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = name; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  var s = document.getElementById("st"); s.textContent = "Descargado."; setTimeout(function(){ s.textContent = ""; }, 2200);
+}
+document.getElementById("bins").onchange = function(){ if(LAST) hist(LAST.x); };
 function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
 </script>
 </body>

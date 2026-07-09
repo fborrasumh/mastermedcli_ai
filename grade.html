@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRADE·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card h3{font-family:'Spectral',serif;font-weight:500;font-size:17px;margin:22px 0 10px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select,textarea{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif}
+  textarea{font-size:12.5px;min-height:110px;resize:vertical;line-height:1.5}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:14px;margin-bottom:20px}
+  .stats div{border-left:2px solid var(--line);padding-left:11px}
+  .stats .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .stats .v{font-family:'Spectral',serif;font-size:25px;font-weight:500;margin-top:1px;line-height:1.15}
+  .stats .v small{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft);font-weight:400;display:block;margin-top:2px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:500}
+  td{padding:7px 10px;border-bottom:1px solid var(--line-soft)}
+  td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  tr.hl td{background:#F2F7F6}
+  .tbl-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:3px}
+
+  .verdict{border-left:3px solid var(--teal);padding-left:16px;margin:18px 0}
+  .verdict.warn{border-color:var(--amber)}
+  .verdict.bad{border-color:var(--red)}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .verdict p{font-size:14.5px;margin-top:4px;max-width:76ch}
+
+  .plot{margin-top:6px}
+  .plot svg{width:100%;height:auto;display:block}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gridl{stroke:var(--line-soft);stroke-width:1}
+  .tick{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:var(--slate)}
+  .bar{fill:#CDE2E0;stroke:var(--teal);stroke-width:.7}
+  .curveline{fill:none;stroke:var(--amber);stroke-width:1.6}
+  .refline{stroke:var(--amber);stroke-width:1;stroke-dasharray:4 3}
+  .pt{fill:var(--teal);opacity:.75}
+
+  .para{font-size:14.5px;line-height:1.75;background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:18px;font-family:'Spectral',serif}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+  .drop{border:1px dashed var(--line);border-radius:3px;padding:26px;text-align:center;color:var(--ink-soft);font-size:14px;cursor:pointer;transition:.15s;background:#FCFDFC}
+  .drop:hover,.drop.over{border-color:var(--teal);background:#F2F7F6;color:var(--teal-deep)}
+  .drop b{display:block;font-weight:500;color:var(--ink);margin-bottom:3px}
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:2px 7px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--slate);margin-left:6px}
+  .pill.ok{background:#F1F8F7;color:var(--teal-deep);border-color:#BFD9D6}
+  .pill.no{background:#FBF2F1;color:var(--red);border-color:#E0C4C1}
+  .pill.mid{background:#FBF6EC;color:var(--amber);border-color:#E5D6B9}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
+
+  .layout{display:grid;grid-template-columns:minmax(280px,320px) 1fr;gap:22px;align-items:start}
+  .out-list{margin-bottom:6px}
+  .out-item{display:flex;align-items:center;gap:8px;padding:9px 11px;border:1px solid var(--line);border-radius:3px;margin-bottom:7px;cursor:pointer;background:#FCFDFC;transition:.14s;font-size:13.5px}
+  .out-item:hover{border-color:var(--teal)}
+  .out-item.on{border-color:var(--teal);background:#F2F7F6}
+  .out-item .cert{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em}
+  .out-item .x{color:#B7C0C3;font-size:16px;background:none;border:none;padding:0 3px}
+  .out-item .x:hover{color:var(--red);background:none}
+  .out-item input{border:none;background:transparent;font-family:'Inter',sans-serif;font-size:13.5px;padding:0;flex:1;min-width:0}
+  .out-item input:focus{outline:none}
+  .crit{font-family:'JetBrains Mono',monospace;font-size:9.5px;border:1px solid var(--line);border-radius:2px;padding:1px 5px;color:var(--slate)}
+
+  .dom{border:1px solid var(--line);border-radius:3px;margin-bottom:12px;background:#FCFDFC;overflow:hidden}
+  .dom.down{border-left:3px solid var(--red)}
+  .dom.up{border-left:3px solid var(--teal)}
+  .dom-h{padding:13px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .dom-h .name{font-weight:500;font-size:14.5px;flex:1;min-width:180px}
+  .dom-h .name small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-soft);margin-top:2px;line-height:1.45}
+  .seg{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;flex-shrink:0}
+  .seg button{border:none;border-radius:0;background:#fff;color:var(--slate);font-size:12px;padding:6px 11px;font-family:'JetBrains Mono',monospace;border-right:1px solid var(--line)}
+  .seg button:last-child{border-right:none}
+  .seg button:hover{background:#F2F7F6;color:var(--teal)}
+  .seg button.on{background:var(--red);color:#fff}
+  .dom.up .seg button.on{background:var(--teal)}
+  .seg button.on[data-v="0"]{background:var(--slate)}
+  .dom-b{padding:0 16px 13px}
+  .dom-b textarea{min-height:40px;font-size:13px;font-family:'Inter',sans-serif}
+  .dom-b .crits{font-size:12.5px;color:var(--ink-soft);margin-bottom:9px;line-height:1.5}
+
+  .cert-box{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;border-left:3px solid var(--teal);padding-left:18px;margin-bottom:22px}
+  .cert-box .sym{font-family:'JetBrains Mono',monospace;font-size:40px;letter-spacing:.06em;color:var(--teal-deep);line-height:1}
+  .cert-box .lbl{font-family:'Spectral',serif;font-size:31px;font-weight:600;line-height:1}
+  .cert-box .txt{font-size:14px;color:var(--ink-soft);flex-basis:100%;max-width:74ch;margin-top:6px}
+  .cert-alta{color:var(--teal-deep)} .cert-moderada{color:var(--teal)}
+  .cert-baja{color:var(--amber)} .cert-muy{color:var(--red)}
+
+  .ledger{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  .ledger td,.ledger th{border-bottom:1px solid var(--line-soft);padding:8px 10px}
+  .ledger td:last-child{text-align:right;font-family:'JetBrains Mono',monospace}
+  .ledger tr.tot td{border-top:1px solid var(--line);border-bottom:none;font-weight:500;padding-top:11px}
+  .ledger .neg{color:var(--red)} .ledger .pos{color:var(--teal)}
+
+  .sof th{white-space:nowrap}
+  .sof td{font-size:13px}
+  .sof .c{font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-align:center}
+
+  .ai-out{border:1px solid var(--line);border-radius:3px;background:#FCFDFC;padding:18px;font-size:14.5px;line-height:1.65;margin-top:16px}
+  .ai-out h4{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);margin:15px 0 7px}
+  .ai-out h4:first-child{margin-top:0}
+  .ai-out ul{margin-left:18px}
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%}
+  dialog::backdrop{background:rgba(23,38,46,.35)}
+  .dlg{padding:24px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">15 · Evidencia y lectura crítica</div>
+    <h1>GRADE<em>·AI</em></h1>
+    <p class="lede">Certeza de la evidencia desenlace a desenlace: cinco dominios que rebajan la confianza y tres que la elevan, con el saldo calculado paso a paso y una tabla de resumen de hallazgos exportable.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="layout">
+  <div>
+    <section class="card">
+      <h2>Desenlaces</h2>
+      <p class="sub">GRADE se aplica por desenlace, no por estudio. Evalúa cada uno por separado.</p>
+      <div class="out-list" id="outs"></div>
+      <div class="actions">
+        <button class="ghost small" id="btn-add">+ Añadir desenlace</button>
+        <button class="ghost small" id="btn-demo">Ejemplo</button>
+      </div>
+
+      <div class="divider"><span>Punto de partida</span></div>
+      <div class="fld">
+        <label for="dis">Diseño de los estudios</label>
+        <select id="dis">
+          <option value="eca">Ensayos aleatorizados → certeza ALTA</option>
+          <option value="obs">Estudios observacionales → certeza BAJA</option>
+        </select>
+        <div class="hint">GRADE arranca la evidencia procedente de ECA en certeza alta y la observacional en baja. Los dominios de ascenso solo se aplican a la observacional.</div>
+      </div>
+      <div class="fld">
+        <label for="imp">Importancia del desenlace</label>
+        <select id="imp">
+          <option value="critico">Crítico para la decisión (7–9)</option>
+          <option value="importante">Importante pero no crítico (4–6)</option>
+          <option value="limitado">De importancia limitada (1–3)</option>
+        </select>
+      </div>
+    </section>
+  </div>
+
+  <div>
+    <section class="card">
+      <h2 id="dom-title">Dominios GRADE</h2>
+      <p class="sub" id="dom-sub"></p>
+
+      <div class="cert-box" id="cert"></div>
+
+      <div class="divider"><span>Cinco razones para rebajar la certeza</span></div>
+      <div id="downs"></div>
+
+      <div id="ups-wrap">
+        <div class="divider"><span>Tres razones para elevarla · solo evidencia observacional</span></div>
+        <div id="ups"></div>
+      </div>
+
+      <div class="divider"><span>Saldo</span></div>
+      <table class="ledger" id="ledger"><tbody></tbody></table>
+
+      <div class="actions">
+        <button id="btn-ai">Revisar mis juicios con IA</button>
+        <button class="ghost" id="btn-sof">Ver resumen de hallazgos</button>
+        <button class="ghost" id="btn-md">Descargar informe (.md)</button>
+        <span class="status" id="st"></span>
+      </div>
+      <div class="ai-out hidden" id="ai-out"></div>
+      <div class="note">La certeza de la evidencia no es la fuerza de la recomendación. Una certeza baja puede sostener una recomendación fuerte cuando el beneficio es enorme y el daño mínimo, y una certeza alta puede desembocar en una recomendación débil si beneficios y perjuicios están equilibrados.</div>
+    </section>
+
+    <section class="card hidden" id="card-sof">
+      <h2>Resumen de hallazgos</h2>
+      <p class="sub">Todos los desenlaces evaluados, ordenados por importancia.</p>
+      <div class="tbl-wrap" style="max-height:none">
+        <table class="sof" id="sof"><thead></thead><tbody></tbody></table>
+      </div>
+    </section>
+  </div>
+</div>
+</main>
+
+<footer class="wrap">
+  <span>GRADE·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span id="model-badge"></span>
+</footer>
+
+<dialog id="dlg-key">
+  <div class="dlg">
+    <h3>Clave de API de OpenAI</h3>
+    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit.</p>
+    <label for="k">Clave</label>
+    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
+    <div style="margin-top:14px"></div>
+    <label for="m">Modelo</label>
+    <select id="m">
+      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
+      <option value="gpt-4o">gpt-4o · más preciso</option>
+      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+      <option value="gpt-4.1">gpt-4.1</option>
+    </select>
+    <div class="actions">
+      <button id="k-save">Guardar</button>
+      <button class="ghost" id="k-cancel">Cancelar</button>
+      <button class="ghost small" id="k-clear">Borrar clave</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+/* ---------- Kernel de IA: clave y modelo compartidos ---------- */
+var KEY = "ia_openai_key", MODEL = "ia_openai_model";
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function getKey(){ return lsGet(KEY) || ""; }
+function getModel(){ return lsGet(MODEL) || "gpt-4o-mini"; }
+function badge(){
+  var b = document.getElementById("model-badge");
+  if(b){ b.textContent = "modelo: " + getModel(); b.style.cursor = "pointer"; b.onclick = askKey; }
+}
+function askKey(){
+  document.getElementById("k").value = getKey();
+  document.getElementById("m").value = getModel();
+  document.getElementById("dlg-key").showModal();
+}
+function initKeyDialog(){
+  document.getElementById("k-save").onclick = function(){
+    var v = document.getElementById("k").value.trim();
+    if(v) lsSet(KEY, v);
+    lsSet(MODEL, document.getElementById("m").value);
+    badge(); document.getElementById("dlg-key").close();
+  };
+  document.getElementById("k-cancel").onclick = function(){ document.getElementById("dlg-key").close(); };
+  document.getElementById("k-clear").onclick = function(){ lsDel(KEY); document.getElementById("k").value = ""; };
+  badge();
+}
+async function askAI(system, user, temp){
+  var key = getKey();
+  if(!key){ askKey(); throw new Error("Falta la clave de API. Configúrala en el pie de página."); }
+  var res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
+    body: JSON.stringify({ model:getModel(), temperature: (temp === undefined ? 0.25 : temp),
+      response_format:{type:"json_object"},
+      messages:[{role:"system",content:system},{role:"user",content:user}] })
+  });
+  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,150)); }
+  var data = await res.json();
+  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
+}
+
+
+/* ============ Dominios ============ */
+var DOWN = [
+  { id:"sesgo", n:"Riesgo de sesgo", s:"Limitaciones en el diseño o la ejecución de los estudios que aportan la evidencia.",
+    c:"Ausencia de ocultación de la asignación, falta de cegamiento con desenlaces subjetivos, pérdidas de seguimiento cuantiosas o diferenciales, análisis distinto del de intención de tratar, interrupción precoz por beneficio, notificación selectiva de desenlaces." },
+  { id:"incons", n:"Inconsistencia", s:"Los estudios discrepan entre sí sin explicación.",
+    c:"Estimaciones puntuales muy dispares, escaso solapamiento de los intervalos de confianza, I² elevado, prueba de heterogeneidad significativa. Si los análisis de subgrupos explican la variabilidad, no se rebaja: se informa por subgrupo." },
+  { id:"indirect", n:"Evidencia indirecta", s:"La evidencia no responde exactamente a la pregunta PICO planteada.",
+    c:"Población distinta de la de interés; intervención administrada de otro modo; comparaciones indirectas entre dos fármacos nunca enfrentados en un mismo ensayo; uso de variables subrogadas en lugar de desenlaces relevantes para el paciente." },
+  { id:"imprec", n:"Imprecisión", s:"El intervalo de confianza es tan amplio que abarca decisiones opuestas.",
+    c:"El IC 95 % incluye simultáneamente un beneficio apreciable y un daño apreciable; el tamaño muestral no alcanza el tamaño de información óptimo; hay pocos eventos (menos de 300 para desenlaces binarios, o menos de 400 sujetos para continuos)." },
+  { id:"pub", n:"Sesgo de publicación", s:"Sospecha de que los estudios negativos no se han publicado.",
+    c:"Asimetría del funnel plot; el cuerpo de evidencia se compone de estudios pequeños financiados por la industria; ausencia de registro previo de los ensayos; búsqueda de literatura gris infructuosa. Rebaja solo si la sospecha es fundada." }
+];
+var UP = [
+  { id:"magnitud", n:"Magnitud del efecto", s:"El efecto es tan grande que resulta difícil atribuirlo a la confusión.",
+    c:"+1 nivel si RR > 2 o < 0,5 sin factores de confusión plausibles. +2 niveles si RR > 5 o < 0,2, con evidencia directa y precisa." },
+  { id:"dosis", n:"Gradiente dosis-respuesta", s:"A mayor exposición, mayor efecto.",
+    c:"+1 nivel cuando existe un gradiente claro y biológicamente plausible entre la dosis o la duración de la exposición y la magnitud del desenlace." },
+  { id:"confusion", n:"Factores de confusión residuales", s:"La confusión no medida actuaría reduciendo el efecto observado.",
+    c:"+1 nivel cuando todos los sesgos plausibles habrían atenuado el efecto y aun así este persiste, o cuando explicarían un efecto espurio pero el observado va en dirección contraria." }
+];
+
+var CERT = [
+  { n:"Alta", sym:"⊕⊕⊕⊕", cls:"cert-alta", d:"Existe mucha confianza en que el efecto real está próximo al estimado. Es muy improbable que investigación adicional cambie la estimación." },
+  { n:"Moderada", sym:"⊕⊕⊕⊝", cls:"cert-moderada", d:"Existe una confianza moderada en la estimación. El efecto real probablemente esté cerca del estimado, pero cabe la posibilidad de que difiera sustancialmente." },
+  { n:"Baja", sym:"⊕⊕⊝⊝", cls:"cert-baja", d:"La confianza en la estimación es limitada. El efecto real puede ser sustancialmente distinto del estimado." },
+  { n:"Muy baja", sym:"⊕⊝⊝⊝", cls:"cert-muy", d:"Existe muy poca confianza en la estimación. Es probable que el efecto real sea sustancialmente distinto del estimado." }
+];
+var IMP = { critico:"Crítico", importante:"Importante", limitado:"Limitado" };
+
+/* ============ Estado ============ */
+function nuevo(nombre){
+  return { nombre: nombre || "Nuevo desenlace", dis:"eca", imp:"critico",
+           j: { sesgo:0, incons:0, indirect:0, imprec:0, pub:0, magnitud:0, dosis:0, confusion:0 },
+           notas: {} };
+}
+var OUTS = [nuevo("Mortalidad a 12 meses")], SEL = 0;
+
+document.getElementById("btn-add").onclick = function(){ OUTS.push(nuevo("Desenlace " + (OUTS.length+1))); SEL = OUTS.length-1; sync(); };
+document.getElementById("btn-demo").onclick = function(){
+  OUTS = [
+    (function(){ var o = nuevo("Mortalidad por cualquier causa"); o.j.imprec = -1; o.notas.imprec = "El IC 95 % del RR (0,72–1,04) incluye tanto un beneficio relevante como la ausencia de efecto."; return o; })(),
+    (function(){ var o = nuevo("Ingresos hospitalarios"); o.j.sesgo = -1; o.j.incons = -1; o.imp = "critico";
+      o.notas.sesgo = "Tres de los cinco ensayos carecen de cegamiento del evaluador del desenlace.";
+      o.notas.incons = "I² = 68 % sin que los análisis de subgrupos por gravedad basal lo expliquen."; return o; })(),
+    (function(){ var o = nuevo("Calidad de vida (SF-36)"); o.dis = "eca"; o.j.indirect = -1; o.j.imprec = -1; o.imp = "importante";
+      o.notas.indirect = "Solo un ensayo mide calidad de vida, y lo hace a las 6 semanas en lugar de a los 12 meses."; return o; })(),
+    (function(){ var o = nuevo("Efectos adversos graves"); o.dis = "obs"; o.j.magnitud = 1; o.imp = "critico";
+      o.notas.magnitud = "OR = 5,8 en cohortes concordantes, sin confusores plausibles que expliquen un efecto de esa magnitud."; return o; })()
+  ];
+  SEL = 0; sync();
+};
+
+function O(){ return OUTS[SEL]; }
+
+function outList(){
+  var box = document.getElementById("outs");
+  box.innerHTML = "";
+  OUTS.forEach(function(o, i){
+    var c = certeza(o);
+    var d = document.createElement("div");
+    d.className = "out-item" + (i === SEL ? " on" : "");
+    d.innerHTML = '<input type="text" value="' + esc(o.nombre) + '" data-i="' + i + '">' +
+      '<span class="crit">' + IMP[o.imp][0] + '</span>' +
+      '<span class="cert ' + CERT[c].cls + '">' + CERT[c].sym + '</span>' +
+      (OUTS.length > 1 ? '<button class="x" data-del="' + i + '">×</button>' : "");
+    d.onclick = function(e){ if(e.target.tagName !== "INPUT" && !e.target.dataset.del){ SEL = i; sync(); } };
+    box.appendChild(d);
+  });
+  box.querySelectorAll("input[data-i]").forEach(function(inp){
+    inp.oninput = function(){ OUTS[inp.dataset.i].nombre = inp.value; };
+  });
+  box.querySelectorAll("[data-del]").forEach(function(b){
+    b.onclick = function(ev){ ev.stopPropagation(); OUTS.splice(+b.dataset.del, 1); SEL = 0; sync(); };
+  });
+}
+
+/* ============ Cálculo de la certeza ============ */
+function certeza(o){
+  var start = o.dis === "eca" ? 0 : 2;                  /* 0 = alta, 2 = baja */
+  var down = DOWN.reduce(function(a,d){ return a + Math.abs(o.j[d.id]); }, 0);
+  var up = o.dis === "obs" ? UP.reduce(function(a,d){ return a + o.j[d.id]; }, 0) : 0;
+  var lvl = start + down - up;
+  return Math.max(0, Math.min(3, lvl));
+}
+
+function dominios(){
+  var o = O();
+  document.getElementById("dis").value = o.dis;
+  document.getElementById("imp").value = o.imp;
+  document.getElementById("ups-wrap").style.display = o.dis === "obs" ? "" : "none";
+  document.getElementById("dom-title").textContent = o.nombre;
+  document.getElementById("dom-sub").textContent = "Punto de partida: " +
+    (o.dis === "eca" ? "ensayos aleatorizados → certeza alta (⊕⊕⊕⊕)" : "estudios observacionales → certeza baja (⊕⊕⊝⊝)") +
+    " · desenlace " + IMP[o.imp].toLowerCase();
+
+  render("downs", DOWN, "down", [0,-1,-2], ["No rebajar","Rebajar 1","Rebajar 2"]);
+  render("ups", UP, "up", [0,1,2], ["No elevar","Elevar 1","Elevar 2"]);
+  cert(); ledger(); outList();
+}
+function render(id, doms, cls, vals, labels){
+  var o = O();
+  var box = document.getElementById(id);
+  box.innerHTML = "";
+  doms.forEach(function(d){
+    var el = document.createElement("div");
+    var activo = o.j[d.id] !== 0;
+    el.className = "dom " + (activo ? cls : "");
+    el.innerHTML =
+      '<div class="dom-h"><div class="name">' + esc(d.n) + '<small>' + esc(d.s) + '</small></div>' +
+      '<div class="seg">' + vals.map(function(v, i){
+        return '<button data-d="' + d.id + '" data-v="' + v + '"' + (o.j[d.id] === v ? ' class="on"' : "") + '>' + labels[i] + '</button>';
+      }).join("") + '</div></div>' +
+      '<div class="dom-b"><div class="crits">' + esc(d.c) + '</div>' +
+      '<textarea data-n="' + d.id + '" placeholder="Justifica tu juicio: qué estudios, qué cifras">' + esc(o.notas[d.id] || "") + '</textarea></div>';
+    box.appendChild(el);
+  });
+  box.querySelectorAll("button[data-d]").forEach(function(b){
+    b.onclick = function(){
+      O().j[b.dataset.d] = +b.dataset.v;
+      dominios();
+    };
+  });
+  box.querySelectorAll("textarea[data-n]").forEach(function(t){
+    t.oninput = function(){ O().notas[t.dataset.n] = t.value; };
+  });
+}
+function cert(){
+  var o = O(), c = certeza(o), C = CERT[c];
+  document.getElementById("cert").innerHTML =
+    '<span class="sym ' + C.cls + '">' + C.sym + '</span>' +
+    '<span class="lbl ' + C.cls + '">Certeza ' + C.n.toLowerCase() + '</span>' +
+    '<span class="txt">' + C.d + '</span>';
+}
+function ledger(){
+  var o = O(), rows = [];
+  var start = o.dis === "eca" ? 0 : 2;
+  rows.push(["Punto de partida · " + (o.dis === "eca" ? "ensayos aleatorizados" : "estudios observacionales"), CERT[start].n, ""]);
+  DOWN.forEach(function(d){
+    if(o.j[d.id] !== 0) rows.push([d.n, o.j[d.id] + " nivel" + (Math.abs(o.j[d.id]) > 1 ? "es" : ""), "neg"]);
+  });
+  if(o.dis === "obs") UP.forEach(function(d){
+    if(o.j[d.id] !== 0) rows.push([d.n, "+" + o.j[d.id] + " nivel" + (o.j[d.id] > 1 ? "es" : ""), "pos"]);
+  });
+  var down = DOWN.reduce(function(a,d){ return a + Math.abs(o.j[d.id]); }, 0);
+  var up = o.dis === "obs" ? UP.reduce(function(a,d){ return a + o.j[d.id]; }, 0) : 0;
+  if(!down && !up) rows.push(["Sin motivos para modificar la certeza", "—", ""]);
+  var c = certeza(o);
+  var tope = (start + down - up) < 0 ? " (limitado al máximo de la escala)" : (start + down - up) > 3 ? " (limitado al mínimo de la escala)" : "";
+  var h = rows.map(function(r){
+    return "<tr><td>" + esc(r[0]) + "</td><td class='" + r[2] + "'>" + esc(r[1]) + "</td></tr>";
+  }).join("");
+  h += "<tr class='tot'><td>Certeza final de la evidencia</td><td>" + CERT[c].sym + " " + CERT[c].n.toUpperCase() + esc(tope) + "</td></tr>";
+  document.querySelector("#ledger tbody").innerHTML = h;
+}
+document.getElementById("dis").onchange = function(){
+  O().dis = this.value;
+  if(this.value === "eca") UP.forEach(function(d){ O().j[d.id] = 0; });
+  dominios();
+};
+document.getElementById("imp").onchange = function(){ O().imp = this.value; dominios(); };
+
+function sync(){ dominios(); }
+
+/* ============ Resumen de hallazgos ============ */
+document.getElementById("btn-sof").onclick = function(){
+  var card = document.getElementById("card-sof");
+  card.classList.remove("hidden");
+  var orden = { critico:0, importante:1, limitado:2 };
+  var lista = OUTS.slice().sort(function(a,b){ return orden[a.imp] - orden[b.imp]; });
+  document.querySelector("#sof thead").innerHTML =
+    "<tr><th>Desenlace</th><th>Importancia</th><th>Diseño</th><th>Rebajas</th><th>Ascensos</th><th>Certeza</th></tr>";
+  document.querySelector("#sof tbody").innerHTML = lista.map(function(o){
+    var c = certeza(o);
+    var ds = DOWN.filter(function(d){ return o.j[d.id] !== 0; }).map(function(d){ return d.n.toLowerCase() + " (" + o.j[d.id] + ")"; });
+    var us = o.dis === "obs" ? UP.filter(function(d){ return o.j[d.id] !== 0; }).map(function(d){ return d.n.toLowerCase() + " (+" + o.j[d.id] + ")"; }) : [];
+    return "<tr><td>" + esc(o.nombre) + "</td><td>" + IMP[o.imp] + "</td><td>" + (o.dis === "eca" ? "ECA" : "Observacional") +
+      "</td><td>" + (ds.join("; ") || "—") + "</td><td>" + (us.join("; ") || "—") +
+      "</td><td class='c " + CERT[c].cls + "'>" + CERT[c].sym + "<br><small>" + CERT[c].n + "</small></td></tr>";
+  }).join("");
+  card.scrollIntoView && card.scrollIntoView({behavior:"smooth", block:"start"});
+};
+
+/* ============ IA ============ */
+var SYS = [
+  "Eres metodólogo del grupo de trabajo GRADE y revisas la evaluación de la certeza de la evidencia hecha por un estudiante.",
+  "Recibes los juicios de cada dominio y sus justificaciones. No recalcules la certeza: viene dada.",
+  "Detecta juicios mal fundamentados, dominios que deberían haberse rebajado y justificaciones vacías o circulares.",
+  "Recuerda: no se rebaja dos veces por el mismo motivo; la imprecisión y la inconsistencia son cosas distintas; los dominios de ascenso solo aplican a evidencia observacional.",
+  "Responde EXCLUSIVAMENTE con JSON, sin markdown, con este esquema:",
+  '{"revision":"2-3 frases sobre la calidad global de la evaluación",',
+  '"juicios_discutibles":[{"dominio":"nombre","problema":"qué falla","sugerencia":"qué haría GRADE"}],',
+  '"justificaciones_debiles":["dominio: por qué la nota no basta","..."],',
+  '"redaccion_sugerida":"frase para la tabla de resumen de hallazgos, del tipo: certeza moderada por riesgo de sesgo"}',
+  "Todo en español, concreto, sin repetir los criterios genéricos que ya conoce el estudiante."
+].join(" ");
+
+document.getElementById("btn-ai").onclick = async function(){
+  var o = O(), btn = this;
+  btn.disabled = true;
+  msg('<span class="spin"></span>Revisando los juicios…');
+  var payload = {
+    desenlace: o.nombre, importancia: IMP[o.imp],
+    diseno: o.dis === "eca" ? "ensayos aleatorizados" : "estudios observacionales",
+    certeza_resultante: CERT[certeza(o)].n,
+    dominios_descenso: DOWN.map(function(d){ return { dominio:d.n, juicio:o.j[d.id], justificacion:o.notas[d.id] || "" }; }),
+    dominios_ascenso: o.dis === "obs" ? UP.map(function(d){ return { dominio:d.n, juicio:o.j[d.id], justificacion:o.notas[d.id] || "" }; }) : []
+  };
+  try{
+    var j = await askAI(SYS, JSON.stringify(payload));
+    var out = document.getElementById("ai-out");
+    out.innerHTML =
+      '<h4>Revisión</h4><p>' + esc(j.revision || "—") + '</p>' +
+      '<h4>Juicios discutibles</h4><ul>' + (j.juicios_discutibles || []).map(function(x){
+        return "<li><b>" + esc(x.dominio) + "</b> — " + esc(x.problema) + " <i>" + esc(x.sugerencia) + "</i></li>";
+      }).join("") + '</ul>' +
+      '<h4>Justificaciones débiles</h4><ul>' + (j.justificaciones_debiles || []).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' +
+      '<h4>Redacción para la tabla</h4><p>' + esc(j.redaccion_sugerida || "—") + '</p>';
+    out.classList.remove("hidden");
+    msg("Revisión completada.");
+  }catch(e){ msg(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+
+/* ============ Salidas ============ */
+document.getElementById("btn-md").onclick = function(){
+  var t = "# Evaluación GRADE de la certeza de la evidencia\n\n";
+  t += "## Resumen de hallazgos\n\n| Desenlace | Importancia | Diseño | Certeza |\n|---|---|---|---|\n";
+  OUTS.forEach(function(o){
+    var c = certeza(o);
+    t += "| " + o.nombre + " | " + IMP[o.imp] + " | " + (o.dis === "eca" ? "ECA" : "Observacional") + " | " + CERT[c].sym + " " + CERT[c].n + " |\n";
+  });
+  OUTS.forEach(function(o){
+    var c = certeza(o);
+    t += "\n## " + o.nombre + "\n\n";
+    t += "- Punto de partida: " + (o.dis === "eca" ? "ensayos aleatorizados (certeza alta)" : "estudios observacionales (certeza baja)") + "\n";
+    t += "- Importancia: " + IMP[o.imp] + "\n- **Certeza final: " + CERT[c].n + " " + CERT[c].sym + "**\n\n";
+    t += "| Dominio | Juicio | Justificación |\n|---|---|---|\n";
+    DOWN.forEach(function(d){
+      t += "| " + d.n + " | " + (o.j[d.id] === 0 ? "no rebajar" : o.j[d.id] + " nivel(es)") + " | " + (o.notas[d.id] || "—") + " |\n";
+    });
+    if(o.dis === "obs") UP.forEach(function(d){
+      t += "| " + d.n + " | " + (o.j[d.id] === 0 ? "no elevar" : "+" + o.j[d.id] + " nivel(es)") + " | " + (o.notas[d.id] || "—") + " |\n";
+    });
+    t += "\n" + CERT[c].d + "\n";
+  });
+  t += "\n_GRADE·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
+  var b = new Blob([t], {type:"text/markdown;charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "grade.md"; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  msg("Descargado.");
+};
+function msg(m, err){ var s = document.getElementById("st"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; if(!/spin/.test(m)) setTimeout(function(){ s.innerHTML = ""; }, 2800); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+initKeyDialog(); sync();
+</script>
+</body>
+</html>

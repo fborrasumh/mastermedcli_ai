@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RegresiónMultivariante·AI · Kit Metodológico UMH</title>
+<title>BioEstadística·AI · Kit Metodológico UMH</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -103,45 +103,27 @@
   @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
 
   .layout{display:grid;grid-template-columns:minmax(280px,350px) 1fr;gap:22px;align-items:start}
-  .modes{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;margin-bottom:18px}
-  .modes button{flex:1;border:none;border-radius:0;background:#FCFDFC;color:var(--slate);font-size:13px;padding:9px}
-  .modes button.on{background:var(--teal);color:#fff}
-  .covlist label{display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-size:13.5px;color:var(--ink);margin-bottom:6px}
-  .covlist input{width:auto}
-  .covlist .tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--slate);border:1px solid var(--line);border-radius:2px;padding:1px 5px}
-  .coef-tbl td.est{font-family:'Spectral',serif;font-size:16px;font-weight:500}
-  .coef-tbl tr.sig td.est{color:var(--teal-deep)}
-  .forest svg{width:100%;height:auto}
-  .fline{stroke:var(--teal);stroke-width:1.3}
-  .fdot{fill:var(--teal)}
-  .fdot.ns{fill:var(--slate)}
-  .fline.ns{stroke:var(--slate)}
-  .fnull{stroke:var(--slate);stroke-width:1;stroke-dasharray:3 3}
-  .fit{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:6px}
-  .fit div{border-left:2px solid var(--line);padding-left:11px}
-  .fit .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
-  .fit .v{font-family:'Spectral',serif;font-size:23px;font-weight:500}
-  .ai-out{border:1px solid var(--line);border-radius:3px;background:#FCFDFC;padding:18px;font-size:14.5px;line-height:1.65;margin-top:16px}
-  .ai-out h4{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);margin:15px 0 7px}
-  .ai-out h4:first-child{margin-top:0}
-  .ai-out ul{margin-left:18px}
-  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
-  @keyframes sp{to{transform:rotate(360deg)}}
-  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
-  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%;box-shadow:0 20px 60px -20px rgba(23,38,46,.4)}
-  dialog::backdrop{background:rgba(23,38,46,.35)}
-  .dlg{padding:24px}
-  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
-  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+  .res-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;border-left:3px solid var(--teal);padding-left:18px;margin-bottom:22px}
+  .res-head .p{font-family:'Spectral',serif;font-size:52px;font-weight:600;line-height:.95;color:var(--teal-deep)}
+  .res-head .p.ns{color:var(--slate)}
+  .res-head .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .res-head .lbl b{display:block;font-family:'Inter',sans-serif;font-size:15px;letter-spacing:0;text-transform:none;color:var(--ink);font-weight:400;margin-top:4px}
+  .assump{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:20px}
+  .assump div{border:1px solid var(--line);border-radius:3px;padding:12px 14px;background:#FCFDFC}
+  .assump .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);margin-bottom:4px}
+  .assump .v{font-size:13.5px}
+  .sugerido{border:1px solid #BFD9D6;background:#F1F8F7;border-radius:3px;padding:14px 16px;font-size:14px;margin-bottom:16px}
+  .sugerido b{color:var(--teal-deep)}
+  .apa{font-family:'JetBrains Mono',monospace;font-size:13px;background:#0F1E24;color:#D7E4E2;padding:16px;border-radius:3px;line-height:1.8;white-space:pre-wrap;word-break:break-word}
 </style>
 </head>
 <body>
 <header>
   <div class="wrap masthead">
     <a class="back" href="index.html">← Kit Metodológico</a>
-    <div class="eyebrow">11 · Análisis y gestión de datos</div>
-    <h1>RegresiónMultivariante<em>·AI</em></h1>
-    <p class="lede">Ajuste por factores de confusión: regresión logística (Odds Ratio ajustada) y regresión de Cox (Hazard Ratio ajustada) desde CSV, con IC 95 %, valor p y medidas del modelo. Interpretación opcional con IA.</p>
+    <div class="eyebrow">06 · Análisis y gestión de datos</div>
+    <h1>BioEstadística<em>·AI</em></h1>
+    <p class="lede">Once contrastes desde tu CSV: t de Student, ANOVA, χ², Mann-Whitney, Wilcoxon, Kruskal-Wallis, correlación de Pearson y Spearman y regresión lineal. Con comprobación de supuestos y tamaño del efecto.</p>
     <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
   </div>
 </header>
@@ -150,95 +132,95 @@
 <div class="layout">
   <div>
     <section class="card">
-      <h2>Modelo</h2>
-      <div class="modes">
-        <button id="m-log" class="on">Logística</button>
-        <button id="m-cox">Cox</button>
-      </div>
-      <p class="sub" id="mode-hint">Desenlace binario. Estima la Odds Ratio ajustada de cada covariable.</p>
+      <h2>Datos</h2>
+      <p class="sub">Todo se calcula en tu navegador.</p>
       <div class="drop" id="drop"><b>Arrastra tu CSV aquí</b>o haz clic para elegir el archivo</div>
       <input type="file" id="file" accept=".csv,.txt,.tsv" class="hidden">
       <div class="actions">
+        <button class="ghost small" id="btn-paste">Pegar datos</button>
         <button class="ghost small" id="btn-demo">Datos de ejemplo</button>
       </div>
+      <div class="hidden" id="paste-box" style="margin-top:14px">
+        <label for="ta">Contenido del CSV</label>
+        <textarea id="ta"></textarea>
+        <div class="actions"><button class="small" id="btn-load-ta">Cargar</button></div>
+      </div>
       <div class="err hidden" id="err"></div>
+    </section>
 
-      <div class="hidden" id="cfg">
-        <div class="divider"><span>Variables</span></div>
-        <div class="fld hidden" id="w-time"><label for="v-t">Tiempo hasta el evento</label><select id="v-t"></select></div>
-        <div class="fld"><label for="v-y" id="lbl-y">Desenlace (binario)</label><select id="v-y"></select></div>
-        <div class="fld"><label for="v-pos">Valor que indica evento</label><select id="v-pos"></select></div>
-        <div class="divider"><span>Covariables del modelo</span></div>
-        <div class="covlist" id="covs"></div>
-        <div class="hint">Las variables categóricas se codifican con variables indicadoras tomando el primer nivel como referencia.</div>
-        <div class="actions">
-          <button id="btn-run">Ajustar modelo</button>
-        </div>
-        <div class="hint" style="margin-top:8px" id="epv"></div>
+    <section class="card hidden" id="card-cfg">
+      <h2>Contraste</h2>
+      <p class="sub">Elige el test o deja que el asistente lo proponga.</p>
+      <div class="fld">
+        <label for="test">Prueba</label>
+        <select id="test">
+          <optgroup label="Dos grupos independientes">
+            <option value="t">t de Student (varianzas iguales)</option>
+            <option value="tw">t de Welch (varianzas desiguales)</option>
+            <option value="mw">U de Mann-Whitney</option>
+          </optgroup>
+          <optgroup label="Dos medidas en los mismos sujetos">
+            <option value="tp">t pareada</option>
+            <option value="wx">Wilcoxon de los rangos con signo</option>
+          </optgroup>
+          <optgroup label="Tres o más grupos">
+            <option value="anova">ANOVA de un factor</option>
+            <option value="kw">Kruskal-Wallis</option>
+          </optgroup>
+          <optgroup label="Asociación">
+            <option value="pearson">Correlación de Pearson</option>
+            <option value="spearman">Correlación de Spearman</option>
+            <option value="linreg">Regresión lineal simple</option>
+            <option value="chi2">χ² de independencia</option>
+          </optgroup>
+        </select>
+      </div>
+      <div id="sel-vars"></div>
+      <div class="actions">
+        <button id="btn-run">Ejecutar</button>
+        <button class="ghost small" id="btn-auto">Sugerir prueba</button>
       </div>
     </section>
   </div>
 
   <div>
+    <section class="card hidden" id="card-sug">
+      <h2>Asistente</h2>
+      <div id="sug"></div>
+    </section>
+
     <section class="card hidden" id="card-res">
-      <h2 id="res-title">Modelo ajustado</h2>
+      <h2 id="res-title">Resultado</h2>
       <p class="sub" id="res-sub"></p>
-      <div class="tbl-wrap" style="max-height:none">
-        <table class="coef-tbl" id="coef-tbl"><thead></thead><tbody></tbody></table>
-      </div>
-      <div class="divider"><span>Bondad de ajuste</span></div>
-      <div class="fit" id="fit"></div>
+      <div class="res-head" id="res-head"></div>
+      <div class="divider"><span>Comprobación de supuestos</span></div>
+      <div class="assump" id="assump"></div>
+      <div class="divider"><span>Estadísticos</span></div>
+      <table id="res-tbl"><thead></thead><tbody></tbody></table>
+      <div class="divider"><span>Descriptivos</span></div>
+      <table id="desc-tbl"><thead></thead><tbody></tbody></table>
+      <div id="posthoc"></div>
     </section>
 
-    <section class="card hidden" id="card-forest">
-      <h2>Efectos ajustados</h2>
-      <p class="sub" id="forest-sub"></p>
-      <div class="forest plot" id="forest"></div>
-    </section>
-
-    <section class="card hidden" id="card-out">
-      <h2>Redacción e interpretación</h2>
-      <p class="sub">Texto generado a partir de los coeficientes calculados en tu navegador.</p>
-      <div class="para" id="para"></div>
+    <section class="card hidden" id="card-apa">
+      <h2>Redacción de resultados</h2>
+      <p class="sub">Formato de una revista biomédica. Revisa las cifras antes de pegarlo.</p>
+      <div class="apa" id="apa"></div>
       <div class="actions">
-        <button id="btn-ai">Interpretar con IA</button>
         <button class="ghost" id="btn-copy">Copiar</button>
         <button class="ghost" id="btn-md">Descargar informe (.md)</button>
         <span class="status" id="st"></span>
       </div>
-      <div class="ai-out hidden" id="ai-out"></div>
-      <div class="note">Los coeficientes se estiman en tu navegador por máxima verosimilitud (Newton-Raphson). La IA no calcula nada: solo comenta las cifras. Regla práctica: al menos 10 eventos por covariable estimada, o los coeficientes estarán sobreajustados.</div>
+      <div class="note">Un valor p no mide la magnitud del efecto ni la relevancia clínica. Informa siempre del tamaño del efecto y de su intervalo de confianza.</div>
     </section>
   </div>
 </div>
 </main>
 
 <footer class="wrap">
-  <span>RegresiónMultivariante·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
-  <span id="model-badge" style="cursor:pointer"></span>
+  <span>BioEstadística·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span>Determinista · sin IA · sin envío de datos</span>
 </footer>
-
-<dialog id="dlg-key">
-  <div class="dlg">
-    <h3>Clave de API de OpenAI</h3>
-    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit. Tus datos nunca se envían: solo la tabla de coeficientes.</p>
-    <label for="k">Clave</label>
-    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
-    <div style="margin-top:14px"></div>
-    <label for="m">Modelo</label>
-    <select id="m">
-      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
-      <option value="gpt-4o">gpt-4o · más preciso</option>
-      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
-      <option value="gpt-4.1">gpt-4.1</option>
-    </select>
-    <div class="actions">
-      <button id="k-save">Guardar</button>
-      <button class="ghost" id="k-cancel">Cancelar</button>
-      <button class="ghost small" id="k-clear">Borrar clave</button>
-    </div>
-  </div>
-</dialog>
 
 <script>
 /* ============ NÚCLEO ESTADÍSTICO · Kit Metodológico UMH ============ */
@@ -1008,57 +990,7 @@ function coxLL(X, time, event, b, ord){
 }
 
 
-/* ---------- clave y modelo ---------- */
-var KEY = "ia_openai_key", MODEL = "ia_openai_model";
-function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
-function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
-function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
-function getKey(){ return lsGet(KEY) || ""; }
-function getModel(){ return lsGet(MODEL) || "gpt-4o-mini"; }
-function badge(){ document.getElementById("model-badge").textContent = "modelo: " + getModel(); }
-var dlg = document.getElementById("dlg-key");
-function askKey(){ document.getElementById("k").value = getKey(); document.getElementById("m").value = getModel(); dlg.showModal(); }
-document.getElementById("k-save").onclick = function(){
-  var v = document.getElementById("k").value.trim();
-  if(v) lsSet(KEY, v);
-  lsSet(MODEL, document.getElementById("m").value);
-  badge(); dlg.close();
-};
-document.getElementById("k-cancel").onclick = function(){ dlg.close(); };
-document.getElementById("k-clear").onclick = function(){ lsDel(KEY); document.getElementById("k").value = ""; };
-document.getElementById("model-badge").onclick = askKey;
-badge();
-
-async function askAI(system, user){
-  var key = getKey();
-  if(!key){ askKey(); throw new Error("Falta la clave de API."); }
-  var res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
-    body: JSON.stringify({ model:getModel(), temperature:0.25, response_format:{type:"json_object"},
-      messages:[{role:"system",content:system},{role:"user",content:user}] })
-  });
-  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,150)); }
-  var data = await res.json();
-  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
-}
-
-/* ---------- estado ---------- */
-var MODE = "log", D = null, RES = null;
-document.getElementById("m-log").onclick = function(){ setMode("log"); };
-document.getElementById("m-cox").onclick = function(){ setMode("cox"); };
-function setMode(m){
-  MODE = m;
-  document.getElementById("m-log").className = m === "log" ? "on" : "";
-  document.getElementById("m-cox").className = m === "cox" ? "on" : "";
-  document.getElementById("mode-hint").textContent = m === "log"
-    ? "Desenlace binario. Estima la Odds Ratio ajustada de cada covariable."
-    : "Tiempo hasta el evento con censura. Estima el Hazard Ratio ajustado (riesgos proporcionales, método de Breslow).";
-  document.getElementById("w-time").classList[m === "cox" ? "remove" : "add"]("hidden");
-  document.getElementById("lbl-y").textContent = m === "cox" ? "Indicador de evento" : "Desenlace (binario)";
-  ["card-res","card-forest","card-out"].forEach(function(id){ document.getElementById(id).classList.add("hidden"); });
-  if(D) cfg();
-}
+var D = null, LAST = null;
 
 /* ---------- carga ---------- */
 var drop = document.getElementById("drop"), file = document.getElementById("file");
@@ -1068,20 +1000,15 @@ drop.ondragleave = function(){ drop.classList.remove("over"); };
 drop.ondrop = function(e){ e.preventDefault(); drop.classList.remove("over"); if(e.dataTransfer.files[0]) rd(e.dataTransfer.files[0]); };
 file.onchange = function(){ if(file.files[0]) rd(file.files[0]); };
 function rd(f){ var r = new FileReader(); r.onload = function(){ load(r.result); }; r.readAsText(f, "UTF-8"); }
-
+document.getElementById("btn-paste").onclick = function(){ document.getElementById("paste-box").classList.toggle("hidden"); };
+document.getElementById("btn-load-ta").onclick = function(){ load(document.getElementById("ta").value); };
 document.getElementById("btn-demo").onclick = function(){
-  var rnd = mb(3), rows = ["tiempo;evento;tratamiento;edad;sexo;estadio"];
-  for(var i = 0; i < 180; i++){
-    var trt = rnd() < 0.5 ? 1 : 0;
-    var edad = Math.round(58 + 11*gs(rnd));
-    var sexo = rnd() < 0.5 ? "Hombre" : "Mujer";
-    var est = ["I","II","III"][Math.floor(rnd()*3)];
-    var lp = -0.85*trt + 0.035*(edad-58) + (est === "II" ? 0.55 : est === "III" ? 1.25 : 0);
-    var haz = Math.exp(lp)*0.045;
-    var t = -Math.log(1-rnd())/haz;
-    var cens = 36;
-    var ev = t <= cens ? 1 : 0;
-    rows.push([Math.min(t, cens).toFixed(1).replace(".",","), ev, trt ? "Nuevo" : "Estándar", edad, sexo, est].join(";"));
+  var rnd = mb(7), rows = ["grupo;pas_basal;pas_final;imc;sexo"];
+  for(var i = 0; i < 96; i++){
+    var g = ["Control","Dieta","Dieta+Ejercicio"][i % 3];
+    var eff = g === "Control" ? 0 : (g === "Dieta" ? -6 : -12);
+    var b = 148 + 12*gs(rnd);
+    rows.push([g, Math.round(b), Math.round(b + eff + 7*gs(rnd)), (27+3.2*gs(rnd)).toFixed(1).replace(".",","), i%2 ? "Mujer":"Hombre"].join(";"));
   }
   load(rows.join("\n"));
 };
@@ -1090,312 +1017,352 @@ function gs(r){ return Math.sqrt(-2*Math.log(1-r()))*Math.cos(2*Math.PI*r()); }
 
 function load(text){
   showErr(null);
-  try{ D = parseCSV(text); if(D.n < 15) throw new Error("Se necesitan al menos 15 sujetos para ajustar un modelo multivariante."); }
-  catch(e){ return showErr(e.message); }
+  try{
+    D = parseCSV(text);
+    if(D.n < 3) throw new Error("Se necesitan al menos 3 filas de datos.");
+  }catch(e){ return showErr(e.message); }
   D.nums = D.head.filter(function(h){ return isNumericCol(D.cols[h]); });
-  D.bins = D.head.filter(function(h){ return uniq(D.cols[h]).length === 2; });
-  D.cats = D.head.filter(function(h){ var u = uniq(D.cols[h]); return u.length >= 2 && u.length <= 6; });
-  if(!D.bins.length) return showErr("No hay ninguna columna con dos niveles para el desenlace.");
-  document.getElementById("cfg").classList.remove("hidden");
-  cfg();
+  D.cats = D.head.filter(function(h){ var u = uniq(D.cols[h]); return u.length >= 2 && u.length <= 10; });
+  document.getElementById("card-cfg").classList.remove("hidden");
+  vars();
 }
 function uniq(a){ return a.filter(function(v,i,s){ return v !== "" && s.indexOf(v) === i; }); }
+function showErr(m){ var e = document.getElementById("err"); if(!m){ e.classList.add("hidden"); return; } e.textContent = m; e.classList.remove("hidden"); }
 
-function cfg(){
-  fill("v-y", D.bins);
-  if(MODE === "cox") fill("v-t", D.nums);
-  document.getElementById("v-y").onchange = function(){ posLv(); covs(); };
-  posLv(); covs();
-  guess();
-}
-function guess(){
-  var t = D.head.find(function(h){ return /^(tiempo|time|t|seguimiento)$/i.test(h); });
-  if(t && MODE === "cox") document.getElementById("v-t").value = t;
-  var e = D.head.find(function(h){ return /^(evento|event|status|desenlace|muerte)$/i.test(h); });
-  if(e){ document.getElementById("v-y").value = e; posLv(); covs(); }
-}
-function fill(id, arr){
-  document.getElementById(id).innerHTML = arr.map(function(h){ return '<option value="' + esc(h) + '">' + esc(h) + '</option>'; }).join("");
-}
-function posLv(){
-  var lv = uniq(D.cols[document.getElementById("v-y").value]);
-  var s = document.getElementById("v-pos");
-  s.innerHTML = lv.map(function(l){ return '<option value="' + esc(l) + '">' + esc(l) + '</option>'; }).join("");
-  var one = lv.find(function(l){ return l === "1" || /^(s[ií]|yes|evento|muerte)$/i.test(l); });
-  if(one) s.value = one;
-}
-function covs(){
-  var y = document.getElementById("v-y").value;
-  var t = MODE === "cox" ? document.getElementById("v-t").value : null;
-  var cand = D.head.filter(function(h){
-    if(h === y || h === t) return false;
-    return D.nums.indexOf(h) >= 0 || D.cats.indexOf(h) >= 0;
+/* ---------- selección de variables por test ---------- */
+var NEEDS = {
+  t:["num","cat"], tw:["num","cat"], mw:["num","cat"],
+  tp:["num","num2"], wx:["num","num2"],
+  anova:["num","cat"], kw:["num","cat"],
+  pearson:["num","num2"], spearman:["num","num2"], linreg:["num","num2"],
+  chi2:["cat","cat2"]
+};
+var LBL = {
+  num:"Variable numérica", num2:"Segunda variable numérica",
+  cat:"Variable de agrupación", cat2:"Segunda variable categórica"
+};
+function vars(){
+  var need = NEEDS[document.getElementById("test").value];
+  var box = document.getElementById("sel-vars");
+  box.innerHTML = "";
+  need.forEach(function(k, i){
+    var opts = (k === "num" || k === "num2") ? D.nums : D.cats;
+    if(k === "cat2" && document.getElementById("test").value === "chi2") opts = D.cats;
+    var d = document.createElement("div");
+    d.className = "fld";
+    d.innerHTML = '<label for="s' + i + '">' + LBL[k] + '</label><select id="s' + i + '">' +
+      opts.map(function(o){ return '<option value="' + esc(o) + '">' + esc(o) + '</option>'; }).join("") + '</select>';
+    box.appendChild(d);
   });
-  document.getElementById("covs").innerHTML = cand.map(function(h){
-    var isNum = D.nums.indexOf(h) >= 0 && uniq(D.cols[h]).length > 6;
-    return '<label><input type="checkbox" value="' + esc(h) + '" checked> ' + esc(h) +
-      '<span class="tag">' + (isNum ? "continua" : uniq(D.cols[h]).length + " niveles") + '</span></label>';
-  }).join("");
-  document.querySelectorAll("#covs input").forEach(function(i){ i.onchange = epv; });
-  epv();
+  if(need.indexOf("num2") >= 0 && D.nums.length > 1) document.getElementById("s1").selectedIndex = 1;
+  if(need.indexOf("cat2") >= 0 && D.cats.length > 1) document.getElementById("s1").selectedIndex = 1;
 }
-function epv(){
-  var y = document.getElementById("v-y").value, pos = document.getElementById("v-pos").value;
-  var ev = D.cols[y].filter(function(v){ return v === pos; }).length;
-  var p = 0;
-  document.querySelectorAll("#covs input:checked").forEach(function(i){
-    var h = i.value;
-    var isNum = D.nums.indexOf(h) >= 0 && uniq(D.cols[h]).length > 6;
-    p += isNum ? 1 : (uniq(D.cols[h]).length - 1);
-  });
-  var r = p ? ev/p : 0;
-  document.getElementById("epv").innerHTML = "Eventos: <b>" + ev + "</b> · parámetros a estimar: <b>" + p + "</b> · eventos por variable: <b>" +
-    nm(r,1) + "</b> " + (r >= 10 ? '<span class="pill ok">adecuado</span>' : r >= 5 ? '<span class="pill mid">justo</span>' : '<span class="pill no">insuficiente</span>');
-}
-document.getElementById("v-pos").onchange = epv;
+document.getElementById("test").onchange = vars;
 
-/* ---------- diseño de la matriz ---------- */
-function design(cols){
-  var names = [], build = [];
-  cols.forEach(function(h){
-    var isNum = D.nums.indexOf(h) >= 0 && uniq(D.cols[h]).length > 6;
-    if(isNum){
-      names.push(h);
-      build.push({ h:h, tipo:"num" });
+function getSeries(){
+  var test = document.getElementById("test").value, need = NEEDS[test];
+  var a = document.getElementById("s0").value, b = document.getElementById("s1").value;
+  if(need[0] === "cat"){ return { test:test, c1:a, c2:b }; }
+  if(need[1] === "cat" || need[1] === "cat2"){
+    var levels = uniq(D.cols[b]);
+    var groups = levels.map(function(l){
+      var v = [];
+      D.cols[b].forEach(function(g,i){ if(g === l){ var n = toNum([D.cols[a][i]])[0]; if(!isNaN(n)) v.push(n); } });
+      return { name:l, v:v };
+    }).filter(function(g){ return g.v.length >= 2; });
+    return { test:test, y:a, g:b, groups:groups };
+  }
+  var x = [], y = [];
+  toNum(D.cols[a]).forEach(function(v,i){
+    var w = toNum([D.cols[b][i]])[0];
+    if(!isNaN(v) && !isNaN(w)){ x.push(v); y.push(w); }
+  });
+  return { test:test, xn:a, yn:b, x:x, y:y };
+}
+
+/* ---------- asistente ---------- */
+document.getElementById("btn-auto").onclick = function(){
+  var S = getSeries();
+  var box = document.getElementById("sug");
+  document.getElementById("card-sug").classList.remove("hidden");
+  var txt;
+  if(S && S.groups){
+    var k = S.groups.length;
+    var sw = S.groups.map(function(g){ return shapiroWilk(g.v); });
+    var normal = sw.every(function(s){ return !s.err && s.p >= 0.05; });
+    var lv = levene(S.groups.map(function(g){ return g.v; }));
+    var homo = lv.p >= 0.05;
+    if(k === 2){
+      var rec = normal ? (homo ? "t" : "tw") : "mw";
+      txt = "Dos grupos independientes. Normalidad " + (normal ? "aceptable" : "rechazada") + " en todos los grupos; homogeneidad de varianzas (Brown-Forsythe) p = " + fmtP(lv.p) + ". " +
+        "Prueba recomendada: <b>" + { t:"t de Student", tw:"t de Welch", mw:"U de Mann-Whitney" }[rec] + "</b>.";
+      document.getElementById("test").value = rec;
     } else {
-      var lv = uniq(D.cols[h]).sort();
-      lv.slice(1).forEach(function(l){
-        names.push(h + " = " + l);
-        build.push({ h:h, tipo:"dummy", nivel:l, ref:lv[0] });
-      });
+      var rec2 = (normal && homo) ? "anova" : "kw";
+      txt = k + " grupos independientes. Normalidad " + (normal ? "aceptable" : "rechazada") + "; varianzas " + (homo ? "homogéneas" : "heterogéneas") + " (p = " + fmtP(lv.p) + "). " +
+        "Prueba recomendada: <b>" + (rec2 === "anova" ? "ANOVA de un factor" : "Kruskal-Wallis") + "</b>.";
+      document.getElementById("test").value = rec2;
     }
-  });
-  return { names: names, build: build };
-}
+    vars();
+  } else if(S && S.x){
+    var swx = shapiroWilk(S.x), swy = shapiroWilk(S.y);
+    var nn = swx.p >= 0.05 && swy.p >= 0.05;
+    txt = "Dos variables numéricas. Normalidad " + (nn ? "aceptable en ambas" : "rechazada en al menos una") + ". " +
+      "Prueba recomendada: <b>" + (nn ? "correlación de Pearson" : "correlación de Spearman") + "</b>. Si una variable explica a la otra, usa la regresión lineal simple.";
+    document.getElementById("test").value = nn ? "pearson" : "spearman";
+    vars();
+  } else {
+    txt = "Dos variables categóricas: <b>χ² de independencia</b> (o prueba exacta de Fisher si alguna frecuencia esperada es menor de 5).";
+  }
+  box.innerHTML = '<div class="sugerido">' + txt + '</div>';
+};
 
-/* ---------- ajuste ---------- */
+/* ---------- ejecución ---------- */
 document.getElementById("btn-run").onclick = function(){
   showErr(null);
-  try{ MODE === "log" ? runLog() : runCox(); }
-  catch(e){ showErr(e.message); }
+  var S;
+  try{ S = getSeries(); }catch(e){ return showErr("Revisa la selección de variables."); }
+  if(!S) return showErr("Combinación de variables no válida.");
+  try{ run(S); }catch(e){ showErr(e.message); }
 };
 
-function rowsMatrix(dz, filtro){
-  var X = [], keep = [];
-  for(var i = 0; i < D.n; i++){
-    var row = dz.build.map(function(b){
-      if(b.tipo === "num") return toNum([D.cols[b.h][i]])[0];
-      return D.cols[b.h][i] === b.nivel ? 1 : 0;
-    });
-    if(row.some(isNaN) || !filtro(i)) continue;
-    X.push(row); keep.push(i);
+function run(S){
+  var t = S.test, R = {}, head = {}, tbl = [], desc = [], asu = [], apa = "";
+
+  if(t === "t" || t === "tw" || t === "mw"){
+    if(S.groups.length !== 2) throw new Error("La variable de agrupación debe tener exactamente 2 niveles con datos.");
+    var a = S.groups[0].v, b = S.groups[1].v, na = S.groups[0].name, nb = S.groups[1].name;
+    var sw1 = shapiroWilk(a), sw2 = shapiroWilk(b), lv = levene([a,b]);
+    asu = [
+      ["Normalidad · " + na, "Shapiro-Wilk W = " + nm(sw1.W,4) + ", p = " + fmtP(sw1.p), sw1.p >= 0.05],
+      ["Normalidad · " + nb, "Shapiro-Wilk W = " + nm(sw2.W,4) + ", p = " + fmtP(sw2.p), sw2.p >= 0.05],
+      ["Homogeneidad de varianzas", "Brown-Forsythe F = " + nm(lv.F,3) + ", p = " + fmtP(lv.p), lv.p >= 0.05]
+    ];
+    if(t === "mw"){
+      var r = mannWhitney(a, b);
+      head = { p:r.p, titulo:"U de Mann-Whitney", sub:S.y + " según " + S.g,
+               efecto:"Correlación biserial de rangos = " + nm(r.rrb,3) };
+      tbl = [["U", nm(r.U,1)],["U₁ / U₂", nm(r.U1,1) + " / " + nm(r.U2,1)],["z (aprox. normal, corrección de continuidad)", nm(r.z,3)],["p bilateral", fmtP(r.p)],["Mediana " + na, nm(r.medA,2)],["Mediana " + nb, nm(r.medB,2)],["Tamaño del efecto (r_rb)", nm(r.rrb,3)]];
+      apa = "Se comparó " + S.y + " entre " + na + " (mediana " + nm(r.medA,2) + ") y " + nb + " (mediana " + nm(r.medB,2) + ") mediante la prueba U de Mann-Whitney. La diferencia " + (r.p < 0.05 ? "fue" : "no fue") + " estadísticamente significativa (U = " + nm(r.U,1) + "; z = " + nm(r.z,2) + "; p = " + fmtP(r.p) + "; r = " + nm(r.rrb,2) + ").";
+    } else {
+      var r2 = tTestInd(a, b, t === "tw");
+      head = { p:r2.p, titulo: t === "tw" ? "t de Welch" : "t de Student", sub:S.y + " según " + S.g,
+               efecto:"d de Cohen = " + nm(r2.d,3) + " (" + efSize(Math.abs(r2.d)) + ")" };
+      tbl = [["Media " + na + " (DT)", nm(r2.m1,2) + " (" + nm(sd(a),2) + ")"],["Media " + nb + " (DT)", nm(r2.m2,2) + " (" + nm(sd(b),2) + ")"],
+             ["Diferencia de medias", nm(r2.dif,3)],["IC 95 % de la diferencia", nm(r2.ic[0],3) + " a " + nm(r2.ic[1],3)],
+             ["Error estándar", nm(r2.se,4)],["t", nm(r2.t,3)],["Grados de libertad", nm(r2.df,3)],["p bilateral", fmtP(r2.p)],
+             ["d de Cohen", nm(r2.d,3)],["g de Hedges", nm(r2.g,3)]];
+      apa = "La media de " + S.y + " fue de " + nm(r2.m1,2) + " (DT " + nm(sd(a),2) + ") en el grupo " + na + " y de " + nm(r2.m2,2) + " (DT " + nm(sd(b),2) + ") en el grupo " + nb + ". La diferencia de " + nm(r2.dif,2) + " (IC 95 % " + nm(r2.ic[0],2) + " a " + nm(r2.ic[1],2) + ") " + (r2.p < 0.05 ? "resultó" : "no resultó") + " estadísticamente significativa (" + (t === "tw" ? "t de Welch" : "t") + "(" + nm(r2.df,1) + ") = " + nm(r2.t,2) + "; p = " + fmtP(r2.p) + "; d de Cohen = " + nm(r2.d,2) + ").";
+    }
+    desc = S.groups;
   }
-  return { X:X, keep:keep };
+
+  else if(t === "tp" || t === "wx"){
+    var x = S.x, y = S.y;
+    if(x.length < 3) throw new Error("Se necesitan al menos 3 pares completos.");
+    var dif = x.map(function(v,i){ return v - y[i]; });
+    var swd = shapiroWilk(dif);
+    asu = [["Normalidad de las diferencias", "Shapiro-Wilk W = " + nm(swd.W,4) + ", p = " + fmtP(swd.p), swd.p >= 0.05],
+           ["Pares completos", x.length + " observaciones emparejadas", true]];
+    if(t === "tp"){
+      var rp = tTestPaired(x, y);
+      head = { p:rp.p, titulo:"t pareada", sub:S.xn + " frente a " + S.yn, efecto:"d_z = " + nm(rp.dz,3) + " (" + efSize(Math.abs(rp.dz)) + ")" };
+      tbl = [["Media " + S.xn, nm(mean(x),2)],["Media " + S.yn, nm(mean(y),2)],["Diferencia media", nm(rp.dif,3)],
+             ["IC 95 % de la diferencia", nm(rp.ic[0],3) + " a " + nm(rp.ic[1],3)],["t", nm(rp.t,3)],["Grados de libertad", rp.df],["p bilateral", fmtP(rp.p)],["d_z", nm(rp.dz,3)]];
+      apa = S.xn + " pasó de " + nm(mean(x),2) + " a " + nm(mean(y),2) + " en " + S.yn + ", con una diferencia media de " + nm(rp.dif,2) + " (IC 95 % " + nm(rp.ic[0],2) + " a " + nm(rp.ic[1],2) + "), " + (rp.p < 0.05 ? "estadísticamente significativa" : "sin significación estadística") + " (t(" + rp.df + ") = " + nm(rp.t,2) + "; p = " + fmtP(rp.p) + "; d_z = " + nm(rp.dz,2) + ").";
+    } else {
+      var rw = wilcoxonSigned(x, y);
+      if(rw.err) throw new Error(rw.err);
+      head = { p:rw.p, titulo:"Wilcoxon de los rangos con signo", sub:S.xn + " frente a " + S.yn, efecto:"r = " + nm(rw.r,3) };
+      tbl = [["W (menor de los dos)", nm(rw.W,1)],["Suma de rangos positivos", nm(rw.Wp,1)],["Suma de rangos negativos", nm(rw.Wm,1)],
+             ["Pares no nulos (n)", rw.n],["z (aprox. normal)", nm(rw.z,3)],["p bilateral", fmtP(rw.p)],["Mediana de las diferencias", nm(rw.medD,3)],["Tamaño del efecto r", nm(rw.r,3)]];
+      apa = "La mediana de las diferencias entre " + S.xn + " y " + S.yn + " fue de " + nm(rw.medD,2) + ". La prueba de Wilcoxon de los rangos con signo " + (rw.p < 0.05 ? "detectó" : "no detectó") + " un cambio significativo (W = " + nm(rw.W,1) + "; z = " + nm(rw.z,2) + "; p = " + fmtP(rw.p) + "; r = " + nm(rw.r,2) + ").";
+    }
+    desc = [{name:S.xn, v:x},{name:S.yn, v:y},{name:"Diferencia", v:dif}];
+  }
+
+  else if(t === "anova" || t === "kw"){
+    if(S.groups.length < 3) throw new Error("Se necesitan al menos 3 grupos con datos. Para 2 grupos usa la t o Mann-Whitney.");
+    var gv = S.groups.map(function(g){ return g.v; });
+    var lv2 = levene(gv);
+    asu = S.groups.map(function(g){
+      var sw = shapiroWilk(g.v);
+      return ["Normalidad · " + g.name, "W = " + nm(sw.W,4) + ", p = " + fmtP(sw.p), sw.p >= 0.05];
+    });
+    asu.push(["Homogeneidad de varianzas", "Brown-Forsythe F = " + nm(lv2.F,3) + ", p = " + fmtP(lv2.p), lv2.p >= 0.05]);
+    if(t === "anova"){
+      var av = anova1(gv);
+      head = { p:av.p, titulo:"ANOVA de un factor", sub:S.y + " según " + S.g, efecto:"η² = " + nm(av.eta2,3) + " · ω² = " + nm(av.omega2,3) };
+      tbl = [["Suma de cuadrados entre grupos", nm(av.ssb,2)],["Suma de cuadrados intra-grupos", nm(av.ssw,2)],
+             ["gl entre / intra", av.df1 + " / " + av.df2],["Media cuadrática entre", nm(av.msb,2)],["Media cuadrática intra", nm(av.msw,2)],
+             ["F", nm(av.F,3)],["p", fmtP(av.p)],["Eta cuadrado (η²)", nm(av.eta2,3)],["Omega cuadrado (ω²)", nm(av.omega2,3)]];
+      apa = "El ANOVA de un factor " + (av.p < 0.05 ? "mostró" : "no mostró") + " diferencias significativas en " + S.y + " entre los " + S.groups.length + " grupos (F(" + av.df1 + ", " + av.df2 + ") = " + nm(av.F,2) + "; p = " + fmtP(av.p) + "; η² = " + nm(av.eta2,2) + ").";
+      if(av.p < 0.05) posthoc(S.groups, av.msw, av.df2);
+      else document.getElementById("posthoc").innerHTML = "";
+    } else {
+      var kwr = kruskal(gv);
+      head = { p:kwr.p, titulo:"Kruskal-Wallis", sub:S.y + " según " + S.g, efecto:"ε² = " + nm(kwr.eps2,3) };
+      tbl = [["H (corregido por empates)", nm(kwr.H,3)],["Grados de libertad", kwr.df],["p", fmtP(kwr.p)],["Épsilon cuadrado (ε²)", nm(kwr.eps2,3)]];
+      apa = "La prueba de Kruskal-Wallis " + (kwr.p < 0.05 ? "detectó" : "no detectó") + " diferencias significativas en " + S.y + " entre los grupos (H(" + kwr.df + ") = " + nm(kwr.H,2) + "; p = " + fmtP(kwr.p) + "; ε² = " + nm(kwr.eps2,2) + ").";
+      document.getElementById("posthoc").innerHTML = "";
+    }
+    desc = S.groups;
+  }
+
+  else if(t === "pearson" || t === "spearman" || t === "linreg"){
+    if(S.x.length < 4) throw new Error("Se necesitan al menos 4 pares completos.");
+    var swx = shapiroWilk(S.x), swy = shapiroWilk(S.y);
+    asu = [["Normalidad · " + S.xn, "W = " + nm(swx.W,4) + ", p = " + fmtP(swx.p), swx.p >= 0.05],
+           ["Normalidad · " + S.yn, "W = " + nm(swy.W,4) + ", p = " + fmtP(swy.p), swy.p >= 0.05],
+           ["Pares completos", S.x.length + " observaciones", true]];
+    if(t === "pearson"){
+      var pr = pearson(S.x, S.y);
+      head = { p:pr.p, titulo:"Correlación de Pearson", sub:S.xn + " · " + S.yn, efecto:"r = " + nm(pr.r,3) + " (" + corrSize(Math.abs(pr.r)) + ")" };
+      tbl = [["r de Pearson", nm(pr.r,4)],["IC 95 % (z de Fisher)", nm(pr.ic[0],3) + " a " + nm(pr.ic[1],3)],["r²", nm(pr.r2,4)],["t", nm(pr.t,3)],["Grados de libertad", pr.df],["p bilateral", fmtP(pr.p)]];
+      apa = "Se observó una correlación " + corrSize(Math.abs(pr.r)) + " " + (pr.r > 0 ? "positiva" : "negativa") + " entre " + S.xn + " y " + S.yn + " (r = " + nm(pr.r,2) + "; IC 95 % " + nm(pr.ic[0],2) + " a " + nm(pr.ic[1],2) + "; p = " + fmtP(pr.p) + "), que explica el " + nm(100*pr.r2,1) + " % de la varianza compartida.";
+    } else if(t === "spearman"){
+      var sr = spearman(S.x, S.y);
+      head = { p:sr.p, titulo:"Correlación de Spearman", sub:S.xn + " · " + S.yn, efecto:"ρ = " + nm(sr.rho,3) + " (" + corrSize(Math.abs(sr.rho)) + ")" };
+      tbl = [["ρ de Spearman", nm(sr.rho,4)],["IC 95 % aproximado", nm(sr.ic[0],3) + " a " + nm(sr.ic[1],3)],["t", nm(sr.t,3)],["Grados de libertad", sr.df],["p bilateral", fmtP(sr.p)]];
+      apa = "La correlación de rangos de Spearman entre " + S.xn + " y " + S.yn + " fue de ρ = " + nm(sr.rho,2) + " (p = " + fmtP(sr.p) + "), " + (sr.p < 0.05 ? "estadísticamente significativa" : "sin alcanzar la significación estadística") + ".";
+    } else {
+      var lr = linreg(S.x, S.y);
+      var swr = shapiroWilk(lr.res);
+      asu.push(["Normalidad de los residuos", "W = " + nm(swr.W,4) + ", p = " + fmtP(swr.p), swr.p >= 0.05]);
+      head = { p:lr.p, titulo:"Regresión lineal simple", sub:S.yn + " = b₀ + b₁ · " + S.xn, efecto:"R² = " + nm(lr.r2,3) };
+      tbl = [["Constante b₀", nm(lr.b0,4) + "  (IC 95 % " + nm(lr.ic0[0],3) + " a " + nm(lr.ic0[1],3) + ")"],
+             ["Pendiente b₁", nm(lr.b1,4) + "  (IC 95 % " + nm(lr.ic1[0],3) + " a " + nm(lr.ic1[1],3) + ")"],
+             ["Error estándar de b₁", nm(lr.seb1,4)],["p de la pendiente", fmtP(lr.p)],["R²", nm(lr.r2,4)],["RMSE (error típico)", nm(lr.rmse,3)],["Grados de libertad", lr.df]];
+      apa = "El modelo de regresión lineal simple estimó que por cada unidad de incremento de " + S.xn + ", " + S.yn + " varía en " + nm(lr.b1,3) + " unidades (IC 95 % " + nm(lr.ic1[0],3) + " a " + nm(lr.ic1[1],3) + "; p = " + fmtP(lr.p) + "). El modelo explica el " + nm(100*lr.r2,1) + " % de la variabilidad de " + S.yn + " (R² = " + nm(lr.r2,3) + ").";
+    }
+    desc = [{name:S.xn, v:S.x},{name:S.yn, v:S.y}];
+  }
+
+  else if(t === "chi2"){
+    var lv1 = uniq(D.cols[S.c1]), lv2b = uniq(D.cols[S.c2]);
+    var obs = lv1.map(function(){ return lv2b.map(function(){ return 0; }); });
+    D.cols[S.c1].forEach(function(v, i){
+      var j = lv1.indexOf(v), k = lv2b.indexOf(D.cols[S.c2][i]);
+      if(j >= 0 && k >= 0) obs[j][k]++;
+    });
+    var ct = chi2Table(obs);
+    asu = [["Frecuencias esperadas ≥ 5", "Mínima esperada = " + nm(ct.minExp,2), ct.minExp >= 5],
+           ["Tamaño de la tabla", lv1.length + " × " + lv2b.length + " · N = " + ct.N, true],
+           ["Independencia de las observaciones", "Cada sujeto aparece una sola vez", true]];
+    head = { p: ct.minExp < 5 && ct.fisher ? ct.fisher.p : ct.p, titulo:"χ² de independencia", sub:S.c1 + " × " + S.c2,
+             efecto:"V de Cramér = " + nm(ct.v,3) };
+    tbl = [["χ² de Pearson", nm(ct.chi2,3)],["Grados de libertad", ct.df],["p", fmtP(ct.p)],["V de Cramér", nm(ct.v,3)],["Mínima frecuencia esperada", nm(ct.minExp,2)]];
+    if(ct.yates !== undefined){
+      tbl.push(["χ² con corrección de Yates", nm(ct.yates,3) + " (p = " + fmtP(ct.pYates) + ")"]);
+      tbl.push(["Prueba exacta de Fisher (bilateral)", fmtP(ct.fisher.p)]);
+    }
+    apa = "Se analizó la asociación entre " + S.c1 + " y " + S.c2 + " mediante la prueba de χ². " +
+      (ct.minExp < 5 ? "Dado que alguna frecuencia esperada fue inferior a 5, se aplicó la prueba exacta de Fisher (p = " + fmtP(ct.fisher ? ct.fisher.p : NaN) + "). " : "") +
+      "La asociación " + (head.p < 0.05 ? "fue" : "no fue") + " estadísticamente significativa (χ²(" + ct.df + ") = " + nm(ct.chi2,2) + "; p = " + fmtP(ct.p) + "; V de Cramér = " + nm(ct.v,2) + ").";
+    tabla(obs, lv1, lv2b, ct, S);
+    desc = null;
+  }
+
+  LAST = { S:S, head:head, tbl:tbl, apa:apa, asu:asu };
+  render(head, tbl, desc, asu, apa);
 }
 
-function runLog(){
-  var y = document.getElementById("v-y").value, pos = document.getElementById("v-pos").value;
-  var cols = [].slice.call(document.querySelectorAll("#covs input:checked")).map(function(i){ return i.value; });
-  if(!cols.length) throw new Error("Marca al menos una covariable.");
-  var dz = design(cols);
-  var M = rowsMatrix(dz, function(){ return true; });
-  var Y = M.keep.map(function(i){ return D.cols[y][i] === pos ? 1 : 0; });
-  var ev = Y.filter(function(v){ return v === 1; }).length;
-  if(ev < 5 || Y.length - ev < 5) throw new Error("Se necesitan al menos 5 eventos y 5 no eventos.");
-  var Xi = M.X.map(function(r){ return [1].concat(r); });
-  var fit = logistic(Xi, Y);
-  if(fit.err) throw new Error(fit.err);
-  RES = { tipo:"log", fit:fit, names:["Constante"].concat(dz.names), dz:dz, n:Y.length, eventos:ev, y:y, pos:pos };
-  render();
-}
+function efSize(d){ return d < 0.2 ? "trivial" : d < 0.5 ? "pequeño" : d < 0.8 ? "medio" : "grande"; }
+function corrSize(r){ return r < 0.1 ? "despreciable" : r < 0.3 ? "débil" : r < 0.5 ? "moderada" : r < 0.7 ? "fuerte" : "muy fuerte"; }
 
-function runCox(){
-  var y = document.getElementById("v-y").value, pos = document.getElementById("v-pos").value;
-  var ct = document.getElementById("v-t").value;
-  var cols = [].slice.call(document.querySelectorAll("#covs input:checked")).map(function(i){ return i.value; });
-  if(!cols.length) throw new Error("Marca al menos una covariable.");
-  var tt = toNum(D.cols[ct]);
-  var dz = design(cols);
-  var M = rowsMatrix(dz, function(i){ return !isNaN(tt[i]) && tt[i] >= 0; });
-  var time = M.keep.map(function(i){ return tt[i]; });
-  var ev = M.keep.map(function(i){ return D.cols[y][i] === pos ? 1 : 0; });
-  var nev = ev.filter(function(v){ return v === 1; }).length;
-  if(nev < 5) throw new Error("Se necesitan al menos 5 eventos observados.");
-  var fit = cox(M.X, time, ev);
-  if(fit.err) throw new Error(fit.err);
-  RES = { tipo:"cox", fit:fit, names:dz.names, dz:dz, n:time.length, eventos:nev, y:y, pos:pos, ct:ct };
-  render();
-}
+function render(head, tbl, desc, asu, apa){
+  document.getElementById("card-res").classList.remove("hidden");
+  document.getElementById("card-apa").classList.remove("hidden");
+  document.getElementById("res-title").textContent = head.titulo;
+  document.getElementById("res-sub").textContent = head.sub;
+  var sig = head.p < 0.05;
+  document.getElementById("res-head").innerHTML =
+    '<span class="p ' + (sig ? "" : "ns") + '">p ' + (head.p < 0.001 ? "< 0,001" : "= " + fmtP(head.p)) + '</span>' +
+    '<span class="lbl">' + (sig ? "significativo con α = 0,05" : "no significativo con α = 0,05") + '<b>' + head.efecto + '</b></span>';
 
-/* ---------- render ---------- */
-function render(){
-  var F = RES.fit, esOR = RES.tipo === "log";
-  ["card-res","card-forest","card-out"].forEach(function(id){ document.getElementById(id).classList.remove("hidden"); });
-  document.getElementById("res-title").textContent = esOR ? "Regresión logística binaria" : "Regresión de Cox de riesgos proporcionales";
-  document.getElementById("res-sub").textContent = RES.n + " sujetos · " + RES.eventos + " eventos · " +
-    (esOR ? "Odds Ratio ajustadas" : "Hazard Ratio ajustados (Breslow)") + " · " + nm(RES.eventos/(F.coef.length - (esOR?1:0)),1) + " eventos por variable";
+  var ab = document.getElementById("assump");
+  ab.innerHTML = "";
+  asu.forEach(function(a){
+    var d = document.createElement("div");
+    d.innerHTML = '<div class="k">' + esc(a[0]) + '</div><div class="v">' + a[1] +
+      '<span class="pill ' + (a[2] ? "ok" : "no") + '">' + (a[2] ? "cumple" : "no cumple") + '</span></div>';
+    ab.appendChild(d);
+  });
 
-  var est = esOR ? "OR ajustada" : "HR ajustado";
-  document.querySelector("#coef-tbl thead").innerHTML =
-    "<tr><th>Variable</th><th class='num'>β</th><th class='num'>EE</th><th class='num'>" + est + "</th><th class='num'>IC 95 %</th><th class='num'>z</th><th class='num'>p</th></tr>";
-  document.querySelector("#coef-tbl tbody").innerHTML = F.coef.map(function(c, i){
-    var e = esOR ? c.or : c.hr;
-    var cte = esOR && i === 0;
-    var sig = c.p < 0.05 && !cte;
-    return "<tr" + (sig ? " class='sig'" : "") + "><td>" + esc(RES.names[i]) + "</td>" +
-      "<td class='num'>" + nm(c.b,4) + "</td><td class='num'>" + nm(c.se,4) + "</td>" +
-      "<td class='num est'>" + (cte ? "—" : nm(e,3)) + "</td>" +
-      "<td class='num'>" + (cte ? "—" : nm(c.ic[0],3) + " – " + nm(c.ic[1],3)) + "</td>" +
-      "<td class='num'>" + nm(c.z,3) + "</td><td class='num'>" + fmtP(c.p) + "</td></tr>";
+  document.querySelector("#res-tbl thead").innerHTML = "<tr><th>Estadístico</th><th class='num'>Valor</th></tr>";
+  document.querySelector("#res-tbl tbody").innerHTML = tbl.map(function(r){
+    return "<tr><td>" + r[0] + "</td><td class='num'>" + r[1] + "</td></tr>";
   }).join("");
 
-  var fb = document.getElementById("fit");
-  fb.innerHTML = "";
-  ft(fb, "Log-verosimilitud", nm(F.ll,2));
-  ft(fb, "Razón de verosimilitudes", "χ²(" + F.lrDf + ") = " + nm(F.lr,2));
-  ft(fb, "p del modelo", fmtP(F.lrP));
-  ft(fb, "AIC", nm(F.aic,2));
-  if(esOR){ ft(fb, "R² de Cox-Snell", nm(F.r2cs,3)); ft(fb, "R² de Nagelkerke", nm(F.r2n,3)); }
+  var dt = document.getElementById("desc-tbl");
+  if(desc){
+    dt.style.display = "";
+    dt.previousElementSibling.style.display = "";
+    document.querySelector("#desc-tbl thead").innerHTML = "<tr><th>Serie</th><th class='num'>n</th><th class='num'>Media</th><th class='num'>DT</th><th class='num'>Mediana</th><th class='num'>Q1</th><th class='num'>Q3</th></tr>";
+    document.querySelector("#desc-tbl tbody").innerHTML = desc.map(function(g){
+      return "<tr><td>" + esc(g.name) + "</td><td class='num'>" + g.v.length + "</td><td class='num'>" + nm(mean(g.v),2) + "</td><td class='num'>" + nm(sd(g.v),2) +
+        "</td><td class='num'>" + nm(median(g.v),2) + "</td><td class='num'>" + nm(quantile(g.v,0.25),2) + "</td><td class='num'>" + nm(quantile(g.v,0.75),2) + "</td></tr>";
+    }).join("");
+  } else { dt.style.display = "none"; dt.previousElementSibling.style.display = "none"; }
 
-  forest();
-  texto();
-}
-function ft(box, k, v){
-  var d = document.createElement("div");
-  d.innerHTML = '<div class="k">' + k + '</div><div class="v">' + v + '</div>';
-  box.appendChild(d);
-}
-
-function forest(){
-  var F = RES.fit, esOR = RES.tipo === "log";
-  var items = [];
-  F.coef.forEach(function(c, i){
-    if(esOR && i === 0) return;
-    items.push({ n: RES.names[i], e: esOR ? c.or : c.hr, ic: c.ic, sig: c.p < 0.05 });
-  });
-  document.getElementById("forest-sub").textContent = (esOR ? "Odds Ratio" : "Hazard Ratio") + " ajustadas con su intervalo de confianza al 95 %, en escala logarítmica.";
-
-  var W = 820, H = 56 + items.length*46, mL = 230, mR = 130;
-  var all = items.reduce(function(s,i){ return s.concat([Math.max(i.ic[0],0.02), Math.min(i.ic[1],50)]); }, [1]);
-  var lo = Math.max(0.02, Math.min.apply(null, all)*0.8), hi = Math.min(60, Math.max.apply(null, all)*1.25);
-  var X = function(v){ return mL + (Math.log(Math.max(Math.min(v,hi),lo)) - Math.log(lo))/(Math.log(hi)-Math.log(lo))*(W-mL-mR); };
-
-  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Efectos ajustados">';
-  s += '<line class="fnull" x1="' + X(1) + '" y1="14" x2="' + X(1) + '" y2="' + (H-30) + '"/>';
-  items.forEach(function(it, i){
-    var y = 30 + i*46, cls = it.sig ? "" : " ns";
-    s += '<text class="tick" x="' + (mL-12) + '" y="' + (y+4) + '" text-anchor="end" style="font-size:11.5px;fill:#17262E">' + esc(it.n) + '</text>';
-    s += '<line class="fline' + cls + '" x1="' + X(it.ic[0]) + '" y1="' + y + '" x2="' + X(it.ic[1]) + '" y2="' + y + '"/>';
-    s += '<line class="fline' + cls + '" x1="' + X(it.ic[0]) + '" y1="' + (y-4) + '" x2="' + X(it.ic[0]) + '" y2="' + (y+4) + '"/>';
-    s += '<line class="fline' + cls + '" x1="' + X(it.ic[1]) + '" y1="' + (y-4) + '" x2="' + X(it.ic[1]) + '" y2="' + (y+4) + '"/>';
-    s += '<rect class="fdot' + cls + '" x="' + (X(it.e)-4.5) + '" y="' + (y-4.5) + '" width="9" height="9" transform="rotate(45 ' + X(it.e) + ' ' + y + ')"/>';
-    s += '<text class="tick" x="' + (W-mR+12) + '" y="' + (y+4) + '">' + nm(it.e,2) + ' (' + nm(it.ic[0],2) + '–' + nm(it.ic[1],2) + ')</text>';
-  });
-  s += '<line class="axis" x1="' + mL + '" y1="' + (H-30) + '" x2="' + (W-mR) + '" y2="' + (H-30) + '"/>';
-  [0.05,0.1,0.25,0.5,1,2,4,10,25].filter(function(t){ return t >= lo && t <= hi; }).forEach(function(t){
-    s += '<line class="axis" x1="' + X(t) + '" y1="' + (H-30) + '" x2="' + X(t) + '" y2="' + (H-25) + '"/>';
-    s += '<text class="tick" x="' + X(t) + '" y="' + (H-13) + '" text-anchor="middle">' + nm(t,2) + '</text>';
-  });
-  s += '<text class="tick" x="' + (X(1)-8) + '" y="' + (H-1) + '" text-anchor="end">← protector</text>';
-  s += '<text class="tick" x="' + (X(1)+8) + '" y="' + (H-1) + '">de riesgo →</text>';
-  s += '</svg>';
-  document.getElementById("forest").innerHTML = s;
+  document.getElementById("apa").textContent = apa;
+  var rc = document.getElementById("card-res");
+  if(rc.scrollIntoView) rc.scrollIntoView({behavior:"smooth", block:"start"});
 }
 
-function texto(){
-  var F = RES.fit, esOR = RES.tipo === "log";
-  var t = "Se ajustó un modelo de " + (esOR ? "regresión logística binaria" : "regresión de Cox de riesgos proporcionales") +
-    " sobre " + RES.n + " sujetos con " + RES.eventos + " eventos, incluyendo " + (F.coef.length - (esOR?1:0)) + " parámetros. " +
-    "El modelo global " + (F.lrP < 0.05 ? "resultó significativo" : "no alcanzó la significación") +
-    " (razón de verosimilitudes χ²(" + F.lrDf + ") = " + nm(F.lr,2) + "; p = " + fmtP(F.lrP) + ")" +
-    (esOR ? ", con una R² de Nagelkerke de " + nm(F.r2n,3) : "") + ". ";
-  var sigs = [];
-  F.coef.forEach(function(c, i){
-    if(esOR && i === 0) return;
-    if(c.p < 0.05) sigs.push({ n: RES.names[i], e: esOR ? c.or : c.hr, ic: c.ic, p: c.p });
-  });
-  if(sigs.length){
-    t += "Tras el ajuste mutuo por las demás covariables, resultaron asociadas de forma independiente al desenlace: ";
-    t += sigs.map(function(s){
-      return s.n + " (" + (esOR ? "OR" : "HR") + " = " + nm(s.e,2) + "; IC 95 % " + nm(s.ic[0],2) + " a " + nm(s.ic[1],2) + "; p = " + fmtP(s.p) + ")";
-    }).join("; ") + ". ";
-    var pr = sigs.filter(function(s){ return s.e < 1; });
-    if(pr.length) t += "Los efectos con estimador inferior a 1 se comportan como factores protectores. ";
-  } else {
-    t += "Ninguna covariable alcanzó la significación estadística tras el ajuste mutuo. ";
+function posthoc(groups, msw, dfw){
+  var k = groups.length, pares = k*(k-1)/2, rows = [];
+  for(var i = 0; i < k; i++) for(var j = i+1; j < k; j++){
+    var a = groups[i].v, b = groups[j].v;
+    var dif = mean(a) - mean(b);
+    var se = Math.sqrt(msw*(1/a.length + 1/b.length));
+    var t = dif/se, p = pt2(Math.abs(t), dfw);
+    rows.push({ par: groups[i].name + " vs " + groups[j].name, dif:dif, t:t, p:p, pb: Math.min(1, p*pares) });
   }
-  t += "El resto de covariables no mostró asociación independiente con el desenlace.";
-  document.getElementById("para").textContent = t;
-  RES.texto = t;
+  rows.sort(function(x,y){ return x.p - y.p; });
+  rows.forEach(function(r, i){ r.ph = Math.min(1, r.p*(pares - i)); });
+  for(var m = 1; m < rows.length; m++) rows[m].ph = Math.max(rows[m].ph, rows[m-1].ph);
+
+  var h = '<div class="divider" style="margin-top:24px"><span>Comparaciones múltiples · corrección de Bonferroni y Holm</span></div>' +
+    "<table><thead><tr><th>Comparación</th><th class='num'>Diferencia</th><th class='num'>t</th><th class='num'>p sin ajustar</th><th class='num'>p Bonferroni</th><th class='num'>p Holm</th></tr></thead><tbody>";
+  rows.forEach(function(r){
+    h += "<tr" + (r.ph < 0.05 ? " class='hl'" : "") + "><td>" + esc(r.par) + "</td><td class='num'>" + nm(r.dif,3) + "</td><td class='num'>" + nm(r.t,3) +
+      "</td><td class='num'>" + fmtP(r.p) + "</td><td class='num'>" + fmtP(r.pb) + "</td><td class='num'>" + fmtP(r.ph) + "</td></tr>";
+  });
+  h += "</tbody></table>";
+  document.getElementById("posthoc").innerHTML = h;
 }
 
-/* ---------- IA ---------- */
-var SYS = [
-  "Eres bioestadístico y revisor de artículos biomédicos.",
-  "Recibes la tabla de coeficientes ya calculados de un modelo (logístico o de Cox) y debes interpretarlos.",
-  "No recalcules nada ni inventes cifras: usa exactamente las que se te dan.",
-  "Responde EXCLUSIVAMENTE con JSON, sin markdown, con este esquema:",
-  '{"lectura":"2-3 frases sobre lo que dice el modelo en términos clínicos",',
-  '"efecto_principal":"interpretación de la covariable con mayor efecto significativo, explicando la escala (odds u hazard)",',
-  '"confusion":"qué sugiere el ajuste sobre la confusión entre covariables",',
-  '"limitaciones":["limitación concreta de ESTE modelo","..."],',
-  '"comprobaciones":["comprobación estadística pendiente, p. ej. riesgos proporcionales, linealidad del logit, colinealidad","..."]}',
-  "Todo en español, específico y sin generalidades de libro de texto."
-].join(" ");
-
-document.getElementById("btn-ai").onclick = async function(){
-  if(!RES) return;
-  var btn = this; btn.disabled = true;
-  st('<span class="spin"></span>Interpretando…');
-  var esOR = RES.tipo === "log";
-  var payload = {
-    modelo: esOR ? "regresión logística" : "regresión de Cox",
-    n: RES.n, eventos: RES.eventos,
-    ajuste: { lr: nm(RES.fit.lr,3), p: fmtP(RES.fit.lrP), aic: nm(RES.fit.aic,2), r2_nagelkerke: esOR ? nm(RES.fit.r2n,3) : null },
-    coeficientes: RES.fit.coef.map(function(c, i){
-      return { variable: RES.names[i], beta: nm(c.b,4), estimador: esOR ? nm(c.or,3) : nm(c.hr,3),
-               ic95: nm(c.ic[0],3) + "-" + nm(c.ic[1],3), p: fmtP(c.p) };
-    })
-  };
-  try{
-    var j = await askAI(SYS, JSON.stringify(payload));
-    var out = document.getElementById("ai-out");
-    out.innerHTML =
-      '<h4>Lectura del modelo</h4><p>' + esc(j.lectura || "—") + '</p>' +
-      '<h4>Efecto principal</h4><p>' + esc(j.efecto_principal || "—") + '</p>' +
-      '<h4>Confusión y ajuste</h4><p>' + esc(j.confusion || "—") + '</p>' +
-      '<h4>Limitaciones</h4><ul>' + (j.limitaciones || []).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' +
-      '<h4>Comprobaciones pendientes</h4><ul>' + (j.comprobaciones || []).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>';
-    out.classList.remove("hidden");
-    st("Interpretación completada.");
-  }catch(e){ st(e.message, true); }
-  finally{ btn.disabled = false; }
-};
-function st(m, err){ var s = document.getElementById("st"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; }
+function tabla(obs, lv1, lv2, ct, S){
+  var h = '<div class="divider" style="margin-top:24px"><span>Tabla de contingencia · observadas (esperadas)</span></div>' +
+    "<table><thead><tr><th>" + esc(S.c1) + " \\ " + esc(S.c2) + "</th>" + lv2.map(function(l){ return "<th class='num'>" + esc(l) + "</th>"; }).join("") + "<th class='num'>Total</th></tr></thead><tbody>";
+  obs.forEach(function(row, i){
+    var tot = row.reduce(function(s,v){ return s+v; },0);
+    h += "<tr><td>" + esc(lv1[i]) + "</td>" + row.map(function(v, j){
+      return "<td class='num'>" + v + " <span style='color:var(--ink-soft)'>(" + nm(ct.exp[i][j],1) + ")</span></td>";
+    }).join("") + "<td class='num'>" + tot + "</td></tr>";
+  });
+  h += "</tbody></table>";
+  document.getElementById("posthoc").innerHTML = h;
+}
 
 /* ---------- salidas ---------- */
 document.getElementById("btn-copy").onclick = async function(){
-  try{ await navigator.clipboard.writeText(RES.texto); st("Copiado."); }catch(e){ st("El navegador bloqueó el portapapeles.", true); }
+  try{ await navigator.clipboard.writeText(document.getElementById("apa").textContent); msg("Copiado."); }
+  catch(e){ msg("El navegador bloqueó el portapapeles."); }
 };
 document.getElementById("btn-md").onclick = function(){
-  var F = RES.fit, esOR = RES.tipo === "log";
-  var t = "# " + (esOR ? "Regresión logística binaria" : "Regresión de Cox") + "\n\n";
-  t += "- Sujetos: " + RES.n + "\n- Eventos: " + RES.eventos + "\n- Desenlace: " + RES.y + " = " + RES.pos + "\n\n";
-  t += "| Variable | β | EE | " + (esOR ? "OR" : "HR") + " ajustada | IC 95 % | p |\n|---|---|---|---|---|---|\n";
-  F.coef.forEach(function(c, i){
-    var cte = esOR && i === 0;
-    t += "| " + RES.names[i] + " | " + nm(c.b,4) + " | " + nm(c.se,4) + " | " + (cte ? "—" : nm(esOR ? c.or : c.hr,3)) +
-      " | " + (cte ? "—" : nm(c.ic[0],3) + " – " + nm(c.ic[1],3)) + " | " + fmtP(c.p) + " |\n";
-  });
-  t += "\nRazón de verosimilitudes: χ²(" + F.lrDf + ") = " + nm(F.lr,3) + "; p = " + fmtP(F.lrP) + " · AIC = " + nm(F.aic,2);
-  if(esOR) t += " · R² Nagelkerke = " + nm(F.r2n,3);
-  t += "\n\n## Redacción\n" + RES.texto + "\n\n_RegresiónMultivariante·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
+  if(!LAST) return;
+  var t = "# " + LAST.head.titulo + "\n\n" + LAST.head.sub + "\n\n";
+  t += "## Supuestos\n" + LAST.asu.map(function(a){ return "- " + a[0] + ": " + a[1] + " → " + (a[2] ? "cumple" : "no cumple"); }).join("\n") + "\n\n";
+  t += "## Estadísticos\n\n| Estadístico | Valor |\n|---|---|\n" + LAST.tbl.map(function(r){ return "| " + r[0] + " | " + r[1] + " |"; }).join("\n") + "\n\n";
+  t += "## Redacción\n" + LAST.apa + "\n\n_BioEstadística·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
   var b = new Blob([t], {type:"text/markdown;charset=utf-8"});
-  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "regresion-" + RES.tipo + ".md"; a.click();
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "contraste.md"; a.click();
   setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
-  st("Descargado.");
+  msg("Descargado.");
 };
-function showErr(m){ var e = document.getElementById("err"); if(!m){ e.classList.add("hidden"); return; } e.textContent = m; e.classList.remove("hidden"); }
+function msg(m){ var s = document.getElementById("st"); s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 2200); }
 function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
 </script>
 </body>

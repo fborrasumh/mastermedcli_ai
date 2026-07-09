@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NivelEvidencia·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card h3{font-family:'Spectral',serif;font-weight:500;font-size:17px;margin:22px 0 10px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select,textarea{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif}
+  textarea{font-size:12.5px;min-height:110px;resize:vertical;line-height:1.5}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:14px;margin-bottom:20px}
+  .stats div{border-left:2px solid var(--line);padding-left:11px}
+  .stats .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .stats .v{font-family:'Spectral',serif;font-size:25px;font-weight:500;margin-top:1px;line-height:1.15}
+  .stats .v small{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft);font-weight:400;display:block;margin-top:2px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:500}
+  td{padding:7px 10px;border-bottom:1px solid var(--line-soft)}
+  td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  tr.hl td{background:#F2F7F6}
+  .tbl-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:3px}
+
+  .verdict{border-left:3px solid var(--teal);padding-left:16px;margin:18px 0}
+  .verdict.warn{border-color:var(--amber)}
+  .verdict.bad{border-color:var(--red)}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .verdict p{font-size:14.5px;margin-top:4px;max-width:76ch}
+
+  .plot{margin-top:6px}
+  .plot svg{width:100%;height:auto;display:block}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gridl{stroke:var(--line-soft);stroke-width:1}
+  .tick{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:var(--slate)}
+  .bar{fill:#CDE2E0;stroke:var(--teal);stroke-width:.7}
+  .curveline{fill:none;stroke:var(--amber);stroke-width:1.6}
+  .refline{stroke:var(--amber);stroke-width:1;stroke-dasharray:4 3}
+  .pt{fill:var(--teal);opacity:.75}
+
+  .para{font-size:14.5px;line-height:1.75;background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:18px;font-family:'Spectral',serif}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+  .drop{border:1px dashed var(--line);border-radius:3px;padding:26px;text-align:center;color:var(--ink-soft);font-size:14px;cursor:pointer;transition:.15s;background:#FCFDFC}
+  .drop:hover,.drop.over{border-color:var(--teal);background:#F2F7F6;color:var(--teal-deep)}
+  .drop b{display:block;font-weight:500;color:var(--ink);margin-bottom:3px}
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:2px 7px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--slate);margin-left:6px}
+  .pill.ok{background:#F1F8F7;color:var(--teal-deep);border-color:#BFD9D6}
+  .pill.no{background:#FBF2F1;color:var(--red);border-color:#E0C4C1}
+  .pill.mid{background:#FBF6EC;color:var(--amber);border-color:#E5D6B9}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
+
+  .layout{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:22px;align-items:start}
+  .qtext{font-family:'Spectral',serif;font-size:22px;font-weight:500;line-height:1.25;margin-bottom:5px}
+  .qhelp{color:var(--ink-soft);font-size:13.5px;margin-bottom:18px}
+  .opts{display:grid;gap:10px}
+  .opt{text-align:left;border:1px solid var(--line);background:#FCFDFC;border-radius:3px;padding:14px 16px;cursor:pointer;transition:.14s;color:var(--ink);font-weight:400}
+  .opt:hover{border-color:var(--teal);background:#F2F7F6;transform:translateY(-1px)}
+  .opt b{display:block;font-weight:500;font-size:14.5px;margin-bottom:3px}
+  .opt span{font-size:12.5px;color:var(--ink-soft);line-height:1.45}
+  .trail{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+  .crumb{font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 8px;border:1px solid var(--line);border-radius:2px;color:var(--slate);background:#fff}
+  .crumb b{color:var(--teal-deep);font-weight:500}
+
+  .levels{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:6px}
+  @media(max-width:760px){.levels{grid-template-columns:1fr}}
+  .lvl{border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .lvl .hd{background:#FCFDFC;border-bottom:1px solid var(--line);padding:11px 16px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--slate);display:flex;justify-content:space-between}
+  .lvl .bd{padding:20px 16px;text-align:center}
+  .lvl .n{font-family:'Spectral',serif;font-size:58px;font-weight:600;line-height:1;color:var(--teal-deep)}
+  .lvl .g{font-family:'Spectral',serif;font-size:34px;font-weight:600;color:var(--amber);line-height:1;margin-top:6px}
+  .lvl .d{font-size:13px;color:var(--ink-soft);margin-top:12px;line-height:1.5;padding:0 6px}
+  .lvl .g-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+
+  .steps li{font-size:14px;padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line-soft);list-style:none}
+  .steps li::before{content:counter(s);counter-increment:s;position:absolute;left:0;top:9px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);border:1px solid var(--line);border-radius:2px;width:19px;height:19px;display:flex;align-items:center;justify-content:center}
+  .steps{counter-reset:s}
+  .steps li b{font-weight:500}
+
+  .escala{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+  .escala td,.escala th{border:1px solid var(--line);padding:7px 10px}
+  .escala th{background:#FCFDFC}
+  .escala tr.on td{background:#F1F8F7;font-weight:500}
+  .escala td:first-child{font-family:'JetBrains Mono',monospace;font-size:12px;width:70px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">14 · Evidencia y lectura crítica</div>
+    <h1>NivelEvidencia<em>·AI</em></h1>
+    <p class="lede">Clasifica el nivel de evidencia y el grado de recomendación de un estudio según las escalas de Oxford (CEBM) y SIGN, con la justificación de cada paso del razonamiento.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="layout">
+  <div>
+    <section class="card">
+      <div id="q-area"></div>
+      <div class="trail" id="trail"></div>
+      <div class="actions">
+        <button class="ghost small" id="btn-back">← Atrás</button>
+        <button class="ghost small" id="btn-reset">Empezar de nuevo</button>
+      </div>
+    </section>
+  </div>
+
+  <div>
+    <section class="card hidden" id="card-res">
+      <h2 id="res-title"></h2>
+      <p class="sub" id="res-sub"></p>
+      <div class="levels">
+        <div class="lvl">
+          <div class="hd"><span>Oxford · CEBM 1998</span><span>nivel</span></div>
+          <div class="bd">
+            <div class="n" id="ox-n"></div>
+            <div class="g-lbl">Grado de recomendación</div>
+            <div class="g" id="ox-g"></div>
+            <div class="d" id="ox-d"></div>
+          </div>
+        </div>
+        <div class="lvl">
+          <div class="hd"><span>SIGN</span><span>nivel</span></div>
+          <div class="bd">
+            <div class="n" id="si-n"></div>
+            <div class="g-lbl">Grado de recomendación</div>
+            <div class="g" id="si-g"></div>
+            <div class="d" id="si-d"></div>
+          </div>
+        </div>
+      </div>
+      <div class="note" id="aviso"></div>
+
+      <div class="divider"><span>Cómo se ha llegado aquí</span></div>
+      <ul class="steps" id="steps"></ul>
+
+      <div class="divider"><span>Posición en la escala de Oxford</span></div>
+      <table class="escala" id="esc-ox"><tbody></tbody></table>
+
+      <div class="divider"><span>Posición en la escala SIGN</span></div>
+      <table class="escala" id="esc-si"><tbody></tbody></table>
+
+      <div class="actions">
+        <button class="ghost" id="btn-md">Descargar informe (.md)</button>
+        <button class="ghost" id="btn-copy">Copiar dictamen</button>
+        <span class="status" id="st"></span>
+      </div>
+      <div class="note">El nivel de evidencia describe el <em>diseño y la calidad</em> del estudio; el grado de recomendación traduce esa evidencia en una indicación para la práctica. Ninguna de estas escalas incorpora la magnitud del efecto ni los valores del paciente: para eso está GRADE.</div>
+    </section>
+
+    <section class="card" id="card-info">
+      <h2>Las dos escalas</h2>
+      <p class="sub">Ambas jerarquizan por diseño, pero con matices distintos.</p>
+      <div class="verdict">
+        <div class="k">Oxford · Centre for Evidence-Based Medicine</div>
+        <p>Cinco niveles con subdivisiones (1a, 1b, 1c…) y cuatro grados (A–D). Distingue el tipo de pregunta: tratamiento, pronóstico, diagnóstico, etiología o análisis económico. La versión de 1998 sigue siendo la más citada en la literatura española.</p>
+      </div>
+      <div class="verdict">
+        <div class="k">SIGN · Scottish Intercollegiate Guidelines Network</div>
+        <p>Añade a cada nivel un indicador de calidad: <b>++</b> (muy baja probabilidad de sesgo), <b>+</b> (sesgo posible) y <b>−</b> (alta probabilidad de sesgo). Un estudio con nivel 1<b>−</b> no debería usarse para formular recomendaciones. Es la escala habitual en las guías de práctica clínica del SNS.</p>
+      </div>
+    </section>
+  </div>
+</div>
+</main>
+
+<footer class="wrap">
+  <span>NivelEvidencia·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span>Determinista · sin IA · sin envío de datos</span>
+</footer>
+
+<script>
+"use strict";
+
+/* ============ Escalas de referencia ============ */
+var OXFORD = [
+  ["1a","Revisión sistemática de ensayos clínicos aleatorizados, con homogeneidad","A"],
+  ["1b","Ensayo clínico aleatorizado individual con intervalo de confianza estrecho","A"],
+  ["1c","Práctica clínica «todos o ninguno»","A"],
+  ["2a","Revisión sistemática de estudios de cohortes, con homogeneidad","B"],
+  ["2b","Estudio de cohortes individual o ensayo aleatorizado de baja calidad","B"],
+  ["2c","Investigación de resultados en salud, estudios ecológicos","B"],
+  ["3a","Revisión sistemática de estudios de casos y controles, con homogeneidad","B"],
+  ["3b","Estudio de casos y controles individual","B"],
+  ["4","Serie de casos, cohortes o casos y controles de baja calidad","C"],
+  ["5","Opinión de expertos sin valoración crítica explícita","D"]
+];
+var SIGN = [
+  ["1++","Metaanálisis, revisiones sistemáticas de ECA o ECA con muy bajo riesgo de sesgo","A"],
+  ["1+","Metaanálisis, revisiones sistemáticas de ECA o ECA bien realizados con bajo riesgo de sesgo","A"],
+  ["1−","Metaanálisis, revisiones sistemáticas de ECA o ECA con alto riesgo de sesgo","No debe usarse"],
+  ["2++","Revisiones sistemáticas de estudios de cohortes o de casos y controles de alta calidad, o estudios con muy bajo riesgo de confusión","B"],
+  ["2+","Estudios de cohortes o de casos y controles bien realizados, con bajo riesgo de confusión","C"],
+  ["2−","Estudios de cohortes o de casos y controles con alto riesgo de confusión","No debe usarse"],
+  ["3","Estudios no analíticos: series de casos, casos clínicos","D"],
+  ["4","Opinión de expertos","D"]
+];
+var GRADO_OX = {
+  A:"Estudios de nivel 1 consistentes. Recomendación firme, extensible a la mayoría de los pacientes.",
+  B:"Estudios de nivel 2 o 3 consistentes, o extrapolaciones de nivel 1. Recomendación favorable.",
+  C:"Estudios de nivel 4, o extrapolaciones de nivel 2 o 3. Recomendación favorable pero no concluyente.",
+  D:"Evidencia de nivel 5, o estudios inconsistentes o no concluyentes de cualquier nivel."
+};
+var GRADO_SI = {
+  A:"Al menos un metaanálisis, revisión sistemática o ECA clasificado como 1++ y directamente aplicable a la población diana, o un volumen de evidencia de estudios 1+ con resultados consistentes.",
+  B:"Volumen de evidencia de estudios 2++ directamente aplicable a la población diana con resultados consistentes, o extrapolación de estudios 1++ o 1+.",
+  C:"Volumen de evidencia de estudios 2+ directamente aplicable a la población diana con resultados consistentes, o extrapolación de estudios 2++.",
+  D:"Evidencia de nivel 3 o 4, o extrapolación de estudios 2+.",
+  "No debe usarse":"Los estudios con alto riesgo de sesgo (1− o 2−) no deben emplearse para formular recomendaciones, con independencia de su diseño."
+};
+
+/* ============ Árbol de decisión ============ */
+var Q = {
+  q1: {
+    t:"¿Qué tipo de pregunta responde el estudio?",
+    h:"La escala de Oxford asigna niveles distintos según el tipo de pregunta.",
+    o:[
+      {b:"Tratamiento, prevención o daño", s:"¿Funciona esta intervención?", n:"q2", set:{pregunta:"tratamiento"}},
+      {b:"Pronóstico", s:"¿Qué le va a pasar a este paciente?", n:"q2", set:{pregunta:"pronóstico"}},
+      {b:"Diagnóstico", s:"¿Esta prueba clasifica bien a los pacientes?", n:"q2", set:{pregunta:"diagnóstico"}},
+      {b:"Etiología o factores de riesgo", s:"¿Qué causa esta enfermedad?", n:"q2", set:{pregunta:"etiología"}}
+    ]
+  },
+  q2: {
+    t:"¿Cuál es el diseño del estudio?",
+    h:"Si es una síntesis de estudios, elige la primera opción.",
+    o:[
+      {b:"Revisión sistemática o metaanálisis", s:"Síntesis reproducible de estudios primarios.", n:"q3", set:{diseno:"revisión"}},
+      {b:"Ensayo clínico aleatorizado", s:"El investigador asigna la intervención al azar.", n:"q5", set:{diseno:"eca"}},
+      {b:"Estudio de cohortes", s:"Parte de la exposición y sigue a los sujetos.", n:"q5", set:{diseno:"cohorte"}},
+      {b:"Estudio de casos y controles", s:"Parte del desenlace y mira atrás.", n:"q5", set:{diseno:"cc"}},
+      {b:"Serie de casos o estudio transversal descriptivo", s:"Sin grupo de comparación individual.", r:true, set:{diseno:"serie"}},
+      {b:"Opinión de expertos o revisión narrativa", s:"Sin valoración crítica explícita de la evidencia.", r:true, set:{diseno:"opinion"}},
+      {b:"Práctica «todos o ninguno»", s:"Antes del tratamiento morían todos; ahora sobrevive alguno. O antes morían algunos y ahora ninguno.", r:true, set:{diseno:"ton"}}
+    ]
+  },
+  q3: {
+    t:"¿Qué diseño tienen los estudios incluidos en la revisión?",
+    h:"El nivel de una revisión sistemática hereda el de sus estudios primarios.",
+    o:[
+      {b:"Ensayos clínicos aleatorizados", s:"", n:"q4", set:{incluidos:"eca"}},
+      {b:"Estudios de cohortes", s:"", n:"q4", set:{incluidos:"cohorte"}},
+      {b:"Estudios de casos y controles", s:"", n:"q4", set:{incluidos:"cc"}}
+    ]
+  },
+  q4: {
+    t:"¿Son homogéneos los resultados de los estudios incluidos?",
+    h:"Homogeneidad significa que las estimaciones apuntan en la misma dirección y la heterogeneidad estadística es baja (I² < 50 %).",
+    o:[
+      {b:"Sí, los resultados son consistentes", s:"Baja heterogeneidad; los intervalos de confianza se solapan.", n:"q5", set:{homogenea:true}},
+      {b:"No, hay heterogeneidad preocupante", s:"Los estudios se contradicen o I² es alto sin explicación.", n:"q5", set:{homogenea:false}}
+    ]
+  },
+  q5: {
+    t:"¿Cuál es el riesgo de sesgo del estudio o de la revisión?",
+    h:"Valóralo con una herramienta explícita: Cochrane RoB 2, ROBINS-I, Newcastle-Ottawa o la ficha CASPe correspondiente.",
+    o:[
+      {b:"Muy bajo riesgo de sesgo", s:"Ocultación de la asignación adecuada, cegamiento, seguimiento completo, análisis por intención de tratar.", r:true, set:{sesgo:"muy_bajo"}},
+      {b:"Bajo riesgo de sesgo", s:"Limitaciones menores que no comprometen las conclusiones.", r:true, set:{sesgo:"bajo"}},
+      {b:"Alto riesgo de sesgo", s:"Pérdidas cuantiosas, ausencia de cegamiento con desenlaces subjetivos, confusión no controlada.", r:true, set:{sesgo:"alto"}}
+    ]
+  }
+};
+
+var path = [], current = "q1", D = {}, done = false;
+
+function drawQ(){
+  var area = document.getElementById("q-area");
+  drawTrail();
+  if(done){
+    area.innerHTML = '<div class="qtext">Clasificación emitida</div><div class="qhelp">Usa «Atrás» para explorar otra rama del árbol.</div>';
+    return;
+  }
+  var q = Q[current];
+  area.innerHTML = '<div class="qtext">' + esc(q.t) + '</div><div class="qhelp">' + esc(q.h) + '</div>';
+  var box = document.createElement("div");
+  box.className = "opts";
+  q.o.forEach(function(o){
+    var b = document.createElement("button");
+    b.className = "opt";
+    b.innerHTML = "<b>" + esc(o.b) + "</b>" + (o.s ? "<span>" + esc(o.s) + "</span>" : "");
+    b.onclick = function(){
+      path.push({ key: current, label: shortQ(current), a: o.b, prev: JSON.parse(JSON.stringify(D)) });
+      Object.keys(o.set || {}).forEach(function(k){ D[k] = o.set[k]; });
+      if(o.r){ done = true; clasificar(); }
+      else current = o.n;
+      drawQ();
+    };
+    box.appendChild(b);
+  });
+  area.appendChild(box);
+}
+function shortQ(k){ return { q1:"Pregunta", q2:"Diseño", q3:"Estudios incluidos", q4:"Homogeneidad", q5:"Riesgo de sesgo" }[k]; }
+function drawTrail(){
+  document.getElementById("trail").innerHTML = path.map(function(p){
+    return '<span class="crumb">' + esc(p.label) + ' <b>' + esc(p.a) + '</b></span>';
+  }).join("");
+}
+document.getElementById("btn-back").onclick = function(){
+  if(!path.length) return;
+  var last = path.pop();
+  current = last.key; D = last.prev; done = false;
+  document.getElementById("card-res").classList.add("hidden");
+  document.getElementById("card-info").classList.remove("hidden");
+  drawQ();
+};
+document.getElementById("btn-reset").onclick = function(){
+  path = []; current = "q1"; D = {}; done = false;
+  document.getElementById("card-res").classList.add("hidden");
+  document.getElementById("card-info").classList.remove("hidden");
+  drawQ();
+};
+
+/* ============ Clasificación determinista ============ */
+function clasificar(){
+  var steps = [], ox, sign, aviso = "";
+
+  /* --- Oxford --- */
+  if(D.diseno === "opinion"){ ox = "5"; steps.push("Se trata de <b>opinión de expertos</b> sin valoración crítica explícita: es el escalón inferior de la escala, nivel 5."); }
+  else if(D.diseno === "ton"){ ox = "1c"; steps.push("La práctica <b>«todos o ninguno»</b> ocupa el nivel 1c: cuando el efecto es tan grande que ningún ensayo resulta necesario ni ético."); }
+  else if(D.diseno === "serie"){ ox = "4"; steps.push("Una <b>serie de casos</b> o un descriptivo sin grupo de comparación se clasifica como nivel 4."); }
+  else if(D.diseno === "revisión"){
+    var base = { eca:"1a", cohorte:"2a", cc:"3a" }[D.incluidos];
+    steps.push("Es una <b>revisión sistemática</b> de " + ({eca:"ensayos aleatorizados", cohorte:"estudios de cohortes", cc:"estudios de casos y controles"})[D.incluidos] + ", lo que la sitúa de partida en el nivel <b>" + base + "</b>.");
+    if(D.homogenea === false){
+      ox = { "1a":"2b", "2a":"2b", "3a":"3b" }[base];
+      steps.push("Sin embargo, los estudios incluidos <b>no son homogéneos</b>. Oxford exige homogeneidad para los niveles «a», de modo que la revisión desciende al nivel <b>" + ox + "</b> y equivale a un estudio individual.");
+    } else {
+      ox = base;
+      steps.push("Los resultados de los estudios incluidos son <b>homogéneos</b>, requisito de Oxford para mantener el nivel «a».");
+    }
+    if(D.sesgo === "alto"){
+      var antes = ox;
+      ox = { "1a":"2b", "1b":"2b", "2a":"4", "2b":"4", "3a":"4", "3b":"4" }[ox] || "4";
+      steps.push("El <b>alto riesgo de sesgo</b> degrada el nivel <b>" + antes + "</b> hasta <b>" + ox + "</b>: Oxford trata los estudios de baja calidad como si tuvieran el diseño del escalón inferior.");
+    }
+  }
+  else {
+    var b2 = { eca:"1b", cohorte:"2b", cc:"3b" }[D.diseno];
+    steps.push("Es un estudio individual de tipo <b>" + ({eca:"ensayo clínico aleatorizado", cohorte:"cohortes", cc:"casos y controles"})[D.diseno] + "</b>, que corresponde al nivel <b>" + b2 + "</b>.");
+    if(D.sesgo === "alto"){
+      ox = D.diseno === "eca" ? "2b" : "4";
+      steps.push("Con <b>alto riesgo de sesgo</b>, Oxford lo degrada a nivel <b>" + ox + "</b>" + (D.diseno === "eca" ? ": un ensayo de baja calidad no vale más que un estudio de cohortes." : ": un observacional de baja calidad equivale a una serie de casos.") + "");
+    } else {
+      ox = b2;
+      steps.push("El riesgo de sesgo es " + (D.sesgo === "muy_bajo" ? "muy bajo" : "bajo") + ", de modo que el estudio conserva el nivel que le otorga su diseño.");
+    }
+  }
+
+  /* --- SIGN --- */
+  var suf = D.sesgo === "muy_bajo" ? "++" : D.sesgo === "bajo" ? "+" : "−";
+  if(D.diseno === "opinion") sign = "4";
+  else if(D.diseno === "serie") sign = "3";
+  else if(D.diseno === "ton") sign = "3";
+  else if(D.diseno === "revisión") sign = (D.incluidos === "eca" ? "1" : "2") + suf;
+  else if(D.diseno === "eca") sign = "1" + suf;
+  else sign = "2" + suf;
+
+  if(D.diseno === "opinion" || D.diseno === "serie" || D.diseno === "ton"){
+    steps.push("SIGN no aplica indicadores de calidad a los estudios no analíticos, de modo que el nivel es directamente <b>" + sign + "</b>.");
+  } else {
+    steps.push("SIGN parte del mismo diseño y le añade el indicador de calidad: riesgo de sesgo " +
+      (D.sesgo === "muy_bajo" ? "muy bajo → <b>++</b>" : D.sesgo === "bajo" ? "bajo → <b>+</b>" : "alto → <b>−</b>") +
+      ". El nivel resultante es <b>" + sign + "</b>.");
+  }
+  if(suf === "−" && (D.diseno === "eca" || D.diseno === "cohorte" || D.diseno === "cc" || D.diseno === "revisión")){
+    aviso = "SIGN es explícito: un estudio clasificado como <b>" + sign + "</b> no debe emplearse para formular recomendaciones, por bueno que sea su diseño sobre el papel. El alto riesgo de sesgo invalida la inferencia, no la matiza.";
+  }
+
+  var oxRow = OXFORD.find(function(r){ return r[0] === ox; });
+  var siRow = SIGN.find(function(r){ return r[0] === sign; });
+  var gOx = oxRow[2], gSi = siRow[2];
+  steps.push("El nivel Oxford <b>" + ox + "</b> corresponde al grado de recomendación <b>" + gOx + "</b>; el nivel SIGN <b>" + sign + "</b> corresponde al grado <b>" + (gSi === "No debe usarse" ? "—" : gSi) + "</b>.");
+  if(D.pregunta && D.pregunta !== "tratamiento" && D.diseno === "eca")
+    steps.push("Nota: la escala de Oxford tiene tablas propias para las preguntas de " + D.pregunta + ". Los niveles aquí mostrados corresponden a la tabla de tratamiento, que es la de uso más extendido; verifica la tabla específica si tu pregunta lo exige.");
+
+  RES = { ox:ox, sign:sign, gOx:gOx, gSi:gSi, steps:steps, oxRow:oxRow, siRow:siRow, aviso:aviso };
+  render();
+}
+var RES = null;
+
+function render(){
+  document.getElementById("card-res").classList.remove("hidden");
+  document.getElementById("card-info").classList.add("hidden");
+  document.getElementById("res-title").textContent = "Nivel " + RES.ox + " · Oxford  ·  Nivel " + RES.sign + " · SIGN";
+  document.getElementById("res-sub").textContent = "Pregunta de " + (D.pregunta || "tratamiento") + " · " + RES.oxRow[1].toLowerCase();
+
+  document.getElementById("ox-n").textContent = RES.ox;
+  document.getElementById("ox-g").textContent = RES.gOx;
+  document.getElementById("ox-d").textContent = GRADO_OX[RES.gOx];
+  document.getElementById("si-n").textContent = RES.sign;
+  document.getElementById("si-g").textContent = RES.gSi === "No debe usarse" ? "—" : RES.gSi;
+  document.getElementById("si-d").textContent = GRADO_SI[RES.gSi];
+  document.getElementById("aviso").innerHTML = RES.aviso ||
+    "El nivel de evidencia no depende de que el resultado sea significativo, sino de la capacidad del diseño para producir una estimación no sesgada.";
+
+  document.getElementById("steps").innerHTML = RES.steps.map(function(s){ return "<li>" + s + "</li>"; }).join("");
+
+  tabla("esc-ox", OXFORD, RES.ox);
+  tabla("esc-si", SIGN, RES.sign);
+  document.getElementById("card-res").scrollIntoView && document.getElementById("card-res").scrollIntoView({behavior:"smooth", block:"start"});
+}
+function tabla(id, esc2, sel){
+  document.querySelector("#" + id + " tbody").innerHTML =
+    "<tr><th>Nivel</th><th>Descripción</th><th>Grado</th></tr>" +
+    esc2.map(function(r){
+      return "<tr" + (r[0] === sel ? " class='on'" : "") + "><td>" + r[0] + "</td><td>" + r[1] + "</td><td>" + (r[2] === "No debe usarse" ? "—" : r[2]) + "</td></tr>";
+    }).join("");
+}
+
+/* ============ Salidas ============ */
+function dictamen(){
+  return "El estudio se clasifica como nivel de evidencia " + RES.ox + " según la escala de Oxford (CEBM), lo que corresponde a un grado de recomendación " + RES.gOx +
+    ", y como nivel " + RES.sign + " según SIGN" + (RES.gSi === "No debe usarse" ? ", nivel que SIGN considera inadecuado para fundamentar recomendaciones" : ", con grado de recomendación " + RES.gSi) +
+    ". La clasificación se basa en el diseño (" + RES.oxRow[1].toLowerCase() + ") y en el riesgo de sesgo valorado como " +
+    ({muy_bajo:"muy bajo", bajo:"bajo", alto:"alto"})[D.sesgo] + ".";
+}
+document.getElementById("btn-copy").onclick = async function(){
+  try{ await navigator.clipboard.writeText(dictamen()); msg("Copiado."); }catch(e){ msg("El navegador bloqueó el portapapeles."); }
+};
+document.getElementById("btn-md").onclick = function(){
+  var t = "# Nivel de evidencia y grado de recomendación\n\n";
+  t += "## Resultado\n\n| Escala | Nivel | Grado |\n|---|---|---|\n";
+  t += "| Oxford (CEBM) | " + RES.ox + " | " + RES.gOx + " |\n| SIGN | " + RES.sign + " | " + (RES.gSi === "No debe usarse" ? "no debe usarse" : RES.gSi) + " |\n\n";
+  t += "## Ruta de decisión\n\n" + path.map(function(p){ return "- " + p.label + ": " + p.a; }).join("\n") + "\n\n";
+  t += "## Justificación\n\n" + RES.steps.map(function(s, i){ return (i+1) + ". " + s.replace(/<[^>]+>/g, ""); }).join("\n") + "\n\n";
+  t += "## Dictamen\n\n" + dictamen() + "\n\n";
+  t += "_NivelEvidencia·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
+  var b = new Blob([t], {type:"text/markdown;charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "nivel-evidencia.md"; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  msg("Descargado.");
+};
+function msg(m){ var s = document.getElementById("st"); s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 2400); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+drawQ();
+</script>
+</body>
+</html>

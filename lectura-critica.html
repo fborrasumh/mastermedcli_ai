@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LecturaCrítica·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card h3{font-family:'Spectral',serif;font-weight:500;font-size:17px;margin:22px 0 10px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select,textarea{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif}
+  textarea{font-size:12.5px;min-height:110px;resize:vertical;line-height:1.5}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:14px;margin-bottom:20px}
+  .stats div{border-left:2px solid var(--line);padding-left:11px}
+  .stats .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .stats .v{font-family:'Spectral',serif;font-size:25px;font-weight:500;margin-top:1px;line-height:1.15}
+  .stats .v small{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft);font-weight:400;display:block;margin-top:2px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:500}
+  td{padding:7px 10px;border-bottom:1px solid var(--line-soft)}
+  td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  tr.hl td{background:#F2F7F6}
+  .tbl-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:3px}
+
+  .verdict{border-left:3px solid var(--teal);padding-left:16px;margin:18px 0}
+  .verdict.warn{border-color:var(--amber)}
+  .verdict.bad{border-color:var(--red)}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .verdict p{font-size:14.5px;margin-top:4px;max-width:76ch}
+
+  .plot{margin-top:6px}
+  .plot svg{width:100%;height:auto;display:block}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gridl{stroke:var(--line-soft);stroke-width:1}
+  .tick{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:var(--slate)}
+  .bar{fill:#CDE2E0;stroke:var(--teal);stroke-width:.7}
+  .curveline{fill:none;stroke:var(--amber);stroke-width:1.6}
+  .refline{stroke:var(--amber);stroke-width:1;stroke-dasharray:4 3}
+  .pt{fill:var(--teal);opacity:.75}
+
+  .para{font-size:14.5px;line-height:1.75;background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:18px;font-family:'Spectral',serif}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+  .drop{border:1px dashed var(--line);border-radius:3px;padding:26px;text-align:center;color:var(--ink-soft);font-size:14px;cursor:pointer;transition:.15s;background:#FCFDFC}
+  .drop:hover,.drop.over{border-color:var(--teal);background:#F2F7F6;color:var(--teal-deep)}
+  .drop b{display:block;font-weight:500;color:var(--ink);margin-bottom:3px}
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:2px 7px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--slate);margin-left:6px}
+  .pill.ok{background:#F1F8F7;color:var(--teal-deep);border-color:#BFD9D6}
+  .pill.no{background:#FBF2F1;color:var(--red);border-color:#E0C4C1}
+  .pill.mid{background:#FBF6EC;color:var(--amber);border-color:#E5D6B9}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
+
+  .layout{display:grid;grid-template-columns:minmax(280px,330px) 1fr;gap:22px;align-items:start}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin:26px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+  .sec-head .n{font-family:'Spectral',serif;font-size:30px;font-weight:600;color:var(--teal);line-height:1}
+  .sec-head h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin:0}
+  .sec-head .tag{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .item{border:1px solid var(--line);border-radius:3px;padding:15px 17px;margin-bottom:11px;background:#FCFDFC;transition:.15s}
+  .item.done{background:#fff}
+  .item.crib{border-left:3px solid var(--amber)}
+  .item .q{font-size:15px;font-weight:500;margin-bottom:5px;display:flex;gap:9px}
+  .item .q .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);flex-shrink:0;padding-top:3px}
+  .item .pista{font-size:13px;color:var(--ink-soft);margin:0 0 11px 25px;line-height:1.5;border-left:2px solid var(--line-soft);padding-left:10px}
+  .opts{display:flex;gap:7px;margin-left:25px;flex-wrap:wrap}
+  .opts button{padding:6px 15px;font-size:13px;border:1px solid var(--line);background:#fff;color:var(--slate);font-weight:400}
+  .opts button:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  .opts button.on[data-v="si"]{background:var(--teal);color:#fff;border-color:var(--teal)}
+  .opts button.on[data-v="ns"]{background:var(--amber);color:#fff;border-color:var(--amber)}
+  .opts button.on[data-v="no"]{background:var(--red);color:#fff;border-color:var(--red)}
+  .item textarea{margin:11px 0 0 25px;width:calc(100% - 25px);min-height:44px;font-size:13px;font-family:'Inter',sans-serif}
+
+  .progress{position:sticky;top:0;background:var(--card);border:1px solid var(--line);border-radius:3px;padding:18px;box-shadow:var(--shadow)}
+  .bar{height:5px;background:var(--line-soft);border-radius:3px;overflow:hidden;margin:12px 0 6px}
+  .bar i{display:block;height:100%;background:var(--teal);transition:width .3s}
+  .tally{display:flex;gap:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;margin-top:12px}
+  .tally b{font-family:'Spectral',serif;font-size:20px;font-weight:600;display:block}
+  .tally .si b{color:var(--teal)} .tally .ns b{color:var(--amber)} .tally .no b{color:var(--red)}
+
+  .stop{border:1px solid #E0C4C1;background:#FBF2F1;border-radius:3px;padding:15px 17px;margin:16px 0;font-size:14px;color:var(--ink)}
+  .stop b{color:var(--red)}
+  .ai-out{border:1px solid var(--line);border-radius:3px;background:#FCFDFC;padding:18px;font-size:14.5px;line-height:1.65;margin-top:16px}
+  .ai-out h4{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);margin:15px 0 7px}
+  .ai-out h4:first-child{margin-top:0}
+  .ai-out ul{margin-left:18px}
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%}
+  dialog::backdrop{background:rgba(23,38,46,.35)}
+  .dlg{padding:24px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">12 · Evidencia y lectura crítica</div>
+    <h1>LecturaCrítica<em>·AI</em></h1>
+    <p class="lede">Fichas CASPe adaptadas al tipo de estudio. Responde ítem a ítem con las pistas de cada pregunta y obtén una síntesis de la validez, la importancia y la aplicabilidad de los resultados.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="layout">
+  <div>
+    <section class="card">
+      <h2>El artículo</h2>
+      <div class="fld">
+        <label for="tipo">Tipo de estudio</label>
+        <select id="tipo"></select>
+        <div class="hint" id="tipo-hint"></div>
+      </div>
+      <div class="fld"><label for="ref">Referencia</label><input type="text" id="ref" placeholder="Autor et al. Revista. 2024;12(3):45-58."></div>
+      <div class="fld"><label for="preg">Tu pregunta clínica</label><textarea id="preg" style="min-height:64px;font-family:Inter,sans-serif;font-size:13.5px" placeholder="¿Sirve esta intervención en mis pacientes?"></textarea></div>
+      <div class="actions">
+        <button class="ghost small" id="btn-reset">Vaciar respuestas</button>
+      </div>
+    </section>
+
+    <div class="progress">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">Progreso</div>
+      <div class="bar"><i id="bar" style="width:0%"></i></div>
+      <div style="font-size:12.5px;color:var(--ink-soft)"><span id="prog-txt">0 de 0 ítems</span></div>
+      <div class="tally">
+        <span class="si"><b id="t-si">0</b>Sí</span>
+        <span class="ns"><b id="t-ns">0</b>No sé</span>
+        <span class="no"><b id="t-no">0</b>No</span>
+      </div>
+      <div class="actions" style="margin-top:14px">
+        <button id="btn-sint" style="width:100%">Sintetizar</button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <section class="card">
+      <h2 id="ficha-title">Ficha de lectura crítica</h2>
+      <p class="sub" id="ficha-sub"></p>
+      <div id="stop"></div>
+      <div id="items"></div>
+    </section>
+
+    <section class="card hidden" id="card-sint">
+      <h2>Síntesis</h2>
+      <p class="sub">Veredicto determinista a partir de tus respuestas, más el comentario razonado de la IA.</p>
+      <div id="verdicts"></div>
+      <div class="divider"><span>Dictamen</span></div>
+      <div class="para" id="para"></div>
+      <div class="actions">
+        <button id="btn-ai">Comentar con IA</button>
+        <button class="ghost" id="btn-md">Descargar ficha (.md)</button>
+        <button class="ghost" id="btn-copy">Copiar dictamen</button>
+        <span class="status" id="st"></span>
+      </div>
+      <div class="ai-out hidden" id="ai-out"></div>
+      <div class="note">CASPe no es una escala de puntuación: no sumes los "sí" para obtener una nota. Un solo "no" en un ítem de validez interna puede invalidar el estudio entero, mientras que varias dudas menores pueden ser irrelevantes.</div>
+    </section>
+  </div>
+</div>
+</main>
+
+<footer class="wrap">
+  <span>LecturaCrítica·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span id="model-badge"></span>
+</footer>
+
+<dialog id="dlg-key">
+  <div class="dlg">
+    <h3>Clave de API de OpenAI</h3>
+    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit.</p>
+    <label for="k">Clave</label>
+    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
+    <div style="margin-top:14px"></div>
+    <label for="m">Modelo</label>
+    <select id="m">
+      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
+      <option value="gpt-4o">gpt-4o · más preciso</option>
+      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+      <option value="gpt-4.1">gpt-4.1</option>
+    </select>
+    <div class="actions">
+      <button id="k-save">Guardar</button>
+      <button class="ghost" id="k-cancel">Cancelar</button>
+      <button class="ghost small" id="k-clear">Borrar clave</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+/* ---------- Kernel de IA: clave y modelo compartidos ---------- */
+var KEY = "ia_openai_key", MODEL = "ia_openai_model";
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function getKey(){ return lsGet(KEY) || ""; }
+function getModel(){ return lsGet(MODEL) || "gpt-4o-mini"; }
+function badge(){
+  var b = document.getElementById("model-badge");
+  if(b){ b.textContent = "modelo: " + getModel(); b.style.cursor = "pointer"; b.onclick = askKey; }
+}
+function askKey(){
+  document.getElementById("k").value = getKey();
+  document.getElementById("m").value = getModel();
+  document.getElementById("dlg-key").showModal();
+}
+function initKeyDialog(){
+  document.getElementById("k-save").onclick = function(){
+    var v = document.getElementById("k").value.trim();
+    if(v) lsSet(KEY, v);
+    lsSet(MODEL, document.getElementById("m").value);
+    badge(); document.getElementById("dlg-key").close();
+  };
+  document.getElementById("k-cancel").onclick = function(){ document.getElementById("dlg-key").close(); };
+  document.getElementById("k-clear").onclick = function(){ lsDel(KEY); document.getElementById("k").value = ""; };
+  badge();
+}
+async function askAI(system, user, temp){
+  var key = getKey();
+  if(!key){ askKey(); throw new Error("Falta la clave de API. Configúrala en el pie de página."); }
+  var res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
+    body: JSON.stringify({ model:getModel(), temperature: (temp === undefined ? 0.25 : temp),
+      response_format:{type:"json_object"},
+      messages:[{role:"system",content:system},{role:"user",content:user}] })
+  });
+  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,150)); }
+  var data = await res.json();
+  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
+}
+
+
+/* ============ Fichas CASPe ============ */
+var S = { A:"¿Son válidos los resultados del estudio?", B:"¿Cuáles son los resultados?", C:"¿Son aplicables a tu medio?" };
+
+var FICHAS = {
+  eca: {
+    n:"Ensayo clínico aleatorizado",
+    hint:"Once preguntas. Las dos primeras son de eliminación: si ambas se responden «no», no merece la pena seguir.",
+    items:[
+      {s:"A", crib:true, q:"¿Se orienta el ensayo a una pregunta claramente definida?", p:"Una pregunta debe definirse en términos de la población, la intervención, el comparador y los desenlaces (PICO). Búscala al final de la introducción."},
+      {s:"A", crib:true, q:"¿Fue aleatoria la asignación de los pacientes a los tratamientos?", p:"Busca el método concreto: tabla de números aleatorios, secuencia generada por ordenador, bloques. «Se aleatorizó» sin más no es suficiente."},
+      {s:"A", q:"¿Fueron adecuadamente considerados hasta el final del estudio todos los pacientes que entraron en él?", p:"¿El seguimiento fue completo? ¿Se analizó por intención de tratar, es decir, en el grupo al que fueron asignados? Un abandono superior al 20 % amenaza la validez."},
+      {s:"A", q:"¿Se mantuvo el cegamiento a pacientes, clínicos y personal del estudio?", p:"Si el desenlace es subjetivo, el cegamiento del evaluador es crítico. Si es la mortalidad, importa menos. Comprueba también la ocultación de la secuencia de asignación."},
+      {s:"A", q:"¿Fueron similares los grupos al comienzo del ensayo?", p:"Revisa la tabla 1. Busca desequilibrios en factores pronósticos, no valores p: con aleatorización correcta, cualquier diferencia es por azar."},
+      {s:"A", q:"Al margen de la intervención en estudio, ¿los grupos fueron tratados de igual modo?", p:"Cointervenciones diferenciales, seguimiento más intenso en un brazo o cruces entre grupos sesgan el resultado."},
+      {s:"B", q:"¿Es muy grande el efecto del tratamiento?", p:"Cuantifícalo: RR, RAR, NNT. Un resultado significativo con un NNT de 300 rara vez cambia la práctica."},
+      {s:"B", q:"¿Cuál es la precisión de este efecto? ¿Cuáles son sus intervalos de confianza?", p:"El intervalo de confianza al 95 % informa mucho más que el valor p. Pregúntate si el peor extremo del intervalo sigue siendo clínicamente útil."},
+      {s:"C", q:"¿Pueden aplicarse estos resultados en tu medio o población local?", p:"Compara los criterios de inclusión y exclusión con tus pacientes. La pregunta no es si son idénticos, sino si hay alguna razón biológica o social para esperar un efecto distinto."},
+      {s:"C", q:"¿Se tuvieron en cuenta todos los resultados de importancia clínica?", p:"¿Se midieron los desenlaces que importan al paciente, o solo variables subrogadas? ¿Y los efectos adversos?"},
+      {s:"C", q:"¿Los beneficios a obtener justifican los riesgos y los costes?", p:"Aquí ya no decide el artículo, sino el juicio clínico y el contexto de tu sistema sanitario."}
+    ]
+  },
+  cohorte: {
+    n:"Estudio de cohortes",
+    hint:"Doce preguntas. Los dos primeros ítems son de eliminación.",
+    items:[
+      {s:"A", crib:true, q:"¿El estudio se centra en un tema claramente definido?", p:"Población, exposición estudiada, desenlaces medidos y, si procede, el marco temporal."},
+      {s:"A", crib:true, q:"¿La cohorte se reclutó de la manera más adecuada?", p:"¿La cohorte es representativa de una población definida? ¿Existió algún criterio que la haga poco habitual?"},
+      {s:"A", q:"¿Se midió la exposición de forma precisa para minimizar posibles sesgos?", p:"Busca medidas objetivas y validadas. ¿El método fue igual para expuestos y no expuestos?"},
+      {s:"A", q:"¿Se midió el resultado de forma precisa para minimizar posibles sesgos?", p:"¿Estaban cegados los evaluadores del desenlace respecto a la exposición? ¿Se usó un criterio diagnóstico explícito?"},
+      {s:"A", q:"a) ¿Han tenido en cuenta los autores el efecto de los factores de confusión?", p:"Enumera los confusores plausibles y comprueba si están medidos: edad, tabaco, comorbilidad, nivel socioeconómico."},
+      {s:"A", q:"b) ¿Han tenido en cuenta los autores el diseño y el análisis para controlarlos?", p:"Restricción, emparejamiento, estratificación o análisis multivariante. Un ajuste no puede corregir una variable no medida."},
+      {s:"A", q:"a) ¿Fue el seguimiento de los sujetos lo bastante largo?", p:"¿Ha transcurrido el tiempo de latencia necesario para que aparezca el desenlace?"},
+      {s:"A", q:"b) ¿Fue el seguimiento de los sujetos lo bastante completo?", p:"Las pérdidas de seguimiento diferenciales entre expuestos y no expuestos son la amenaza principal de este diseño."},
+      {s:"B", q:"¿Cuáles son los resultados de este estudio?", p:"Riesgo relativo, hazard ratio o densidad de incidencia. ¿Se ajustaron por confusores? Compara la estimación cruda con la ajustada."},
+      {s:"B", q:"¿Cuál es la precisión de los resultados?", p:"Intervalos de confianza al 95 %. Un IC que atraviesa la unidad no permite descartar la ausencia de efecto."},
+      {s:"B", q:"¿Te parecen creíbles los resultados?", p:"Criterios de Bradford Hill: fuerza de la asociación, gradiente dosis-respuesta, plausibilidad biológica, coherencia con otros estudios, temporalidad."},
+      {s:"C", q:"¿Los resultados de este estudio coinciden con otra evidencia disponible?", p:"Un hallazgo aislado que contradice a la literatura previa exige más cautela que uno que la confirma."}
+    ]
+  },
+  cc: {
+    n:"Estudio de casos y controles",
+    hint:"Once preguntas. Los dos primeros ítems son de eliminación.",
+    items:[
+      {s:"A", crib:true, q:"¿El estudio se centra en un tema claramente definido?", p:"Población, exposición estudiada y definición operativa del desenlace que define al caso."},
+      {s:"A", crib:true, q:"¿Los autores han utilizado un método apropiado para responder a la pregunta?", p:"El diseño de casos y controles está indicado con enfermedades raras o de latencia larga. ¿Es el caso?"},
+      {s:"A", q:"¿Los casos se reclutaron de una manera aceptable?", p:"¿La definición de caso es explícita y validada? ¿Son casos incidentes o prevalentes? Los prevalentes mezclan factores de incidencia y de supervivencia."},
+      {s:"A", q:"¿Los controles se seleccionaron de una manera aceptable?", p:"Los controles deben proceder de la misma base poblacional que los casos y haber podido convertirse en casos si hubieran enfermado. Es el punto más delicado del diseño."},
+      {s:"A", q:"¿La exposición se midió de forma precisa para minimizar posibles sesgos?", p:"El sesgo de recuerdo es el gran enemigo: los enfermos rebuscan en su memoria más que los sanos. ¿Se usaron registros previos y evaluadores cegados?"},
+      {s:"A", q:"a) ¿Qué factores de confusión han tenido en cuenta los autores?", p:"Enumera los confusores plausibles y comprueba si se midieron."},
+      {s:"A", q:"b) ¿Han tenido en cuenta los autores los factores de confusión en el diseño o el análisis?", p:"Emparejamiento (que exige análisis apareado) o ajuste multivariante mediante regresión logística."},
+      {s:"B", q:"¿Cuáles son los resultados de este estudio?", p:"La medida propia de este diseño es la Odds Ratio. Solo se aproxima al riesgo relativo si la enfermedad es rara."},
+      {s:"B", q:"¿Cuál es la precisión de los resultados?", p:"Intervalos de confianza al 95 % de la OR, cruda y ajustada."},
+      {s:"B", q:"¿Te parecen creíbles los resultados?", p:"¿Es plausible la temporalidad? ¿Puede la enfermedad haber causado la exposición y no al revés (causalidad reversa)?"},
+      {s:"C", q:"¿Se pueden aplicar los resultados a tu medio y coinciden con la evidencia disponible?", p:"Considera si tu población comparte la prevalencia de exposición y los factores de confusión del estudio."}
+    ]
+  },
+  rs: {
+    n:"Revisión sistemática",
+    hint:"Diez preguntas. Los dos primeros ítems son de eliminación.",
+    items:[
+      {s:"A", crib:true, q:"¿Se hizo la revisión sobre un tema claramente definido?", p:"La pregunta PICO debe estar explícita, junto con los diseños de estudio elegibles."},
+      {s:"A", crib:true, q:"¿Buscaron los autores el tipo de artículos adecuado?", p:"Los estudios incluidos deben responder a la pregunta de la revisión y tener el diseño apropiado para ello."},
+      {s:"A", q:"¿Crees que estaban incluidos los estudios importantes y pertinentes?", p:"¿Qué bases de datos se consultaron? ¿Se rastreó literatura gris, registros de ensayos y referencias de los artículos? ¿Hubo restricción de idioma?"},
+      {s:"A", q:"¿Crees que los autores de la revisión han hecho suficiente esfuerzo para valorar la calidad de los estudios incluidos?", p:"Debe emplearse una herramienta explícita (Cochrane RoB 2, ROBINS-I, Newcastle-Ottawa) por al menos dos revisores independientes."},
+      {s:"B", q:"Si los resultados de los diferentes estudios han sido mezclados para obtener un resultado combinado, ¿era razonable hacer eso?", p:"¿Eran los estudios suficientemente similares en población, intervención y desenlace? Revisa la heterogeneidad: I², Q de Cochran, y sobre todo la heterogeneidad clínica."},
+      {s:"B", q:"¿Cuál es el resultado global de la revisión?", p:"Expresa el efecto combinado en una medida interpretable y comprueba qué modelo se usó: efectos fijos o aleatorios."},
+      {s:"B", q:"¿Cuál es la precisión del resultado o resultados?", p:"Intervalos de confianza del efecto combinado. En efectos aleatorios, valora también el intervalo de predicción."},
+      {s:"C", q:"¿Se pueden aplicar los resultados en tu medio?", p:"¿Los pacientes de los estudios primarios se parecen a los tuyos? ¿Dispones de la intervención?"},
+      {s:"C", q:"¿Se han considerado todos los resultados importantes para tomar la decisión?", p:"Beneficios, daños y costes. La ausencia de datos de efectos adversos no es evidencia de seguridad."},
+      {s:"C", q:"¿Los beneficios merecen la pena frente a los perjuicios y costes?", p:"Aquí decide el juicio clínico, no la revisión."}
+    ]
+  },
+  diag: {
+    n:"Estudio de pruebas diagnósticas",
+    hint:"Once preguntas. Los dos primeros ítems son de eliminación.",
+    items:[
+      {s:"A", crib:true, q:"¿Existió una comparación con una prueba de referencia adecuada?", p:"El patrón de referencia debe ser el mejor disponible y estar definido con independencia de la prueba índice."},
+      {s:"A", crib:true, q:"¿Incluyó la muestra un espectro adecuado de pacientes?", p:"Una serie consecutiva de pacientes con sospecha diagnóstica. Comparar enfermos graves con sanos infla artificialmente el rendimiento (sesgo de espectro)."},
+      {s:"A", q:"¿Existe una adecuada descripción de la prueba?", p:"Debe poder reproducirse: técnica, umbral, quién la realiza y con qué formación."},
+      {s:"A", q:"¿Hubo cegamiento en la interpretación de la prueba y del patrón de referencia?", p:"Quien interpreta la prueba índice no debe conocer el resultado de referencia, ni al revés (sesgo de revisión)."},
+      {s:"A", q:"¿Se aplicó el patrón de referencia a todos los pacientes, con independencia del resultado de la prueba?", p:"Si solo se verifica a los positivos, hay sesgo de verificación parcial y la sensibilidad se sobrestima."},
+      {s:"A", q:"¿Formaba la prueba índice parte del patrón de referencia?", p:"Si es así, existe sesgo de incorporación y la concordancia es artificialmente alta. Responde «sí» solo si el estudio lo evita."},
+      {s:"B", q:"¿Se presentan los cocientes de probabilidad o los datos necesarios para calcularlos?", p:"Se necesita la tabla 2×2 completa. Los cocientes de probabilidad, a diferencia de los valores predictivos, no dependen de la prevalencia."},
+      {s:"B", q:"¿Cuál es la precisión de los resultados?", p:"Intervalos de confianza de la sensibilidad, la especificidad y el área bajo la curva ROC."},
+      {s:"C", q:"¿Serán satisfactorios en el ámbito del estudio la reproducibilidad de la prueba y su interpretación?", p:"¿Se informa de la concordancia intra e interobservador (kappa, ICC)?"},
+      {s:"C", q:"¿Es aceptable la prueba en tu medio?", p:"Disponibilidad, coste, invasividad y aceptación por el paciente."},
+      {s:"C", q:"¿Modificarán los resultados de la prueba tu decisión clínica?", p:"Si la probabilidad post-test no cruza ningún umbral de decisión, la prueba no aporta nada aunque sea precisa."}
+    ]
+  },
+  cual: {
+    n:"Estudio cualitativo",
+    hint:"Diez preguntas. Los dos primeros ítems son de eliminación.",
+    items:[
+      {s:"A", crib:true, q:"¿Se definieron de forma clara los objetivos de la investigación?", p:"¿Qué se pretendía comprender y por qué era importante hacerlo con una metodología cualitativa?"},
+      {s:"A", crib:true, q:"¿Es congruente la metodología cualitativa con los objetivos?", p:"Si la pregunta es sobre magnitudes o frecuencias, la metodología cualitativa no es la adecuada."},
+      {s:"A", q:"¿El método de investigación es adecuado para alcanzar los objetivos?", p:"Fenomenología, teoría fundamentada, etnografía, análisis del discurso: la elección debe justificarse."},
+      {s:"A", q:"¿La estrategia de selección de participantes es congruente con la pregunta de investigación?", p:"El muestreo intencional o teórico debe explicarse, junto con el criterio de saturación."},
+      {s:"A", q:"¿Las técnicas de recogida de datos utilizadas son congruentes con la pregunta?", p:"Entrevistas en profundidad, grupos focales, observación participante. ¿Se explicita la saturación de los datos?"},
+      {s:"A", q:"¿Se ha reflexionado sobre la relación entre el investigador y el objeto de investigación?", p:"Reflexividad: cómo la posición, la formación y los sesgos del investigador han podido influir en la recogida y el análisis."},
+      {s:"A", q:"¿Se han tenido en cuenta los aspectos éticos?", p:"Consentimiento informado, confidencialidad, gestión del efecto emocional de la entrevista y aprobación del comité."},
+      {s:"B", q:"¿Fue el análisis de datos suficientemente riguroso?", p:"Proceso de codificación descrito, más de un analista, verificación con los participantes, presencia de datos discrepantes."},
+      {s:"B", q:"¿Es clara la exposición de los resultados?", p:"Los hallazgos deben apoyarse en citas literales suficientes y estar articulados en categorías coherentes."},
+      {s:"C", q:"¿Son aplicables los resultados de la investigación?", p:"La cualitativa no busca generalización estadística sino transferibilidad: ¿describe el contexto lo bastante para que juzgues si aplica al tuyo?"}
+    ]
+  }
+};
+
+var TIPO = "eca", R = {}, NOTAS = {};
+
+var sel = document.getElementById("tipo");
+Object.keys(FICHAS).forEach(function(k){
+  var o = document.createElement("option");
+  o.value = k; o.textContent = FICHAS[k].n;
+  sel.appendChild(o);
+});
+sel.onchange = function(){ TIPO = sel.value; R = {}; NOTAS = {}; ficha(); };
+
+function ficha(){
+  var F = FICHAS[TIPO];
+  document.getElementById("tipo-hint").textContent = F.hint;
+  document.getElementById("ficha-title").textContent = "Ficha CASPe · " + F.n;
+  document.getElementById("ficha-sub").textContent = F.items.length + " ítems agrupados en validez, resultados y aplicabilidad";
+  document.getElementById("card-sint").classList.add("hidden");
+
+  var box = document.getElementById("items");
+  box.innerHTML = "";
+  var lastS = null;
+  F.items.forEach(function(it, i){
+    if(it.s !== lastS){
+      lastS = it.s;
+      var h = document.createElement("div");
+      h.className = "sec-head";
+      h.innerHTML = '<span class="n">' + it.s + '</span><h3>' + S[it.s] + '</h3>' +
+        '<span class="tag">' + (it.s === "A" ? "validez interna" : it.s === "B" ? "importancia" : "aplicabilidad") + '</span>';
+      box.appendChild(h);
+    }
+    var d = document.createElement("div");
+    d.className = "item" + (it.crib ? " crib" : "");
+    d.id = "it-" + i;
+    d.innerHTML = '<div class="q"><span class="num">' + (i+1) + '</span><span>' + esc(it.q) + (it.crib ? ' <span class="pill mid">eliminación</span>' : "") + '</span></div>' +
+      '<div class="pista">' + esc(it.p) + '</div>' +
+      '<div class="opts">' +
+        '<button data-i="' + i + '" data-v="si">Sí</button>' +
+        '<button data-i="' + i + '" data-v="ns">No sé</button>' +
+        '<button data-i="' + i + '" data-v="no">No</button>' +
+      '</div>' +
+      '<textarea data-n="' + i + '" placeholder="Notas y evidencia del texto (opcional)"></textarea>';
+    box.appendChild(d);
+  });
+
+  box.querySelectorAll(".opts button").forEach(function(b){
+    b.onclick = function(){
+      var i = b.dataset.i;
+      R[i] = b.dataset.v;
+      document.querySelectorAll('.opts button[data-i="' + i + '"]').forEach(function(x){ x.classList.remove("on"); });
+      b.classList.add("on");
+      document.getElementById("it-" + i).classList.add("done");
+      prog();
+    };
+  });
+  box.querySelectorAll("textarea[data-n]").forEach(function(t){
+    t.oninput = function(){ NOTAS[t.dataset.n] = t.value; };
+  });
+  prog();
+}
+
+function prog(){
+  var F = FICHAS[TIPO], n = F.items.length;
+  var done = Object.keys(R).length;
+  document.getElementById("bar").style.width = (100*done/n) + "%";
+  document.getElementById("prog-txt").textContent = done + " de " + n + " ítems";
+  ["si","ns","no"].forEach(function(v){
+    document.getElementById("t-" + v).textContent = Object.keys(R).filter(function(k){ return R[k] === v; }).length;
+  });
+  cribado();
+}
+function cribado(){
+  var F = FICHAS[TIPO];
+  var crib = F.items.map(function(it,i){ return it.crib ? i : -1; }).filter(function(i){ return i >= 0; });
+  var noes = crib.filter(function(i){ return R[i] === "no"; });
+  var box = document.getElementById("stop");
+  if(noes.length === crib.length && crib.length){
+    box.innerHTML = '<div class="stop"><b>Alto.</b> Has respondido «no» a las dos preguntas de eliminación. CASPe recomienda no continuar: el artículo no responde a una pregunta bien definida con un método apropiado, de modo que el resto del análisis no cambiará la conclusión. Descártalo y busca otro estudio.</div>';
+  } else if(noes.length){
+    box.innerHTML = '<div class="stop" style="border-color:#E5D6B9;background:#FBF6EC"><b>Atención.</b> Un ítem de eliminación se ha respondido «no». Puedes continuar, pero la validez del estudio queda comprometida desde el inicio.</div>';
+  } else box.innerHTML = "";
+}
+document.getElementById("btn-reset").onclick = function(){ R = {}; NOTAS = {}; ficha(); };
+
+/* ============ Síntesis determinista ============ */
+document.getElementById("btn-sint").onclick = function(){
+  var F = FICHAS[TIPO];
+  var done = Object.keys(R).length;
+  if(done < F.items.length*0.5){ msg("Responde al menos la mitad de los ítems.", true); return; }
+  document.getElementById("card-sint").classList.remove("hidden");
+
+  var secs = ["A","B","C"];
+  var vb = document.getElementById("verdicts");
+  vb.innerHTML = "";
+  var resumen = {};
+  secs.forEach(function(sec){
+    var idx = F.items.map(function(it,i){ return it.s === sec ? i : -1; }).filter(function(i){ return i >= 0; });
+    var si = idx.filter(function(i){ return R[i] === "si"; }).length;
+    var no = idx.filter(function(i){ return R[i] === "no"; }).length;
+    var ns = idx.filter(function(i){ return R[i] === "ns"; }).length;
+    var sinResp = idx.filter(function(i){ return !R[i]; }).length;
+    resumen[sec] = { si:si, no:no, ns:ns, total:idx.length, sinResp:sinResp };
+    var clase = no === 0 && ns <= 1 ? "" : (no >= 2 ? "bad" : "warn");
+    var txt;
+    if(sec === "A") txt = no === 0 ? "Ningún ítem de validez interna se ha respondido «no». El estudio parece metodológicamente sólido." + (ns ? " Quedan " + ns + " dudas por resolver releyendo el texto." : "") : "Se han identificado " + no + " problemas de validez interna. Antes de creer los resultados, valora si ese sesgo podría explicar por sí solo el efecto observado y en qué dirección lo desplazaría.";
+    else if(sec === "B") txt = no === 0 ? "Los resultados están cuantificados y su precisión es valorable." : "La presentación de los resultados es insuficiente en " + no + " ítem(es): sin magnitud del efecto o sin intervalos de confianza no puedes juzgar la relevancia clínica.";
+    else txt = no === 0 ? "Los resultados parecen trasladables a tu medio." : "Existen " + no + " obstáculo(s) para la aplicabilidad. Un estudio válido puede ser inútil en tu contexto.";
+    var d = document.createElement("div");
+    d.className = "verdict " + clase;
+    d.innerHTML = '<div class="k">' + sec + " · " + esc(S[sec]) + " · " + si + " sí / " + ns + " no sé / " + no + " no" + (sinResp ? " / " + sinResp + " sin responder" : "") + '</div><p>' + txt + '</p>';
+    vb.appendChild(d);
+  });
+
+  var noA = resumen.A.no;
+  var dic;
+  if(noA === 0 && resumen.B.no === 0 && resumen.C.no === 0)
+    dic = "El estudio supera la lectura crítica en los tres bloques. Sus resultados son válidos, están adecuadamente cuantificados y resultan aplicables a tu medio; puedes usarlos para fundamentar una decisión clínica, ponderándolos con el resto de la evidencia disponible.";
+  else if(noA >= 2)
+    dic = "El estudio presenta problemas serios de validez interna (" + noA + " ítems del bloque A respondidos «no»). Los resultados podrían estar sesgados con independencia de su significación estadística, de modo que no deberían fundamentar por sí solos un cambio de práctica clínica.";
+  else if(noA === 1)
+    dic = "El estudio tiene una limitación relevante de validez interna. Antes de aceptarlo, razona la dirección del sesgo: si actúa contra la hipótesis de los autores, el efecto real podría ser incluso mayor; si actúa a favor, el efecto observado puede ser espurio.";
+  else if(resumen.B.no)
+    dic = "La validez interna del estudio es aceptable, pero la presentación de los resultados impide juzgar la magnitud o la precisión del efecto. Solicita los datos a los autores o busca otra fuente antes de aplicar estos hallazgos.";
+  else
+    dic = "El estudio es internamente válido y sus resultados están bien cuantificados, pero su aplicabilidad a tu medio es dudosa. Valora las diferencias de población, disponibilidad de la intervención y desenlaces relevantes antes de trasladarlo a tu práctica.";
+  if(resumen.A.ns + resumen.B.ns + resumen.C.ns >= 3)
+    dic += " Además, quedan " + (resumen.A.ns + resumen.B.ns + resumen.C.ns) + " ítems como «no sé»: una lectura crítica solo es útil si se resuelven releyendo el artículo o su material suplementario.";
+  document.getElementById("para").textContent = dic;
+  LAST = { resumen: resumen, dictamen: dic };
+  document.getElementById("card-sint").scrollIntoView && document.getElementById("card-sint").scrollIntoView({behavior:"smooth", block:"start"});
+};
+var LAST = null;
+
+/* ============ IA ============ */
+var SYS = [
+  "Eres un experto en lectura crítica de literatura biomédica y docente de medicina basada en la evidencia.",
+  "Recibes las respuestas de un estudiante a una plantilla CASPe y sus notas. No inventes contenido del artículo que no aparezca en las notas.",
+  "Céntrate en cómo cada 'no' o 'no sé' amenaza la validez, y en qué debe releer el estudiante para resolver las dudas.",
+  "Responde EXCLUSIVAMENTE con JSON, sin markdown, con este esquema:",
+  '{"veredicto":"2-3 frases","sesgos_probables":[{"nombre":"nombre del sesgo","direccion":"hacia dónde desplaza el efecto","item":"ítem que lo delata"}],',
+  '"que_releer":["dónde buscar la respuesta a los ítems marcados como no sé","..."],',
+  '"pregunta_al_autor":["duda concreta que plantearías a los autores","..."],',
+  '"aplicabilidad":"1-2 frases sobre el traslado a la práctica"}',
+  "Todo en español, concreto, sin generalidades de libro de texto."
+].join(" ");
+
+document.getElementById("btn-ai").onclick = async function(){
+  if(!LAST){ msg("Sintetiza primero.", true); return; }
+  var F = FICHAS[TIPO];
+  var btn = this; btn.disabled = true;
+  msg('<span class="spin"></span>Analizando la ficha…');
+  var payload = {
+    tipo_estudio: F.n,
+    referencia: document.getElementById("ref").value || "no indicada",
+    pregunta_clinica: document.getElementById("preg").value || "no indicada",
+    respuestas: F.items.map(function(it, i){
+      return { item: i+1, bloque: it.s, pregunta: it.q, respuesta: R[i] || "sin responder", nota: NOTAS[i] || "" };
+    })
+  };
+  try{
+    var j = await askAI(SYS, JSON.stringify(payload));
+    var out = document.getElementById("ai-out");
+    out.innerHTML =
+      '<h4>Veredicto</h4><p>' + esc(j.veredicto || "—") + '</p>' +
+      '<h4>Sesgos probables</h4><ul>' + (j.sesgos_probables || []).map(function(s){
+        return "<li><b>" + esc(s.nombre) + "</b> — " + esc(s.direccion) + " <i>(" + esc(s.item) + ")</i></li>";
+      }).join("") + '</ul>' +
+      '<h4>Qué releer</h4><ul>' + (j.que_releer || []).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' +
+      '<h4>Preguntas a los autores</h4><ul>' + (j.pregunta_al_autor || []).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' +
+      '<h4>Aplicabilidad</h4><p>' + esc(j.aplicabilidad || "—") + '</p>';
+    out.classList.remove("hidden");
+    msg("Comentario generado.");
+  }catch(e){ msg(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+
+/* ============ Salidas ============ */
+document.getElementById("btn-copy").onclick = async function(){
+  try{ await navigator.clipboard.writeText(LAST.dictamen); msg("Copiado."); }catch(e){ msg("El navegador bloqueó el portapapeles.", true); }
+};
+document.getElementById("btn-md").onclick = function(){
+  if(!LAST) return;
+  var F = FICHAS[TIPO];
+  var LBL = { si:"Sí", ns:"No sé", no:"No" };
+  var t = "# Lectura crítica CASPe · " + F.n + "\n\n";
+  t += "**Referencia:** " + (document.getElementById("ref").value || "—") + "\n\n";
+  t += "**Pregunta clínica:** " + (document.getElementById("preg").value || "—") + "\n\n";
+  var lastS = null;
+  F.items.forEach(function(it, i){
+    if(it.s !== lastS){ lastS = it.s; t += "\n## " + it.s + ". " + S[it.s] + "\n\n"; }
+    t += "**" + (i+1) + ". " + it.q + "**  \n";
+    t += "→ " + (LBL[R[i]] || "sin responder") + "\n";
+    if(NOTAS[i]) t += "> " + NOTAS[i] + "\n";
+    t += "\n";
+  });
+  t += "\n## Dictamen\n\n" + LAST.dictamen + "\n\n";
+  t += "_LecturaCrítica·AI · Kit Metodológico UMH · " + new Date().toLocaleDateString("es-ES") + "_\n";
+  var b = new Blob([t], {type:"text/markdown;charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "caspe-" + TIPO + ".md"; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  msg("Descargada.");
+};
+function msg(m, err){ var s = document.getElementById("st"); if(!s) return; s.className = "status" + (err ? " err" : ""); s.innerHTML = m; if(!/spin/.test(m)) setTimeout(function(){ s.innerHTML = ""; }, 3000); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+initKeyDialog(); ficha();
+</script>
+</body>
+</html>
