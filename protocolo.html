@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocolo·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.js"></script>
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card h3{font-family:'Spectral',serif;font-weight:500;font-size:17px;margin:22px 0 10px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select,textarea{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif}
+  textarea{font-size:12.5px;min-height:110px;resize:vertical;line-height:1.5}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:14px;margin-bottom:20px}
+  .stats div{border-left:2px solid var(--line);padding-left:11px}
+  .stats .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .stats .v{font-family:'Spectral',serif;font-size:25px;font-weight:500;margin-top:1px;line-height:1.15}
+  .stats .v small{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft);font-weight:400;display:block;margin-top:2px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:500}
+  td{padding:7px 10px;border-bottom:1px solid var(--line-soft)}
+  td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  tr.hl td{background:#F2F7F6}
+  .tbl-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:3px}
+
+  .verdict{border-left:3px solid var(--teal);padding-left:16px;margin:18px 0}
+  .verdict.warn{border-color:var(--amber)}
+  .verdict.bad{border-color:var(--red)}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .verdict p{font-size:14.5px;margin-top:4px;max-width:76ch}
+
+  .plot{margin-top:6px}
+  .plot svg{width:100%;height:auto;display:block}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gridl{stroke:var(--line-soft);stroke-width:1}
+  .tick{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:var(--slate)}
+  .bar{fill:#CDE2E0;stroke:var(--teal);stroke-width:.7}
+  .curveline{fill:none;stroke:var(--amber);stroke-width:1.6}
+  .refline{stroke:var(--amber);stroke-width:1;stroke-dasharray:4 3}
+  .pt{fill:var(--teal);opacity:.75}
+
+  .para{font-size:14.5px;line-height:1.75;background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:18px;font-family:'Spectral',serif}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+  .drop{border:1px dashed var(--line);border-radius:3px;padding:26px;text-align:center;color:var(--ink-soft);font-size:14px;cursor:pointer;transition:.15s;background:#FCFDFC}
+  .drop:hover,.drop.over{border-color:var(--teal);background:#F2F7F6;color:var(--teal-deep)}
+  .drop b{display:block;font-weight:500;color:var(--ink);margin-bottom:3px}
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:2px 7px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--slate);margin-left:6px}
+  .pill.ok{background:#F1F8F7;color:var(--teal-deep);border-color:#BFD9D6}
+  .pill.no{background:#FBF2F1;color:var(--red);border-color:#E0C4C1}
+  .pill.mid{background:#FBF6EC;color:var(--amber);border-color:#E5D6B9}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
+
+  .layout{display:grid;grid-template-columns:minmax(280px,340px) 1fr;gap:22px;align-items:start}
+  .navlist{margin-bottom:6px}
+  .navlist button{display:flex;width:100%;text-align:left;align-items:center;gap:10px;border:1px solid transparent;background:none;color:var(--ink);padding:9px 11px;border-radius:3px;font-size:13.5px;font-weight:400;margin-bottom:2px}
+  .navlist button:hover{background:#F2F7F6;color:var(--ink)}
+  .navlist button.on{background:#F1F8F7;border-color:#BFD9D6;color:var(--teal-deep);font-weight:500}
+  .navlist .n{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--slate);flex-shrink:0;width:18px}
+  .navlist .dot{margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--line);flex-shrink:0}
+  .navlist .dot.full{background:var(--teal)}
+  .navlist .dot.part{background:var(--amber)}
+
+  .spirit-item{border:1px solid var(--line);border-radius:3px;margin-bottom:14px;background:#FCFDFC;overflow:hidden}
+  .spirit-item .h{padding:13px 16px;display:flex;gap:12px;align-items:baseline;border-bottom:1px solid var(--line-soft)}
+  .spirit-item .h .code{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);flex-shrink:0;padding-top:2px}
+  .spirit-item .h .t{font-weight:500;font-size:14.5px}
+  .spirit-item .h .t small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-soft);margin-top:3px;line-height:1.5}
+  .spirit-item .b{padding:13px 16px}
+  .spirit-item textarea{min-height:76px;font-family:'Inter',sans-serif;font-size:13.5px;background:#fff}
+  .spirit-item .tools{display:flex;gap:7px;margin-top:9px;align-items:center;flex-wrap:wrap}
+  .spirit-item .wc{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate);margin-left:auto}
+
+  .prev{background:#fff;border:1px solid var(--line);border-radius:3px;padding:34px 40px;font-family:'Spectral',serif;font-size:14.5px;line-height:1.72;max-height:600px;overflow:auto}
+  .prev h1{font-size:22px;font-weight:600;margin-bottom:6px;line-height:1.25}
+  .prev h2{font-family:'Spectral',serif;font-size:17px;font-weight:600;margin:24px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--line)}
+  .prev h3{font-family:'Spectral',serif;font-size:14.5px;font-weight:600;margin:16px 0 4px}
+  .prev p{margin-bottom:10px;text-align:justify}
+  .prev .meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate);margin-bottom:18px}
+  .prev .falta{color:#B7C0C3;font-style:italic}
+
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%}
+  dialog::backdrop{background:rgba(23,38,46,.35)}
+  .dlg{padding:24px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">16 · Escritura científica y difusión</div>
+    <h1>Protocolo<em>·AI</em></h1>
+    <p class="lede">Redacta el protocolo de investigación siguiendo los ítems SPIRIT 2013. Introduce los datos esenciales del estudio, deja que la IA proponga cada sección, edítala y expórtala a Word.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="layout">
+  <div>
+    <section class="card">
+      <h2>Datos del estudio</h2>
+      <p class="sub">La IA usará esta ficha para redactar cada sección.</p>
+      <div class="fld"><label for="f-tit">Título provisional</label><input type="text" id="f-tit" placeholder="Eficacia de … en …: ensayo aleatorizado"></div>
+      <div class="fld"><label for="f-dis">Diseño</label>
+        <select id="f-dis">
+          <option>Ensayo clínico aleatorizado, paralelo, doble ciego</option>
+          <option>Ensayo clínico aleatorizado por conglomerados</option>
+          <option>Ensayo cruzado (cross-over)</option>
+          <option>Estudio de cohortes prospectivo</option>
+          <option>Estudio de casos y controles</option>
+          <option>Estudio transversal</option>
+          <option>Estudio cuasi-experimental antes-después</option>
+        </select>
+      </div>
+      <div class="fld"><label for="f-p">P · Población</label><textarea id="f-p" style="min-height:52px;font-family:Inter,sans-serif;font-size:13px" placeholder="Adultos con insuficiencia cardíaca y FEVI ≤ 40 %"></textarea></div>
+      <div class="fld"><label for="f-i">I · Intervención</label><textarea id="f-i" style="min-height:52px;font-family:Inter,sans-serif;font-size:13px"></textarea></div>
+      <div class="fld"><label for="f-c">C · Comparador</label><textarea id="f-c" style="min-height:44px;font-family:Inter,sans-serif;font-size:13px"></textarea></div>
+      <div class="fld"><label for="f-o">O · Variable principal</label><textarea id="f-o" style="min-height:44px;font-family:Inter,sans-serif;font-size:13px"></textarea></div>
+      <div class="fld"><label for="f-o2">Variables secundarias</label><textarea id="f-o2" style="min-height:44px;font-family:Inter,sans-serif;font-size:13px"></textarea></div>
+      <div class="grid2">
+        <div class="fld"><label for="f-n">Tamaño muestral</label><input type="text" id="f-n" placeholder="198 (99 por brazo)"></div>
+        <div class="fld"><label for="f-dur">Duración</label><input type="text" id="f-dur" placeholder="24 meses"></div>
+      </div>
+      <div class="fld"><label for="f-cen">Centro y promotor</label><input type="text" id="f-cen" placeholder="EPSO · Universidad Miguel Hernández"></div>
+      <div class="actions">
+        <button id="btn-all">Redactar todo con IA</button>
+        <button class="ghost small" id="btn-demo">Ejemplo</button>
+      </div>
+      <div class="status" id="st" style="margin-top:10px"></div>
+    </section>
+
+    <section class="card">
+      <h2>Secciones SPIRIT</h2>
+      <p class="sub" id="prog-sub">0 de 0 redactadas</p>
+      <div class="navlist" id="nav"></div>
+    </section>
+  </div>
+
+  <div>
+    <section class="card">
+      <h2 id="sec-title">Sección</h2>
+      <p class="sub" id="sec-sub"></p>
+      <div id="items"></div>
+    </section>
+
+    <section class="card">
+      <h2>Vista previa del protocolo</h2>
+      <p class="sub">Documento completo tal como se exportará.</p>
+      <div class="prev" id="prev"></div>
+      <div class="actions">
+        <button id="btn-docx">Descargar en Word (.docx)</button>
+        <button class="ghost" id="btn-md">Descargar (.md)</button>
+        <button class="ghost small" id="btn-save">Guardar borrador</button>
+        <button class="ghost small" id="btn-load">Recuperar borrador</button>
+        <span class="status" id="st2"></span>
+      </div>
+      <div class="note">SPIRIT 2013 define el contenido mínimo del protocolo de un ensayo clínico. Los estudios observacionales no lo exigen, pero la mayoría de sus ítems (objetivos, criterios de elegibilidad, desenlaces, tamaño muestral, plan de análisis, aspectos éticos) siguen siendo pertinentes.</div>
+    </section>
+  </div>
+</div>
+</main>
+
+<footer class="wrap">
+  <span>Protocolo·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span id="model-badge"></span>
+</footer>
+
+<dialog id="dlg-key">
+  <div class="dlg">
+    <h3>Clave de API de OpenAI</h3>
+    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit.</p>
+    <label for="k">Clave</label>
+    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
+    <div style="margin-top:14px"></div>
+    <label for="m">Modelo</label>
+    <select id="m">
+      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
+      <option value="gpt-4o">gpt-4o · más preciso</option>
+      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+      <option value="gpt-4.1">gpt-4.1</option>
+    </select>
+    <div class="actions">
+      <button id="k-save">Guardar</button>
+      <button class="ghost" id="k-cancel">Cancelar</button>
+      <button class="ghost small" id="k-clear">Borrar clave</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+/* ---------- Kernel de IA: clave y modelo compartidos ---------- */
+var KEY = "ia_openai_key", MODEL = "ia_openai_model";
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function getKey(){ return lsGet(KEY) || ""; }
+function getModel(){ return lsGet(MODEL) || "gpt-4o-mini"; }
+function badge(){
+  var b = document.getElementById("model-badge");
+  if(b){ b.textContent = "modelo: " + getModel(); b.style.cursor = "pointer"; b.onclick = askKey; }
+}
+function askKey(){
+  document.getElementById("k").value = getKey();
+  document.getElementById("m").value = getModel();
+  document.getElementById("dlg-key").showModal();
+}
+function initKeyDialog(){
+  document.getElementById("k-save").onclick = function(){
+    var v = document.getElementById("k").value.trim();
+    if(v) lsSet(KEY, v);
+    lsSet(MODEL, document.getElementById("m").value);
+    badge(); document.getElementById("dlg-key").close();
+  };
+  document.getElementById("k-cancel").onclick = function(){ document.getElementById("dlg-key").close(); };
+  document.getElementById("k-clear").onclick = function(){ lsDel(KEY); document.getElementById("k").value = ""; };
+  badge();
+}
+async function askAI(system, user, temp){
+  var key = getKey();
+  if(!key){ askKey(); throw new Error("Falta la clave de API. Configúrala en el pie de página."); }
+  var res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
+    body: JSON.stringify({ model:getModel(), temperature: (temp === undefined ? 0.25 : temp),
+      response_format:{type:"json_object"},
+      messages:[{role:"system",content:system},{role:"user",content:user}] })
+  });
+  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,150)); }
+  var data = await res.json();
+  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
+}
+
+
+/* ============ Estructura SPIRIT 2013 ============ */
+var SECS = [
+  { n:"Información administrativa", items:[
+    { id:"s1", c:"1", t:"Título", s:"Descriptivo, con la población, la intervención, el comparador y el diseño." },
+    { id:"s2", c:"2a-2b", t:"Registro del ensayo", s:"Identificador del registro (ClinicalTrials.gov, EudraCT, REec) y conjunto de datos registrado." },
+    { id:"s3", c:"3-5", t:"Promotor, financiación y roles", s:"Promotor, fuentes de financiación, papel del financiador en el diseño, el análisis y la decisión de publicar. Comité de seguimiento si procede." }
+  ]},
+  { n:"Introducción", items:[
+    { id:"s6", c:"6a", t:"Antecedentes y justificación", s:"Qué se sabe, qué no se sabe y por qué hace falta este estudio. Justifica la elección del comparador." },
+    { id:"s7", c:"6b", t:"Justificación del comparador", s:"Por qué placebo, tratamiento habitual o control activo. Aborda la equipoise clínica." },
+    { id:"s8", c:"7", t:"Objetivos e hipótesis", s:"Objetivo principal y secundarios, formulados en términos PICO. Hipótesis contrastable." },
+    { id:"s9", c:"8", t:"Diseño del estudio", s:"Tipo, marco de asignación, razón de asignación y marco (superioridad, no inferioridad, equivalencia)." }
+  ]},
+  { n:"Métodos: participantes e intervenciones", items:[
+    { id:"s10", c:"9", t:"Ámbito del estudio", s:"Centros, países y contexto asistencial." },
+    { id:"s11", c:"10", t:"Criterios de elegibilidad", s:"Criterios de inclusión y exclusión, y de los profesionales que aplican la intervención." },
+    { id:"s12", c:"11a-11d", t:"Intervenciones", s:"Descripción reproducible de cada brazo, criterios de suspensión, estrategias de adherencia y cointervenciones permitidas." },
+    { id:"s13", c:"12", t:"Variables de resultado", s:"Variable principal y secundarias, con la métrica, el método de agregación y el momento de medición. Justifica su relevancia clínica." },
+    { id:"s14", c:"13", t:"Cronograma de participación", s:"Calendario de inscripción, intervenciones, valoraciones y visitas." },
+    { id:"s15", c:"14", t:"Tamaño muestral", s:"Número previsto y cómo se determinó, con supuestos clínicos y estadísticos." },
+    { id:"s16", c:"15", t:"Reclutamiento", s:"Estrategias para alcanzar el tamaño de muestra previsto." }
+  ]},
+  { n:"Métodos: asignación y cegamiento", items:[
+    { id:"s17", c:"16a", t:"Generación de la secuencia", s:"Método de aleatorización, tipo, tamaño de bloques y factores de estratificación." },
+    { id:"s18", c:"16b", t:"Mecanismo de ocultación", s:"Cómo se oculta la secuencia hasta que se asigna la intervención: sobres opacos, sistema centralizado." },
+    { id:"s19", c:"16c", t:"Implementación", s:"Quién genera la secuencia, quién recluta y quién asigna a los participantes." },
+    { id:"s20", c:"17a-17b", t:"Cegamiento", s:"A quién se ciega y cómo. Circunstancias en que se permite el desenmascaramiento." }
+  ]},
+  { n:"Métodos: recogida y análisis de datos", items:[
+    { id:"s21", c:"18a-18b", t:"Recogida de datos", s:"Instrumentos, validez y fiabilidad conocidas, formación de los evaluadores y plan de retención de participantes." },
+    { id:"s22", c:"19", t:"Gestión de los datos", s:"Introducción, codificación, seguridad, almacenamiento y control de calidad. Protección de datos (RGPD, LOPDGDD)." },
+    { id:"s23", c:"20a-20c", t:"Métodos estadísticos", s:"Análisis de la variable principal, análisis adicionales (subgrupos, ajustados) y manejo de la no adherencia y los datos ausentes. Población de análisis." },
+    { id:"s24", c:"21a-21b", t:"Monitorización y análisis intermedios", s:"Comité de monitorización de datos, análisis intermedios y criterios de interrupción precoz." },
+    { id:"s25", c:"22-23", t:"Efectos adversos y auditoría", s:"Recogida, notificación y manejo de acontecimientos adversos. Frecuencia y alcance de la auditoría." }
+  ]},
+  { n:"Ética y difusión", items:[
+    { id:"s26", c:"24-25", t:"Aprobación ética y enmiendas", s:"Comité de ética que aprueba el protocolo y procedimiento para comunicar enmiendas relevantes." },
+    { id:"s27", c:"26a-26b", t:"Consentimiento informado", s:"Quién obtiene el consentimiento y cómo. Consentimiento adicional para el uso futuro de datos y muestras." },
+    { id:"s28", c:"27-28", t:"Confidencialidad y conflicto de intereses", s:"Protección de los datos personales y declaración de conflictos de los investigadores." },
+    { id:"s29", c:"29-30", t:"Acceso a los datos y cobertura de daños", s:"Quién accede al conjunto final de datos. Seguro y compensación por daños derivados de la participación." },
+    { id:"s30", c:"31a-31c", t:"Política de difusión", s:"Plan de comunicación de resultados, criterios de autoría y acceso público al protocolo y a los datos individuales." },
+    { id:"s31", c:"32-33", t:"Anexos", s:"Modelo de hoja de información y consentimiento. Planes de recogida y uso futuro de muestras biológicas." }
+  ]}
+];
+var TODOS = SECS.reduce(function(a,s){ return a.concat(s.items); }, []);
+var TXT = {}, SEL = 0;
+
+/* ============ Navegación ============ */
+function nav(){
+  var box = document.getElementById("nav");
+  box.innerHTML = "";
+  SECS.forEach(function(s, i){
+    var llenos = s.items.filter(function(it){ return (TXT[it.id] || "").trim().length > 30; }).length;
+    var cls = llenos === s.items.length ? "full" : llenos ? "part" : "";
+    var b = document.createElement("button");
+    b.className = i === SEL ? "on" : "";
+    b.innerHTML = '<span class="n">' + (i+1) + '</span><span>' + esc(s.n) + '</span><span class="dot ' + cls + '"></span>';
+    b.onclick = function(){ SEL = i; render(); };
+    box.appendChild(b);
+  });
+  var hechos = TODOS.filter(function(it){ return (TXT[it.id] || "").trim().length > 30; }).length;
+  document.getElementById("prog-sub").textContent = hechos + " de " + TODOS.length + " ítems redactados";
+}
+
+function render(){
+  var s = SECS[SEL];
+  document.getElementById("sec-title").textContent = s.n;
+  document.getElementById("sec-sub").textContent = "Ítems SPIRIT " + s.items[0].c + " a " + s.items[s.items.length-1].c;
+  var box = document.getElementById("items");
+  box.innerHTML = "";
+  s.items.forEach(function(it){
+    var d = document.createElement("div");
+    d.className = "spirit-item";
+    d.innerHTML =
+      '<div class="h"><span class="code">' + it.c + '</span><span class="t">' + esc(it.t) + '<small>' + esc(it.s) + '</small></span></div>' +
+      '<div class="b"><textarea data-t="' + it.id + '" placeholder="Redacta o pulsa «Proponer»">' + esc(TXT[it.id] || "") + '</textarea>' +
+      '<div class="tools"><button class="ghost small" data-ai="' + it.id + '">Proponer con IA</button>' +
+      '<button class="ghost small" data-mej="' + it.id + '">Mejorar redacción</button>' +
+      '<span class="wc" data-wc="' + it.id + '"></span></div></div>';
+    box.appendChild(d);
+    wc(it.id);
+  });
+  box.querySelectorAll("textarea[data-t]").forEach(function(t){
+    t.oninput = function(){ TXT[t.dataset.t] = t.value; wc(t.dataset.t); nav(); prev(); };
+  });
+  box.querySelectorAll("[data-ai]").forEach(function(b){ b.onclick = function(){ ia(b.dataset.ai, false, b); }; });
+  box.querySelectorAll("[data-mej]").forEach(function(b){ b.onclick = function(){ ia(b.dataset.mej, true, b); }; });
+  nav(); prev();
+}
+function wc(id){
+  var el = document.querySelector('[data-wc="' + id + '"]');
+  if(!el) return;
+  var n = (TXT[id] || "").trim().split(/\s+/).filter(Boolean).length;
+  el.textContent = n + " palabras";
+}
+
+/* ============ Ficha y IA ============ */
+function ficha(){
+  return {
+    titulo: v("f-tit"), diseno: v("f-dis"),
+    poblacion: v("f-p"), intervencion: v("f-i"), comparador: v("f-c"),
+    variable_principal: v("f-o"), variables_secundarias: v("f-o2"),
+    tamano_muestral: v("f-n"), duracion: v("f-dur"), centro: v("f-cen")
+  };
+}
+function v(id){ return document.getElementById(id).value.trim(); }
+
+var SYS = [
+  "Eres metodólogo de investigación clínica y redactas protocolos conforme a la guía SPIRIT 2013.",
+  "Recibes la ficha del estudio y un ítem SPIRIT concreto. Redacta ese ítem, y solo ese, en español académico.",
+  "Escribe en prosa continua, en tercera persona y en futuro o presente según convenga; nada de listas ni titulares.",
+  "No inventes cifras que no estén en la ficha: si falta un dato, señálalo entre corchetes, por ejemplo [pendiente de definir].",
+  "Extensión: entre 80 y 180 palabras, salvo que el ítem sea el título, que será una sola frase.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"texto\":\"...\",\"faltan\":[\"dato ausente que deberías concretar\",\"...\"]}"
+].join(" ");
+var SYS_MEJ = [
+  "Eres editor de textos científicos. Recibes un fragmento de protocolo y su ítem SPIRIT.",
+  "Mejora la precisión, elimina la redundancia y ajusta el registro académico, sin añadir información que no esté presente.",
+  "Conserva todas las cifras y los corchetes de datos pendientes.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"texto\":\"...\",\"cambios\":[\"qué has cambiado y por qué\",\"...\"]}"
+].join(" ");
+
+async function ia(id, mejorar, btn){
+  var it = TODOS.find(function(x){ return x.id === id; });
+  if(mejorar && !(TXT[id] || "").trim()){ st("No hay texto que mejorar en ese ítem.", true); return; }
+  if(btn) btn.disabled = true;
+  st('<span class="spin"></span>' + (mejorar ? "Mejorando" : "Redactando") + " «" + it.t + "»…");
+  try{
+    var payload = mejorar
+      ? JSON.stringify({ item: it.t, descripcion: it.s, texto_actual: TXT[id] })
+      : JSON.stringify({ ficha: ficha(), item: it.t, codigo_spirit: it.c, que_debe_contener: it.s });
+    var j = await askAI(mejorar ? SYS_MEJ : SYS, payload, 0.35);
+    TXT[id] = j.texto || "";
+    var t = document.querySelector('textarea[data-t="' + id + '"]');
+    if(t) t.value = TXT[id];
+    wc(id); nav(); prev();
+    var extra = (j.faltan && j.faltan.length) ? " Faltan datos: " + j.faltan.join("; ") : (j.cambios && j.cambios.length ? " " + j.cambios[0] : "");
+    st("Listo." + extra);
+  }catch(e){ st(e.message, true); }
+  finally{ if(btn) btn.disabled = false; }
+}
+
+document.getElementById("btn-all").onclick = async function(){
+  if(!v("f-tit") || !v("f-p")){ st("Completa al menos el título y la población.", true); return; }
+  var btn = this; btn.disabled = true;
+  var pend = TODOS.filter(function(it){ return !(TXT[it.id] || "").trim(); });
+  for(var i = 0; i < pend.length; i++){
+    st('<span class="spin"></span>Redactando ' + (i+1) + " de " + pend.length + ": " + pend[i].t + "…");
+    try{ await ia(pend[i].id, false, null); }
+    catch(e){ st(e.message, true); break; }
+  }
+  btn.disabled = false;
+  st("Protocolo redactado. Revisa cada sección: la IA no conoce tu estudio.");
+};
+
+document.getElementById("btn-demo").onclick = function(){
+  document.getElementById("f-tit").value = "Eficacia de un programa de telerrehabilitación cardíaca frente a la rehabilitación presencial en pacientes con insuficiencia cardíaca: ensayo clínico aleatorizado de no inferioridad";
+  document.getElementById("f-dis").selectedIndex = 0;
+  document.getElementById("f-p").value = "Adultos de 18 a 80 años con insuficiencia cardíaca crónica estable y fracción de eyección reducida (FEVI ≤ 40 %), en clase funcional NYHA II-III";
+  document.getElementById("f-i").value = "Programa de telerrehabilitación domiciliaria de 12 semanas con monitorización remota y sesiones supervisadas por videoconferencia dos veces por semana";
+  document.getElementById("f-c").value = "Rehabilitación cardíaca presencial hospitalaria de 12 semanas, tratamiento habitual";
+  document.getElementById("f-o").value = "Cambio en la distancia recorrida en el test de la marcha de 6 minutos a las 12 semanas (margen de no inferioridad: 30 metros)";
+  document.getElementById("f-o2").value = "Calidad de vida (Minnesota Living with Heart Failure), adherencia al programa, reingresos por insuficiencia cardíaca a los 12 meses, acontecimientos adversos";
+  document.getElementById("f-n").value = "198 (99 por brazo), asumiendo un 10 % de pérdidas";
+  document.getElementById("f-dur").value = "24 meses (12 de reclutamiento, 12 de seguimiento)";
+  document.getElementById("f-cen").value = "Hospital General Universitario de Elche · Universidad Miguel Hernández";
+  st("Ficha de ejemplo cargada. Pulsa «Redactar todo con IA».");
+};
+
+/* ============ Vista previa ============ */
+function prev(){
+  var h = '<h1>' + (v("f-tit") ? esc(v("f-tit")) : '<span class="falta">[Título del protocolo]</span>') + '</h1>';
+  h += '<div class="meta">' + esc(v("f-cen") || "[Centro]") + " · " + esc(v("f-dis")) + " · " + esc(v("f-dur") || "[duración]") + " · versión " + new Date().toLocaleDateString("es-ES") + '</div>';
+  SECS.forEach(function(s){
+    h += "<h2>" + esc(s.n) + "</h2>";
+    s.items.forEach(function(it){
+      h += "<h3>" + esc(it.t) + " <span style='font-family:JetBrains Mono,monospace;font-size:10px;color:#9AA7AC'>SPIRIT " + it.c + "</span></h3>";
+      var t = (TXT[it.id] || "").trim();
+      h += t ? "<p>" + esc(t).replace(/\n+/g, "</p><p>") + "</p>" : '<p class="falta">[Pendiente de redactar]</p>';
+    });
+  });
+  document.getElementById("prev").innerHTML = h;
+}
+
+/* ============ Exportación ============ */
+document.getElementById("btn-docx").onclick = async function(){
+  if(typeof docx === "undefined"){ st2("No se ha podido cargar la librería de Word. Comprueba tu conexión."); return; }
+  var D = docx;
+  var kids = [];
+  kids.push(new D.Paragraph({ text: v("f-tit") || "Protocolo de investigación", heading: D.HeadingLevel.TITLE }));
+  kids.push(new D.Paragraph({ children: [new D.TextRun({ text: (v("f-cen") || "") + " · " + v("f-dis"), italics:true, size:20, color:"5E6E74" })] }));
+  kids.push(new D.Paragraph({ children: [new D.TextRun({ text: "Versión de " + new Date().toLocaleDateString("es-ES") + " · estructura SPIRIT 2013", size:18, color:"5E6E74" })], spacing:{ after: 300 } }));
+
+  SECS.forEach(function(s){
+    kids.push(new D.Paragraph({ text: s.n, heading: D.HeadingLevel.HEADING_1, spacing:{ before:280, after:120 } }));
+    s.items.forEach(function(it){
+      kids.push(new D.Paragraph({ children:[
+        new D.TextRun({ text: it.t, bold:true, size:24 }),
+        new D.TextRun({ text: "  (SPIRIT " + it.c + ")", size:16, color:"9AA7AC" })
+      ], spacing:{ before:160, after:60 } }));
+      var t = (TXT[it.id] || "").trim();
+      (t ? t.split(/\n+/) : ["[Pendiente de redactar]"]).forEach(function(p){
+        kids.push(new D.Paragraph({ children:[ new D.TextRun({ text:p, size:22, italics: !t, color: t ? "17262E" : "9AA7AC" }) ],
+          alignment: D.AlignmentType.JUSTIFIED, spacing:{ after:100, line:300 } }));
+      });
+    });
+  });
+
+  var doc = new D.Document({ sections:[{ properties:{}, children: kids }],
+    styles:{ default:{ document:{ run:{ font:"Calibri" } } } } });
+  try{
+    var blob = await D.Packer.toBlob(doc);
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "protocolo.docx"; a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+    st2("Documento de Word descargado.");
+  }catch(e){ st2("Error al generar el .docx: " + e.message); }
+};
+document.getElementById("btn-md").onclick = function(){
+  var t = "# " + (v("f-tit") || "Protocolo de investigación") + "\n\n";
+  t += "*" + (v("f-cen") || "") + " · " + v("f-dis") + " · versión " + new Date().toLocaleDateString("es-ES") + "*\n\n";
+  SECS.forEach(function(s){
+    t += "\n## " + s.n + "\n";
+    s.items.forEach(function(it){
+      t += "\n### " + it.t + " *(SPIRIT " + it.c + ")*\n\n" + ((TXT[it.id] || "").trim() || "[Pendiente de redactar]") + "\n";
+    });
+  });
+  t += "\n_Protocolo·AI · Kit Metodológico UMH_\n";
+  var b = new Blob([t], {type:"text/markdown;charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "protocolo.md"; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  st2("Descargado.");
+};
+
+/* ============ Borrador ============ */
+var BK = "protocolo_ai_borrador";
+document.getElementById("btn-save").onclick = function(){
+  lsSet(BK, JSON.stringify({ ficha: ficha(), txt: TXT }));
+  st2("Borrador guardado en este navegador.");
+};
+document.getElementById("btn-load").onclick = function(){
+  var raw = lsGet(BK);
+  if(!raw){ st2("No hay ningún borrador guardado."); return; }
+  var d = JSON.parse(raw);
+  TXT = d.txt || {};
+  var map = { titulo:"f-tit", diseno:"f-dis", poblacion:"f-p", intervencion:"f-i", comparador:"f-c",
+              variable_principal:"f-o", variables_secundarias:"f-o2", tamano_muestral:"f-n", duracion:"f-dur", centro:"f-cen" };
+  Object.keys(map).forEach(function(k){ if(d.ficha[k] !== undefined) document.getElementById(map[k]).value = d.ficha[k]; });
+  render(); st2("Borrador recuperado.");
+};
+
+function st(m, err){ var s = document.getElementById("st"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; }
+function st2(m){ var s = document.getElementById("st2"); s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 2600); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+initKeyDialog(); render();
+</script>
+</body>
+</html>

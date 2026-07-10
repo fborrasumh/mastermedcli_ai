@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AbstractIMRyD·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.js"></script>
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card h3{font-family:'Spectral',serif;font-weight:500;font-size:17px;margin:22px 0 10px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select,textarea{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif}
+  textarea{font-size:12.5px;min-height:110px;resize:vertical;line-height:1.5}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:14px;margin-bottom:20px}
+  .stats div{border-left:2px solid var(--line);padding-left:11px}
+  .stats .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .stats .v{font-family:'Spectral',serif;font-size:25px;font-weight:500;margin-top:1px;line-height:1.15}
+  .stats .v small{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft);font-weight:400;display:block;margin-top:2px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:500}
+  td{padding:7px 10px;border-bottom:1px solid var(--line-soft)}
+  td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  tr.hl td{background:#F2F7F6}
+  .tbl-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:3px}
+
+  .verdict{border-left:3px solid var(--teal);padding-left:16px;margin:18px 0}
+  .verdict.warn{border-color:var(--amber)}
+  .verdict.bad{border-color:var(--red)}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .verdict p{font-size:14.5px;margin-top:4px;max-width:76ch}
+
+  .plot{margin-top:6px}
+  .plot svg{width:100%;height:auto;display:block}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gridl{stroke:var(--line-soft);stroke-width:1}
+  .tick{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:var(--slate)}
+  .bar{fill:#CDE2E0;stroke:var(--teal);stroke-width:.7}
+  .curveline{fill:none;stroke:var(--amber);stroke-width:1.6}
+  .refline{stroke:var(--amber);stroke-width:1;stroke-dasharray:4 3}
+  .pt{fill:var(--teal);opacity:.75}
+
+  .para{font-size:14.5px;line-height:1.75;background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:18px;font-family:'Spectral',serif}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+  .drop{border:1px dashed var(--line);border-radius:3px;padding:26px;text-align:center;color:var(--ink-soft);font-size:14px;cursor:pointer;transition:.15s;background:#FCFDFC}
+  .drop:hover,.drop.over{border-color:var(--teal);background:#F2F7F6;color:var(--teal-deep)}
+  .drop b{display:block;font-weight:500;color:var(--ink);margin-bottom:3px}
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:2px 7px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--slate);margin-left:6px}
+  .pill.ok{background:#F1F8F7;color:var(--teal-deep);border-color:#BFD9D6}
+  .pill.no{background:#FBF2F1;color:var(--red);border-color:#E0C4C1}
+  .pill.mid{background:#FBF6EC;color:var(--amber);border-color:#E5D6B9}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
+
+  .layout{display:grid;grid-template-columns:minmax(280px,340px) 1fr;gap:22px;align-items:start}
+  .meter{height:5px;background:var(--line-soft);border-radius:3px;overflow:hidden;margin:10px 0 5px}
+  .meter i{display:block;height:100%;background:var(--teal);transition:width .25s}
+  .meter i.warn{background:var(--amber)} .meter i.over{background:var(--red)}
+  .mcount{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate)}
+  .mcount b{font-family:'Spectral',serif;font-size:19px;font-weight:600;color:var(--ink)}
+  .mcount b.over{color:var(--red)}
+
+  .sec{border:1px solid var(--line);border-radius:3px;margin-bottom:13px;background:#FCFDFC;overflow:hidden}
+  .sec .h{padding:12px 15px;display:flex;align-items:baseline;gap:11px;border-bottom:1px solid var(--line-soft)}
+  .sec .h .let{font-family:'Spectral',serif;font-size:25px;font-weight:600;color:var(--teal);line-height:1}
+  .sec .h .t{font-weight:500;font-size:14.5px}
+  .sec .h .t small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-soft);margin-top:2px;line-height:1.45}
+  .sec .h .w{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate);flex-shrink:0}
+  .sec .h .w.over{color:var(--red)}
+  .sec .b{padding:12px 15px}
+  .sec textarea{min-height:88px;font-family:'Inter',sans-serif;font-size:13.5px;background:#fff}
+  .sec .tools{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap}
+
+  .titulos .t-opt{border:1px solid var(--line);border-radius:3px;padding:13px 15px;margin-bottom:9px;background:#FCFDFC;cursor:pointer;transition:.14s}
+  .titulos .t-opt:hover{border-color:var(--teal);background:#F2F7F6}
+  .titulos .t-opt.on{border-color:var(--teal);background:#F1F8F7}
+  .titulos .t-opt .txt{font-family:'Spectral',serif;font-size:15.5px;line-height:1.35}
+  .titulos .t-opt .meta{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--slate);margin-top:6px;display:flex;gap:12px}
+
+  .kw{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+  .kw span{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:4px 9px;border-radius:2px;border:1px solid #BFD9D6;background:#F1F8F7;color:var(--teal-deep)}
+  .kw span.libre{border-color:#E5D6B9;background:#FBF6EC;color:var(--amber)}
+  .kw span i{cursor:pointer;font-style:normal;color:#9AA7AC}
+  .kw span i:hover{color:var(--red)}
+
+  .prev{background:#fff;border:1px solid var(--line);border-radius:3px;padding:30px 34px;font-family:'Spectral',serif;font-size:14.5px;line-height:1.7}
+  .prev h1{font-size:19px;font-weight:600;line-height:1.3;margin-bottom:16px}
+  .prev p{margin-bottom:10px;text-align:justify}
+  .prev b{font-weight:600}
+  .prev .kws{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink-soft)}
+
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%}
+  dialog::backdrop{background:rgba(23,38,46,.35)}
+  .dlg{padding:24px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">19 · Escritura científica y difusión</div>
+    <h1>AbstractIMRyD<em>·AI</em></h1>
+    <p class="lede">Redacta el resumen estructurado según el esquema IMRyD, controla el límite de palabras que impone la revista, genera títulos alternativos y selecciona los descriptores MeSH.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="layout">
+  <div>
+    <section class="card">
+      <h2>Límite de palabras</h2>
+      <p class="sub">Cada revista fija el suyo. Excederlo es motivo de rechazo administrativo.</p>
+      <div class="fld">
+        <label for="lim">Máximo del resumen</label>
+        <select id="lim">
+          <option value="250">250 · The Lancet, NEJM, BMJ</option>
+          <option value="300" selected>300 · JAMA, Annals, revistas generales</option>
+          <option value="200">200 · muchas revistas españolas</option>
+          <option value="350">350 · algunas de especialidad</option>
+          <option value="0">Sin límite</option>
+        </select>
+      </div>
+      <div class="meter"><i id="meter" style="width:0%"></i></div>
+      <div class="mcount">
+        <span><b id="wtot">0</b> palabras</span>
+        <span id="wlim">de 300</span>
+      </div>
+      <div id="reparto" style="margin-top:16px"></div>
+    </section>
+
+    <section class="card">
+      <h2>Ficha del estudio</h2>
+      <p class="sub">Cuanto más precisa sea, mejor será el borrador.</p>
+      <div class="fld"><label for="f-dis">Diseño</label>
+        <select id="f-dis">
+          <option>Ensayo clínico aleatorizado</option>
+          <option>Estudio de cohortes</option>
+          <option>Estudio de casos y controles</option>
+          <option>Estudio transversal</option>
+          <option>Revisión sistemática y metaanálisis</option>
+          <option>Estudio de precisión diagnóstica</option>
+          <option>Estudio cualitativo</option>
+        </select>
+      </div>
+      <div class="fld"><label for="f-obj">Objetivo</label><textarea id="f-obj" style="min-height:52px;font-family:Inter,sans-serif;font-size:13px"></textarea></div>
+      <div class="fld"><label for="f-met">Métodos: población, intervención, desenlace</label><textarea id="f-met" style="min-height:64px;font-family:Inter,sans-serif;font-size:13px"></textarea></div>
+      <div class="fld"><label for="f-res">Resultados principales, con cifras</label><textarea id="f-res" style="min-height:64px;font-family:Inter,sans-serif;font-size:13px" placeholder="n = 198; RR 0,72 (IC 95 % 0,58–0,89); p = 0,003"></textarea></div>
+      <div class="fld"><label for="f-con">Conclusión en una frase</label><textarea id="f-con" style="min-height:44px;font-family:Inter,sans-serif;font-size:13px"></textarea></div>
+      <div class="actions">
+        <button id="btn-gen">Redactar resumen</button>
+        <button class="ghost small" id="btn-demo">Ejemplo</button>
+      </div>
+      <div class="status" id="st" style="margin-top:10px"></div>
+    </section>
+  </div>
+
+  <div>
+    <section class="card">
+      <h2>Resumen estructurado</h2>
+      <p class="sub" id="imryd-sub">Cuatro secciones. El contador vigila el reparto de palabras.</p>
+      <div id="secs"></div>
+      <div class="actions">
+        <button class="ghost" id="btn-ajustar">Ajustar al límite</button>
+        <button class="ghost" id="btn-revisar">Revisar y criticar</button>
+        <span class="status" id="st4"></span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Título</h2>
+      <p class="sub">Un buen título contiene la población, la intervención, el desenlace y el diseño.</p>
+      <div class="fld"><label for="tit">Título elegido</label><textarea id="tit" style="min-height:56px;font-family:Spectral,serif;font-size:15px"></textarea></div>
+      <div class="actions" style="margin-top:0">
+        <button class="ghost small" id="btn-tits">Proponer 4 títulos</button>
+        <span class="status" id="st3"></span>
+      </div>
+      <div class="titulos" id="titulos" style="margin-top:14px"></div>
+    </section>
+
+    <section class="card">
+      <h2>Palabras clave</h2>
+      <p class="sub">Entre tres y seis. Los descriptores MeSH mejoran la indexación; los términos libres captan lo que el MeSH no recoge.</p>
+      <div class="kw" id="kws"></div>
+      <div class="actions">
+        <button class="ghost small" id="btn-kw">Proponer descriptores</button>
+        <input type="text" id="kw-new" placeholder="Añadir a mano y pulsar Enter" style="max-width:280px">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Vista previa</h2>
+      <div class="prev" id="prev"></div>
+      <div class="actions">
+        <button id="btn-docx">Descargar en Word (.docx)</button>
+        <button class="ghost" id="btn-copy">Copiar</button>
+        <button class="ghost" id="btn-md">Descargar (.md)</button>
+        <span class="status" id="st2"></span>
+      </div>
+      <div class="note">El resumen es lo único que leerán la mayoría de tus lectores, y lo único que ven los revisores al decidir si aceptan revisar. Las cifras del resumen deben coincidir exactamente con las del cuerpo del artículo.</div>
+    </section>
+  </div>
+</div>
+</main>
+
+<footer class="wrap">
+  <span>AbstractIMRyD·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span id="model-badge"></span>
+</footer>
+
+<dialog id="dlg-key">
+  <div class="dlg">
+    <h3>Clave de API de OpenAI</h3>
+    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit.</p>
+    <label for="k">Clave</label>
+    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
+    <div style="margin-top:14px"></div>
+    <label for="m">Modelo</label>
+    <select id="m">
+      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
+      <option value="gpt-4o">gpt-4o · más preciso</option>
+      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+      <option value="gpt-4.1">gpt-4.1</option>
+    </select>
+    <div class="actions">
+      <button id="k-save">Guardar</button>
+      <button class="ghost" id="k-cancel">Cancelar</button>
+      <button class="ghost small" id="k-clear">Borrar clave</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+/* ---------- Kernel de IA: clave y modelo compartidos ---------- */
+var KEY = "ia_openai_key", MODEL = "ia_openai_model";
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function getKey(){ return lsGet(KEY) || ""; }
+function getModel(){ return lsGet(MODEL) || "gpt-4o-mini"; }
+function badge(){
+  var b = document.getElementById("model-badge");
+  if(b){ b.textContent = "modelo: " + getModel(); b.style.cursor = "pointer"; b.onclick = askKey; }
+}
+function askKey(){
+  document.getElementById("k").value = getKey();
+  document.getElementById("m").value = getModel();
+  document.getElementById("dlg-key").showModal();
+}
+function initKeyDialog(){
+  document.getElementById("k-save").onclick = function(){
+    var v = document.getElementById("k").value.trim();
+    if(v) lsSet(KEY, v);
+    lsSet(MODEL, document.getElementById("m").value);
+    badge(); document.getElementById("dlg-key").close();
+  };
+  document.getElementById("k-cancel").onclick = function(){ document.getElementById("dlg-key").close(); };
+  document.getElementById("k-clear").onclick = function(){ lsDel(KEY); document.getElementById("k").value = ""; };
+  badge();
+}
+async function askAI(system, user, temp){
+  var key = getKey();
+  if(!key){ askKey(); throw new Error("Falta la clave de API. Configúrala en el pie de página."); }
+  var res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
+    body: JSON.stringify({ model:getModel(), temperature: (temp === undefined ? 0.25 : temp),
+      response_format:{type:"json_object"},
+      messages:[{role:"system",content:system},{role:"user",content:user}] })
+  });
+  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,150)); }
+  var data = await res.json();
+  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
+}
+
+
+/* ============ Estructura ============ */
+var SECS = [
+  { id:"intro", let:"I", n:"Introducción", s:"Contexto en una o dos frases y el objetivo del estudio. Termina con «El objetivo fue…».", pct:0.15 },
+  { id:"met", let:"M", n:"Métodos", s:"Diseño, ámbito, participantes, intervención o exposición, desenlace principal y análisis.", pct:0.30 },
+  { id:"res", let:"R", n:"Resultados", s:"Cifras: n reclutado y analizado, estimación del efecto con su IC 95 % y valor p. Nada de interpretación.", pct:0.35 },
+  { id:"dis", let:"D", n:"Conclusiones", s:"Respuesta directa al objetivo, sin exagerar. Una limitación y la implicación práctica.", pct:0.20 }
+];
+var T = { intro:"", met:"", res:"", dis:"" };
+var KW = [];
+
+function palabras(s){ return String(s).trim().split(/\s+/).filter(Boolean).length; }
+function total(){ return SECS.reduce(function(a,s){ return a + palabras(T[s.id]); }, 0); }
+function limite(){ return +document.getElementById("lim").value; }
+
+/* ============ Render ============ */
+function secs(){
+  var box = document.getElementById("secs");
+  box.innerHTML = "";
+  var lim = limite();
+  SECS.forEach(function(s){
+    var w = palabras(T[s.id]);
+    var obj = lim ? Math.round(lim*s.pct) : 0;
+    var over = lim && w > obj*1.35;
+    var d = document.createElement("div");
+    d.className = "sec";
+    d.innerHTML =
+      '<div class="h"><span class="let">' + s.let + '</span><span class="t">' + s.n + '<small>' + esc(s.s) + '</small></span>' +
+      '<span class="w' + (over ? " over" : "") + '">' + w + (lim ? " / ~" + obj : "") + '</span></div>' +
+      '<div class="b"><textarea data-s="' + s.id + '" placeholder="Redacta o pulsa Redactar resumen">' + esc(T[s.id]) + '</textarea>' +
+      '<div class="tools"><button class="ghost small" data-ia="' + s.id + '">Reescribir esta sección</button></div></div>';
+    box.appendChild(d);
+  });
+  box.querySelectorAll("textarea[data-s]").forEach(function(t){
+    t.oninput = function(){ T[t.dataset.s] = t.value; contador(); prev(); };
+  });
+  box.querySelectorAll("[data-ia]").forEach(function(b){
+    b.onclick = function(){ una(b.dataset.ia, b); };
+  });
+  contador();
+}
+function contador(){
+  var lim = limite(), n = total();
+  var pct = lim ? Math.min(100, 100*n/lim) : 0;
+  var m = document.getElementById("meter");
+  m.style.width = pct + "%";
+  m.className = !lim ? "" : (n > lim ? "over" : (n > lim*0.9 ? "warn" : ""));
+  var b = document.getElementById("wtot");
+  b.textContent = n;
+  b.className = lim && n > lim ? "over" : "";
+  document.getElementById("wlim").textContent = lim ? "de " + lim + (n > lim ? " · sobran " + (n-lim) : " · quedan " + (lim-n)) : "sin límite";
+
+  var r = document.getElementById("reparto");
+  r.innerHTML = SECS.map(function(s){
+    var w = palabras(T[s.id]), obj = lim ? Math.round(lim*s.pct) : 0;
+    var p = lim ? Math.min(100, 100*w/Math.max(obj,1)) : 0;
+    return '<div style="margin-bottom:9px"><div style="display:flex;justify-content:space-between;font-family:JetBrains Mono,monospace;font-size:10.5px;color:var(--slate)">' +
+      '<span>' + s.n + '</span><span>' + w + (lim ? " / " + obj : "") + '</span></div>' +
+      '<div class="meter" style="margin:4px 0 0"><i style="width:' + p + '%;background:' + (lim && w > obj*1.35 ? "var(--red)" : "var(--teal)") + '"></i></div></div>';
+  }).join("");
+  var over = SECS.filter(function(s){ return lim && palabras(T[s.id]) > Math.round(lim*s.pct)*1.35; });
+  document.getElementById("imryd-sub").textContent = over.length
+    ? "Desequilibrio: " + over.map(function(s){ return s.n.toLowerCase(); }).join(" y ") + " ocupa más de lo razonable."
+    : "Cuatro secciones. El contador vigila el reparto de palabras.";
+}
+document.getElementById("lim").onchange = function(){ secs(); };
+
+/* ============ Ficha e IA ============ */
+function ficha(){
+  return { diseno: v("f-dis"), objetivo: v("f-obj"), metodos: v("f-met"), resultados: v("f-res"), conclusion: v("f-con"),
+           titulo: v("tit"), limite: limite() };
+}
+function v(id){ return document.getElementById(id).value.trim(); }
+
+var SYS_ALL = [
+  "Eres redactor científico biomédico y escribes resúmenes estructurados IMRyD para revistas indexadas.",
+  "Recibes la ficha de un estudio y el límite total de palabras del resumen.",
+  "Reparte las palabras así: introducción 15 %, métodos 30 %, resultados 35 %, conclusiones 20 %.",
+  "Reglas: pasado para métodos y resultados; presente para las conclusiones. Ninguna cita bibliográfica. Ninguna abreviatura sin definir.",
+  "Los resultados llevan cifras: n, estimación del efecto, intervalo de confianza al 95 % y valor p. Si la ficha no los aporta, usa marcadores entre corchetes como [IC 95 %].",
+  "No interpretes en Resultados. No introduzcas datos nuevos en Conclusiones.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"intro\":\"...\",\"met\":\"...\",\"res\":\"...\",\"dis\":\"...\",\"avisos\":[\"dato que falta o problema detectado\"]}"
+].join(" ");
+var SYS_UNA = [
+  "Eres redactor científico biomédico. Reescribe una única sección del resumen estructurado que se te indica.",
+  "Conserva todas las cifras existentes. No añadas información que no esté en la ficha ni en el texto actual.",
+  "Respeta la extensión objetivo en palabras que se te indica, con una tolerancia del 15 %.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"texto\":\"...\",\"nota\":\"qué has cambiado\"}"
+].join(" ");
+var SYS_AJU = [
+  "Eres editor de textos científicos. Recibes un resumen estructurado que excede el límite de palabras.",
+  "Recórtalo hasta el límite eliminando redundancias, adjetivos vacíos y frases de relleno.",
+  "PROHIBIDO eliminar cifras, intervalos de confianza, valores p o el tamaño muestral.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"intro\":\"...\",\"met\":\"...\",\"res\":\"...\",\"dis\":\"...\",\"eliminado\":\"qué has quitado\"}"
+].join(" ");
+var SYS_REV = [
+  "Eres revisor de una revista biomédica y evalúas un resumen estructurado.",
+  "Busca: interpretación indebida en Resultados, conclusiones que exceden los datos, ausencia de cifras o de intervalos de confianza,",
+  "abreviaturas sin definir, tiempo verbal incorrecto y desenlaces mencionados en Conclusiones que no aparecen en Resultados.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"veredicto\":\"2 frases\",\"problemas\":[{\"seccion\":\"...\",\"problema\":\"...\",\"correccion\":\"...\"}],\"lo_que_funciona\":[\"...\"]}"
+].join(" ");
+var SYS_TIT = [
+  "Eres redactor científico. Propón cuatro títulos alternativos para un artículo biomédico a partir de su ficha.",
+  "Estilos: uno declarativo (afirma el hallazgo), uno descriptivo neutro, uno con dos puntos que indique el diseño, y uno interrogativo.",
+  "Todos deben incluir población y desenlace; ninguno debe superar 20 palabras ni contener abreviaturas.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"titulos\":[{\"texto\":\"...\",\"estilo\":\"...\",\"por_que\":\"...\"}]}"
+].join(" ");
+var SYS_KW = [
+  "Eres documentalista biomédico. Propón palabras clave para un artículo a partir de su ficha.",
+  "Da entre cuatro y seis: la mayoría descriptores MeSH exactos del tesauro de la NLM (en inglés) y, si hace falta, uno o dos términos libres.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"claves\":[{\"termino\":\"...\",\"tipo\":\"mesh|libre\"}]}"
+].join(" ");
+
+document.getElementById("btn-gen").onclick = async function(){
+  if(!v("f-obj") || !v("f-met")){ st("Completa al menos el objetivo y los métodos.", true); return; }
+  var btn = this; btn.disabled = true;
+  st('<span class="spin"></span>Redactando el resumen…');
+  try{
+    var j = await askAI(SYS_ALL, JSON.stringify(ficha()), 0.35);
+    ["intro","met","res","dis"].forEach(function(k){ T[k] = j[k] || ""; });
+    secs(); prev();
+    st((j.avisos && j.avisos.length) ? "Listo. Avisos: " + j.avisos.join("; ") : "Resumen redactado. Revisa las cifras.");
+  }catch(e){ st(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+async function una(id, btn){
+  var s = SECS.find(function(x){ return x.id === id; });
+  btn.disabled = true;
+  st4('<span class="spin"></span>Reescribiendo ' + s.n.toLowerCase() + "…");
+  try{
+    var lim = limite();
+    var j = await askAI(SYS_UNA, JSON.stringify({ ficha: ficha(), seccion: s.n, que_contiene: s.s,
+      texto_actual: T[id], palabras_objetivo: lim ? Math.round(lim*s.pct) : 80 }), 0.35);
+    T[id] = j.texto || T[id];
+    secs(); prev();
+    st4(j.nota || "Sección reescrita.");
+  }catch(e){ st4(e.message, true); }
+  finally{ btn.disabled = false; }
+}
+document.getElementById("btn-ajustar").onclick = async function(){
+  var lim = limite();
+  if(!lim){ st4("No hay límite fijado.", true); return; }
+  if(total() <= lim){ st4("Ya estás dentro del límite: " + total() + " de " + lim + " palabras."); return; }
+  var btn = this; btn.disabled = true;
+  st4('<span class="spin"></span>Recortando ' + (total()-lim) + " palabras…");
+  try{
+    var j = await askAI(SYS_AJU, JSON.stringify({ limite: lim, actual: total(), resumen: T }), 0.2);
+    ["intro","met","res","dis"].forEach(function(k){ if(j[k]) T[k] = j[k]; });
+    secs(); prev();
+    st4(total() <= lim ? "Ajustado a " + total() + " palabras. " + (j.eliminado || "") : "Quedan " + (total()-lim) + " palabras de más. Recorta a mano.");
+  }catch(e){ st4(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+document.getElementById("btn-revisar").onclick = async function(){
+  if(!total()){ st4("No hay resumen que revisar.", true); return; }
+  var btn = this; btn.disabled = true;
+  st4('<span class="spin"></span>Revisando…');
+  try{
+    var j = await askAI(SYS_REV, JSON.stringify({ diseno: v("f-dis"), resumen: T }), 0.25);
+    var h = '<div class="verdict"><div class="k">Veredicto del revisor</div><p>' + esc(j.veredicto || "—") + "</p></div>";
+    (j.problemas || []).forEach(function(p){
+      h += '<div class="verdict warn"><div class="k">' + esc(p.seccion) + '</div><p>' + esc(p.problema) + " <b>→</b> " + esc(p.correccion) + "</p></div>";
+    });
+    if(j.lo_que_funciona && j.lo_que_funciona.length)
+      h += '<div class="verdict"><div class="k">Lo que funciona</div><p>' + j.lo_que_funciona.map(esc).join(". ") + "</p></div>";
+    var box = document.getElementById("secs");
+    var old = document.getElementById("rev-out");
+    if(old) old.remove();
+    var d = document.createElement("div");
+    d.id = "rev-out"; d.innerHTML = h;
+    box.appendChild(d);
+    st4("Revisión completada.");
+  }catch(e){ st4(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+
+document.getElementById("btn-tits").onclick = async function(){
+  var btn = this; btn.disabled = true;
+  st3('<span class="spin"></span>Generando títulos…');
+  try{
+    var j = await askAI(SYS_TIT, JSON.stringify(ficha()), 0.5);
+    var box = document.getElementById("titulos");
+    box.innerHTML = (j.titulos || []).map(function(t, i){
+      return '<div class="t-opt" data-t="' + i + '"><div class="txt">' + esc(t.texto) + '</div>' +
+        '<div class="meta"><span>' + esc(t.estilo) + '</span><span>' + palabras(t.texto) + ' palabras</span><span>' + esc(t.por_que || "") + '</span></div></div>';
+    }).join("");
+    box.querySelectorAll(".t-opt").forEach(function(el, i){
+      el.onclick = function(){
+        box.querySelectorAll(".t-opt").forEach(function(x){ x.classList.remove("on"); });
+        el.classList.add("on");
+        document.getElementById("tit").value = j.titulos[i].texto;
+        prev();
+      };
+    });
+    st3("Cuatro títulos propuestos.");
+  }catch(e){ st3(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+
+document.getElementById("btn-kw").onclick = async function(){
+  var btn = this; btn.disabled = true;
+  st3('<span class="spin"></span>Buscando descriptores…');
+  try{
+    var j = await askAI(SYS_KW, JSON.stringify(ficha()), 0.2);
+    KW = (j.claves || []).map(function(c){ return { t: c.termino, tipo: c.tipo === "mesh" ? "mesh" : "libre" }; });
+    kws(); prev();
+    st3(KW.length + " descriptores propuestos.");
+  }catch(e){ st3(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+document.getElementById("kw-new").onkeydown = function(e){
+  if(e.key !== "Enter") return;
+  var v2 = this.value.trim();
+  if(!v2) return;
+  KW.push({ t: v2, tipo:"libre" });
+  this.value = ""; kws(); prev();
+};
+function kws(){
+  var box = document.getElementById("kws");
+  box.innerHTML = KW.length ? "" : '<span style="color:var(--ink-soft);font-family:Inter,sans-serif;background:none;border:none;padding:0">Sin palabras clave.</span>';
+  KW.forEach(function(k, i){
+    var s = document.createElement("span");
+    s.className = k.tipo === "mesh" ? "" : "libre";
+    s.innerHTML = esc(k.t) + ' <i data-x="' + i + '">×</i>';
+    s.querySelector("i").onclick = function(){ KW.splice(i,1); kws(); prev(); };
+    box.appendChild(s);
+  });
+}
+
+/* ============ Vista previa y salidas ============ */
+function prev(){
+  var h = "";
+  if(v("tit")) h += "<h1>" + esc(v("tit")) + "</h1>";
+  SECS.forEach(function(s){
+    if(!T[s.id].trim()) return;
+    h += "<p><b>" + s.n + ".</b> " + esc(T[s.id]) + "</p>";
+  });
+  if(!h) h = '<p style="color:#B7C0C3;font-style:italic">El resumen aparecerá aquí.</p>';
+  if(KW.length) h += '<div class="kws"><b>Palabras clave:</b> ' + KW.map(function(k){ return esc(k.t); }).join("; ") + ".</div>";
+  document.getElementById("prev").innerHTML = h;
+}
+function texto(){
+  var t = v("tit") ? v("tit") + "\n\n" : "";
+  SECS.forEach(function(s){ if(T[s.id].trim()) t += s.n + ". " + T[s.id] + "\n\n"; });
+  if(KW.length) t += "Palabras clave: " + KW.map(function(k){ return k.t; }).join("; ") + ".\n";
+  return t;
+}
+document.getElementById("btn-copy").onclick = async function(){
+  try{ await navigator.clipboard.writeText(texto()); st2("Copiado (" + total() + " palabras)."); }
+  catch(e){ st2("El navegador bloqueó el portapapeles."); }
+};
+document.getElementById("btn-md").onclick = function(){
+  var t = "# " + (v("tit") || "Resumen") + "\n\n";
+  SECS.forEach(function(s){ if(T[s.id].trim()) t += "**" + s.n + ".** " + T[s.id] + "\n\n"; });
+  if(KW.length) t += "**Palabras clave:** " + KW.map(function(k){ return k.t; }).join("; ") + ".\n\n";
+  t += "_" + total() + " palabras · AbstractIMRyD·AI · Kit Metodológico UMH_\n";
+  var b = new Blob([t], {type:"text/markdown;charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "resumen.md"; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  st2("Descargado.");
+};
+document.getElementById("btn-docx").onclick = async function(){
+  if(typeof docx === "undefined"){ st2("No se ha podido cargar la librería de Word."); return; }
+  var D = docx, kids = [];
+  if(v("tit")) kids.push(new D.Paragraph({ children:[new D.TextRun({ text:v("tit"), bold:true, size:28 })], spacing:{ after:240 } }));
+  SECS.forEach(function(s){
+    if(!T[s.id].trim()) return;
+    kids.push(new D.Paragraph({ children:[
+      new D.TextRun({ text: s.n + ". ", bold:true, size:22 }),
+      new D.TextRun({ text: T[s.id], size:22 })
+    ], alignment: D.AlignmentType.JUSTIFIED, spacing:{ after:140, line:300 } }));
+  });
+  if(KW.length) kids.push(new D.Paragraph({ children:[
+    new D.TextRun({ text:"Palabras clave: ", bold:true, size:22 }),
+    new D.TextRun({ text: KW.map(function(k){ return k.t; }).join("; ") + ".", size:22 })
+  ], spacing:{ before:200 } }));
+  kids.push(new D.Paragraph({ children:[new D.TextRun({ text: total() + " palabras · AbstractIMRyD·AI", size:16, color:"9AA7AC", italics:true })], spacing:{ before:240 } }));
+  var doc = new D.Document({ sections:[{ properties:{}, children: kids }], styles:{ default:{ document:{ run:{ font:"Calibri" } } } } });
+  try{
+    var blob = await D.Packer.toBlob(doc);
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "resumen.docx"; a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+    st2("Documento de Word descargado.");
+  }catch(e){ st2("Error al generar el .docx: " + e.message); }
+};
+
+document.getElementById("btn-demo").onclick = function(){
+  document.getElementById("f-dis").selectedIndex = 0;
+  document.getElementById("f-obj").value = "Evaluar si un programa de telerrehabilitación cardíaca domiciliaria no es inferior a la rehabilitación presencial en pacientes con insuficiencia cardíaca y fracción de eyección reducida.";
+  document.getElementById("f-met").value = "Ensayo aleatorizado de no inferioridad, dos centros, 198 adultos con FEVI ≤ 40 % y clase NYHA II-III. Intervención: 12 semanas de telerrehabilitación supervisada por videoconferencia. Comparador: rehabilitación presencial. Desenlace principal: cambio en el test de la marcha de 6 minutos a las 12 semanas; margen de no inferioridad 30 m. Análisis por protocolo y por intención de tratar.";
+  document.getElementById("f-res").value = "Se aleatorizaron 198 pacientes (99 por brazo); completaron 181. Cambio medio: 62,4 m (DT 41,2) en telerrehabilitación y 68,1 m (DT 39,8) en presencial. Diferencia −5,7 m (IC 95 % unilateral: −16,8 m; límite inferior por encima de −30 m). Adherencia 87 % frente a 71 % (p = 0,004). Sin acontecimientos adversos graves relacionados.";
+  document.getElementById("f-con").value = "La telerrehabilitación cardíaca no es inferior a la presencial en capacidad funcional y mejora la adherencia.";
+  st("Ficha de ejemplo cargada. Pulsa «Redactar resumen».");
+};
+
+function st(m, err){ var s = document.getElementById("st"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; }
+function st2(m){ var s = document.getElementById("st2"); s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 2600); }
+function st3(m, err){ var s = document.getElementById("st3"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; if(!/spin/.test(m)) setTimeout(function(){ s.innerHTML = ""; }, 2800); }
+function st4(m, err){ var s = document.getElementById("st4"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; if(!/spin/.test(m)) setTimeout(function(){ s.innerHTML = ""; }, 3400); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+document.getElementById("tit").oninput = prev;
+initKeyDialog(); secs(); kws(); prev();
+</script>
+</body>
+</html>

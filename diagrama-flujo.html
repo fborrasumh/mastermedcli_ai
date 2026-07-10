@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DiagramaFlujo·AI · Kit Metodológico · UMH</title>
+<title>DiagramaFlujo·AI · Kit Metodológico UMH</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -11,347 +11,611 @@
   :root{
     --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
     --line:#DCE1DD; --line-soft:#EAEEEA;
-    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --bad:#B23A3A;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
     --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1100px;margin:0 auto;padding:0 28px}
-  a{color:var(--teal-deep)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
   header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
   .masthead{padding:34px 0 26px}
-  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);text-decoration:none;letter-spacing:.03em}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
   .back:hover{color:var(--teal)}
   .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
   .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
-  h1{font-family:'Spectral',serif;font-weight:500;letter-spacing:-.01em;font-size:clamp(26px,4vw,38px);line-height:1.08;margin:14px 0 0}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
   h1 em{font-style:italic;color:var(--teal-deep)}
-  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:15.5px}
-  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:16px}
-  .t{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--line);color:var(--slate)}
-  .t.det{border-color:#CBD4CE}.t.ia{border-color:#E3CFA6;color:var(--amber);background:#FBF6EC}
-  main{padding:30px 0 60px}
-  .layout{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
-  @media(max-width:880px){.layout{grid-template-columns:1fr}}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:20px;box-shadow:var(--shadow)}
-  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:18px;margin-bottom:12px}
-  label{display:block;font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.03em;text-transform:uppercase;color:var(--slate);margin:12px 0 4px}
-  select,input,textarea{width:100%;border:1px solid var(--line);border-radius:4px;padding:8px 10px;font-family:inherit;font-size:13.5px;background:#fff;color:var(--ink)}
-  textarea{resize:vertical;min-height:70px;font-size:13px}
-  select:focus,input:focus,textarea:focus{outline:2px solid #B9DAD5;border-color:var(--teal)}
-  .fields{max-height:none}
-  .fld{margin-bottom:2px}
-  .num{font-family:'JetBrains Mono',monospace}
-  .btn{font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;border:1px solid var(--teal);background:var(--teal);color:#fff;border-radius:4px;padding:9px 15px;cursor:pointer;transition:filter .15s}
-  .btn:hover{filter:brightness(1.08)}.btn:disabled{opacity:.5;cursor:not-allowed}
-  .btn.ghost{background:#fff;color:var(--teal-deep);border-color:var(--line)}
-  .btn.ghost:hover{border-color:var(--teal);filter:none}
-  .btn.sm{padding:6px 11px;font-size:12.5px}
-  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
-  .preview{background:#fff;border:1px solid var(--line);border-radius:5px;padding:16px;overflow:auto;box-shadow:var(--shadow)}
-  .preview svg{display:block;margin:0 auto;max-width:100%;height:auto}
-  .status{font-size:12.5px;color:var(--ink-soft);margin-top:10px;min-height:1.1em}
-  .status.err{color:var(--bad)}
-  .sub{font-size:11.5px;color:var(--ink-soft);margin:2px 0 8px}
-  .divider{border:none;border-top:1px solid var(--line-soft);margin:14px 0}
-  .ia-note{font-size:11.5px;color:var(--amber);font-family:'JetBrains Mono',monospace;margin-top:4px}
-  dialog{border:none;border-radius:6px;padding:0;max-width:520px;width:92%;box-shadow:0 24px 60px rgba(23,38,46,.25)}
-  dialog::backdrop{background:rgba(23,38,46,.4)}.dlg{padding:22px}
-  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:18px;margin-bottom:8px}
-  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:10px}
-  code{font-family:'JetBrains Mono',monospace;font-size:.9em;background:var(--line-soft);padding:1px 5px;border-radius:3px}
-  .hidden{display:none!important}
-  footer{border-top:1px solid var(--line);margin-top:26px;padding:26px 0 50px;color:var(--ink-soft);font-size:12.5px;font-family:'JetBrains Mono',monospace;line-height:1.8}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card h3{font-family:'Spectral',serif;font-weight:500;font-size:17px;margin:22px 0 10px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select,textarea{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif}
+  textarea{font-size:12.5px;min-height:110px;resize:vertical;line-height:1.5}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:14px;margin-bottom:20px}
+  .stats div{border-left:2px solid var(--line);padding-left:11px}
+  .stats .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .stats .v{font-family:'Spectral',serif;font-size:25px;font-weight:500;margin-top:1px;line-height:1.15}
+  .stats .v small{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft);font-weight:400;display:block;margin-top:2px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:500}
+  td{padding:7px 10px;border-bottom:1px solid var(--line-soft)}
+  td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  tr.hl td{background:#F2F7F6}
+  .tbl-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:3px}
+
+  .verdict{border-left:3px solid var(--teal);padding-left:16px;margin:18px 0}
+  .verdict.warn{border-color:var(--amber)}
+  .verdict.bad{border-color:var(--red)}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .verdict p{font-size:14.5px;margin-top:4px;max-width:76ch}
+
+  .plot{margin-top:6px}
+  .plot svg{width:100%;height:auto;display:block}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gridl{stroke:var(--line-soft);stroke-width:1}
+  .tick{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:var(--slate)}
+  .bar{fill:#CDE2E0;stroke:var(--teal);stroke-width:.7}
+  .curveline{fill:none;stroke:var(--amber);stroke-width:1.6}
+  .refline{stroke:var(--amber);stroke-width:1;stroke-dasharray:4 3}
+  .pt{fill:var(--teal);opacity:.75}
+
+  .para{font-size:14.5px;line-height:1.75;background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:18px;font-family:'Spectral',serif}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+  .drop{border:1px dashed var(--line);border-radius:3px;padding:26px;text-align:center;color:var(--ink-soft);font-size:14px;cursor:pointer;transition:.15s;background:#FCFDFC}
+  .drop:hover,.drop.over{border-color:var(--teal);background:#F2F7F6;color:var(--teal-deep)}
+  .drop b{display:block;font-weight:500;color:var(--ink);margin-bottom:3px}
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:2px 7px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--slate);margin-left:6px}
+  .pill.ok{background:#F1F8F7;color:var(--teal-deep);border-color:#BFD9D6}
+  .pill.no{background:#FBF2F1;color:var(--red);border-color:#E0C4C1}
+  .pill.mid{background:#FBF6EC;color:var(--amber);border-color:#E5D6B9}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
+
+  .layout{display:grid;grid-template-columns:minmax(280px,350px) 1fr;gap:22px;align-items:start}
+  .modes{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;margin-bottom:16px}
+  .modes button{flex:1;border:none;border-radius:0;background:#FCFDFC;color:var(--slate);font-size:12.5px;padding:9px 4px}
+  .modes button.on{background:var(--teal);color:#fff}
+  .grp-h{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .grp-h:first-child{margin-top:0}
+  .nf{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .nf label{flex:1;margin:0;text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);line-height:1.4}
+  .nf input{width:78px;flex-shrink:0;text-align:center}
+  .nf.calc input{background:#F1F8F7;color:var(--teal-deep);font-weight:500}
+  .razones{margin:6px 0 10px 0}
+  .razon{display:flex;gap:7px;margin-bottom:6px}
+  .razon input[type=text]{flex:1;font-family:'Inter',sans-serif;font-size:12.5px}
+  .razon input[type=number]{width:66px;text-align:center}
+  .razon .x{background:none;border:none;color:#B7C0C3;font-size:15px;padding:0 3px}
+  .razon .x:hover{color:var(--red);background:none}
+
+  .diag{background:#fff;border:1px solid var(--line);border-radius:3px;padding:16px;overflow:auto}
+  .diag svg{display:block;margin:0 auto;max-width:100%;height:auto}
+  .chk{margin-top:4px}
+  .chk .ok{color:var(--teal)} .chk .bad{color:var(--red)}
+  .chk div{font-size:13.5px;padding:6px 0 6px 22px;position:relative;border-bottom:1px solid var(--line-soft)}
+  .chk div::before{content:"✓";position:absolute;left:0;color:var(--teal);font-size:12px}
+  .chk div.bad::before{content:"✕";color:var(--red)}
+
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%}
+  dialog::backdrop{background:rgba(23,38,46,.35)}
+  .dlg{padding:24px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
 </style>
 </head>
 <body>
-<header><div class="wrap masthead">
-  <a class="back" href="index.html">← Kit metodológico</a>
-  <div class="eyebrow">Proyecto, documentación y publicación · TFM</div>
-  <h1>Diagrama de <em>flujo</em> de participantes</h1>
-  <p class="lede">Genera el diagrama de flujo exigido por las guías de publicación: <b>CONSORT</b> (ensayo aleatorizado), <b>PRISMA 2020</b> (revisión sistemática) y <b>STROBE</b> (estudio observacional). Rellena las cifras, previsualiza y exporta en SVG (vectorial) o PNG para tu manuscrito o tu TFM.</p>
-  <div class="tags"><span class="t det">Determinista</span><span class="t ia">IA opcional</span><span class="t">reemplaza · complementa CheckReporting</span></div>
-</div></header>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">20 · Escritura científica y difusión</div>
+    <h1>DiagramaFlujo<em>·AI</em></h1>
+    <p class="lede">Diagrama de flujo de participantes: CONSORT para ensayos, PRISMA 2020 para revisiones sistemáticas y STROBE para estudios observacionales. Rellena las cifras o extráelas de un texto con IA, y exporta en SVG y PNG.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
 
 <main class="wrap">
-  <div class="layout">
-    <!-- CONTROLES -->
-    <div class="card">
-      <h2>Configuración</h2>
-      <label>Tipo de diagrama</label>
-      <select id="tipo">
-        <option value="consort">CONSORT · ensayo aleatorizado (2 brazos)</option>
-        <option value="prisma">PRISMA 2020 · revisión sistemática</option>
-        <option value="strobe">STROBE · estudio observacional</option>
-      </select>
-      <div class="toolbar">
-        <button class="btn ghost sm" id="btnIa">✦ Rellenar desde texto (IA)</button>
-        <button class="btn ghost sm" id="btnKey">🔑</button>
+<div class="layout">
+  <div>
+    <section class="card">
+      <h2>Guía</h2>
+      <div class="modes">
+        <button id="m-consort" class="on">CONSORT</button>
+        <button id="m-prisma">PRISMA 2020</button>
+        <button id="m-strobe">STROBE</button>
       </div>
-      <div class="ia-note" id="iaNote"></div>
-      <hr class="divider">
-      <div class="fields" id="fields"></div>
-      <hr class="divider">
-      <div class="toolbar">
-        <button class="btn" id="btnSvg">⬇ SVG</button>
-        <button class="btn ghost" id="btnPng">⬇ PNG</button>
+      <p class="sub" id="mode-hint"></p>
+      <div id="campos"></div>
+      <div class="actions">
+        <button class="ghost small" id="btn-demo">Cifras de ejemplo</button>
+        <button class="ghost small" id="btn-cero">Poner a cero</button>
       </div>
-      <div class="status" id="st"></div>
-    </div>
+    </section>
 
-    <!-- PREVIEW -->
-    <div class="preview" id="preview"></div>
+    <section class="card">
+      <h2>Extraer de un texto</h2>
+      <p class="sub">Pega el apartado de resultados o de métodos y la IA rellenará las cifras.</p>
+      <textarea id="txt" placeholder="Se evaluaron 412 pacientes para su elegibilidad, de los cuales 198 fueron aleatorizados…"></textarea>
+      <div class="actions">
+        <button id="btn-ia">Extraer cifras</button>
+        <span class="status" id="st"></span>
+      </div>
+    </section>
   </div>
+
+  <div>
+    <section class="card">
+      <h2 id="d-title">Diagrama</h2>
+      <p class="sub" id="d-sub"></p>
+      <div class="diag" id="diag"></div>
+      <div class="actions">
+        <button id="btn-svg">Descargar SVG</button>
+        <button class="ghost" id="btn-png">Descargar PNG</button>
+        <button class="ghost small" id="btn-copy">Copiar SVG</button>
+        <span class="status" id="st2"></span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Comprobación aritmética</h2>
+      <p class="sub">Los revisores suman las cifras del diagrama. Que cuadren.</p>
+      <div class="chk" id="chk"></div>
+      <div class="note">Las cifras del diagrama deben coincidir con las del texto y las de las tablas. Es el error más frecuente y el más fácil de detectar para un revisor: basta con sumar.</div>
+    </section>
+  </div>
+</div>
 </main>
 
-<footer><div class="wrap">
-  DiagramaFlujo·AI · Kit Metodológico · Máster U. en Investigación en Medicina Clínica · UMH<br>
-  Plantillas conformes a CONSORT 2010, PRISMA 2020 y recomendaciones STROBE · salida vectorial editable<br>
-  Herramienta docente · las cifras deben cuadrar con tu base de datos real
-</div></footer>
+<footer class="wrap">
+  <span>DiagramaFlujo·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span id="model-badge"></span>
+</footer>
 
-<dialog id="dlgIa"><div class="dlg">
-  <h3>Rellenar desde un texto</h3>
-  <p>Pega el párrafo de métodos/resultados que describa el reclutamiento. La IA extraerá las cifras y rellenará el formulario. Revísalas siempre: la IA puede equivocarse.</p>
-  <textarea id="iaText" style="min-height:130px" placeholder="Se evaluaron 320 pacientes, de los que 74 fueron excluidos (48 no cumplían criterios, 20 rechazaron participar, 6 otras causas). Se aleatorizaron 246: 123 a intervención y 123 a control…"></textarea>
-  <div class="toolbar"><button class="btn sm" id="iaRun">Extraer cifras</button><button class="btn ghost sm" id="iaClose">Cerrar</button></div>
-  <div class="status" id="iaSt"></div>
-</div></dialog>
-
-<dialog id="dlgKey"><div class="dlg">
-  <h3>Clave de API de OpenAI</h3>
-  <p>Solo para la extracción opcional de cifras desde texto. Se guarda en <code>localStorage</code> (<code>ia_openai_key</code>) y se envía directamente a OpenAI.</p>
-  <input type="text" id="inKey" placeholder="sk-...">
-  <div class="toolbar"><button class="btn sm" id="saveKey">Guardar</button><button class="btn ghost sm" id="closeKey">Cerrar</button><button class="btn ghost sm" id="delKey" style="color:var(--bad)">Borrar</button></div>
-</div></dialog>
+<dialog id="dlg-key">
+  <div class="dlg">
+    <h3>Clave de API de OpenAI</h3>
+    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit.</p>
+    <label for="k">Clave</label>
+    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
+    <div style="margin-top:14px"></div>
+    <label for="m">Modelo</label>
+    <select id="m">
+      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
+      <option value="gpt-4o">gpt-4o · más preciso</option>
+      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+      <option value="gpt-4.1">gpt-4.1</option>
+    </select>
+    <div class="actions">
+      <button id="k-save">Guardar</button>
+      <button class="ghost" id="k-cancel">Cancelar</button>
+      <button class="ghost small" id="k-clear">Borrar clave</button>
+    </div>
+  </div>
+</dialog>
 
 <script>
 "use strict";
-const $=id=>document.getElementById(id);
+/* ---------- Kernel de IA: clave y modelo compartidos ---------- */
+var KEY = "ia_openai_key", MODEL = "ia_openai_model";
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function getKey(){ return lsGet(KEY) || ""; }
+function getModel(){ return lsGet(MODEL) || "gpt-4o-mini"; }
+function badge(){
+  var b = document.getElementById("model-badge");
+  if(b){ b.textContent = "modelo: " + getModel(); b.style.cursor = "pointer"; b.onclick = askKey; }
+}
+function askKey(){
+  document.getElementById("k").value = getKey();
+  document.getElementById("m").value = getModel();
+  document.getElementById("dlg-key").showModal();
+}
+function initKeyDialog(){
+  document.getElementById("k-save").onclick = function(){
+    var v = document.getElementById("k").value.trim();
+    if(v) lsSet(KEY, v);
+    lsSet(MODEL, document.getElementById("m").value);
+    badge(); document.getElementById("dlg-key").close();
+  };
+  document.getElementById("k-cancel").onclick = function(){ document.getElementById("dlg-key").close(); };
+  document.getElementById("k-clear").onclick = function(){ lsDel(KEY); document.getElementById("k").value = ""; };
+  badge();
+}
+async function askAI(system, user, temp){
+  var key = getKey();
+  if(!key){ askKey(); throw new Error("Falta la clave de API. Configúrala en el pie de página."); }
+  var res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
+    body: JSON.stringify({ model:getModel(), temperature: (temp === undefined ? 0.25 : temp),
+      response_format:{type:"json_object"},
+      messages:[{role:"system",content:system},{role:"user",content:user}] })
+  });
+  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,150)); }
+  var data = await res.json();
+  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
+}
 
-/* ============ Plantillas de campos ============ */
-const TEMPLATES={
-  consort:{
-    fields:[
-      {id:"eval",label:"Evaluados para elegibilidad",def:320,type:"num"},
-      {id:"excl",label:"Excluidos (total)",def:74,type:"num"},
-      {id:"excl_crit",label:"— No cumplían criterios",def:48,type:"num"},
-      {id:"excl_rech",label:"— Rechazaron participar",def:20,type:"num"},
-      {id:"excl_otr",label:"— Otras razones",def:6,type:"num"},
-      {id:"rand",label:"Aleatorizados",def:246,type:"num"},
-      {id:"a1_name",label:"Nombre brazo 1",def:"Intervención",type:"txt"},
-      {id:"a1_asig",label:"Brazo 1 · asignados",def:123,type:"num"},
-      {id:"a1_rec",label:"Brazo 1 · recibieron",def:118,type:"num"},
-      {id:"a1_nrec",label:"Brazo 1 · no recibieron",def:5,type:"num"},
-      {id:"a1_lost",label:"Brazo 1 · pérdidas seguimiento",def:8,type:"num"},
-      {id:"a1_anal",label:"Brazo 1 · analizados",def:115,type:"num"},
-      {id:"a1_exan",label:"Brazo 1 · excluidos del análisis",def:3,type:"num"},
-      {id:"a2_name",label:"Nombre brazo 2",def:"Control",type:"txt"},
-      {id:"a2_asig",label:"Brazo 2 · asignados",def:123,type:"num"},
-      {id:"a2_rec",label:"Brazo 2 · recibieron",def:120,type:"num"},
-      {id:"a2_nrec",label:"Brazo 2 · no recibieron",def:3,type:"num"},
-      {id:"a2_lost",label:"Brazo 2 · pérdidas seguimiento",def:6,type:"num"},
-      {id:"a2_anal",label:"Brazo 2 · analizados",def:119,type:"num"},
-      {id:"a2_exan",label:"Brazo 2 · excluidos del análisis",def:1,type:"num"},
-    ]
+
+/* ============ Definición de los tres diagramas ============ */
+var DEFS = {
+  consort: {
+    n:"CONSORT 2010", hint:"Ensayo aleatorizado de dos grupos paralelos. Los excluidos se desglosan por motivos.",
+    campos:[
+      ["Reclutamiento", [["evaluados","Evaluados para elegibilidad"]]],
+      ["Reclutamiento", [["noCrit","Excluidos: no cumplen criterios"],["rechazan","Excluidos: rechazan participar"],["otros","Excluidos: otros motivos"]]],
+      ["Aleatorización", [["aleat","Aleatorizados", true]]],
+      ["Grupo intervención", [["a_asig","Asignados a la intervención"],["a_recib","Recibieron la intervención"],["a_norecib","No la recibieron"],
+        ["a_perd","Pérdidas de seguimiento"],["a_disc","Discontinuaron la intervención"],["a_anal","Analizados"],["a_excl","Excluidos del análisis"]]],
+      ["Grupo control", [["b_asig","Asignados al control"],["b_recib","Recibieron el control"],["b_norecib","No lo recibieron"],
+        ["b_perd","Pérdidas de seguimiento"],["b_disc","Discontinuaron"],["b_anal","Analizados"],["b_excl","Excluidos del análisis"]]]
+    ],
+    demo:{ evaluados:412, noCrit:142, rechazan:58, otros:14, a_asig:99, a_recib:97, a_norecib:2, a_perd:6, a_disc:4, a_anal:93, a_excl:6,
+           b_asig:99, b_recib:99, b_norecib:0, b_perd:9, b_disc:2, b_anal:90, b_excl:9 },
+    calc:function(D){ D.aleat = D.a_asig + D.b_asig; }
   },
-  prisma:{
-    fields:[
-      {id:"db",label:"Registros identificados en bases de datos",def:1420,type:"num"},
-      {id:"other",label:"Registros de otras fuentes",def:35,type:"num"},
-      {id:"dup",label:"Duplicados eliminados",def:310,type:"num"},
-      {id:"screen",label:"Registros cribados",def:1145,type:"num"},
-      {id:"screen_ex",label:"Registros excluidos (cribado)",def:1020,type:"num"},
-      {id:"full",label:"Textos completos evaluados",def:125,type:"num"},
-      {id:"full_ex",label:"Textos completos excluidos",def:98,type:"num"},
-      {id:"full_reason",label:"Razones de exclusión (texto libre)",def:"Diseño inadecuado; sin desenlace de interés; muestra insuficiente",type:"txt"},
-      {id:"inc_qual",label:"Estudios en síntesis cualitativa",def:27,type:"num"},
-      {id:"inc_quant",label:"Estudios en metaanálisis",def:19,type:"num"},
-    ]
+  prisma: {
+    n:"PRISMA 2020", hint:"Revisión sistemática. Se distinguen «registros» (referencias) de «informes» (artículos recuperados).",
+    campos:[
+      ["Identificación", [["bases","Registros identificados en bases de datos"],["registros","Registros identificados en registros de ensayos"],
+        ["dup","Duplicados eliminados"],["automat","Marcados como no elegibles por herramientas automáticas"],["otrosEl","Eliminados por otros motivos"]]],
+      ["Cribado", [["cribados","Registros cribados", true],["cribExcl","Registros excluidos tras el cribado"],
+        ["buscados","Informes buscados para su recuperación", true],["noRecup","Informes no recuperados"],
+        ["evaluados","Informes evaluados para elegibilidad", true]]],
+      ["Exclusiones con motivo", [["ex1","Excluidos: población no elegible"],["ex2","Excluidos: intervención no elegible"],
+        ["ex3","Excluidos: diseño no elegible"],["ex4","Excluidos: desenlace no notificado"]]],
+      ["Incluidos", [["incluidos","Estudios incluidos en la revisión", true],["informes","Informes de los estudios incluidos"]]]
+    ],
+    demo:{ bases:1847, registros:63, dup:412, automat:38, otrosEl:9, cribExcl:1218, noRecup:22, ex1:87, ex2:54, ex3:41, ex4:15, informes:38 },
+    calc:function(D){
+      D.cribados = D.bases + D.registros - D.dup - D.automat - D.otrosEl;
+      D.buscados = D.cribados - D.cribExcl;
+      D.evaluados = D.buscados - D.noRecup;
+      D.incluidos = D.evaluados - (D.ex1 + D.ex2 + D.ex3 + D.ex4);
+    }
   },
-  strobe:{
-    fields:[
-      {id:"elig",label:"Población elegible",def:540,type:"num"},
-      {id:"excl",label:"Excluidos (total)",def:90,type:"num"},
-      {id:"excl_reason",label:"Razones de exclusión (texto libre)",def:"No cumplían criterios; datos incompletos; pérdida de contacto",type:"txt"},
-      {id:"incl",label:"Incluidos en el estudio",def:450,type:"num"},
-      {id:"lost",label:"Pérdidas de seguimiento",def:35,type:"num"},
-      {id:"anal",label:"Analizados",def:415,type:"num"},
-    ]
+  strobe: {
+    n:"STROBE", hint:"Estudio observacional. Una columna por cada fase; opcionalmente dos grupos de exposición.",
+    campos:[
+      ["Selección", [["elegibles","Potencialmente elegibles"],["noCrit","No cumplen criterios de inclusión"],["rechazan","Rechazan participar"],
+        ["incluidos","Incluidos en el estudio", true]]],
+      ["Seguimiento", [["perdidas","Pérdidas de seguimiento"],["retirados","Retiran el consentimiento"],
+        ["seguidos","Completan el seguimiento", true]]],
+      ["Análisis", [["datosFalt","Excluidos por datos ausentes"],["analizados","Incluidos en el análisis", true]]]
+    ],
+    demo:{ elegibles:920, noCrit:214, rechazan:96, perdidas:41, retirados:12, datosFalt:28 },
+    calc:function(D){
+      D.incluidos = D.elegibles - D.noCrit - D.rechazan;
+      D.seguidos = D.incluidos - D.perdidas - D.retirados;
+      D.analizados = D.seguidos - D.datosFalt;
+    }
   }
 };
-let VALS={};
 
-function buildForm(){
-  const t=$("tipo").value;const f=TEMPLATES[t].fields;
-  VALS={};f.forEach(x=>VALS[x.id]=x.def);
-  $("fields").innerHTML=f.map(x=>`<div class="fld"><label for="f_${x.id}">${x.label}</label>
-    <input id="f_${x.id}" ${x.type==="num"?'type="number" class="num"':'type="text"'} value="${x.def}"></div>`).join("");
-  f.forEach(x=>{$("f_"+x.id).addEventListener("input",e=>{VALS[x.id]=x.type==="num"?(parseFloat(e.target.value)||0):e.target.value;render();});});
-  render();
-}
+var MODO = "consort", D = {}, SVG = "";
+var CALCS = {};
 
-/* ============ Motor SVG ============ */
-const NS="http://www.w3.org/2000/svg";
-function wrapText(s,max){ // envuelve por número de caracteres aproximado
-  const words=String(s).split(/\s+/);const lines=[];let cur="";
-  words.forEach(w=>{if((cur+" "+w).trim().length>max){if(cur)lines.push(cur);cur=w;}else cur=(cur+" "+w).trim();});
-  if(cur)lines.push(cur);return lines.length?lines:[""];
+["consort","prisma","strobe"].forEach(function(m){
+  document.getElementById("m-" + m).onclick = function(){ setModo(m); };
+});
+function setModo(m){
+  MODO = m;
+  ["consort","prisma","strobe"].forEach(function(x){ document.getElementById("m-" + x).className = x === m ? "on" : ""; });
+  document.getElementById("mode-hint").textContent = DEFS[m].hint;
+  D = {}; campos(); recalc();
 }
-function box(x,y,w,lines,opt={}){
-  const lh=16,pad=10;const h=lines.length*lh+pad*2;
-  const fill=opt.fill||"#FFFFFF";const stroke=opt.stroke||"#42525A";
-  let t=`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${fill}" stroke="${stroke}" stroke-width="1.2"/>`;
-  lines.forEach((ln,i)=>{
-    const bold=opt.boldFirst&&i===0;
-    t+=`<text x="${x+w/2}" y="${y+pad+lh*(i+1)-4}" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12.5" ${bold?'font-weight="600"':''} fill="#17262E">${escapeXml(ln)}</text>`;
+function campos(){
+  var def = DEFS[MODO];
+  CALCS = {};
+  def.campos.forEach(function(g){ g[1].forEach(function(c){ if(c[2]) CALCS[c[0]] = true; }); });
+  var box = document.getElementById("campos");
+  box.innerHTML = "";
+  var last = null;
+  def.campos.forEach(function(g){
+    if(g[0] !== last){ last = g[0];
+      var h = document.createElement("div"); h.className = "grp-h"; h.textContent = g[0]; box.appendChild(h);
+    }
+    g[1].forEach(function(c){
+      var d = document.createElement("div");
+      d.className = "nf" + (c[2] ? " calc" : "");
+      d.innerHTML = '<label for="c-' + c[0] + '">' + esc(c[1]) + (c[2] ? " ·" : "") + '</label>' +
+        '<input type="number" min="0" step="1" id="c-' + c[0] + '" data-k="' + c[0] + '" value="' + (D[c[0]] || 0) + '"' + (c[2] ? " readonly tabindex='-1'" : "") + '>';
+      box.appendChild(d);
+    });
   });
-  return {svg:t,x,y,w,h,cx:x+w/2,cy:y+h/2,bottom:y+h,right:x+w,top:y,left:x};
+  box.querySelectorAll("input[data-k]").forEach(function(i){
+    if(CALCS[i.dataset.k]) return;
+    i.oninput = function(){ D[i.dataset.k] = Math.max(0, parseInt(i.value, 10) || 0); recalc(); };
+  });
 }
-function escapeXml(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-function vArrow(x,y1,y2){return `<line x1="${x}" y1="${y1}" x2="${x}" y2="${y2-6}" stroke="#42525A" stroke-width="1.2" marker-end="url(#ah)"/>`;}
-function hArrow(x1,x2,y){const d=x2>x1?-6:6;return `<line x1="${x1}" y1="${y}" x2="${x2+d}" y2="${y}" stroke="#42525A" stroke-width="1.2" marker-end="url(#ah)"/>`;}
-function elbow(x1,y1,x2,y2){ // vertical desde (x1,y1) hasta y2 luego horizontal a x2 (con punta)
-  const d=x2>x1?-6:6;
-  return `<path d="M ${x1} ${y1} V ${y2} H ${x2+d}" fill="none" stroke="#42525A" stroke-width="1.2" marker-end="url(#ah)"/>`;}
+function recalc(){
+  var def = DEFS[MODO];
+  def.campos.forEach(function(g){ g[1].forEach(function(c){ if(D[c[0]] === undefined) D[c[0]] = 0; }); });
+  def.calc(D);
+  Object.keys(CALCS).forEach(function(k){
+    var el = document.getElementById("c-" + k);
+    if(el) el.value = D[k];
+  });
+  dibujar(); chequeo();
+}
+document.getElementById("btn-demo").onclick = function(){ D = Object.assign({}, DEFS[MODO].demo); campos(); recalc(); };
+document.getElementById("btn-cero").onclick = function(){ D = {}; campos(); recalc(); };
 
-function defs(){return `<defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L7,3 L0,6 Z" fill="#42525A"/></marker></defs>`;}
-function band(y,txt){return `<text x="6" y="${y}" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="1" fill="#0E7C74" text-transform="uppercase">${txt}</text>`;}
-
-function renderConsort(V){
-  const W=860;let s="";const cx=W*0.36;const bw=270;
-  let parts=[];
-  const b1=box(cx-bw/2,34,bw,[`Evaluados para elegibilidad (n = ${V.eval})`],{boldFirst:true});
-  const exLines=[`Excluidos (n = ${V.excl})`,`· No cumplían criterios (n = ${V.excl_crit})`,`· Rechazaron participar (n = ${V.excl_rech})`,`· Otras razones (n = ${V.excl_otr})`];
-  const bx=box(cx+bw/2+70,34,300,exLines);
-  const b2=box(cx-bw/2,b1.bottom+46,bw,[`Aleatorizados (n = ${V.rand})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
-  // dos brazos
-  const armW=300;const lx=W*0.22, rx=W*0.72;
-  const y3=b2.bottom+52;
-  const la=box(lx-armW/2,y3,armW,[`Asignados a ${V.a1_name} (n = ${V.a1_asig})`,`· Recibieron (n = ${V.a1_rec})`,`· No recibieron (n = ${V.a1_nrec})`],{boldFirst:true});
-  const ra=box(rx-armW/2,y3,armW,[`Asignados a ${V.a2_name} (n = ${V.a2_asig})`,`· Recibieron (n = ${V.a2_rec})`,`· No recibieron (n = ${V.a2_nrec})`],{boldFirst:true});
-  const y4=Math.max(la.bottom,ra.bottom)+46;
-  const lf=box(lx-armW/2,y4,armW,[`Seguimiento`,`· Pérdidas (n = ${V.a1_lost})`],{boldFirst:true});
-  const rf=box(rx-armW/2,y4,armW,[`Seguimiento`,`· Pérdidas (n = ${V.a2_lost})`],{boldFirst:true});
-  const y5=Math.max(lf.bottom,rf.bottom)+46;
-  const lan=box(lx-armW/2,y5,armW,[`Analizados (n = ${V.a1_anal})`,`· Excluidos del análisis (n = ${V.a1_exan})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
-  const ran=box(rx-armW/2,y5,armW,[`Analizados (n = ${V.a2_anal})`,`· Excluidos del análisis (n = ${V.a2_exan})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
-  const H=Math.max(lan.bottom,ran.bottom)+24;
-
-  parts.push(band(24,"RECLUTAMIENTO"));
-  parts.push(b1.svg,bx.svg,b2.svg);
-  parts.push(vArrow(b1.cx,b1.bottom,b2.top));
-  parts.push(elbow(b1.cx,b1.bottom+18,bx.left,bx.cy)); // codo hacia excluidos
-  // reclutamiento -> asignación: baja y se bifurca
-  const midY=b2.bottom+26;
-  parts.push(`<line x1="${b2.cx}" y1="${b2.bottom}" x2="${b2.cx}" y2="${midY}" stroke="#42525A" stroke-width="1.2"/>`);
-  parts.push(`<line x1="${la.cx}" y1="${midY}" x2="${ra.cx}" y2="${midY}" stroke="#42525A" stroke-width="1.2"/>`);
-  parts.push(vArrow(la.cx,midY,la.top),vArrow(ra.cx,midY,ra.top));
-  parts.push(band(y3-12,"ASIGNACIÓN"));
-  parts.push(la.svg,ra.svg);
-  parts.push(vArrow(la.cx,la.bottom,lf.top),vArrow(ra.cx,ra.bottom,rf.top));
-  parts.push(band(y4-12,"SEGUIMIENTO"));
-  parts.push(lf.svg,rf.svg);
-  parts.push(vArrow(la.cx,lf.bottom,lan.top),vArrow(ra.cx,rf.bottom,ran.top));
-  parts.push(band(y5-12,"ANÁLISIS"));
-  parts.push(lan.svg,ran.svg);
-  return svgWrap(W,H,parts.join(""));
+/* ============ Dibujo SVG ============ */
+var F = "Helvetica, Arial, sans-serif";
+function box(x, y, w, h, lines, opts){
+  opts = opts || {};
+  var s = '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + (opts.fill || "#FCFDFC") + '" stroke="' + (opts.stroke || "#17262E") + '" stroke-width="1"' + (opts.dash ? ' stroke-dasharray="4 3"' : "") + '/>';
+  var lh = 14, top = y + h/2 - (lines.length-1)*lh/2 + 4;
+  lines.forEach(function(l, i){
+    var bold = /^\*/.test(l);
+    var txt = l.replace(/^\*/, "");
+    s += '<text x="' + (x + w/2) + '" y="' + (top + i*lh) + '" text-anchor="middle" font-family="' + F + '" font-size="' + (bold ? 11.5 : 10.5) + '"' +
+      (bold ? ' font-weight="600"' : "") + ' fill="#17262E">' + esc(txt) + '</text>';
+  });
+  return s;
+}
+function arrow(x1, y1, x2, y2){
+  return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="#42525A" stroke-width="1" marker-end="url(#ar)"/>';
+}
+function lbl(x, y, t){
+  return '<text x="' + x + '" y="' + y + '" font-family="' + F + '" font-size="9.5" letter-spacing="1" fill="#0E7C74" font-weight="600" transform="rotate(-90 ' + x + ' ' + y + ')" text-anchor="middle">' + esc(t.toUpperCase()) + '</text>';
+}
+function head(W, H){
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '">' +
+    '<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">' +
+    '<polygon points="0 0, 9 3.5, 0 7" fill="#42525A"/></marker></defs>' +
+    '<rect width="' + W + '" height="' + H + '" fill="#FFFFFF"/>';
 }
 
-function renderPrisma(V){
-  const W=760;const cx=W*0.42;const bw=330;let parts=[];
-  const b1=box(cx-bw/2,34,bw,[`Registros identificados (n = ${V.db})`,`De otras fuentes (n = ${V.other})`],{boldFirst:true});
-  const dup=box(cx+bw/2+50,34,260,[`Duplicados eliminados (n = ${V.dup})`]);
-  const b2=box(cx-bw/2,b1.bottom+44,bw,[`Registros cribados (n = ${V.screen})`],{boldFirst:true});
-  const ex1=box(cx+bw/2+50,b2.top,260,[`Excluidos (n = ${V.screen_ex})`]);
-  const b3=box(cx-bw/2,b2.bottom+44,bw,[`Textos completos evaluados (n = ${V.full})`],{boldFirst:true});
-  const exLines=[`Excluidos (n = ${V.full_ex})`].concat(wrapText(V.full_reason,34).map(l=>"· "+l));
-  const ex2=box(cx+bw/2+50,b3.top,260,exLines);
-  const b4=box(cx-bw/2,b3.bottom+44,bw,[`Incluidos en síntesis cualitativa (n = ${V.inc_qual})`,`Incluidos en metaanálisis (n = ${V.inc_quant})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
-  const H=Math.max(b4.bottom,ex2.bottom)+24;
-  parts.push(band(24,"IDENTIFICACIÓN"));
-  parts.push(b1.svg,dup.svg,b2.svg,ex1.svg,b3.svg,ex2.svg,b4.svg);
-  parts.push(vArrow(b1.cx,b1.bottom,b2.top));
-  parts.push(hArrow(b1.right,dup.left,b1.bottom-14));
-  parts.push(band(b2.top-12,"CRIBADO"));
-  parts.push(vArrow(b2.cx,b2.bottom,b3.top));
-  parts.push(hArrow(b2.right,ex1.left,b2.cy));
-  parts.push(vArrow(b3.cx,b3.bottom,b4.top));
-  parts.push(hArrow(b3.right,ex2.left,b3.cy));
-  parts.push(band(b4.top-12,"INCLUIDOS"));
-  return svgWrap(W,H,parts.join(""));
+function dibujar(){
+  var s;
+  if(MODO === "consort") s = consort();
+  else if(MODO === "prisma") s = prisma();
+  else s = strobe();
+  SVG = s;
+  document.getElementById("diag").innerHTML = s;
+  document.getElementById("d-title").textContent = "Diagrama " + DEFS[MODO].n;
+  document.getElementById("d-sub").textContent = DEFS[MODO].hint;
 }
 
-function renderStrobe(V){
-  const W=720;const cx=W*0.40;const bw=320;let parts=[];
-  const b1=box(cx-bw/2,34,bw,[`Población elegible (n = ${V.elig})`],{boldFirst:true});
-  const exLines=[`Excluidos (n = ${V.excl})`].concat(wrapText(V.excl_reason,34).map(l=>"· "+l));
-  const ex=box(cx+bw/2+50,34,260,exLines);
-  const b2=box(cx-bw/2,b1.bottom+46,bw,[`Incluidos en el estudio (n = ${V.incl})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
-  const lost=box(cx+bw/2+50,b2.bottom+46,260,[`Pérdidas de seguimiento (n = ${V.lost})`]);
-  const b3=box(cx-bw/2,b2.bottom+46,bw,[`Analizados (n = ${V.anal})`],{boldFirst:true,fill:"#EDF6F4",stroke:"#0E7C74"});
-  const H=Math.max(b3.bottom,lost.bottom)+24;
-  parts.push(b1.svg,ex.svg,b2.svg,lost.svg,b3.svg);
-  parts.push(vArrow(b1.cx,b1.bottom,b2.top));
-  parts.push(hArrow(b1.right,ex.left,b1.cy));
-  parts.push(vArrow(b2.cx,b2.bottom,b3.top));
-  parts.push(hArrow(b2.right,lost.left,b3.cy));
-  return svgWrap(W,H,parts.join(""));
+function consort(){
+  var W = 780, H = 640, cx = W/2;
+  var s = head(W, H);
+  s += lbl(18, 90, "Reclutamiento") + lbl(18, 250, "Asignación") + lbl(18, 400, "Seguimiento") + lbl(18, 545, "Análisis");
+  s += box(cx-120, 20, 240, 46, ["*Evaluados para elegibilidad", "(n = " + D.evaluados + ")"]);
+  var exTot = D.noCrit + D.rechazan + D.otros;
+  s += box(cx+40, 88, 260, 74, ["*Excluidos (n = " + exTot + ")",
+    "· No cumplen criterios (n = " + D.noCrit + ")", "· Rechazan participar (n = " + D.rechazan + ")", "· Otros motivos (n = " + D.otros + ")"], {fill:"#FFFFFF"});
+  s += arrow(cx, 66, cx, 186);
+  s += arrow(cx, 118, cx+40, 118);
+  s += box(cx-110, 186, 220, 40, ["*Aleatorizados (n = " + D.aleat + ")"], {fill:"#F1F8F7", stroke:"#0E7C74"});
+
+  var lx = 60, rx = 420, bw = 300;
+  s += '<line x1="' + cx + '" y1="226" x2="' + cx + '" y2="252" stroke="#42525A"/>';
+  s += '<line x1="' + (lx+bw/2) + '" y1="252" x2="' + (rx+bw/2) + '" y2="252" stroke="#42525A"/>';
+  s += arrow(lx+bw/2, 252, lx+bw/2, 276);
+  s += arrow(rx+bw/2, 252, rx+bw/2, 276);
+
+  [[lx, "a", "intervención"], [rx, "b", "control"]].forEach(function(g){
+    var x = g[0], p = g[1];
+    s += box(x, 276, bw, 62, ["*Asignados a " + g[2] + " (n = " + D[p+"_asig"] + ")",
+      "· Recibieron la asignación (n = " + D[p+"_recib"] + ")", "· No la recibieron (n = " + D[p+"_norecib"] + ")"]);
+    s += arrow(x+bw/2, 338, x+bw/2, 398);
+    s += box(x, 398, bw, 56, ["*Seguimiento", "· Pérdidas (n = " + D[p+"_perd"] + ")", "· Discontinuaron (n = " + D[p+"_disc"] + ")"]);
+    s += arrow(x+bw/2, 454, x+bw/2, 514);
+    s += box(x, 514, bw, 56, ["*Analizados (n = " + D[p+"_anal"] + ")", "· Excluidos del análisis (n = " + D[p+"_excl"] + ")"],
+      {fill:"#F1F8F7", stroke:"#0E7C74"});
+  });
+  s += '<text x="' + cx + '" y="' + (H-14) + '" text-anchor="middle" font-family="' + F + '" font-size="9" fill="#9AA7AC">Diagrama de flujo CONSORT 2010</text>';
+  return s + "</svg>";
 }
 
-function svgWrap(w,h,inner){
-  return `<svg xmlns="${NS}" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">${defs()}<rect width="${w}" height="${h}" fill="#FFFFFF"/>${inner}</svg>`;
-}
-function currentSvg(){
-  const t=$("tipo").value;
-  if(t==="consort")return renderConsort(VALS);
-  if(t==="prisma")return renderPrisma(VALS);
-  return renderStrobe(VALS);
-}
-function render(){$("preview").innerHTML=currentSvg();}
+function prisma(){
+  var W = 820, H = 700;
+  var lx = 60, bw = 300, rx = 460, rw = 300;
+  var s = head(W, H);
+  s += lbl(20, 110, "Identificación") + lbl(20, 350, "Cribado") + lbl(20, 600, "Incluidos");
+  s += box(lx, 24, bw, 56, ["*Registros identificados en:",
+    "Bases de datos (n = " + D.bases + ")", "Registros de ensayos (n = " + D.registros + ")"]);
+  s += box(rx, 24, rw, 70, ["*Registros eliminados antes del cribado:",
+    "Duplicados (n = " + D.dup + ")", "Marcados no elegibles por automatismo (n = " + D.automat + ")", "Otros motivos (n = " + D.otrosEl + ")"]);
+  s += arrow(lx+bw, 52, rx, 52);
+  s += arrow(lx+bw/2, 80, lx+bw/2, 130);
 
-/* ============ export ============ */
-$("btnSvg").onclick=()=>{const b=new Blob([currentSvg()],{type:"image/svg+xml"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="diagrama_"+$("tipo").value+".svg";a.click();};
-$("btnPng").onclick=()=>{
-  const svg=currentSvg();const m=svg.match(/width="(\d+)" height="(\d+)"/);const w=+m[1],h=+m[2];const scale=2;
-  const img=new Image();const blob=new Blob([svg],{type:"image/svg+xml"});const url=URL.createObjectURL(blob);
-  img.onload=()=>{const c=document.createElement("canvas");c.width=w*scale;c.height=h*scale;const ctx=c.getContext("2d");
-    ctx.setTransform(scale,0,0,scale,0,0);ctx.drawImage(img,0,0);URL.revokeObjectURL(url);
-    c.toBlob(bb=>{const a=document.createElement("a");a.href=URL.createObjectURL(bb);a.download="diagrama_"+$("tipo").value+".png";a.click();});};
-  img.onerror=()=>{$("st").classList.add("err");$("st").textContent="⚠ No se pudo generar el PNG; usa la exportación SVG.";};
-  img.src=url;
-};
+  var pasos = [
+    ["Registros cribados (n = " + D.cribados + ")", "Registros excluidos (n = " + D.cribExcl + ")", 130],
+    ["Informes buscados para su recuperación (n = " + D.buscados + ")", "Informes no recuperados (n = " + D.noRecup + ")", 210],
+    ["Informes evaluados para elegibilidad (n = " + D.evaluados + ")", null, 290]
+  ];
+  pasos.forEach(function(p){
+    s += box(lx, p[2], bw, 42, ["*" + p[0]]);
+    if(p[1]){
+      s += box(rx, p[2], rw, 42, ["*" + p[1]]);
+      s += arrow(lx+bw, p[2]+21, rx, p[2]+21);
+      s += arrow(lx+bw/2, p[2]+42, lx+bw/2, p[2]+80);
+    }
+  });
+  var exTot = D.ex1 + D.ex2 + D.ex3 + D.ex4;
+  s += box(rx, 290, rw, 86, ["*Informes excluidos (n = " + exTot + "):",
+    "Población no elegible (n = " + D.ex1 + ")", "Intervención no elegible (n = " + D.ex2 + ")",
+    "Diseño no elegible (n = " + D.ex3 + ")", "Desenlace no notificado (n = " + D.ex4 + ")"]);
+  s += arrow(lx+bw, 311, rx, 311);
+  s += arrow(lx+bw/2, 332, lx+bw/2, 420);
 
-/* ============ IA opcional ============ */
-function getKey(){return localStorage.getItem("ia_openai_key")||"";}
-$("btnKey").onclick=()=>{$("inKey").value=getKey();$("dlgKey").showModal();};
-$("saveKey").onclick=()=>{const v=$("inKey").value.trim();if(v)localStorage.setItem("ia_openai_key",v);$("dlgKey").close();};
-$("delKey").onclick=()=>{localStorage.removeItem("ia_openai_key");$("inKey").value="";};
-$("closeKey").onclick=()=>$("dlgKey").close();
-$("btnIa").onclick=()=>{ if(!getKey()){$("dlgKey").showModal();return;} $("dlgIa").showModal(); };
-$("iaClose").onclick=()=>$("dlgIa").close();
-$("iaRun").onclick=async()=>{
-  const key=getKey();if(!key){$("dlgKey").showModal();return;}
-  const txt=$("iaText").value.trim();if(!txt){$("iaSt").textContent="Pega un texto primero.";return;}
-  const t=$("tipo").value;const flds=TEMPLATES[t].fields;
-  $("iaSt").textContent="Extrayendo…";
-  const schema=flds.map(f=>`"${f.id}": ${f.type==="num"?"número":"texto"} (${f.label})`).join(", ");
-  const prompt=`Extrae del siguiente texto las cifras para un diagrama de flujo ${t.toUpperCase()}. Devuelve SOLO un objeto JSON con estas claves (usa 0 o "" si un dato no aparece, no inventes): {${schema}}. Texto:\n"""${txt}"""`;
+  s += box(lx, 420, bw, 56, ["*Estudios incluidos en la revisión", "(n = " + D.incluidos + ")",
+    "Informes de esos estudios (n = " + D.informes + ")"], {fill:"#F1F8F7", stroke:"#0E7C74"});
+  s += '<text x="' + (W/2) + '" y="' + (H-260) + '" text-anchor="middle" font-family="' + F + '" font-size="9" fill="#9AA7AC">Diagrama de flujo PRISMA 2020</text>';
+  return s.replace(/viewBox="0 0 820 700"/, 'viewBox="0 0 820 500"').replace(/height="700"/, 'height="500"') + "</svg>";
+}
+
+function strobe(){
+  var W = 760, H = 500, cx = W/2;
+  var s = head(W, H);
+  s += lbl(20, 100, "Selección") + lbl(20, 260, "Seguimiento") + lbl(20, 400, "Análisis");
+  s += box(cx-130, 24, 260, 40, ["*Potencialmente elegibles (n = " + D.elegibles + ")"]);
+  s += box(cx+50, 84, 260, 56, ["*Excluidos (n = " + (D.noCrit + D.rechazan) + ")",
+    "· No cumplen criterios (n = " + D.noCrit + ")", "· Rechazan participar (n = " + D.rechazan + ")"]);
+  s += arrow(cx, 64, cx, 164);
+  s += arrow(cx, 112, cx+50, 112);
+  s += box(cx-130, 164, 260, 40, ["*Incluidos en el estudio (n = " + D.incluidos + ")"], {fill:"#F1F8F7", stroke:"#0E7C74"});
+
+  s += box(cx+50, 224, 260, 56, ["*Pérdidas (n = " + (D.perdidas + D.retirados) + ")",
+    "· Pérdidas de seguimiento (n = " + D.perdidas + ")", "· Retiran el consentimiento (n = " + D.retirados + ")"]);
+  s += arrow(cx, 204, cx, 304);
+  s += arrow(cx, 252, cx+50, 252);
+  s += box(cx-130, 304, 260, 40, ["*Completan el seguimiento (n = " + D.seguidos + ")"]);
+
+  s += box(cx+50, 360, 260, 40, ["*Excluidos por datos ausentes (n = " + D.datosFalt + ")"]);
+  s += arrow(cx, 344, cx, 420);
+  s += arrow(cx, 380, cx+50, 380);
+  s += box(cx-130, 420, 260, 40, ["*Incluidos en el análisis (n = " + D.analizados + ")"], {fill:"#F1F8F7", stroke:"#0E7C74"});
+  s += '<text x="' + cx + '" y="' + (H-8) + '" text-anchor="middle" font-family="' + F + '" font-size="9" fill="#9AA7AC">Diagrama de flujo STROBE</text>';
+  return s + "</svg>";
+}
+
+/* ============ Comprobación aritmética ============ */
+function chequeo(){
+  var c = [];
+  if(MODO === "consort"){
+    var ex = D.noCrit + D.rechazan + D.otros;
+    c.push([D.evaluados - ex === D.aleat, "Evaluados (" + D.evaluados + ") − excluidos (" + ex + ") = aleatorizados (" + D.aleat + ")"]);
+    ["a","b"].forEach(function(p, i){
+      var g = i ? "control" : "intervención";
+      c.push([D[p+"_asig"] === D[p+"_recib"] + D[p+"_norecib"], "Grupo " + g + ": asignados = recibieron + no recibieron"]);
+      c.push([D[p+"_anal"] + D[p+"_excl"] === D[p+"_asig"], "Grupo " + g + ": analizados + excluidos del análisis = asignados"]);
+      c.push([D[p+"_perd"] + D[p+"_disc"] <= D[p+"_asig"], "Grupo " + g + ": las pérdidas no superan a los asignados"]);
+    });
+    c.push([D.aleat > 0, "Hay participantes aleatorizados"]);
+  } else if(MODO === "prisma"){
+    c.push([D.cribados >= 0, "Registros cribados no negativos (" + D.cribados + ")"]);
+    c.push([D.buscados >= 0 && D.cribExcl <= D.cribados, "Los excluidos en el cribado no superan a los cribados"]);
+    c.push([D.evaluados >= 0 && D.noRecup <= D.buscados, "Los informes no recuperados no superan a los buscados"]);
+    c.push([D.incluidos >= 0, "Estudios incluidos no negativos (" + D.incluidos + ")"]);
+    c.push([D.informes >= D.incluidos || D.incluidos === 0, "Los informes son al menos tantos como los estudios incluidos"]);
+    c.push([D.dup <= D.bases + D.registros, "Los duplicados no superan a los registros identificados"]);
+  } else {
+    c.push([D.incluidos >= 0, "Incluidos no negativos (" + D.incluidos + ")"]);
+    c.push([D.noCrit + D.rechazan <= D.elegibles, "Los excluidos no superan a los elegibles"]);
+    c.push([D.seguidos >= 0, "Los que completan el seguimiento no son negativos"]);
+    c.push([D.analizados >= 0, "Los analizados no son negativos"]);
+    c.push([D.analizados <= D.incluidos, "Los analizados no superan a los incluidos"]);
+  }
+  document.getElementById("chk").innerHTML = c.map(function(x){
+    return '<div class="' + (x[0] ? "" : "bad") + '">' + esc(x[1]) + '</div>';
+  }).join("");
+}
+
+/* ============ IA: extracción de cifras ============ */
+var SYS = [
+  "Eres extractor de datos de artículos biomédicos. Recibes un texto y la lista de campos numéricos de un diagrama de flujo.",
+  "Devuelve el valor de cada campo que puedas identificar con certeza en el texto. Si un campo no aparece, devuélvelo como 0.",
+  "No calcules totales: extrae solo lo que el texto afirma explícitamente.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"valores\":{\"clave\":numero,...},\"no_encontrados\":[\"clave\",...],\"avisos\":[\"ambigüedad detectada\"]}"
+].join(" ");
+
+document.getElementById("btn-ia").onclick = async function(){
+  var t = document.getElementById("txt").value.trim();
+  if(t.length < 40){ st("Pega un texto algo más largo.", true); return; }
+  var btn = this; btn.disabled = true;
+  st('<span class="spin"></span>Extrayendo cifras…');
+  var claves = [];
+  DEFS[MODO].campos.forEach(function(g){ g[1].forEach(function(c){ if(!c[2]) claves.push({ clave:c[0], significa:c[1] }); }); });
   try{
-    const r=await fetch("https://api.openai.com/v1/chat/completions",{method:"POST",
-      headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},
-      body:JSON.stringify({model:"gpt-4o-mini",temperature:0.1,response_format:{type:"json_object"},messages:[{role:"user",content:prompt}]})});
-    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||("HTTP "+r.status));}
-    const d=await r.json();const obj=JSON.parse(d.choices[0].message.content.replace(/```json|```/g,"").trim());
-    flds.forEach(f=>{if(obj[f.id]!==undefined&&obj[f.id]!==null){VALS[f.id]=f.type==="num"?(parseFloat(obj[f.id])||0):String(obj[f.id]);const el=$("f_"+f.id);if(el)el.value=VALS[f.id];}});
-    render();$("iaSt").textContent="✓ Cifras rellenadas. Revísalas.";$("iaNote").textContent="⚠ Cifras extraídas por IA — verifícalas.";
-    setTimeout(()=>$("dlgIa").close(),700);
-  }catch(e){$("iaSt").textContent="⚠ "+e.message;}
+    var j = await askAI(SYS, JSON.stringify({ guia: DEFS[MODO].n, campos: claves, texto: t }), 0);
+    var n = 0;
+    Object.keys(j.valores || {}).forEach(function(k){
+      if(CALCS[k]) return;
+      var v = parseInt(j.valores[k], 10);
+      if(!isNaN(v) && v >= 0){ D[k] = v; n++; }
+    });
+    campos(); recalc();
+    st(n + " campos rellenados." + ((j.avisos && j.avisos.length) ? " Avisos: " + j.avisos.join("; ") : "") +
+       ((j.no_encontrados && j.no_encontrados.length) ? " No hallados: " + j.no_encontrados.length + " campos." : ""));
+  }catch(e){ st(e.message, true); }
+  finally{ btn.disabled = false; }
 };
 
-/* init */
-$("tipo").onchange=buildForm;
-buildForm();
+/* ============ Exportación ============ */
+document.getElementById("btn-svg").onclick = function(){
+  dl(SVG, "diagrama-" + MODO + ".svg", "image/svg+xml");
+};
+document.getElementById("btn-copy").onclick = async function(){
+  try{ await navigator.clipboard.writeText(SVG); st2("SVG copiado al portapapeles."); }
+  catch(e){ st2("El navegador bloqueó el portapapeles."); }
+};
+document.getElementById("btn-png").onclick = function(){
+  var svg = document.querySelector("#diag svg");
+  if(!svg){ st2("No hay diagrama."); return; }
+  var W = svg.viewBox.baseVal.width || 800, H = svg.viewBox.baseVal.height || 600;
+  var esc2 = 2;
+  var img = new Image();
+  var blob = new Blob([SVG], {type:"image/svg+xml;charset=utf-8"});
+  var url = URL.createObjectURL(blob);
+  img.onload = function(){
+    var cv = document.createElement("canvas");
+    cv.width = W*esc2; cv.height = H*esc2;
+    var ctx = cv.getContext("2d");
+    ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.drawImage(img, 0, 0, cv.width, cv.height);
+    URL.revokeObjectURL(url);
+    cv.toBlob(function(b){
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(b);
+      a.download = "diagrama-" + MODO + ".png"; a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+      st2("PNG descargado a " + (W*esc2) + "×" + (H*esc2) + " px.");
+    }, "image/png");
+  };
+  img.onerror = function(){ URL.revokeObjectURL(url); st2("No se ha podido convertir a PNG. Usa el SVG."); };
+  img.src = url;
+};
+function dl(text, name, mime){
+  var b = new Blob([text], {type: mime + ";charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = name; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  st2("Descargado.");
+}
+function st(m, err){ var s = document.getElementById("st"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; if(!/spin/.test(m)) setTimeout(function(){ s.innerHTML = ""; }, 4000); }
+function st2(m){ var s = document.getElementById("st2"); s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 2600); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+initKeyDialog(); setModo("consort");
 </script>
 </body>
 </html>

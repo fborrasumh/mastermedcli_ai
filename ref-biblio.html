@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RefBiblio·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card h3{font-family:'Spectral',serif;font-weight:500;font-size:17px;margin:22px 0 10px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select,textarea{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif}
+  textarea{font-size:12.5px;min-height:110px;resize:vertical;line-height:1.5}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:14px;margin-bottom:20px}
+  .stats div{border-left:2px solid var(--line);padding-left:11px}
+  .stats .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .stats .v{font-family:'Spectral',serif;font-size:25px;font-weight:500;margin-top:1px;line-height:1.15}
+  .stats .v small{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft);font-weight:400;display:block;margin-top:2px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:500}
+  td{padding:7px 10px;border-bottom:1px solid var(--line-soft)}
+  td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  tr.hl td{background:#F2F7F6}
+  .tbl-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:3px}
+
+  .verdict{border-left:3px solid var(--teal);padding-left:16px;margin:18px 0}
+  .verdict.warn{border-color:var(--amber)}
+  .verdict.bad{border-color:var(--red)}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .verdict p{font-size:14.5px;margin-top:4px;max-width:76ch}
+
+  .plot{margin-top:6px}
+  .plot svg{width:100%;height:auto;display:block}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gridl{stroke:var(--line-soft);stroke-width:1}
+  .tick{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:var(--slate)}
+  .bar{fill:#CDE2E0;stroke:var(--teal);stroke-width:.7}
+  .curveline{fill:none;stroke:var(--amber);stroke-width:1.6}
+  .refline{stroke:var(--amber);stroke-width:1;stroke-dasharray:4 3}
+  .pt{fill:var(--teal);opacity:.75}
+
+  .para{font-size:14.5px;line-height:1.75;background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:18px;font-family:'Spectral',serif}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+  .drop{border:1px dashed var(--line);border-radius:3px;padding:26px;text-align:center;color:var(--ink-soft);font-size:14px;cursor:pointer;transition:.15s;background:#FCFDFC}
+  .drop:hover,.drop.over{border-color:var(--teal);background:#F2F7F6;color:var(--teal-deep)}
+  .drop b{display:block;font-weight:500;color:var(--ink);margin-bottom:3px}
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:2px 7px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--slate);margin-left:6px}
+  .pill.ok{background:#F1F8F7;color:var(--teal-deep);border-color:#BFD9D6}
+  .pill.no{background:#FBF2F1;color:var(--red);border-color:#E0C4C1}
+  .pill.mid{background:#FBF6EC;color:var(--amber);border-color:#E5D6B9}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
+
+  .layout{display:grid;grid-template-columns:minmax(280px,340px) 1fr;gap:22px;align-items:start}
+  .src{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  .src label{display:inline-flex;align-items:center;gap:7px;text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-size:13.5px;color:var(--ink);margin:0;cursor:pointer}
+  .src input{width:auto}
+
+  .rec{border:1px solid var(--line);border-radius:3px;padding:14px 16px;margin-bottom:9px;background:#FCFDFC;transition:.14s}
+  .rec:hover{border-color:#BFD9D6}
+  .rec.added{background:#F1F8F7;border-color:#BFD9D6}
+  .rec .t{font-family:'Spectral',serif;font-size:15.5px;font-weight:500;line-height:1.35;margin-bottom:5px}
+  .rec .a{font-size:12.5px;color:var(--ink-soft);margin-bottom:5px;line-height:1.45}
+  .rec .m{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate);display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .rec .m a{color:var(--teal);text-decoration:none}
+  .rec .m a:hover{text-decoration:underline}
+  .src-tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.06em;padding:1px 6px;border-radius:2px;text-transform:uppercase}
+  .src-tag.pubmed{background:#F1F8F7;color:var(--teal-deep);border:1px solid #BFD9D6}
+  .src-tag.crossref{background:#FBF6EC;color:var(--amber);border:1px solid #E5D6B9}
+  .rec .btns{margin-top:9px;display:flex;gap:7px}
+
+  .lib-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+  .lib-item .n{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);flex-shrink:0;width:26px;padding-top:2px}
+  .lib-item .cite{flex:1;font-size:13.5px;line-height:1.6;min-width:0}
+  .lib-item .cite i{font-style:italic}
+  .lib-item .x{background:none;border:none;color:#B7C0C3;font-size:16px;padding:0 4px;flex-shrink:0}
+  .lib-item .x:hover{color:var(--red);background:none}
+  .dup{border-left:3px solid var(--amber);padding-left:11px;margin-left:-14px}
+
+  .fmt{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;margin-bottom:16px}
+  .fmt button{flex:1;border:none;border-radius:0;background:#FCFDFC;color:var(--slate);font-size:13px;padding:8px}
+  .fmt button.on{background:var(--teal);color:#fff}
+
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+  .empty{color:var(--ink-soft);font-size:13.5px;padding:16px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">18 · Escritura científica y difusión</div>
+    <h1>RefBiblio<em>·AI</em></h1>
+    <p class="lede">Busca en PubMed y CrossRef con sus APIs reales, construye tu biblioteca, formatea las citas en Vancouver o APA, detecta duplicados y exporta a BibTeX y RIS para Zotero o Mendeley.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="layout">
+  <div>
+    <section class="card">
+      <h2>Búsqueda</h2>
+      <p class="sub">Las consultas van directamente a las APIs públicas desde tu navegador.</p>
+      <div class="fld">
+        <label for="q">Términos, título, autor o DOI</label>
+        <input type="text" id="q" placeholder="dapagliflozina insuficiencia cardíaca">
+      </div>
+      <label>Fuentes</label>
+      <div class="src">
+        <label><input type="checkbox" id="s-pm" checked> PubMed (E-utilities)</label>
+        <label><input type="checkbox" id="s-cr" checked> CrossRef</label>
+      </div>
+      <div class="grid2">
+        <div class="fld"><label for="lim">Resultados por fuente</label>
+          <select id="lim"><option>10</option><option selected>20</option><option>40</option></select>
+        </div>
+        <div class="fld"><label for="anio">Desde el año</label><input type="number" id="anio" placeholder="2015" min="1800" max="2100"></div>
+      </div>
+      <div class="actions">
+        <button id="btn-buscar">Buscar</button>
+        <button class="ghost small" id="btn-doi">Buscar por DOI</button>
+      </div>
+      <div class="status" id="st" style="margin-top:10px"></div>
+      <div class="note">PubMed limita a tres peticiones por segundo sin clave de API. Si buscas mucho, espacia las consultas.</div>
+    </section>
+
+    <section class="card">
+      <h2>Biblioteca</h2>
+      <p class="sub" id="lib-sub">0 referencias</p>
+      <div class="actions" style="margin-top:0">
+        <button class="ghost small" id="btn-bib">BibTeX</button>
+        <button class="ghost small" id="btn-ris">RIS</button>
+        <button class="ghost small" id="btn-txt">Lista de citas</button>
+        <button class="ghost small" id="btn-clear">Vaciar</button>
+      </div>
+      <div class="status" id="st3" style="margin-top:8px"></div>
+      <div class="divider"><span>Duplicados</span></div>
+      <div id="dups" class="empty">Ninguno detectado.</div>
+    </section>
+  </div>
+
+  <div>
+    <section class="card">
+      <h2>Resultados</h2>
+      <p class="sub" id="res-sub">Introduce una consulta y pulsa Buscar.</p>
+      <div id="res"></div>
+    </section>
+
+    <section class="card">
+      <h2>Referencias</h2>
+      <p class="sub">Numeradas por orden de adición, como exige Vancouver.</p>
+      <div class="fmt">
+        <button id="f-van" class="on">Vancouver</button>
+        <button id="f-apa">APA 7ª ed.</button>
+      </div>
+      <div id="lib"></div>
+      <div class="actions">
+        <button class="ghost" id="btn-copy">Copiar lista</button>
+        <span class="status" id="st2"></span>
+      </div>
+      <div class="note">Comprueba siempre las citas antes de enviarlas: los metadatos de CrossRef proceden de las editoriales y no siempre están completos. La abreviatura de la revista en Vancouver es la del <em>Index Medicus</em>; PubMed la proporciona, CrossRef no siempre.</div>
+    </section>
+  </div>
+</div>
+</main>
+
+<footer class="wrap">
+  <span>RefBiblio·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span>APIs de NCBI E-utilities y CrossRef · sin clave requerida</span>
+</footer>
+
+<script>
+"use strict";
+
+var LIB = [], RES = [], FMT = "van";
+
+/* ============ APIs ============ */
+var EU = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
+var CR = "https://api.crossref.org/works";
+
+async function jget(url){
+  var r = await fetch(url);
+  if(!r.ok) throw new Error("La API respondió " + r.status);
+  return r.json();
+}
+
+async function pubmed(q, lim, anio){
+  var term = q;
+  if(anio) term += ' AND ("' + anio + '"[Date - Publication] : "3000"[Date - Publication])';
+  var s = await jget(EU + "esearch.fcgi?db=pubmed&retmode=json&retmax=" + lim + "&term=" + encodeURIComponent(term));
+  var ids = (s.esearchresult && s.esearchresult.idlist) || [];
+  if(!ids.length) return [];
+  var d = await jget(EU + "esummary.fcgi?db=pubmed&retmode=json&id=" + ids.join(","));
+  return ids.map(function(id){
+    var u = d.result[id];
+    if(!u) return null;
+    var ids2 = {};
+    (u.articleids || []).forEach(function(a){ ids2[a.idtype] = a.value; });
+    return {
+      fuente:"pubmed",
+      titulo: limpia(u.title || ""),
+      autores: (u.authors || []).filter(function(a){ return a.authtype === "Author"; }).map(function(a){ return a.name; }),
+      revista: u.source || "",
+      revistaLarga: u.fulljournalname || u.source || "",
+      anio: (String(u.pubdate || "").match(/\d{4}/) || [""])[0],
+      volumen: u.volume || "", numero: u.issue || "", paginas: u.pages || "",
+      doi: ids2.doi || "", pmid: id,
+      tipo: "article"
+    };
+  }).filter(Boolean);
+}
+
+async function crossref(q, lim, anio){
+  var url = CR + "?rows=" + lim + "&select=DOI,title,author,container-title,short-container-title,issued,volume,issue,page,type,publisher" +
+    "&query.bibliographic=" + encodeURIComponent(q);
+  if(anio) url += "&filter=from-pub-date:" + anio + "-01-01";
+  var d = await jget(url);
+  var items = (d.message && d.message.items) || [];
+  return items.map(function(it){
+    var dp = (it.issued && it.issued["date-parts"] && it.issued["date-parts"][0]) || [];
+    return {
+      fuente:"crossref",
+      titulo: limpia((it.title && it.title[0]) || ""),
+      autores: (it.author || []).map(function(a){
+        var ini = (a.given || "").split(/[\s.\-]+/).filter(Boolean).map(function(w){ return w[0].toUpperCase(); }).join("");
+        return ((a.family || a.name || "") + " " + ini).trim();
+      }),
+      revista: (it["short-container-title"] && it["short-container-title"][0]) || (it["container-title"] && it["container-title"][0]) || "",
+      revistaLarga: (it["container-title"] && it["container-title"][0]) || "",
+      anio: dp[0] ? String(dp[0]) : "",
+      volumen: it.volume || "", numero: it.issue || "", paginas: it.page || "",
+      doi: it.DOI || "", pmid: "",
+      tipo: it.type === "journal-article" ? "article" : (it.type || "misc"),
+      editorial: it.publisher || ""
+    };
+  }).filter(function(r){ return r.titulo; });
+}
+function limpia(t){ return String(t).replace(/<[^>]+>/g, "").replace(/\.$/, "").trim(); }
+
+/* ============ Búsqueda ============ */
+document.getElementById("btn-buscar").onclick = buscar;
+document.getElementById("q").onkeydown = function(e){ if(e.key === "Enter") buscar(); };
+document.getElementById("btn-doi").onclick = async function(){
+  var q = document.getElementById("q").value.trim().replace(/^https?:\/\/(dx\.)?doi\.org\//, "");
+  if(!/^10\.\d{4,9}\//.test(q)){ st("Eso no parece un DOI. Debe empezar por 10.", true); return; }
+  st('<span class="spin"></span>Recuperando el DOI…');
+  try{
+    var d = await jget(CR + "/" + encodeURIComponent(q));
+    var it = d.message;
+    var dp = (it.issued && it.issued["date-parts"] && it.issued["date-parts"][0]) || [];
+    RES = [{
+      fuente:"crossref", titulo: limpia((it.title && it.title[0]) || ""),
+      autores: (it.author || []).map(function(a){
+        var ini = (a.given || "").split(/[\s.\-]+/).filter(Boolean).map(function(w){ return w[0].toUpperCase(); }).join("");
+        return ((a.family || "") + " " + ini).trim();
+      }),
+      revista: (it["short-container-title"] && it["short-container-title"][0]) || (it["container-title"] && it["container-title"][0]) || "",
+      revistaLarga: (it["container-title"] && it["container-title"][0]) || "",
+      anio: dp[0] ? String(dp[0]) : "", volumen: it.volume || "", numero: it.issue || "",
+      paginas: it.page || "", doi: it.DOI || "", pmid: "", tipo:"article", editorial: it.publisher || ""
+    }];
+    render(); st("DOI encontrado.");
+  }catch(e){ st("No se ha encontrado el DOI. " + e.message, true); }
+};
+
+async function buscar(){
+  var q = document.getElementById("q").value.trim();
+  if(q.length < 3){ st("Escribe al menos tres caracteres.", true); return; }
+  var lim = +document.getElementById("lim").value;
+  var anio = document.getElementById("anio").value.trim();
+  var usaPM = document.getElementById("s-pm").checked, usaCR = document.getElementById("s-cr").checked;
+  if(!usaPM && !usaCR){ st("Selecciona al menos una fuente.", true); return; }
+
+  st('<span class="spin"></span>Consultando ' + [usaPM ? "PubMed" : "", usaCR ? "CrossRef" : ""].filter(Boolean).join(" y ") + "…");
+  RES = [];
+  var errs = [];
+  var tareas = [];
+  if(usaPM) tareas.push(pubmed(q, lim, anio).then(function(r){ RES = RES.concat(r); }).catch(function(e){ errs.push("PubMed: " + e.message); }));
+  if(usaCR) tareas.push(crossref(q, lim, anio).then(function(r){ RES = RES.concat(r); }).catch(function(e){ errs.push("CrossRef: " + e.message); }));
+  await Promise.all(tareas);
+
+  RES.sort(function(a,b){ return (parseInt(b.anio,10) || 0) - (parseInt(a.anio,10) || 0); });
+  render();
+  st(errs.length ? errs.join(" · ") : RES.length + " resultados.", !!errs.length);
+}
+
+function render(){
+  var box = document.getElementById("res");
+  document.getElementById("res-sub").textContent = RES.length ? RES.length + " resultados, ordenados por año descendente" : "Sin resultados.";
+  box.innerHTML = "";
+  if(!RES.length){ box.innerHTML = '<div class="empty">No hay resultados que mostrar.</div>'; return; }
+  RES.forEach(function(r, i){
+    var yaEsta = LIB.some(function(x){ return mismo(x, r); });
+    var d = document.createElement("div");
+    d.className = "rec" + (yaEsta ? " added" : "");
+    d.innerHTML =
+      '<div class="t">' + esc(r.titulo) + '</div>' +
+      '<div class="a">' + esc(r.autores.slice(0,5).join(", ") + (r.autores.length > 5 ? ", et al." : "") || "Sin autores") + '</div>' +
+      '<div class="m"><span class="src-tag ' + r.fuente + '">' + r.fuente + '</span>' +
+        '<span>' + esc(r.revista || "—") + '</span><span>' + esc(r.anio || "s. f.") + '</span>' +
+        (r.doi ? '<a href="https://doi.org/' + esc(r.doi) + '" target="_blank" rel="noopener">doi:' + esc(r.doi) + '</a>' : "") +
+        (r.pmid ? '<a href="https://pubmed.ncbi.nlm.nih.gov/' + esc(r.pmid) + '/" target="_blank" rel="noopener">PMID ' + esc(r.pmid) + '</a>' : "") +
+      '</div>' +
+      '<div class="btns"><button class="ghost small" data-add="' + i + '"' + (yaEsta ? " disabled" : "") + '>' + (yaEsta ? "Ya está en la biblioteca" : "Añadir") + '</button></div>';
+    box.appendChild(d);
+  });
+  box.querySelectorAll("[data-add]").forEach(function(b){
+    b.onclick = function(){ LIB.push(RES[+b.dataset.add]); lib(); render(); };
+  });
+}
+
+/* ============ Duplicados ============ */
+function norm(t){ return String(t).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim(); }
+function mismo(a, b){
+  if(a.doi && b.doi && a.doi.toLowerCase() === b.doi.toLowerCase()) return true;
+  if(a.pmid && b.pmid && a.pmid === b.pmid) return true;
+  var na = norm(a.titulo), nb = norm(b.titulo);
+  if(na && na === nb) return true;
+  if(na && nb && a.anio === b.anio && jaccard(na, nb) > 0.85) return true;
+  return false;
+}
+function jaccard(a, b){
+  var A = new Set(a.split(" ")), B = new Set(b.split(" "));
+  var inter = 0;
+  A.forEach(function(w){ if(B.has(w)) inter++; });
+  return inter/(A.size + B.size - inter);
+}
+function duplicados(){
+  var pares = [];
+  for(var i = 0; i < LIB.length; i++) for(var j = i+1; j < LIB.length; j++)
+    if(mismo(LIB[i], LIB[j])) pares.push([i,j]);
+  var box = document.getElementById("dups");
+  if(!pares.length){ box.className = "empty"; box.textContent = "Ninguno detectado."; return []; }
+  box.className = "";
+  box.innerHTML = pares.map(function(p){
+    return '<div class="dup" style="margin-bottom:10px;font-size:13px">Referencias <b>' + (p[0]+1) + '</b> y <b>' + (p[1]+1) + '</b> parecen la misma obra.<br>' +
+      '<span style="color:var(--ink-soft)">' + esc(LIB[p[1]].titulo.slice(0,70)) + '…</span><br>' +
+      '<button class="ghost small" data-del="' + p[1] + '" style="margin-top:6px">Eliminar la ' + (p[1]+1) + '</button></div>';
+  }).join("");
+  box.querySelectorAll("[data-del]").forEach(function(b){
+    b.onclick = function(){ LIB.splice(+b.dataset.del, 1); lib(); render(); };
+  });
+  return pares;
+}
+
+/* ============ Formato de citas ============ */
+function vancouver(r, n){
+  var a = r.autores.slice(0, 6).join(", ") + (r.autores.length > 6 ? ", et al" : "");
+  var s = (a || "[Sin autor]") + ". " + r.titulo + ". ";
+  s += (r.revista || r.revistaLarga || "[Revista]") + ". " + (r.anio || "s.f.");
+  if(r.volumen) s += ";" + r.volumen;
+  if(r.numero) s += "(" + r.numero + ")";
+  if(r.paginas) s += ":" + r.paginas;
+  s += ".";
+  if(r.doi) s += " doi: " + r.doi + ".";
+  return s;
+}
+function apa(r){
+  var au = r.autores.map(function(x){
+    var p = x.trim().split(/\s+/);
+    var ini = p.length > 1 ? p.pop() : "";
+    var ap = p.join(" ");
+    return ap + (ini ? ", " + ini.split("").join(". ") + "." : "");
+  });
+  var a;
+  if(!au.length) a = "[Sin autor]";
+  else if(au.length === 1) a = au[0];
+  else if(au.length <= 20) a = au.slice(0,-1).join(", ") + ", & " + au[au.length-1];
+  else a = au.slice(0,19).join(", ") + ", … " + au[au.length-1];
+  var s = a + " (" + (r.anio || "s. f.") + "). " + r.titulo + ". ";
+  s += "<i>" + (r.revistaLarga || r.revista || "[Revista]") + "</i>";
+  if(r.volumen) s += ", <i>" + r.volumen + "</i>";
+  if(r.numero) s += "(" + r.numero + ")";
+  if(r.paginas) s += ", " + r.paginas;
+  s += ".";
+  if(r.doi) s += " https://doi.org/" + r.doi;
+  return s;
+}
+
+document.getElementById("f-van").onclick = function(){ FMT = "van"; fmtBtns(); lib(); };
+document.getElementById("f-apa").onclick = function(){ FMT = "apa"; fmtBtns(); lib(); };
+function fmtBtns(){
+  document.getElementById("f-van").className = FMT === "van" ? "on" : "";
+  document.getElementById("f-apa").className = FMT === "apa" ? "on" : "";
+}
+
+function lib(){
+  document.getElementById("lib-sub").textContent = LIB.length + (LIB.length === 1 ? " referencia" : " referencias");
+  var box = document.getElementById("lib");
+  box.innerHTML = "";
+  if(!LIB.length){ box.innerHTML = '<div class="empty">Añade referencias desde los resultados de búsqueda.</div>'; duplicados(); return; }
+  LIB.forEach(function(r, i){
+    var d = document.createElement("div");
+    d.className = "lib-item";
+    d.innerHTML = '<span class="n">' + (FMT === "van" ? (i+1) + "." : "") + '</span>' +
+      '<span class="cite">' + (FMT === "van" ? esc(vancouver(r)) : apaEsc(r)) + '</span>' +
+      '<button class="x" data-del="' + i + '" title="Quitar">×</button>';
+    box.appendChild(d);
+  });
+  box.querySelectorAll("[data-del]").forEach(function(b){
+    b.onclick = function(){ LIB.splice(+b.dataset.del, 1); lib(); render(); };
+  });
+  duplicados();
+}
+function apaEsc(r){
+  var s = apa(r);
+  return s.split(/(<i>.*?<\/i>)/).map(function(p){
+    return /^<i>/.test(p) ? "<i>" + esc(p.replace(/<\/?i>/g, "")) + "</i>" : esc(p);
+  }).join("");
+}
+
+/* ============ Exportación ============ */
+function clave(r, i){
+  var ap = (r.autores[0] || "Anon").split(/\s+/)[0].replace(/[^A-Za-z]/g, "");
+  return (ap || "Anon") + (r.anio || "") + String.fromCharCode(97 + (i % 26));
+}
+document.getElementById("btn-bib").onclick = function(){
+  if(!chk()) return;
+  var t = LIB.map(function(r, i){
+    var f = ["author = {" + r.autores.join(" and ") + "}",
+             "title = {" + r.titulo + "}",
+             "journal = {" + (r.revistaLarga || r.revista) + "}",
+             "year = {" + r.anio + "}"];
+    if(r.volumen) f.push("volume = {" + r.volumen + "}");
+    if(r.numero) f.push("number = {" + r.numero + "}");
+    if(r.paginas) f.push("pages = {" + r.paginas.replace("-", "--") + "}");
+    if(r.doi) f.push("doi = {" + r.doi + "}");
+    if(r.pmid) f.push("pmid = {" + r.pmid + "}");
+    return "@article{" + clave(r, i) + ",\n  " + f.join(",\n  ") + "\n}";
+  }).join("\n\n");
+  dl(t, "referencias.bib", "application/x-bibtex");
+};
+document.getElementById("btn-ris").onclick = function(){
+  if(!chk()) return;
+  var t = LIB.map(function(r){
+    var l = ["TY  - JOUR"];
+    r.autores.forEach(function(a){ l.push("AU  - " + a); });
+    l.push("TI  - " + r.titulo);
+    l.push("JO  - " + (r.revistaLarga || r.revista));
+    if(r.anio) l.push("PY  - " + r.anio);
+    if(r.volumen) l.push("VL  - " + r.volumen);
+    if(r.numero) l.push("IS  - " + r.numero);
+    if(r.paginas){
+      var p = r.paginas.split("-");
+      l.push("SP  - " + p[0]);
+      if(p[1]) l.push("EP  - " + p[1]);
+    }
+    if(r.doi) l.push("DO  - " + r.doi);
+    if(r.pmid) l.push("AN  - " + r.pmid);
+    l.push("ER  - ");
+    return l.join("\n");
+  }).join("\n\n");
+  dl(t, "referencias.ris", "application/x-research-info-systems");
+};
+document.getElementById("btn-txt").onclick = function(){
+  if(!chk()) return;
+  var t = LIB.map(function(r, i){
+    return FMT === "van" ? (i+1) + ". " + vancouver(r) : apa(r).replace(/<\/?i>/g, "");
+  }).join("\n\n");
+  dl(t, "referencias.txt", "text/plain");
+};
+document.getElementById("btn-copy").onclick = async function(){
+  if(!chk("st2")) return;
+  var t = LIB.map(function(r, i){
+    return FMT === "van" ? (i+1) + ". " + vancouver(r) : apa(r).replace(/<\/?i>/g, "");
+  }).join("\n\n");
+  try{ await navigator.clipboard.writeText(t); st2("Lista copiada."); }
+  catch(e){ st2("El navegador bloqueó el portapapeles."); }
+};
+document.getElementById("btn-clear").onclick = function(){ LIB = []; lib(); render(); st3("Biblioteca vaciada."); };
+
+function chk(id){
+  if(LIB.length) return true;
+  (id === "st2" ? st2 : st3)("La biblioteca está vacía.");
+  return false;
+}
+function dl(text, name, mime){
+  var b = new Blob([text], {type: mime + ";charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = name; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  st3("Descargado: " + name);
+}
+function st(m, err){ var s = document.getElementById("st"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; }
+function st2(m){ var s = document.getElementById("st2"); s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 2400); }
+function st3(m){ var s = document.getElementById("st3"); s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 2400); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+fmtBtns(); lib(); render();
+</script>
+</body>
+</html>

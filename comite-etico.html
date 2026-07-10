@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ComitéÉtico·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.js"></script>
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card h3{font-family:'Spectral',serif;font-weight:500;font-size:17px;margin:22px 0 10px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select,textarea{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif}
+  textarea{font-size:12.5px;min-height:110px;resize:vertical;line-height:1.5}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:14px;margin-bottom:20px}
+  .stats div{border-left:2px solid var(--line);padding-left:11px}
+  .stats .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .stats .v{font-family:'Spectral',serif;font-size:25px;font-weight:500;margin-top:1px;line-height:1.15}
+  .stats .v small{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft);font-weight:400;display:block;margin-top:2px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:500}
+  td{padding:7px 10px;border-bottom:1px solid var(--line-soft)}
+  td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  tr.hl td{background:#F2F7F6}
+  .tbl-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:3px}
+
+  .verdict{border-left:3px solid var(--teal);padding-left:16px;margin:18px 0}
+  .verdict.warn{border-color:var(--amber)}
+  .verdict.bad{border-color:var(--red)}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .verdict p{font-size:14.5px;margin-top:4px;max-width:76ch}
+
+  .plot{margin-top:6px}
+  .plot svg{width:100%;height:auto;display:block}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gridl{stroke:var(--line-soft);stroke-width:1}
+  .tick{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:var(--slate)}
+  .bar{fill:#CDE2E0;stroke:var(--teal);stroke-width:.7}
+  .curveline{fill:none;stroke:var(--amber);stroke-width:1.6}
+  .refline{stroke:var(--amber);stroke-width:1;stroke-dasharray:4 3}
+  .pt{fill:var(--teal);opacity:.75}
+
+  .para{font-size:14.5px;line-height:1.75;background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:18px;font-family:'Spectral',serif}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+  .drop{border:1px dashed var(--line);border-radius:3px;padding:26px;text-align:center;color:var(--ink-soft);font-size:14px;cursor:pointer;transition:.15s;background:#FCFDFC}
+  .drop:hover,.drop.over{border-color:var(--teal);background:#F2F7F6;color:var(--teal-deep)}
+  .drop b{display:block;font-weight:500;color:var(--ink);margin-bottom:3px}
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:2px 7px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--slate);margin-left:6px}
+  .pill.ok{background:#F1F8F7;color:var(--teal-deep);border-color:#BFD9D6}
+  .pill.no{background:#FBF2F1;color:var(--red);border-color:#E0C4C1}
+  .pill.mid{background:#FBF6EC;color:var(--amber);border-color:#E5D6B9}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
+
+  .modes{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;margin-bottom:22px;max-width:600px}
+  .modes button{flex:1;border:none;border-radius:0;background:#FCFDFC;color:var(--slate);font-size:13px;padding:10px 6px}
+  .modes button.on{background:var(--teal);color:#fff}
+  .layout{display:grid;grid-template-columns:minmax(280px,350px) 1fr;gap:22px;align-items:start}
+
+  .doc{background:#fff;border:1px solid var(--line);border-radius:3px;padding:36px 42px;font-family:'Spectral',serif;font-size:14px;line-height:1.75;max-height:660px;overflow:auto}
+  .doc h1{font-size:19px;font-weight:600;text-align:center;margin-bottom:6px;line-height:1.3}
+  .doc .cent{text-align:center;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--slate);margin-bottom:22px}
+  .doc h2{font-family:'Spectral',serif;font-size:15px;font-weight:600;margin:20px 0 6px}
+  .doc p{margin-bottom:9px;text-align:justify}
+  .doc .firma{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:26px;font-family:'Inter',sans-serif;font-size:12.5px}
+  .doc .firma div{border-top:1px solid var(--ink);padding-top:6px;margin-top:44px;color:var(--ink-soft)}
+  .doc .falta{color:#B7C0C3;font-style:italic}
+  .doc .rgpd{font-size:12px;color:var(--ink-soft);background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:14px 16px;margin-top:14px;font-family:'Inter',sans-serif;line-height:1.6}
+
+  .sec-nav button{display:flex;width:100%;text-align:left;align-items:center;gap:9px;border:1px solid transparent;background:none;color:var(--ink);padding:8px 10px;border-radius:3px;font-size:13px;font-weight:400;margin-bottom:2px}
+  .sec-nav button:hover{background:#F2F7F6}
+  .sec-nav button.on{background:#F1F8F7;border-color:#BFD9D6;color:var(--teal-deep);font-weight:500}
+  .sec-nav .dot{margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--line)}
+  .sec-nav .dot.full{background:var(--teal)}
+
+  .chk .ci{display:flex;gap:11px;align-items:flex-start;padding:11px 13px;border:1px solid var(--line);border-radius:3px;margin-bottom:7px;background:#FCFDFC}
+  .chk .ci.ok{background:#fff;border-color:var(--line-soft)}
+  .chk .ci.bad{border-left:3px solid var(--red)}
+  .chk .ci.oblig .txt b::after{content:" ·";color:var(--red)}
+  .chk .txt{flex:1;font-size:13.5px;line-height:1.5}
+  .chk .txt b{font-weight:500;display:block}
+  .chk .txt small{color:var(--ink-soft);font-size:12.5px;display:block;margin-top:2px;line-height:1.45}
+  .chk .seg{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;flex-shrink:0}
+  .chk .seg button{border:none;border-radius:0;background:#fff;color:var(--slate);font-size:11.5px;padding:5px 9px;border-right:1px solid var(--line)}
+  .chk .seg button:last-child{border-right:none}
+  .chk .seg button.on[data-v="si"]{background:var(--teal);color:#fff}
+  .chk .seg button.on[data-v="na"]{background:var(--slate);color:#fff}
+  .chk .seg button.on[data-v="no"]{background:var(--red);color:#fff}
+
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%}
+  dialog::backdrop{background:rgba(23,38,46,.35)}
+  .dlg{padding:24px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">22 · Escritura científica y difusión</div>
+    <h1>ComitéÉtico<em>·AI</em></h1>
+    <p class="lede">Genera la hoja de información al participante y el documento de consentimiento informado conforme a la normativa española, y verifica la documentación que exige el CEIm antes de presentar el proyecto.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="modes">
+    <button id="m-hip" class="on">Hoja de información</button>
+    <button id="m-ci">Consentimiento</button>
+    <button id="m-doc">Documentación CEIm</button>
+  </div>
+
+  <!-- HIP -->
+  <div id="v-hip">
+    <div class="layout">
+      <div>
+        <section class="card">
+          <h2>Datos del estudio</h2>
+          <div class="fld"><label for="f-tit">Título del estudio</label><textarea id="f-tit" style="min-height:52px;font-family:Inter,sans-serif;font-size:13px"></textarea></div>
+          <div class="fld"><label for="f-cod">Código de protocolo</label><input type="text" id="f-cod" placeholder="UMH-2026-001"></div>
+          <div class="fld"><label for="f-ip">Investigador principal</label><input type="text" id="f-ip"></div>
+          <div class="fld"><label for="f-cen">Centro</label><input type="text" id="f-cen" placeholder="Hospital General Universitario de Elche"></div>
+          <div class="fld"><label for="f-tel">Contacto (teléfono y correo)</label><input type="text" id="f-tel"></div>
+          <div class="fld"><label for="f-obj">Objetivo del estudio</label><textarea id="f-obj" style="min-height:56px;font-family:Inter,sans-serif;font-size:13px"></textarea></div>
+          <div class="fld"><label for="f-que">Qué se pide al participante</label><textarea id="f-que" style="min-height:56px;font-family:Inter,sans-serif;font-size:13px" placeholder="Tres visitas, extracción de sangre, cuestionarios de 20 minutos"></textarea></div>
+          <div class="fld"><label for="f-riesgo">Riesgos y molestias</label><textarea id="f-riesgo" style="min-height:52px;font-family:Inter,sans-serif;font-size:13px"></textarea></div>
+          <div class="fld"><label for="f-ben">Beneficios esperados</label><textarea id="f-ben" style="min-height:44px;font-family:Inter,sans-serif;font-size:13px"></textarea></div>
+          <div class="grid2">
+            <div class="fld"><label for="f-tipo">Tipo de estudio</label>
+              <select id="f-tipo">
+                <option>Estudio observacional</option>
+                <option>Ensayo clínico con medicamento</option>
+                <option>Estudio con producto sanitario</option>
+                <option>Estudio con muestras biológicas</option>
+                <option>Estudio con datos ya existentes</option>
+              </select>
+            </div>
+            <div class="fld"><label for="f-menores">Población</label>
+              <select id="f-menores">
+                <option value="adultos">Adultos con capacidad</option>
+                <option value="menores">Menores de edad</option>
+                <option value="incapaces">Personas sin capacidad de consentir</option>
+              </select>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="btn-hip">Redactar con IA</button>
+            <button class="ghost small" id="btn-demo">Ejemplo</button>
+          </div>
+          <div class="status" id="st" style="margin-top:9px"></div>
+        </section>
+
+        <section class="card">
+          <h2>Secciones</h2>
+          <div class="sec-nav" id="nav"></div>
+        </section>
+      </div>
+      <div>
+        <section class="card">
+          <h2 id="ed-title">Redacción</h2>
+          <p class="sub" id="ed-sub"></p>
+          <textarea id="ed" style="min-height:170px;font-family:Inter,sans-serif;font-size:13.5px"></textarea>
+          <div class="actions">
+            <button class="ghost small" id="btn-una">Reescribir esta sección</button>
+            <button class="ghost small" id="btn-leg">Comprobar legibilidad</button>
+            <span class="status" id="st4"></span>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Vista previa</h2>
+          <div class="doc" id="prev-hip"></div>
+          <div class="actions">
+            <button id="btn-hip-docx">Descargar en Word (.docx)</button>
+            <button class="ghost" id="btn-hip-md">Descargar (.md)</button>
+            <span class="status" id="st2"></span>
+          </div>
+          <div class="note">La hoja de información debe estar redactada en lenguaje comprensible para una persona sin formación sanitaria. La normativa española de referencia es la Ley 14/2007 de investigación biomédica, el RD 1090/2015 para ensayos clínicos, el Reglamento (UE) 2016/679 y la LO 3/2018 de protección de datos.</div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSENTIMIENTO -->
+  <div id="v-ci" class="hidden">
+    <section class="card">
+      <h2>Documento de consentimiento informado</h2>
+      <p class="sub">Se genera a partir de los datos de la hoja de información. Incluye el apartado de revocación, obligatorio.</p>
+      <div class="doc" id="prev-ci"></div>
+      <div class="actions">
+        <button id="btn-ci-docx">Descargar en Word (.docx)</button>
+        <button class="ghost" id="btn-ci-md">Descargar (.md)</button>
+        <span class="status" id="st3"></span>
+      </div>
+      <div class="note">El consentimiento se firma por triplicado: una copia para el participante, otra para el investigador y otra para la historia clínica. En menores de 12 a 17 años se recoge también su asentimiento; por debajo de 12 años, el de sus representantes legales.</div>
+    </section>
+  </div>
+
+  <!-- DOCUMENTACIÓN -->
+  <div id="v-doc" class="hidden">
+    <div class="layout">
+      <div>
+        <section class="card">
+          <h2>Estado del expediente</h2>
+          <div style="height:5px;background:var(--line-soft);border-radius:3px;overflow:hidden;margin:12px 0 6px"><i id="d-bar" style="display:block;height:100%;background:var(--teal);width:0%"></i></div>
+          <div style="font-size:12.5px;color:var(--ink-soft)" id="d-txt">0 de 0 documentos</div>
+          <div id="d-verdict" style="margin-top:14px"></div>
+          <div class="actions">
+            <button class="ghost small" id="btn-d-todo">Marcar todo</button>
+            <button class="ghost small" id="btn-d-reset">Vaciar</button>
+            <button class="ghost small" id="btn-d-md">Descargar (.md)</button>
+          </div>
+        </section>
+      </div>
+      <div>
+        <section class="card chk">
+          <h2>Documentación exigida por el CEIm</h2>
+          <p class="sub">Los marcados con punto rojo son obligatorios para cualquier proyecto. El resto depende del tipo de estudio.</p>
+          <div id="docs"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="wrap">
+  <span>ComitéÉtico·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span id="model-badge"></span>
+</footer>
+
+<dialog id="dlg-key">
+  <div class="dlg">
+    <h3>Clave de API de OpenAI</h3>
+    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit.</p>
+    <label for="k">Clave</label>
+    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
+    <div style="margin-top:14px"></div>
+    <label for="m">Modelo</label>
+    <select id="m">
+      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
+      <option value="gpt-4o">gpt-4o · más preciso</option>
+      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+      <option value="gpt-4.1">gpt-4.1</option>
+    </select>
+    <div class="actions">
+      <button id="k-save">Guardar</button>
+      <button class="ghost" id="k-cancel">Cancelar</button>
+      <button class="ghost small" id="k-clear">Borrar clave</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+/* ---------- Kernel de IA: clave y modelo compartidos ---------- */
+var KEY = "ia_openai_key", MODEL = "ia_openai_model";
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function getKey(){ return lsGet(KEY) || ""; }
+function getModel(){ return lsGet(MODEL) || "gpt-4o-mini"; }
+function badge(){
+  var b = document.getElementById("model-badge");
+  if(b){ b.textContent = "modelo: " + getModel(); b.style.cursor = "pointer"; b.onclick = askKey; }
+}
+function askKey(){
+  document.getElementById("k").value = getKey();
+  document.getElementById("m").value = getModel();
+  document.getElementById("dlg-key").showModal();
+}
+function initKeyDialog(){
+  document.getElementById("k-save").onclick = function(){
+    var v = document.getElementById("k").value.trim();
+    if(v) lsSet(KEY, v);
+    lsSet(MODEL, document.getElementById("m").value);
+    badge(); document.getElementById("dlg-key").close();
+  };
+  document.getElementById("k-cancel").onclick = function(){ document.getElementById("dlg-key").close(); };
+  document.getElementById("k-clear").onclick = function(){ lsDel(KEY); document.getElementById("k").value = ""; };
+  badge();
+}
+async function askAI(system, user, temp){
+  var key = getKey();
+  if(!key){ askKey(); throw new Error("Falta la clave de API. Configúrala en el pie de página."); }
+  var res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
+    body: JSON.stringify({ model:getModel(), temperature: (temp === undefined ? 0.25 : temp),
+      response_format:{type:"json_object"},
+      messages:[{role:"system",content:system},{role:"user",content:user}] })
+  });
+  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,150)); }
+  var data = await res.json();
+  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
+}
+
+
+["hip","ci","doc"].forEach(function(m){
+  document.getElementById("m-" + m).onclick = function(){
+    ["hip","ci","doc"].forEach(function(x){
+      document.getElementById("m-" + x).className = x === m ? "on" : "";
+      document.getElementById("v-" + x).classList[x === m ? "remove" : "add"]("hidden");
+    });
+    if(m === "ci") prevCI();
+  };
+});
+
+/* ============ Secciones de la HIP ============ */
+var SECS = [
+  { id:"invit", n:"Invitación a participar", s:"Se invita al lector, se explica que la participación es voluntaria y se le pide que lea la hoja con calma y pregunte lo que necesite." },
+  { id:"obj", n:"Objetivo del estudio", s:"Qué se quiere averiguar y por qué, en lenguaje llano, sin tecnicismos ni siglas." },
+  { id:"part", n:"En qué consiste su participación", s:"Qué se le pedirá exactamente: número de visitas, pruebas, cuestionarios, duración total." },
+  { id:"volunt", n:"Participación voluntaria y retirada", s:"Puede negarse o retirarse en cualquier momento, sin dar explicaciones y sin que afecte a su asistencia sanitaria." },
+  { id:"riesgos", n:"Riesgos y molestias", s:"Todos los riesgos previsibles y las molestias, sin minimizarlos. Si no hay riesgos añadidos, decirlo explícitamente." },
+  { id:"benef", n:"Beneficios esperados", s:"Beneficios directos para el participante, si los hay, y beneficios para el conocimiento. No prometer lo que no se puede garantizar." },
+  { id:"alt", n:"Tratamientos alternativos", s:"Qué otras opciones tiene si decide no participar. Solo en estudios de intervención." },
+  { id:"conf", n:"Confidencialidad y protección de datos", s:"Seudonimización, base jurídica del tratamiento, responsable, DPD, derechos ARCO y plazo de conservación." },
+  { id:"comp", n:"Compensación y gastos", s:"Si se compensan gastos de desplazamiento. La participación no puede retribuirse como incentivo." },
+  { id:"seguro", n:"Seguro y cobertura de daños", s:"Póliza suscrita, si procede, y cómo reclamar en caso de daño derivado de la participación." },
+  { id:"result", n:"Resultados y publicación", s:"Cómo se difundirán los resultados y si el participante podrá conocer los suyos." },
+  { id:"contacto", n:"Contacto e información adicional", s:"Nombre, teléfono y correo del investigador principal, y del comité de ética que aprobó el estudio." }
+];
+var T = {}, SEL = 0, LEG = null;
+
+function v(id){ return document.getElementById(id).value.trim(); }
+function ficha(){
+  return { titulo:v("f-tit"), codigo:v("f-cod"), ip:v("f-ip"), centro:v("f-cen"), contacto:v("f-tel"),
+    objetivo:v("f-obj"), participacion:v("f-que"), riesgos:v("f-riesgo"), beneficios:v("f-ben"),
+    tipo:v("f-tipo"), poblacion:document.getElementById("f-menores").value };
+}
+
+function nav(){
+  var box = document.getElementById("nav");
+  box.innerHTML = "";
+  SECS.forEach(function(s, i){
+    var b = document.createElement("button");
+    b.className = i === SEL ? "on" : "";
+    b.innerHTML = "<span>" + esc(s.n) + '</span><span class="dot ' + ((T[s.id] || "").trim().length > 40 ? "full" : "") + '"></span>';
+    b.onclick = function(){ SEL = i; editor(); };
+    box.appendChild(b);
+  });
+}
+function editor(){
+  var s = SECS[SEL];
+  document.getElementById("ed-title").textContent = s.n;
+  document.getElementById("ed-sub").textContent = s.s;
+  document.getElementById("ed").value = T[s.id] || "";
+  nav();
+}
+document.getElementById("ed").oninput = function(){ T[SECS[SEL].id] = this.value; nav(); prevHIP(); };
+
+/* ============ IA ============ */
+var SYS = [
+  "Eres experto en ética de la investigación biomédica y redactas hojas de información al participante conforme a la normativa española:",
+  "Ley 14/2007 de investigación biomédica, RD 1090/2015 de ensayos clínicos, Reglamento (UE) 2016/679 y LO 3/2018 de protección de datos.",
+  "Escribe en segunda persona de cortesía (usted), en párrafos cortos, con frases de menos de 25 palabras y sin tecnicismos ni siglas sin explicar.",
+  "El lector tiene estudios primarios. Nunca minimices los riesgos ni prometas beneficios no garantizados.",
+  "No inventes datos: si falta información, escríbela entre corchetes, por ejemplo [número de visitas].",
+  "Redacta TODAS las secciones que se te piden y devuélvelas en un único objeto JSON cuyas claves son los identificadores dados.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"secciones\":{\"id\":\"texto\",...},\"avisos\":[\"dato que falta o problema ético detectado\"]}"
+].join(" ");
+var SYS_UNA = [
+  "Eres experto en ética de la investigación biomédica. Reescribe una única sección de la hoja de información al participante.",
+  "Segunda persona de cortesía, frases cortas, sin tecnicismos. No añadas información que no esté en la ficha.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"texto\":\"...\",\"nota\":\"qué has cambiado\"}"
+].join(" ");
+
+document.getElementById("btn-hip").onclick = async function(){
+  if(!v("f-tit") || !v("f-obj")){ st("Completa al menos el título y el objetivo.", true); return; }
+  var btn = this; btn.disabled = true;
+  st('<span class="spin"></span>Redactando las 12 secciones…');
+  try{
+    var pide = SECS.filter(function(s){
+      return !(s.id === "alt" && v("f-tipo").indexOf("observacional") >= 0);
+    }).map(function(s){ return { id:s.id, seccion:s.n, debe_contener:s.s }; });
+    var j = await askAI(SYS, JSON.stringify({ ficha: ficha(), secciones: pide }), 0.3);
+    Object.keys(j.secciones || {}).forEach(function(k){ T[k] = j.secciones[k]; });
+    editor(); prevHIP();
+    st((j.avisos && j.avisos.length) ? "Listo. Avisos: " + j.avisos.join("; ") : "Hoja redactada. Revísala: es un documento legal.");
+  }catch(e){ st(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+document.getElementById("btn-una").onclick = async function(){
+  var s = SECS[SEL], btn = this;
+  btn.disabled = true;
+  st4('<span class="spin"></span>Reescribiendo…');
+  try{
+    var j = await askAI(SYS_UNA, JSON.stringify({ ficha: ficha(), seccion: s.n, debe_contener: s.s, texto_actual: T[s.id] || "" }), 0.3);
+    T[s.id] = j.texto || T[s.id];
+    editor(); prevHIP();
+    st4(j.nota || "Sección reescrita.");
+  }catch(e){ st4(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+
+/* ============ Legibilidad (índice de Szigriszt-Pazos, determinista) ============ */
+function silabas(p){
+  p = p.toLowerCase().replace(/[^a-záéíóúüñ]/g, "");
+  if(!p) return 0;
+  var g = p.match(/[aeiouáéíóúü]+/g);
+  return g ? g.length : 1;
+}
+function legibilidad(txt){
+  var frases = txt.split(/[.;:!?]+/).filter(function(s){ return s.trim().length > 3; }).length || 1;
+  var pals = txt.trim().split(/\s+/).filter(Boolean);
+  if(!pals.length) return null;
+  var sil = pals.reduce(function(a,p){ return a + silabas(p); }, 0);
+  var P = 206.835 - 62.3*(sil/pals.length) - (pals.length/frases);   /* Szigriszt-Pazos (perspicuidad) */
+  var nivel = P > 80 ? "muy fácil" : P > 65 ? "fácil (nivel exigido a un documento divulgativo)" :
+              P > 55 ? "normal" : P > 40 ? "algo difícil" : P > 15 ? "difícil" : "muy difícil";
+  return { P:P, nivel:nivel, palabras:pals.length, frases:frases, silPal: sil/pals.length, palFrase: pals.length/frases };
+}
+document.getElementById("btn-leg").onclick = function(){
+  var todo = SECS.map(function(s){ return T[s.id] || ""; }).join(" ").trim();
+  if(todo.length < 100){ st4("Redacta primero la hoja.", true); return; }
+  var L = legibilidad(todo);
+  LEG = L;
+  var ok = L.P > 65;
+  st4("Índice de perspicuidad " + L.P.toFixed(1) + " · " + L.nivel + " · " + L.palFrase.toFixed(1) + " palabras por frase" +
+      (ok ? "." : ". Acorta las frases y sustituye los tecnicismos."), !ok);
+};
+
+/* ============ Vistas previas ============ */
+function prevHIP(){
+  var f = ficha();
+  var h = "<h1>Hoja de información al participante</h1>";
+  h += '<div class="cent">' + esc(f.codigo || "[código]") + " · " + esc(f.centro || "[centro]") + " · versión " + new Date().toLocaleDateString("es-ES") + "</div>";
+  h += "<p style='text-align:center;font-weight:600'>" + (f.titulo ? esc(f.titulo) : '<span class="falta">[Título del estudio]</span>') + "</p>";
+  SECS.forEach(function(s){
+    if(s.id === "alt" && f.tipo.indexOf("observacional") >= 0 && !(T[s.id] || "").trim()) return;
+    h += "<h2>" + esc(s.n) + "</h2>";
+    var t = (T[s.id] || "").trim();
+    h += t ? "<p>" + esc(t).replace(/\n+/g, "</p><p>") + "</p>" : '<p class="falta">[Pendiente de redactar]</p>';
+  });
+  h += '<div class="rgpd"><b>Información básica sobre protección de datos.</b> Responsable: ' + esc(f.centro || "[centro]") +
+    ". Finalidad: realizar la investigación descrita en esta hoja. Legitimación: consentimiento del interesado (artículo 6.1.a del RGPD) y artículo 9.2.j para los datos de salud. " +
+    "Destinatarios: no se cederán datos a terceros salvo obligación legal. Derechos: acceso, rectificación, supresión, limitación, portabilidad y oposición, dirigiéndose al investigador principal o al delegado de protección de datos del centro. " +
+    "Los datos se seudonimizarán y se conservarán durante el plazo legalmente exigible.</div>";
+  document.getElementById("prev-hip").innerHTML = h;
+}
+function prevCI(){
+  var f = ficha();
+  var menor = f.poblacion !== "adultos";
+  var h = "<h1>Documento de consentimiento informado</h1>";
+  h += '<div class="cent">' + esc(f.codigo || "[código]") + " · " + esc(f.centro || "[centro]") + "</div>";
+  h += "<p style='text-align:center;font-weight:600'>" + (f.titulo ? esc(f.titulo) : '<span class="falta">[Título del estudio]</span>') + "</p>";
+  h += "<h2>Declaración del participante</h2>";
+  h += "<p>Yo, D./D.ª ____________________________________, con DNI/NIE _______________, declaro que:</p>";
+  ["He leído la hoja de información que se me ha entregado sobre el estudio arriba indicado.",
+   "He podido hacer preguntas sobre el estudio y he recibido respuestas satisfactorias.",
+   "He recibido suficiente información sobre el estudio y he dispuesto de tiempo para reflexionar.",
+   "He hablado con " + (f.ip ? esc(f.ip) : "[investigador principal]") + ".",
+   "Comprendo que mi participación es voluntaria.",
+   "Comprendo que puedo retirarme del estudio cuando quiera, sin tener que dar explicaciones y sin que ello repercuta en mis cuidados médicos.",
+   "Presto libremente mi conformidad para participar en el estudio y consiento el tratamiento de mis datos personales en los términos descritos en la hoja de información."
+  ].forEach(function(x, i){ h += "<p>" + (i+1) + ". " + x + "</p>"; });
+
+  if(f.tipo.indexOf("muestras") >= 0)
+    h += "<h2>Uso futuro de las muestras</h2><p>Consiento que las muestras biológicas obtenidas se conserven para su uso en investigaciones futuras relacionadas con esta línea, previo informe favorable del comité de ética correspondiente: <b>Sí ☐  No ☐</b></p>";
+
+  h += '<div class="firma"><div>Firma del participante<br>Fecha: ___ / ___ / _____</div>' +
+       "<div>Firma del investigador<br>Nombre: " + esc(f.ip || "____________________") + "<br>Fecha: ___ / ___ / _____</div></div>";
+
+  if(menor){
+    h += "<h2>Consentimiento del representante legal</h2>";
+    h += "<p>D./D.ª ____________________________________, con DNI/NIE _______________, en calidad de _______________ de _______________________________, presta su consentimiento para su participación en el estudio.</p>";
+    h += '<div class="firma"><div>Firma del representante legal<br>Fecha: ___ / ___ / _____</div><div>Firma del investigador<br>Fecha: ___ / ___ / _____</div></div>';
+    if(f.poblacion === "menores")
+      h += "<h2>Asentimiento del menor (de 12 a 17 años)</h2><p>Me han explicado en qué consiste el estudio, he podido preguntar lo que quería y estoy de acuerdo en participar. Sé que puedo cambiar de opinión cuando quiera.</p>" +
+        '<div class="firma"><div>Firma del menor<br>Fecha: ___ / ___ / _____</div><div></div></div>';
+  }
+
+  h += "<h2>Revocación del consentimiento</h2>";
+  h += "<p>Yo, D./D.ª ____________________________________, revoco el consentimiento prestado con fecha ___ / ___ / _____ y no deseo continuar participando en el estudio, lo que comunico libremente y sin necesidad de justificación.</p>";
+  h += '<div class="firma"><div>Firma del participante o representante<br>Fecha: ___ / ___ / _____</div><div>Firma del investigador<br>Fecha: ___ / ___ / _____</div></div>';
+  h += '<div class="rgpd">Este documento se firma por triplicado: un ejemplar para el participante, otro para el investigador y otro para la historia clínica. ' +
+    (f.contacto ? "Para cualquier duda puede contactar con " + esc(f.contacto) + "." : "") + "</div>";
+  document.getElementById("prev-ci").innerHTML = h;
+}
+
+/* ============ Documentación CEIm ============ */
+var DOCS = [
+  ["Solicitud de evaluación firmada por el investigador principal", "Formulario oficial del CEIm correspondiente.", true, null],
+  ["Protocolo de investigación completo y fechado", "Con número de versión. Debe coincidir con lo declarado en el resto de documentos.", true, null],
+  ["Memoria económica del proyecto", "Presupuesto y fuente de financiación. Debe declararse la ausencia de financiación si es el caso.", true, null],
+  ["Hoja de información al participante", "En lenguaje comprensible, adaptada a la población del estudio.", true, null],
+  ["Documento de consentimiento informado", "Con apartado de revocación. Adaptado si hay menores o personas sin capacidad.", true, null],
+  ["Currículum vítae abreviado del investigador principal", "Y del resto del equipo investigador.", true, null],
+  ["Compromiso del investigador principal", "Declaración de cumplimiento de la Declaración de Helsinki y de las normas de buena práctica clínica.", true, null],
+  ["Conformidad de la dirección de cada centro participante", "Firmada por la gerencia o la dirección médica.", true, null],
+  ["Declaración de conflicto de intereses", "De todo el equipo investigador.", true, null],
+  ["Cuaderno de recogida de datos", "Modelo del formulario que se cumplimentará por cada participante.", false, null],
+  ["Plan de gestión de datos personales", "Análisis de riesgos, medidas de seudonimización y designación del responsable del tratamiento.", true, null],
+  ["Autorización del delegado de protección de datos", "Necesaria cuando se tratan categorías especiales de datos, como los de salud.", false, null],
+  ["Póliza de seguro de responsabilidad civil", "Obligatoria en ensayos clínicos con medicamentos y en estudios con riesgo superior al mínimo.", false, "Ensayo clínico con medicamento"],
+  ["Manual del investigador o ficha técnica del medicamento", "Con toda la información preclínica y clínica disponible del producto en investigación.", false, "Ensayo clínico con medicamento"],
+  ["Autorización de la AEMPS o justificante de solicitud", "Obligatoria para ensayos clínicos y estudios con productos sanitarios.", false, "Ensayo clínico con medicamento"],
+  ["Documento de idoneidad de las instalaciones", "Firmado por el responsable del servicio donde se realiza el estudio.", false, null],
+  ["Contrato con el centro o convenio", "Cuando el promotor es ajeno al centro donde se realiza el estudio.", false, null],
+  ["Autorización del biobanco o del comité de bioseguridad", "Cuando se recogen, conservan o utilizan muestras biológicas de origen humano.", false, "Estudio con muestras biológicas"],
+  ["Justificación de la exención de consentimiento", "Solo cuando se usan datos ya existentes y obtener el consentimiento resulta imposible o desproporcionado.", false, "Estudio con datos ya existentes"],
+  ["Registro previo del estudio", "ClinicalTrials.gov, EudraCT o el Registro Español de Estudios Clínicos.", false, null],
+  ["Dictamen previo de otro CEIm, si lo hubiera", "En estudios multicéntricos con dictamen único.", false, null]
+];
+var DR = {};
+
+function docs(){
+  var tipo = v("f-tipo");
+  var box = document.getElementById("docs");
+  box.innerHTML = "";
+  var aplicables = DOCS.filter(function(d){ return !d[3] || d[3] === tipo; });
+  aplicables.forEach(function(d){
+    var i = DOCS.indexOf(d);
+    var el = document.createElement("div");
+    el.className = "ci" + (DR[i] === "si" || DR[i] === "na" ? " ok" : DR[i] === "no" ? " bad" : "") + (d[2] ? " oblig" : "");
+    el.innerHTML = '<span class="txt"><b>' + esc(d[0]) + '</b><small>' + esc(d[1]) + '</small></span>' +
+      '<span class="seg">' + ["si","na","no"].map(function(x){
+        return '<button data-i="' + i + '" data-v="' + x + '"' + (DR[i] === x ? ' class="on"' : "") + '>' +
+          ({si:"Listo", na:"N/A", no:"Falta"})[x] + '</button>';
+      }).join("") + '</span>';
+    box.appendChild(el);
+  });
+  box.querySelectorAll("button[data-i]").forEach(function(b){ b.onclick = function(){ DR[b.dataset.i] = b.dataset.v; docs(); }; });
+
+  var n = aplicables.length;
+  var done = aplicables.filter(function(d){ return DR[DOCS.indexOf(d)]; }).length;
+  document.getElementById("d-bar").style.width = (100*done/n) + "%";
+  document.getElementById("d-txt").textContent = done + " de " + n + " documentos revisados";
+  var faltanOblig = aplicables.filter(function(d){ return d[2] && DR[DOCS.indexOf(d)] !== "si" && DR[DOCS.indexOf(d)] !== "na"; });
+  var faltanOtros = aplicables.filter(function(d){ return !d[2] && DR[DOCS.indexOf(d)] === "no"; });
+  var txt;
+  if(faltanOblig.length) txt = "Faltan " + faltanOblig.length + " documento(s) obligatorio(s): " + faltanOblig.map(function(d){ return d[0].toLowerCase(); }).slice(0,3).join("; ") + (faltanOblig.length > 3 ? "…" : "") + ". El CEIm devolverá el expediente sin evaluarlo.";
+  else if(faltanOtros.length) txt = "Toda la documentación obligatoria está lista. Quedan " + faltanOtros.length + " documento(s) condicionales pendientes; justifica su ausencia en la solicitud.";
+  else if(done === n) txt = "El expediente está completo para un estudio de tipo «" + tipo.toLowerCase() + "». Comprueba que las versiones y las fechas coinciden entre el protocolo, la hoja de información y el consentimiento: es el motivo de aclaración más frecuente.";
+  else txt = "Revisa los " + (n - done) + " documentos restantes.";
+  document.getElementById("d-verdict").innerHTML = '<div class="verdict ' + (faltanOblig.length ? "bad" : (done < n ? "warn" : "")) + '"><div class="k">Expediente</div><p>' + esc(txt) + '</p></div>';
+}
+document.getElementById("btn-d-todo").onclick = function(){ DOCS.forEach(function(_, i){ DR[i] = "si"; }); docs(); };
+document.getElementById("btn-d-reset").onclick = function(){ DR = {}; docs(); };
+document.getElementById("f-tipo").onchange = function(){ docs(); prevHIP(); };
+document.getElementById("f-menores").onchange = function(){ prevCI(); };
+
+/* ============ Exportación ============ */
+function docxDoc(titulo, bloques){
+  var D = docx, kids = [];
+  kids.push(new D.Paragraph({ children:[new D.TextRun({ text: titulo, bold:true, size:28 })], alignment: D.AlignmentType.CENTER, spacing:{ after:120 } }));
+  kids.push(new D.Paragraph({ children:[new D.TextRun({ text: v("f-cod") + " · " + v("f-cen") + " · versión " + new Date().toLocaleDateString("es-ES"), size:16, color:"5E6E74" })],
+    alignment: D.AlignmentType.CENTER, spacing:{ after:260 } }));
+  bloques.forEach(function(b){
+    if(b.h) kids.push(new D.Paragraph({ children:[new D.TextRun({ text:b.h, bold:true, size:24 })], spacing:{ before:200, after:80 } }));
+    (b.p || []).forEach(function(p){
+      kids.push(new D.Paragraph({ children:[new D.TextRun({ text:p, size:22 })], alignment: D.AlignmentType.JUSTIFIED, spacing:{ after:100, line:300 } }));
+    });
+  });
+  return new D.Document({ sections:[{ properties:{}, children: kids }], styles:{ default:{ document:{ run:{ font:"Calibri" } } } } });
+}
+async function saveDocx(doc, nombre, sid){
+  try{
+    var blob = await docx.Packer.toBlob(doc);
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = nombre; a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+    msg(sid, "Documento de Word descargado.");
+  }catch(e){ msg(sid, "Error al generar el .docx: " + e.message); }
+}
+document.getElementById("btn-hip-docx").onclick = function(){
+  if(typeof docx === "undefined"){ msg("st2", "No se ha podido cargar la librería de Word."); return; }
+  var b = [{ p:[v("f-tit") || "[Título del estudio]"] }];
+  SECS.forEach(function(s){ if((T[s.id] || "").trim()) b.push({ h:s.n, p:T[s.id].split(/\n+/) }); });
+  b.push({ h:"Información básica sobre protección de datos", p:["Responsable: " + (v("f-cen") || "[centro]") + ". Finalidad: realizar la investigación descrita. Legitimación: consentimiento del interesado (art. 6.1.a RGPD) y art. 9.2.j para datos de salud. Derechos: acceso, rectificación, supresión, limitación, portabilidad y oposición."] });
+  saveDocx(docxDoc("Hoja de información al participante", b), "hoja-informacion.docx", "st2");
+};
+document.getElementById("btn-ci-docx").onclick = function(){
+  if(typeof docx === "undefined"){ msg("st3", "No se ha podido cargar la librería de Word."); return; }
+  prevCI();
+  var txt = document.getElementById("prev-ci").innerText.split("\n").filter(function(l){ return l.trim(); });
+  saveDocx(docxDoc("Documento de consentimiento informado", [{ p: txt.slice(1) }]), "consentimiento.docx", "st3");
+};
+document.getElementById("btn-hip-md").onclick = function(){
+  var t = "# Hoja de información al participante\n\n**" + (v("f-tit") || "[Título]") + "**\n\n" + v("f-cod") + " · " + v("f-cen") + "\n";
+  SECS.forEach(function(s){ if((T[s.id] || "").trim()) t += "\n## " + s.n + "\n\n" + T[s.id] + "\n"; });
+  dl(t, "hoja-informacion.md", "text/markdown", "st2");
+};
+document.getElementById("btn-ci-md").onclick = function(){
+  prevCI();
+  dl("# Documento de consentimiento informado\n\n" + document.getElementById("prev-ci").innerText, "consentimiento.md", "text/markdown", "st3");
+};
+document.getElementById("btn-d-md").onclick = function(){
+  var tipo = v("f-tipo");
+  var LBL = { si:"Listo", na:"No aplica", no:"Falta" };
+  var t = "# Documentación para el CEIm\n\nTipo de estudio: " + tipo + "\n\n| Documento | Obligatorio | Estado |\n|---|---|---|\n";
+  DOCS.filter(function(d){ return !d[3] || d[3] === tipo; }).forEach(function(d){
+    t += "| " + d[0] + " | " + (d[2] ? "Sí" : "Condicional") + " | " + (DR[DOCS.indexOf(d)] ? LBL[DR[DOCS.indexOf(d)]] : "sin revisar") + " |\n";
+  });
+  dl(t, "documentacion-ceim.md", "text/markdown", "d-txt");
+};
+document.getElementById("btn-demo").onclick = function(){
+  document.getElementById("f-tit").value = "Eficacia de un programa de telerrehabilitación cardíaca frente a la rehabilitación presencial en pacientes con insuficiencia cardíaca";
+  document.getElementById("f-cod").value = "UMH-CARD-2026-01";
+  document.getElementById("f-ip").value = "Dra. Ana Ruiz Navarro";
+  document.getElementById("f-cen").value = "Hospital General Universitario de Elche";
+  document.getElementById("f-tel").value = "96 XXX XX XX · investigacion@umh.es";
+  document.getElementById("f-obj").value = "Comprobar si hacer la rehabilitación cardíaca en casa, con seguimiento por videollamada, funciona tan bien como hacerla en el hospital.";
+  document.getElementById("f-que").value = "Tres visitas al hospital (inicial, a las 12 semanas y al año), dos sesiones semanales de ejercicio durante 12 semanas, un análisis de sangre y dos cuestionarios de 20 minutos.";
+  document.getElementById("f-riesgo").value = "El ejercicio puede provocar cansancio, dolor muscular o, muy raramente, arritmias. Las sesiones están supervisadas. La extracción de sangre puede causar un hematoma.";
+  document.getElementById("f-ben").value = "Puede mejorar su capacidad para caminar y su calidad de vida, aunque no se garantiza. Los resultados ayudarán a decidir cómo organizar la rehabilitación en el futuro.";
+  st("Ficha de ejemplo cargada. Pulsa «Redactar con IA».");
+  prevHIP(); prevCI(); docs();
+};
+
+function dl(text, name, mime, sid){
+  var b = new Blob([text], {type: mime + ";charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = name; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  msg(sid, "Descargado.");
+}
+function msg(id, m){ var s = document.getElementById(id); if(!s) return; s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 2600); }
+function st(m, err){ var s = document.getElementById("st"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; }
+function st4(m, err){ var s = document.getElementById("st4"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; if(!/spin/.test(m)) setTimeout(function(){ s.innerHTML = ""; }, 4200); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+["f-tit","f-cod","f-ip","f-cen","f-tel"].forEach(function(id){ document.getElementById(id).addEventListener("input", function(){ prevHIP(); }); });
+initKeyDialog(); editor(); prevHIP(); prevCI(); docs();
+</script>
+</body>
+</html>

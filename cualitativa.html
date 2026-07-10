@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cualitativa·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card h3{font-family:'Spectral',serif;font-weight:500;font-size:17px;margin:22px 0 10px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select,textarea{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif}
+  textarea{font-size:12.5px;min-height:110px;resize:vertical;line-height:1.5}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:14px;margin-bottom:20px}
+  .stats div{border-left:2px solid var(--line);padding-left:11px}
+  .stats .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .stats .v{font-family:'Spectral',serif;font-size:25px;font-weight:500;margin-top:1px;line-height:1.15}
+  .stats .v small{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft);font-weight:400;display:block;margin-top:2px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:500}
+  td{padding:7px 10px;border-bottom:1px solid var(--line-soft)}
+  td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  tr.hl td{background:#F2F7F6}
+  .tbl-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:3px}
+
+  .verdict{border-left:3px solid var(--teal);padding-left:16px;margin:18px 0}
+  .verdict.warn{border-color:var(--amber)}
+  .verdict.bad{border-color:var(--red)}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .verdict p{font-size:14.5px;margin-top:4px;max-width:76ch}
+
+  .plot{margin-top:6px}
+  .plot svg{width:100%;height:auto;display:block}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gridl{stroke:var(--line-soft);stroke-width:1}
+  .tick{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:var(--slate)}
+  .bar{fill:#CDE2E0;stroke:var(--teal);stroke-width:.7}
+  .curveline{fill:none;stroke:var(--amber);stroke-width:1.6}
+  .refline{stroke:var(--amber);stroke-width:1;stroke-dasharray:4 3}
+  .pt{fill:var(--teal);opacity:.75}
+
+  .para{font-size:14.5px;line-height:1.75;background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:18px;font-family:'Spectral',serif}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+  .drop{border:1px dashed var(--line);border-radius:3px;padding:26px;text-align:center;color:var(--ink-soft);font-size:14px;cursor:pointer;transition:.15s;background:#FCFDFC}
+  .drop:hover,.drop.over{border-color:var(--teal);background:#F2F7F6;color:var(--teal-deep)}
+  .drop b{display:block;font-weight:500;color:var(--ink);margin-bottom:3px}
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:2px 7px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--slate);margin-left:6px}
+  .pill.ok{background:#F1F8F7;color:var(--teal-deep);border-color:#BFD9D6}
+  .pill.no{background:#FBF2F1;color:var(--red);border-color:#E0C4C1}
+  .pill.mid{background:#FBF6EC;color:var(--amber);border-color:#E5D6B9}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
+
+  .modes{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;margin-bottom:22px;max-width:680px}
+  .modes button{flex:1;border:none;border-radius:0;background:#FCFDFC;color:var(--slate);font-size:13px;padding:10px 6px}
+  .modes button.on{background:var(--teal);color:#fff}
+  .layout{display:grid;grid-template-columns:minmax(280px,340px) 1fr;gap:22px;align-items:start}
+
+  .bloque{border:1px solid var(--line);border-radius:3px;margin-bottom:12px;background:#FCFDFC;overflow:hidden}
+  .bloque .h{padding:12px 15px;border-bottom:1px solid var(--line-soft);display:flex;align-items:baseline;gap:10px}
+  .bloque .h b{font-weight:500;font-size:14.5px}
+  .bloque .h .m{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--slate)}
+  .bloque ol{margin:12px 15px 14px 32px}
+  .bloque li{font-size:13.5px;margin-bottom:8px;line-height:1.5}
+  .bloque li .son{display:block;color:var(--ink-soft);font-size:12.5px;margin-top:2px;font-style:italic}
+
+  .cod{border:1px solid var(--line);border-radius:3px;padding:12px 14px;margin-bottom:9px;background:#FCFDFC}
+  .cod .t{display:flex;align-items:baseline;gap:9px}
+  .cod .t b{font-weight:500;font-size:14px;flex:1}
+  .cod .t .n{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--slate)}
+  .cod .cita{font-family:'Spectral',serif;font-style:italic;font-size:13.5px;color:var(--ink-soft);border-left:2px solid var(--line);padding-left:11px;margin-top:8px;line-height:1.55}
+  .cod select{margin-top:9px;font-size:12.5px;padding:5px 7px}
+  .cod .x{background:none;border:none;color:#B7C0C3;font-size:15px;padding:0 3px}
+  .cod .x:hover{color:var(--red);background:none}
+
+  .mapa svg{width:100%;height:auto;display:block}
+  .sat svg{width:100%;height:auto}
+  .cats{display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 14px}
+  .cats span{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:4px 9px;border-radius:2px;border:1px solid #BFD9D6;background:#F1F8F7;color:var(--teal-deep)}
+  .cats span i{cursor:pointer;font-style:normal;color:#9AA7AC}
+  .cats span i:hover{color:var(--red)}
+
+  .ent{display:flex;gap:9px;align-items:center;margin-bottom:7px}
+  .ent input[type=text]{flex:1;font-family:'Inter',sans-serif;font-size:13px}
+  .ent input[type=number]{width:74px;text-align:center}
+  .ent .x{background:none;border:none;color:#B7C0C3;font-size:15px}
+  .ent .x:hover{color:var(--red);background:none}
+
+  .coreq .ci{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:3px;margin-bottom:6px;background:#FCFDFC}
+  .coreq .ci.ok{background:#fff;border-color:var(--line-soft)}
+  .coreq .ci.bad{border-left:3px solid var(--red)}
+  .coreq .num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);width:24px;flex-shrink:0;padding-top:3px}
+  .coreq .txt{flex:1;font-size:13.5px;line-height:1.5}
+  .coreq .seg{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;flex-shrink:0}
+  .coreq .seg button{border:none;border-radius:0;background:#fff;color:var(--slate);font-size:11.5px;padding:5px 9px;border-right:1px solid var(--line)}
+  .coreq .seg button:last-child{border-right:none}
+  .coreq .seg button.on[data-v="si"]{background:var(--teal);color:#fff}
+  .coreq .seg button.on[data-v="no"]{background:var(--red);color:#fff}
+  .grp-h{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin:22px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .grp-h:first-child{margin-top:0}
+
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%}
+  dialog::backdrop{background:rgba(23,38,46,.35)}
+  .dlg{padding:24px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">21 · Escritura científica y difusión</div>
+    <h1>Cualitativa<em>·AI</em></h1>
+    <p class="lede">Apoyo al análisis cualitativo: guion de entrevista o grupo focal, codificación temática asistida con citas literales, mapa de categorías, evaluación de la saturación y checklist COREQ.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="modes">
+    <button id="m-guion" class="on">Guion</button>
+    <button id="m-cod">Codificación</button>
+    <button id="m-sat">Saturación</button>
+    <button id="m-coreq">COREQ</button>
+  </div>
+
+  <!-- GUION -->
+  <div id="v-guion">
+    <div class="layout">
+      <div>
+        <section class="card">
+          <h2>Diseño del guion</h2>
+          <div class="fld"><label for="g-tipo">Técnica</label>
+            <select id="g-tipo">
+              <option>Grupo focal</option>
+              <option>Entrevista semiestructurada en profundidad</option>
+              <option>Entrevista a informante clave</option>
+            </select>
+          </div>
+          <div class="fld"><label for="g-obj">Objetivo de la investigación</label><textarea id="g-obj" style="min-height:70px;font-family:Inter,sans-serif;font-size:13px" placeholder="Comprender las barreras percibidas por los pacientes con diabetes tipo 2 para adherirse al tratamiento insulínico."></textarea></div>
+          <div class="fld"><label for="g-part">Participantes</label><textarea id="g-part" style="min-height:52px;font-family:Inter,sans-serif;font-size:13px" placeholder="8 pacientes de 45 a 70 años en tratamiento insulínico desde hace más de un año"></textarea></div>
+          <div class="fld"><label for="g-marco">Marco teórico o metodológico</label>
+            <select id="g-marco">
+              <option>Análisis temático (Braun y Clarke)</option>
+              <option>Teoría fundamentada</option>
+              <option>Fenomenología</option>
+              <option>Análisis de contenido</option>
+            </select>
+          </div>
+          <div class="fld"><label for="g-dur">Duración prevista</label><input type="text" id="g-dur" value="60-90 minutos"></div>
+          <div class="actions">
+            <button id="btn-guion">Generar guion</button>
+            <span class="status" id="st1"></span>
+          </div>
+        </section>
+      </div>
+      <div>
+        <section class="card">
+          <h2>Guion</h2>
+          <p class="sub">Bloques de preguntas abiertas con sus sondeos. Edítalo: es tuyo, no del modelo.</p>
+          <div id="guion"><div class="empty" style="color:var(--ink-soft);font-size:13.5px">Define el objetivo y pulsa Generar.</div></div>
+          <div class="actions">
+            <button class="ghost" id="btn-g-md">Descargar (.md)</button>
+            <button class="ghost" id="btn-g-copy">Copiar</button>
+            <span class="status" id="st1b"></span>
+          </div>
+          <div class="note">Empieza por lo general y desciende a lo concreto. Evita preguntas que se respondan con sí o no, las que llevan implícita la respuesta y las que preguntan dos cosas a la vez.</div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- CODIFICACIÓN -->
+  <div id="v-cod" class="hidden">
+    <div class="layout">
+      <div>
+        <section class="card">
+          <h2>Transcripción</h2>
+          <p class="sub">Pega el fragmento a codificar. Nada sale de tu navegador salvo hacia la API de OpenAI.</p>
+          <textarea id="trans" style="min-height:220px;font-size:12.5px" placeholder="ENTREVISTADOR: ¿Cómo vivió el momento del diagnóstico?&#10;P3: Pues mire, al principio no me lo creía…"></textarea>
+          <div class="fld" style="margin-top:12px"><label for="c-id">Identificador del documento</label><input type="text" id="c-id" value="E01"></div>
+          <div class="actions">
+            <button id="btn-codificar">Codificar con IA</button>
+            <button class="ghost small" id="btn-c-demo">Ejemplo</button>
+          </div>
+          <div class="status" id="st2" style="margin-top:9px"></div>
+          <div class="divider"><span>Categorías</span></div>
+          <div class="cats" id="cats"></div>
+          <input type="text" id="cat-new" placeholder="Añadir categoría y pulsar Enter">
+        </section>
+      </div>
+      <div>
+        <section class="card">
+          <h2>Códigos <span class="pill" id="n-cod">0</span></h2>
+          <p class="sub">Cada código con su cita literal de anclaje. Asigna cada uno a una categoría.</p>
+          <div id="codigos"><div style="color:var(--ink-soft);font-size:13.5px">Aún no hay códigos.</div></div>
+          <div class="actions">
+            <button class="ghost" id="btn-agrupar">Agrupar en categorías con IA</button>
+            <button class="ghost" id="btn-c-md">Exportar libro de códigos (.md)</button>
+            <button class="ghost small" id="btn-c-csv">CSV</button>
+            <span class="status" id="st2b"></span>
+          </div>
+        </section>
+        <section class="card">
+          <h2>Mapa de categorías</h2>
+          <p class="sub">Categorías y sus códigos. El tamaño refleja el número de códigos agrupados.</p>
+          <div class="mapa" id="mapa"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- SATURACIÓN -->
+  <div id="v-sat" class="hidden">
+    <div class="layout">
+      <div>
+        <section class="card">
+          <h2>Códigos nuevos por documento</h2>
+          <p class="sub">Anota cuántos códigos <em>nuevos</em> aparecieron en cada entrevista o grupo, en el orden en que los analizaste.</p>
+          <div id="ents"></div>
+          <div class="actions">
+            <button class="ghost small" id="btn-ent">+ Añadir documento</button>
+            <button class="ghost small" id="btn-s-demo">Ejemplo</button>
+          </div>
+          <div class="divider"><span>Criterio</span></div>
+          <div class="fld"><label for="s-crit">Regla de saturación</label>
+            <select id="s-crit">
+              <option value="3">Tres documentos consecutivos sin códigos nuevos</option>
+              <option value="2">Dos documentos consecutivos sin códigos nuevos</option>
+              <option value="5">Menos del 5 % de códigos nuevos acumulados</option>
+            </select>
+          </div>
+        </section>
+      </div>
+      <div>
+        <section class="card">
+          <h2>Curva de saturación</h2>
+          <p class="sub">Códigos acumulados y códigos nuevos por documento.</p>
+          <div class="sat" id="sat"></div>
+          <div id="sat-verdict"></div>
+          <div class="note">La saturación no es un número mágico: es un argumento que debes defender. Documenta cuándo dejaste de encontrar códigos nuevos y con qué criterio lo decidiste, no solo cuántas entrevistas hiciste.</div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- COREQ -->
+  <div id="v-coreq" class="hidden">
+    <div class="layout">
+      <div>
+        <section class="card">
+          <h2>Progreso</h2>
+          <div class="bar" style="height:5px;background:var(--line-soft);border-radius:3px;overflow:hidden;margin:12px 0 6px"><i id="q-bar" style="display:block;height:100%;background:var(--teal);width:0%"></i></div>
+          <div style="font-size:12.5px;color:var(--ink-soft)" id="q-txt">0 de 32 ítems</div>
+          <div class="actions">
+            <button class="ghost small" id="btn-q-todo">Marcar todo «Sí»</button>
+            <button class="ghost small" id="btn-q-reset">Vaciar</button>
+            <button class="ghost small" id="btn-q-md">Descargar (.md)</button>
+          </div>
+          <div id="q-verdict" style="margin-top:14px"></div>
+        </section>
+      </div>
+      <div>
+        <section class="card coreq">
+          <h2>COREQ · 32 ítems</h2>
+          <p class="sub">Consolidated criteria for reporting qualitative research (Tong, Sainsbury y Craig, 2007).</p>
+          <div id="coreq"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="wrap">
+  <span>Cualitativa·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span id="model-badge"></span>
+</footer>
+
+<dialog id="dlg-key">
+  <div class="dlg">
+    <h3>Clave de API de OpenAI</h3>
+    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit.</p>
+    <label for="k">Clave</label>
+    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
+    <div style="margin-top:14px"></div>
+    <label for="m">Modelo</label>
+    <select id="m">
+      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
+      <option value="gpt-4o">gpt-4o · más preciso</option>
+      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+      <option value="gpt-4.1">gpt-4.1</option>
+    </select>
+    <div class="actions">
+      <button id="k-save">Guardar</button>
+      <button class="ghost" id="k-cancel">Cancelar</button>
+      <button class="ghost small" id="k-clear">Borrar clave</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+/* ---------- Kernel de IA: clave y modelo compartidos ---------- */
+var KEY = "ia_openai_key", MODEL = "ia_openai_model";
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function getKey(){ return lsGet(KEY) || ""; }
+function getModel(){ return lsGet(MODEL) || "gpt-4o-mini"; }
+function badge(){
+  var b = document.getElementById("model-badge");
+  if(b){ b.textContent = "modelo: " + getModel(); b.style.cursor = "pointer"; b.onclick = askKey; }
+}
+function askKey(){
+  document.getElementById("k").value = getKey();
+  document.getElementById("m").value = getModel();
+  document.getElementById("dlg-key").showModal();
+}
+function initKeyDialog(){
+  document.getElementById("k-save").onclick = function(){
+    var v = document.getElementById("k").value.trim();
+    if(v) lsSet(KEY, v);
+    lsSet(MODEL, document.getElementById("m").value);
+    badge(); document.getElementById("dlg-key").close();
+  };
+  document.getElementById("k-cancel").onclick = function(){ document.getElementById("dlg-key").close(); };
+  document.getElementById("k-clear").onclick = function(){ lsDel(KEY); document.getElementById("k").value = ""; };
+  badge();
+}
+async function askAI(system, user, temp){
+  var key = getKey();
+  if(!key){ askKey(); throw new Error("Falta la clave de API. Configúrala en el pie de página."); }
+  var res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
+    body: JSON.stringify({ model:getModel(), temperature: (temp === undefined ? 0.25 : temp),
+      response_format:{type:"json_object"},
+      messages:[{role:"system",content:system},{role:"user",content:user}] })
+  });
+  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,150)); }
+  var data = await res.json();
+  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
+}
+
+
+/* ============ Navegación ============ */
+["guion","cod","sat","coreq"].forEach(function(m){
+  document.getElementById("m-" + m).onclick = function(){
+    ["guion","cod","sat","coreq"].forEach(function(x){
+      document.getElementById("m-" + x).className = x === m ? "on" : "";
+      document.getElementById("v-" + x).classList[x === m ? "remove" : "add"]("hidden");
+    });
+  };
+});
+
+/* ============ 1 · Guion ============ */
+var SYS_G = [
+  "Eres metodólogo de investigación cualitativa en salud.",
+  "Diseña un guion de la técnica indicada, coherente con el marco metodológico elegido.",
+  "Estructura: apertura (rapport y consentimiento), calentamiento, tres a cinco bloques temáticos de lo general a lo concreto, y cierre.",
+  "Cada pregunta debe ser abierta, no inducir la respuesta y no preguntar dos cosas a la vez. Añade dos sondeos por pregunta.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"bloques\":[{\"titulo\":\"...\",\"minutos\":10,\"preguntas\":[{\"pregunta\":\"...\",\"sondeos\":[\"...\",\"...\"]}]}],\"advertencias\":[\"riesgo ético o de sesgo\"]}"
+].join(" ");
+var GUION = null;
+
+document.getElementById("btn-guion").onclick = async function(){
+  var obj = document.getElementById("g-obj").value.trim();
+  if(obj.length < 20){ s1("Describe el objetivo con algo más de detalle.", true); return; }
+  var btn = this; btn.disabled = true;
+  s1('<span class="spin"></span>Diseñando el guion…');
+  try{
+    GUION = await askAI(SYS_G, JSON.stringify({
+      tecnica: document.getElementById("g-tipo").value, objetivo: obj,
+      participantes: document.getElementById("g-part").value,
+      marco: document.getElementById("g-marco").value,
+      duracion: document.getElementById("g-dur").value
+    }), 0.5);
+    var box = document.getElementById("guion");
+    box.innerHTML = (GUION.bloques || []).map(function(b){
+      return '<div class="bloque"><div class="h"><b>' + esc(b.titulo) + '</b><span class="m">' + (b.minutos || "?") + ' min</span></div><ol>' +
+        (b.preguntas || []).map(function(p){
+          return "<li>" + esc(p.pregunta) + (p.sondeos || []).map(function(s){ return '<span class="son">↳ ' + esc(s) + '</span>'; }).join("") + "</li>";
+        }).join("") + "</ol></div>";
+    }).join("");
+    if(GUION.advertencias && GUION.advertencias.length)
+      box.innerHTML += '<div class="verdict warn"><div class="k">Advertencias</div><p>' + GUION.advertencias.map(esc).join(". ") + '</p></div>';
+    s1("Guion generado. Pruébalo con un piloto antes de usarlo.");
+  }catch(e){ s1(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+function guionTxt(){
+  if(!GUION) return "";
+  var t = "# Guion · " + document.getElementById("g-tipo").value + "\n\n**Objetivo:** " + document.getElementById("g-obj").value + "\n\n";
+  (GUION.bloques || []).forEach(function(b){
+    t += "## " + b.titulo + " (" + (b.minutos || "?") + " min)\n\n";
+    (b.preguntas || []).forEach(function(p, i){
+      t += (i+1) + ". " + p.pregunta + "\n";
+      (p.sondeos || []).forEach(function(s){ t += "   - " + s + "\n"; });
+    });
+    t += "\n";
+  });
+  return t + "\n_Cualitativa·AI · Kit Metodológico UMH_\n";
+}
+document.getElementById("btn-g-md").onclick = function(){ if(GUION) dl(guionTxt(), "guion.md", "text/markdown", "st1b"); else s1b("No hay guion."); };
+document.getElementById("btn-g-copy").onclick = async function(){
+  if(!GUION){ s1b("No hay guion."); return; }
+  try{ await navigator.clipboard.writeText(guionTxt()); s1b("Copiado."); }catch(e){ s1b("Portapapeles bloqueado."); }
+};
+
+/* ============ 2 · Codificación ============ */
+var COD = [], CATS = [];
+var SYS_C = [
+  "Eres analista de investigación cualitativa y aplicas análisis temático inductivo.",
+  "Recibes un fragmento de transcripción. Identifica entre cinco y doce códigos descriptivos.",
+  "Cada código lleva una cita literal EXACTA del texto, copiada sin modificar, que lo sustenta. No inventes citas.",
+  "Los códigos son sintagmas breves en gerundio o sustantivos, no frases completas ni interpretaciones.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"codigos\":[{\"codigo\":\"...\",\"cita\":\"texto literal\",\"memo\":\"nota analítica breve\"}]}"
+].join(" ");
+var SYS_A = [
+  "Eres analista cualitativo. Recibes una lista de códigos y debes agruparlos en categorías temáticas de segundo orden.",
+  "Entre tres y seis categorías. Cada código pertenece a una sola. Nombra las categorías con sustantivos abstractos.",
+  "Responde EXCLUSIVAMENTE con JSON: {\"categorias\":[{\"nombre\":\"...\",\"definicion\":\"...\",\"codigos\":[\"...\"]}],\"tema_central\":\"una frase\"}"
+].join(" ");
+
+document.getElementById("btn-c-demo").onclick = function(){
+  document.getElementById("trans").value =
+"ENTREVISTADOR: ¿Cómo vivió el momento en que le dijeron que tenía que ponerse insulina?\n" +
+"P3: Pues mire, fue un mazazo. Yo lo asociaba con estar ya muy mal, con el final. Mi madre se pinchaba y murió a los dos años. Entonces yo pensé, ya está, me toca.\n" +
+"ENTREVISTADOR: ¿Y qué le preocupaba más?\n" +
+"P3: Los pinchazos, claro, pero sobre todo que se enterase la gente. En el trabajo no lo sabe nadie. Me voy al baño a pincharme, como si fuera un delincuente. Y luego lo de las hipoglucemias, que un día me dio una en el coche y desde entonces conduzco con miedo.\n" +
+"ENTREVISTADOR: ¿Ha hablado de esto con su médico?\n" +
+"P3: Poco. En la consulta hay diez minutos y siempre miran la máquina, los números. Nadie me ha preguntado nunca cómo lo llevo. Me dan la hoja y para casa.";
+  document.getElementById("c-id").value = "E03";
+};
+document.getElementById("btn-codificar").onclick = async function(){
+  var t = document.getElementById("trans").value.trim();
+  if(t.length < 80){ s2("Pega un fragmento más largo.", true); return; }
+  var btn = this; btn.disabled = true;
+  s2('<span class="spin"></span>Codificando…');
+  try{
+    var j = await askAI(SYS_C, JSON.stringify({ documento: document.getElementById("c-id").value, transcripcion: t }), 0.3);
+    var id = document.getElementById("c-id").value.trim() || "E";
+    var nuevos = 0;
+    (j.codigos || []).forEach(function(c){
+      if(!c.codigo || !c.cita) return;
+      var literal = t.indexOf(c.cita.trim().slice(0, 40)) >= 0;
+      COD.push({ codigo: c.codigo, cita: c.cita, memo: c.memo || "", doc: id, cat: "", literal: literal });
+      nuevos++;
+    });
+    codigos(); mapa();
+    var falsas = COD.filter(function(c){ return !c.literal; }).length;
+    s2(nuevos + " códigos añadidos." + (falsas ? " Atención: " + falsas + " citas no se han localizado literalmente en el texto; verifícalas." : " Todas las citas verificadas contra el texto."));
+  }catch(e){ s2(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+document.getElementById("btn-agrupar").onclick = async function(){
+  if(COD.length < 3){ s2b("Necesitas al menos 3 códigos.", true); return; }
+  var btn = this; btn.disabled = true;
+  s2b('<span class="spin"></span>Agrupando…');
+  try{
+    var j = await askAI(SYS_A, JSON.stringify({ codigos: COD.map(function(c){ return c.codigo; }) }), 0.3);
+    CATS = (j.categorias || []).map(function(c){ return c.nombre; });
+    (j.categorias || []).forEach(function(cat){
+      (cat.codigos || []).forEach(function(cn){
+        var c = COD.find(function(x){ return x.codigo === cn; });
+        if(c) c.cat = cat.nombre;
+      });
+    });
+    cats(); codigos(); mapa();
+    s2b(CATS.length + " categorías. Tema central: " + (j.tema_central || "—"));
+  }catch(e){ s2b(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+document.getElementById("cat-new").onkeydown = function(e){
+  if(e.key !== "Enter") return;
+  var v = this.value.trim();
+  if(v && CATS.indexOf(v) < 0){ CATS.push(v); this.value = ""; cats(); codigos(); mapa(); }
+};
+function cats(){
+  var box = document.getElementById("cats");
+  box.innerHTML = CATS.length ? "" : '<span style="border:none;background:none;color:var(--ink-soft);font-family:Inter,sans-serif;padding:0">Sin categorías.</span>';
+  CATS.forEach(function(c, i){
+    var s = document.createElement("span");
+    s.innerHTML = esc(c) + ' <i>×</i>';
+    s.querySelector("i").onclick = function(){
+      COD.forEach(function(x){ if(x.cat === c) x.cat = ""; });
+      CATS.splice(i,1); cats(); codigos(); mapa();
+    };
+    box.appendChild(s);
+  });
+}
+function codigos(){
+  document.getElementById("n-cod").textContent = COD.length;
+  var box = document.getElementById("codigos");
+  if(!COD.length){ box.innerHTML = '<div style="color:var(--ink-soft);font-size:13.5px">Aún no hay códigos.</div>'; return; }
+  box.innerHTML = "";
+  COD.forEach(function(c, i){
+    var d = document.createElement("div");
+    d.className = "cod";
+    d.innerHTML = '<div class="t"><b>' + esc(c.codigo) + '</b><span class="n">' + esc(c.doc) + '</span>' +
+      (c.literal ? "" : '<span class="pill no">cita no verificada</span>') +
+      '<button class="x" data-x="' + i + '">×</button></div>' +
+      '<div class="cita">« ' + esc(c.cita) + ' »</div>' +
+      (c.memo ? '<div style="font-size:12.5px;color:var(--ink-soft);margin-top:7px">' + esc(c.memo) + '</div>' : "") +
+      '<select data-c="' + i + '"><option value="">— sin categoría —</option>' +
+        CATS.map(function(x){ return '<option' + (c.cat === x ? " selected" : "") + '>' + esc(x) + '</option>'; }).join("") + '</select>';
+    box.appendChild(d);
+  });
+  box.querySelectorAll("[data-x]").forEach(function(b){ b.onclick = function(){ COD.splice(+b.dataset.x, 1); codigos(); mapa(); }; });
+  box.querySelectorAll("select[data-c]").forEach(function(s){ s.onchange = function(){ COD[+s.dataset.c].cat = s.value; mapa(); }; });
+}
+function mapa(){
+  var box = document.getElementById("mapa");
+  var usadas = CATS.filter(function(c){ return COD.some(function(x){ return x.cat === c; }); });
+  if(!usadas.length){ box.innerHTML = '<div style="color:var(--ink-soft);font-size:13.5px;padding:12px 0">Asigna categorías a los códigos para ver el mapa.</div>'; return; }
+  var W = 860, H = 460, cx = W/2, cy = H/2;
+  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Mapa de categorías">';
+  s += '<circle cx="' + cx + '" cy="' + cy + '" r="42" fill="#0E7C74"/>';
+  s += '<text x="' + cx + '" y="' + (cy+4) + '" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#fff" font-weight="600">Tema</text>';
+  var R = 150;
+  usadas.forEach(function(cat, i){
+    var ang = -Math.PI/2 + 2*Math.PI*i/usadas.length;
+    var x = cx + R*Math.cos(ang), y = cy + R*Math.sin(ang);
+    var cs = COD.filter(function(c){ return c.cat === cat; });
+    var r = 24 + Math.min(20, cs.length*3);
+    s += '<line x1="' + cx + '" y1="' + cy + '" x2="' + x + '" y2="' + y + '" stroke="#DCE1DD" stroke-width="1.4"/>';
+    s += '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="#F1F8F7" stroke="#0E7C74" stroke-width="1.5"/>';
+    s += '<text x="' + x + '" y="' + (y+4) + '" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#0A5A54">' + cs.length + '</text>';
+    var wrap = esc(cat).length > 22 ? esc(cat).slice(0,20) + "…" : esc(cat);
+    var ty = y + r + 15;
+    s += '<text x="' + x + '" y="' + ty + '" text-anchor="middle" font-family="Inter,sans-serif" font-size="11.5" fill="#17262E" font-weight="500">' + wrap + '</text>';
+    cs.slice(0,5).forEach(function(c, j){
+      var a2 = ang + (j - (Math.min(cs.length,5)-1)/2)*0.19;
+      var x2 = cx + (R+108)*Math.cos(a2), y2 = cy + (R+108)*Math.sin(a2);
+      s += '<line x1="' + x + '" y1="' + y + '" x2="' + x2 + '" y2="' + y2 + '" stroke="#EAEEEA"/>';
+      s += '<circle cx="' + x2 + '" cy="' + y2 + '" r="3.5" fill="#A76A16"/>';
+    });
+  });
+  s += '</svg>';
+  box.innerHTML = s;
+}
+document.getElementById("btn-c-md").onclick = function(){
+  if(!COD.length){ s2b("No hay códigos."); return; }
+  var t = "# Libro de códigos\n\n";
+  (CATS.concat([""])).forEach(function(cat){
+    var cs = COD.filter(function(c){ return c.cat === cat; });
+    if(!cs.length) return;
+    t += "\n## " + (cat || "Sin categoría") + "\n\n";
+    cs.forEach(function(c){
+      t += "### " + c.codigo + " *(" + c.doc + ")*\n\n> " + c.cita + "\n\n" + (c.memo ? c.memo + "\n\n" : "");
+    });
+  });
+  dl(t, "libro-codigos.md", "text/markdown", "st2b");
+};
+document.getElementById("btn-c-csv").onclick = function(){
+  if(!COD.length){ s2b("No hay códigos."); return; }
+  var t = "documento;categoria;codigo;cita;memo\n" + COD.map(function(c){
+    return [c.doc, c.cat, c.codigo, '"' + c.cita.replace(/"/g, '""') + '"', '"' + c.memo.replace(/"/g, '""') + '"'].join(";");
+  }).join("\n");
+  dl(t, "codigos.csv", "text/csv", "st2b");
+};
+
+/* ============ 3 · Saturación ============ */
+var ENTS = [{n:"E01", v:14},{n:"E02", v:9},{n:"E03", v:6}];
+function ents(){
+  var box = document.getElementById("ents");
+  box.innerHTML = "";
+  ENTS.forEach(function(e, i){
+    var d = document.createElement("div");
+    d.className = "ent";
+    d.innerHTML = '<input type="text" value="' + esc(e.n) + '" data-n="' + i + '">' +
+      '<input type="number" min="0" value="' + e.v + '" data-v="' + i + '">' +
+      (ENTS.length > 2 ? '<button class="x" data-x="' + i + '">×</button>' : "");
+    box.appendChild(d);
+  });
+  box.querySelectorAll("[data-n]").forEach(function(i){ i.oninput = function(){ ENTS[i.dataset.n].n = i.value; sat(); }; });
+  box.querySelectorAll("[data-v]").forEach(function(i){ i.oninput = function(){ ENTS[i.dataset.v].v = Math.max(0, parseInt(i.value,10) || 0); sat(); }; });
+  box.querySelectorAll("[data-x]").forEach(function(b){ b.onclick = function(){ ENTS.splice(+b.dataset.x, 1); ents(); sat(); }; });
+  sat();
+}
+document.getElementById("btn-ent").onclick = function(){
+  ENTS.push({ n:"E" + String(ENTS.length+1).padStart(2,"0"), v:0 }); ents();
+};
+document.getElementById("btn-s-demo").onclick = function(){
+  ENTS = [["E01",16],["E02",11],["E03",8],["E04",5],["E05",3],["E06",2],["E07",1],["E08",0],["E09",0],["E10",0]]
+    .map(function(x){ return { n:x[0], v:x[1] }; });
+  ents();
+};
+document.getElementById("s-crit").onchange = sat;
+
+function sat(){
+  var box = document.getElementById("sat");
+  var k = ENTS.length;
+  if(k < 2){ box.innerHTML = ""; return; }
+  var acum = [], t = 0;
+  ENTS.forEach(function(e){ t += e.v; acum.push(t); });
+  var maxA = Math.max(t, 1), maxN = Math.max.apply(null, ENTS.map(function(e){ return e.v; })) || 1;
+  var W = 760, H = 340, mL = 52, mR = 52, mT = 20, mB = 46;
+  var X = function(i){ return mL + (k === 1 ? 0 : i/(k-1)*(W-mL-mR)); };
+  var Ya = function(v){ return mT + (1 - v/maxA)*(H-mT-mB); };
+  var Yn = function(v){ return mT + (1 - v/maxN)*(H-mT-mB); };
+
+  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Curva de saturación">';
+  for(var i = 0; i <= 4; i++){
+    s += '<line class="gridl" x1="' + mL + '" y1="' + Ya(maxA*i/4) + '" x2="' + (W-mR) + '" y2="' + Ya(maxA*i/4) + '"/>';
+    s += '<text class="tick" x="' + (mL-8) + '" y="' + (Ya(maxA*i/4)+3) + '" text-anchor="end">' + Math.round(maxA*i/4) + '</text>';
+    s += '<text class="tick" x="' + (W-mR+8) + '" y="' + (Yn(maxN*i/4)+3) + '" fill="#A76A16">' + Math.round(maxN*i/4) + '</text>';
+  }
+  s += '<path fill="none" stroke="#0E7C74" stroke-width="2" d="M' + acum.map(function(v,i){ return X(i) + " " + Ya(v); }).join(" L") + '"/>';
+  s += '<path fill="none" stroke="#A76A16" stroke-width="1.6" stroke-dasharray="4 3" d="M' + ENTS.map(function(e,i){ return X(i) + " " + Yn(e.v); }).join(" L") + '"/>';
+  ENTS.forEach(function(e, i){
+    s += '<circle cx="' + X(i) + '" cy="' + Ya(acum[i]) + '" r="3.5" fill="#0E7C74"/>';
+    s += '<circle cx="' + X(i) + '" cy="' + Yn(e.v) + '" r="3" fill="#A76A16"/>';
+    s += '<text class="tick" x="' + X(i) + '" y="' + (H-26) + '" text-anchor="middle">' + esc(e.n) + '</text>';
+  });
+  var crit = +document.getElementById("s-crit").value;
+  var idx = -1;
+  if(crit === 2 || crit === 3){
+    for(i = crit-1; i < k; i++){
+      var ceros = ENTS.slice(i-crit+1, i+1).every(function(e){ return e.v === 0; });
+      if(ceros){ idx = i - crit + 1; break; }
+    }
+  } else {
+    for(i = 1; i < k; i++){ if(acum[i-1] > 0 && ENTS[i].v/acum[i-1] < 0.05){ idx = i; break; } }
+  }
+  if(idx >= 0){
+    s += '<line x1="' + X(idx) + '" y1="' + mT + '" x2="' + X(idx) + '" y2="' + (H-mB) + '" stroke="#0E7C74" stroke-dasharray="3 3"/>';
+    s += '<text class="tick" x="' + (X(idx)+6) + '" y="' + (mT+12) + '" fill="#0E7C74">saturación</text>';
+  }
+  s += '<line class="axis" x1="' + mL + '" y1="' + (H-mB) + '" x2="' + (W-mR) + '" y2="' + (H-mB) + '"/>';
+  s += '<text class="tick" x="' + mL + '" y="' + (H-8) + '" fill="#0E7C74">— códigos acumulados</text>';
+  s += '<text class="tick" x="' + (W-mR) + '" y="' + (H-8) + '" text-anchor="end" fill="#A76A16">- - códigos nuevos</text>';
+  s += '</svg>';
+  box.innerHTML = s;
+
+  var vd = document.getElementById("sat-verdict");
+  var txt;
+  if(idx >= 0) txt = "La saturación se alcanza a partir de <b>" + ENTS[idx].n + "</b> (documento " + (idx+1) + " de " + k + "), con " + t + " códigos en total. Los " + (k-idx) + " documentos restantes no aportaron códigos nuevos relevantes. Documenta este criterio en el apartado de métodos.";
+  else txt = "Todavía no se cumple el criterio de saturación elegido: el último documento (" + ENTS[k-1].n + ") aportó " + ENTS[k-1].v + " códigos nuevos. Continúa recogiendo datos o justifica explícitamente por qué detienes el muestreo.";
+  vd.innerHTML = '<div class="verdict ' + (idx >= 0 ? "" : "warn") + '"><div class="k">Veredicto</div><p>' + txt + '</p></div>';
+}
+
+/* ============ 4 · COREQ ============ */
+var COREQ = [
+  ["Dominio 1 · Equipo de investigación y reflexividad","1","Entrevistador o moderador: ¿qué autor condujo la entrevista o el grupo focal?"],
+  ["Dominio 1 · Equipo de investigación y reflexividad","2","Credenciales: ¿cuáles eran las credenciales del investigador (PhD, MD…)?"],
+  ["Dominio 1 · Equipo de investigación y reflexividad","3","Ocupación: ¿cuál era su ocupación en el momento del estudio?"],
+  ["Dominio 1 · Equipo de investigación y reflexividad","4","Género: ¿se indica el género del investigador?"],
+  ["Dominio 1 · Equipo de investigación y reflexividad","5","Experiencia y formación: ¿qué experiencia o formación tenía el investigador?"],
+  ["Dominio 1 · Equipo de investigación y reflexividad","6","Relación previa: ¿existía relación entre investigador y participantes antes de empezar?"],
+  ["Dominio 1 · Equipo de investigación y reflexividad","7","Conocimiento sobre el entrevistador: ¿qué sabían los participantes del investigador?"],
+  ["Dominio 1 · Equipo de investigación y reflexividad","8","Características del investigador: ¿se comunican sus sesgos, supuestos e intereses?"],
+  ["Dominio 2 · Diseño del estudio","9","Marco metodológico: ¿qué orientación teórica sustenta el estudio?"],
+  ["Dominio 2 · Diseño del estudio","10","Selección de los participantes: ¿cómo se seleccionaron (bola de nieve, intencional, consecutiva)?"],
+  ["Dominio 2 · Diseño del estudio","11","Método de contacto: ¿cómo se contactó con ellos (cara a cara, teléfono, correo)?"],
+  ["Dominio 2 · Diseño del estudio","12","Tamaño de la muestra: ¿cuántos participaron?"],
+  ["Dominio 2 · Diseño del estudio","13","No participación: ¿cuántos rehusaron participar o abandonaron, y por qué?"],
+  ["Dominio 2 · Diseño del estudio","14","Ámbito de la recogida de datos: ¿dónde se recogieron (domicilio, consulta, trabajo)?"],
+  ["Dominio 2 · Diseño del estudio","15","Presencia de terceros: ¿había alguien más presente además del investigador y el participante?"],
+  ["Dominio 2 · Diseño del estudio","16","Descripción de la muestra: ¿se aportan los datos característicos de los participantes?"],
+  ["Dominio 2 · Diseño del estudio","17","Guion de la entrevista: ¿se aportan las preguntas y sondeos? ¿Se realizó un pilotaje?"],
+  ["Dominio 2 · Diseño del estudio","18","Entrevistas repetidas: ¿se realizaron? Si es así, ¿cuántas?"],
+  ["Dominio 2 · Diseño del estudio","19","Grabación: ¿se grabó en audio o vídeo la recogida de datos?"],
+  ["Dominio 2 · Diseño del estudio","20","Notas de campo: ¿se tomaron durante o después de la entrevista o el grupo focal?"],
+  ["Dominio 2 · Diseño del estudio","21","Duración: ¿cuánto duraron las entrevistas o los grupos focales?"],
+  ["Dominio 2 · Diseño del estudio","22","Saturación de los datos: ¿se discutió la saturación?"],
+  ["Dominio 2 · Diseño del estudio","23","Devolución de las transcripciones: ¿se devolvieron a los participantes para comentarios?"],
+  ["Dominio 3 · Análisis y hallazgos","24","Número de codificadores: ¿cuántos codificaron los datos?"],
+  ["Dominio 3 · Análisis y hallazgos","25","Descripción del árbol de códigos: ¿se aporta una descripción?"],
+  ["Dominio 3 · Análisis y hallazgos","26","Derivación de los temas: ¿se identificaron de antemano o se derivaron de los datos?"],
+  ["Dominio 3 · Análisis y hallazgos","27","Programa informático: ¿se usó algún software para gestionar los datos?"],
+  ["Dominio 3 · Análisis y hallazgos","28","Verificación por los participantes: ¿aportaron su valoración de los hallazgos?"],
+  ["Dominio 3 · Análisis y hallazgos","29","Citas presentadas: ¿se presentan citas literales que ilustren los temas, identificadas?"],
+  ["Dominio 3 · Análisis y hallazgos","30","Coherencia entre datos y hallazgos: ¿hay consistencia entre los datos presentados y los hallazgos?"],
+  ["Dominio 3 · Análisis y hallazgos","31","Claridad de los temas mayores: ¿se presentan con claridad los temas principales?"],
+  ["Dominio 3 · Análisis y hallazgos","32","Claridad de los temas menores: ¿se describen los casos diversos y los temas menores?"]
+];
+var QR = {};
+function coreq(){
+  var box = document.getElementById("coreq");
+  box.innerHTML = "";
+  var last = null;
+  COREQ.forEach(function(it, i){
+    if(it[0] !== last){ last = it[0];
+      var h = document.createElement("div"); h.className = "grp-h"; h.textContent = it[0]; box.appendChild(h);
+    }
+    var d = document.createElement("div");
+    d.className = "ci" + (QR[i] === "si" ? " ok" : QR[i] === "no" ? " bad" : "");
+    d.innerHTML = '<span class="num">' + it[1] + '</span><span class="txt">' + esc(it[2]) + '</span>' +
+      '<span class="seg">' + ["si","no"].map(function(v){
+        return '<button data-i="' + i + '" data-v="' + v + '"' + (QR[i] === v ? ' class="on"' : "") + '>' + (v === "si" ? "Sí" : "No") + '</button>';
+      }).join("") + '</span>';
+    box.appendChild(d);
+  });
+  box.querySelectorAll("button[data-i]").forEach(function(b){ b.onclick = function(){ QR[b.dataset.i] = b.dataset.v; coreq(); }; });
+  var done = Object.keys(QR).length, no = Object.keys(QR).filter(function(k){ return QR[k] === "no"; }).length;
+  document.getElementById("q-bar").style.width = (100*done/32) + "%";
+  document.getElementById("q-txt").textContent = done + " de 32 ítems · " + no + " incumplidos";
+  document.getElementById("q-verdict").innerHTML = !done ? "" :
+    '<div class="verdict ' + (no ? "bad" : (done < 32 ? "warn" : "")) + '"><div class="k">COREQ</div><p>' +
+    (done < 32 ? "Faltan " + (32-done) + " ítems por revisar. " : "") +
+    (no ? "Hay " + no + " ítems sin cumplir: " + COREQ.map(function(it,i){ return QR[i] === "no" ? it[1] : null; }).filter(Boolean).join(", ") +
+      ". La reflexividad (ítems 1 a 8) es lo que más olvidan los autores y lo primero que miran los revisores." : "El manuscrito cumple los 32 ítems.") + '</p></div>';
+}
+document.getElementById("btn-q-todo").onclick = function(){ COREQ.forEach(function(_, i){ QR[i] = "si"; }); coreq(); };
+document.getElementById("btn-q-reset").onclick = function(){ QR = {}; coreq(); };
+document.getElementById("btn-q-md").onclick = function(){
+  var t = "# Checklist COREQ\n\n| Nº | Ítem | Estado |\n|---|---|---|\n";
+  COREQ.forEach(function(it, i){ t += "| " + it[1] + " | " + it[2] + " | " + (QR[i] === "si" ? "Sí" : QR[i] === "no" ? "No" : "sin revisar") + " |\n"; });
+  dl(t, "coreq.md", "text/markdown", "st2b");
+};
+
+/* ============ Utilidades ============ */
+function dl(text, name, mime, sid){
+  var b = new Blob([text], {type: mime + ";charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = name; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  var s = document.getElementById(sid);
+  if(s){ s.textContent = "Descargado."; setTimeout(function(){ s.textContent = ""; }, 2200); }
+}
+function mk(id){ return function(m, err){ var s = document.getElementById(id); if(!s) return; s.className = "status" + (err ? " err" : ""); s.innerHTML = m; if(!/spin/.test(m)) setTimeout(function(){ s.innerHTML = ""; }, 4200); }; }
+var s1 = mk("st1"), s1b = mk("st1b"), s2 = mk("st2"), s2b = mk("st2b");
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+initKeyDialog(); cats(); codigos(); mapa(); ents(); coreq();
+</script>
+</body>
+</html>

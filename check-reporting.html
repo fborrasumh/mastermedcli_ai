@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CheckReporting·AI · Kit Metodológico UMH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --paper:#F6F7F5; --card:#FFFFFF; --ink:#17262E; --ink-soft:#5E6E74;
+    --line:#DCE1DD; --line-soft:#EAEEEA;
+    --teal:#0E7C74; --teal-deep:#0A5A54; --amber:#A76A16; --slate:#42525A; --red:#B4453C;
+    --shadow:0 1px 2px rgba(23,38,46,.04), 0 8px 24px -16px rgba(23,38,46,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FBFCFB,var(--paper))}
+  .masthead{padding:34px 0 26px}
+  .back{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate);text-decoration:none;letter-spacing:.06em}
+  .back:hover{color:var(--teal)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-top:16px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+  h1{font-family:'Spectral',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.08;margin:14px 0 0}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .lede{margin-top:14px;max-width:66ch;color:var(--ink-soft);font-size:16px}
+  .fp{display:flex;align-items:center;margin:26px 0 0;height:14px}
+  .fp .rule{flex:1;height:1px;background:var(--line)}
+  .fp .ci{position:relative;height:1px;background:var(--teal);width:90px}
+  .fp .ci::before,.fp .ci::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--teal)}
+  .fp .ci::before{left:0}.fp .ci::after{right:0}
+  .fp .dot{width:9px;height:9px;background:var(--teal);transform:rotate(45deg);margin:0 -4px;z-index:1}
+
+  main{padding:34px 0 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow);padding:24px;margin-bottom:22px}
+  .card h2{font-family:'Spectral',serif;font-weight:500;font-size:21px;margin-bottom:4px}
+  .card h3{font-family:'Spectral',serif;font-weight:500;font-size:17px;margin:22px 0 10px}
+  .card .sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px}
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+  input[type=number],input[type=text],select,textarea{width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:#FCFDFC;border:1px solid var(--line);border-radius:2px;padding:9px 10px}
+  select{font-family:'Inter',sans-serif}
+  textarea{font-size:12.5px;min-height:110px;resize:vertical;line-height:1.5}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+  .fld{margin-bottom:14px}
+  .fld .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .divider{border-top:1px solid var(--line);margin:18px 0 16px}
+  .divider span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+  button{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:2px;border:1px solid var(--teal);background:var(--teal);color:#fff;padding:10px 18px;transition:.15s}
+  button:hover{background:var(--teal-deep)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--slate);border-color:var(--line)}
+  button.ghost:hover{border-color:var(--teal);color:var(--teal);background:#F2F7F6}
+  button.small{padding:6px 11px;font-size:12.5px}
+  .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:14px;margin-bottom:20px}
+  .stats div{border-left:2px solid var(--line);padding-left:11px}
+  .stats .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+  .stats .v{font-family:'Spectral',serif;font-size:25px;font-weight:500;margin-top:1px;line-height:1.15}
+  .stats .v small{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft);font-weight:400;display:block;margin-top:2px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:500}
+  td{padding:7px 10px;border-bottom:1px solid var(--line-soft)}
+  td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  tr.hl td{background:#F2F7F6}
+  .tbl-wrap{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:3px}
+
+  .verdict{border-left:3px solid var(--teal);padding-left:16px;margin:18px 0}
+  .verdict.warn{border-color:var(--amber)}
+  .verdict.bad{border-color:var(--red)}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+  .verdict p{font-size:14.5px;margin-top:4px;max-width:76ch}
+
+  .plot{margin-top:6px}
+  .plot svg{width:100%;height:auto;display:block}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gridl{stroke:var(--line-soft);stroke-width:1}
+  .tick{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:var(--slate)}
+  .bar{fill:#CDE2E0;stroke:var(--teal);stroke-width:.7}
+  .curveline{fill:none;stroke:var(--amber);stroke-width:1.6}
+  .refline{stroke:var(--amber);stroke-width:1;stroke-dasharray:4 3}
+  .pt{fill:var(--teal);opacity:.75}
+
+  .para{font-size:14.5px;line-height:1.75;background:#FCFDFC;border:1px solid var(--line);border-radius:3px;padding:18px;font-family:'Spectral',serif}
+  .note{font-size:13px;color:var(--ink-soft);border-left:2px solid var(--amber);padding-left:12px;margin-top:16px}
+  .err{color:var(--red);font-size:13.5px;margin-top:10px}
+  .status{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--slate)}
+  .hidden{display:none}
+  .drop{border:1px dashed var(--line);border-radius:3px;padding:26px;text-align:center;color:var(--ink-soft);font-size:14px;cursor:pointer;transition:.15s;background:#FCFDFC}
+  .drop:hover,.drop.over{border-color:var(--teal);background:#F2F7F6;color:var(--teal-deep)}
+  .drop b{display:block;font-weight:500;color:var(--ink);margin-bottom:3px}
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:2px 7px;border-radius:2px;border:1px solid var(--line);background:#fff;color:var(--slate);margin-left:6px}
+  .pill.ok{background:#F1F8F7;color:var(--teal-deep);border-color:#BFD9D6}
+  .pill.no{background:#FBF2F1;color:var(--red);border-color:#E0C4C1}
+  .pill.mid{background:#FBF6EC;color:var(--amber);border-color:#E5D6B9}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--slate);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr!important}}
+
+  .layout{display:grid;grid-template-columns:minmax(280px,320px) 1fr;gap:22px;align-items:start}
+  .guias button{display:flex;width:100%;text-align:left;align-items:baseline;gap:10px;border:1px solid var(--line);background:#FCFDFC;color:var(--ink);padding:11px 13px;border-radius:3px;font-size:13.5px;font-weight:400;margin-bottom:7px}
+  .guias button:hover{border-color:var(--teal);background:#F2F7F6;color:var(--ink)}
+  .guias button.on{background:#F1F8F7;border-color:var(--teal);color:var(--teal-deep)}
+  .guias b{font-weight:500;font-size:14px}
+  .guias small{display:block;color:var(--ink-soft);font-size:12px;margin-top:2px;line-height:1.4}
+  .guias .cnt{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--slate);flex-shrink:0}
+
+  .bar{height:5px;background:var(--line-soft);border-radius:3px;overflow:hidden;margin:12px 0 6px}
+  .bar i{display:block;height:100%;background:var(--teal);transition:width .3s}
+  .tally{display:flex;gap:16px;font-family:'JetBrains Mono',monospace;font-size:11.5px;margin-top:12px}
+  .tally b{font-family:'Spectral',serif;font-size:21px;font-weight:600;display:block}
+  .tally .si b{color:var(--teal)} .tally .na b{color:var(--slate)} .tally .no b{color:var(--red)}
+
+  .grp{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin:24px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+  .grp:first-child{margin-top:0}
+  .ci{display:flex;gap:12px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);border-radius:3px;margin-bottom:7px;background:#FCFDFC;transition:.14s}
+  .ci.ok{background:#fff;border-color:var(--line-soft)}
+  .ci.bad{border-left:3px solid var(--red)}
+  .ci .num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);flex-shrink:0;width:32px;padding-top:4px}
+  .ci .txt{flex:1;font-size:13.5px;line-height:1.5;min-width:0}
+  .ci .ctl{display:flex;gap:6px;align-items:center;flex-shrink:0}
+  .ci .seg{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden}
+  .ci .seg button{border:none;border-radius:0;background:#fff;color:var(--slate);font-size:11.5px;padding:5px 9px;border-right:1px solid var(--line)}
+  .ci .seg button:last-child{border-right:none}
+  .ci .seg button:hover{background:#F2F7F6;color:var(--teal)}
+  .ci .seg button.on[data-v="si"]{background:var(--teal);color:#fff}
+  .ci .seg button.on[data-v="na"]{background:var(--slate);color:#fff}
+  .ci .seg button.on[data-v="no"]{background:var(--red);color:#fff}
+  .ci .pg{width:56px;font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:5px 6px;text-align:center}
+
+  .ai-out{border:1px solid var(--line);border-radius:3px;background:#FCFDFC;padding:18px;font-size:14.5px;line-height:1.65;margin-top:16px}
+  .ai-out h4{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);margin:15px 0 7px}
+  .ai-out h4:first-child{margin-top:0}
+  .ai-out ul{margin-left:18px}
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--teal);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+  dialog{border:1px solid var(--line);border-radius:3px;padding:0;max-width:480px;width:92%}
+  dialog::backdrop{background:rgba(23,38,46,.35)}
+  .dlg{padding:24px}
+  .dlg h3{font-family:'Spectral',serif;font-weight:500;font-size:19px;margin-bottom:6px}
+  .dlg p{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap masthead">
+    <a class="back" href="index.html">← Kit Metodológico</a>
+    <div class="eyebrow">17 · Escritura científica y difusión</div>
+    <h1>CheckReporting<em>·AI</em></h1>
+    <p class="lede">Verificador de las siete guías de publicación de la red EQUATOR. Marca cada ítem, anota la página donde se cumple y exporta el checklist firmado en PDF para adjuntarlo al manuscrito.</p>
+    <div class="fp"><span class="rule"></span><span class="ci"></span><span class="dot"></span><span class="ci"></span><span class="rule"></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="layout">
+  <div>
+    <section class="card">
+      <h2>Guía</h2>
+      <p class="sub">Elige la que corresponde al diseño de tu estudio.</p>
+      <div class="guias" id="guias"></div>
+    </section>
+
+    <section class="card">
+      <h2>Progreso</h2>
+      <div class="bar"><i id="bar" style="width:0%"></i></div>
+      <div style="font-size:12.5px;color:var(--ink-soft)" id="prog-txt">0 de 0 ítems</div>
+      <div class="tally">
+        <span class="si"><b id="t-si">0</b>Cumple</span>
+        <span class="na"><b id="t-na">0</b>No aplica</span>
+        <span class="no"><b id="t-no">0</b>No cumple</span>
+      </div>
+      <div class="divider"><span>Datos del manuscrito</span></div>
+      <div class="fld"><label for="tit">Título</label><input type="text" id="tit" placeholder="Título del manuscrito"></div>
+      <div class="fld"><label for="aut">Autor que firma</label><input type="text" id="aut" placeholder="Nombre y apellidos"></div>
+      <div class="actions">
+        <button id="btn-pdf">Exportar checklist (.pdf)</button>
+        <button class="ghost small" id="btn-todo">Marcar todo «cumple»</button>
+        <button class="ghost small" id="btn-reset">Vaciar</button>
+      </div>
+      <div class="status" id="st2" style="margin-top:8px"></div>
+    </section>
+  </div>
+
+  <div>
+    <section class="card">
+      <h2 id="g-title"></h2>
+      <p class="sub" id="g-sub"></p>
+      <div id="items"></div>
+    </section>
+
+    <section class="card">
+      <h2>Revisión</h2>
+      <p class="sub">Veredicto determinista sobre los ítems incumplidos, y ayuda de la IA para redactarlos.</p>
+      <div id="verdict"></div>
+      <div class="actions">
+        <button id="btn-ai">Cómo cumplir los ítems pendientes</button>
+        <button class="ghost" id="btn-md">Descargar (.md)</button>
+        <span class="status" id="st"></span>
+      </div>
+      <div class="ai-out hidden" id="ai-out"></div>
+      <div class="note">Cumplir una guía de publicación no mejora un estudio mal diseñado: solo garantiza que el lector pueda juzgarlo. La mayoría de revistas biomédicas exige adjuntar el checklist cumplimentado con el número de página de cada ítem.</div>
+    </section>
+  </div>
+</div>
+</main>
+
+<footer class="wrap">
+  <span>CheckReporting·AI · Kit Metodológico · Máster U. Investigación en Medicina Clínica · UMH</span>
+  <span id="model-badge"></span>
+</footer>
+
+<dialog id="dlg-key">
+  <div class="dlg">
+    <h3>Clave de API de OpenAI</h3>
+    <p>Se guarda en este navegador con la clave <code>ia_openai_key</code> y la comparten todas las herramientas del Kit.</p>
+    <label for="k">Clave</label>
+    <input type="text" id="k" placeholder="sk-..." autocomplete="off">
+    <div style="margin-top:14px"></div>
+    <label for="m">Modelo</label>
+    <select id="m">
+      <option value="gpt-4o-mini">gpt-4o-mini · rápido y económico (recomendado)</option>
+      <option value="gpt-4o">gpt-4o · más preciso</option>
+      <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+      <option value="gpt-4.1">gpt-4.1</option>
+    </select>
+    <div class="actions">
+      <button id="k-save">Guardar</button>
+      <button class="ghost" id="k-cancel">Cancelar</button>
+      <button class="ghost small" id="k-clear">Borrar clave</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+/* ---------- Kernel de IA: clave y modelo compartidos ---------- */
+var KEY = "ia_openai_key", MODEL = "ia_openai_model";
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function getKey(){ return lsGet(KEY) || ""; }
+function getModel(){ return lsGet(MODEL) || "gpt-4o-mini"; }
+function badge(){
+  var b = document.getElementById("model-badge");
+  if(b){ b.textContent = "modelo: " + getModel(); b.style.cursor = "pointer"; b.onclick = askKey; }
+}
+function askKey(){
+  document.getElementById("k").value = getKey();
+  document.getElementById("m").value = getModel();
+  document.getElementById("dlg-key").showModal();
+}
+function initKeyDialog(){
+  document.getElementById("k-save").onclick = function(){
+    var v = document.getElementById("k").value.trim();
+    if(v) lsSet(KEY, v);
+    lsSet(MODEL, document.getElementById("m").value);
+    badge(); document.getElementById("dlg-key").close();
+  };
+  document.getElementById("k-cancel").onclick = function(){ document.getElementById("dlg-key").close(); };
+  document.getElementById("k-clear").onclick = function(){ lsDel(KEY); document.getElementById("k").value = ""; };
+  badge();
+}
+async function askAI(system, user, temp){
+  var key = getKey();
+  if(!key){ askKey(); throw new Error("Falta la clave de API. Configúrala en el pie de página."); }
+  var res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + key },
+    body: JSON.stringify({ model:getModel(), temperature: (temp === undefined ? 0.25 : temp),
+      response_format:{type:"json_object"},
+      messages:[{role:"system",content:system},{role:"user",content:user}] })
+  });
+  if(!res.ok){ var t = await res.text(); throw new Error("La API respondió " + res.status + ". " + t.slice(0,150)); }
+  var data = await res.json();
+  return JSON.parse(data.choices[0].message.content.replace(/```json|```/g,"").trim());
+}
+
+
+/* ============ Guías EQUATOR ============ */
+var G = {
+  consort: { n:"CONSORT 2010", d:"Ensayos clínicos aleatorizados de grupos paralelos", url:"consort-statement.org", items:[
+    ["Título y resumen","1a","Identificación como ensayo aleatorizado en el título"],
+    ["Título y resumen","1b","Resumen estructurado del diseño, los métodos, los resultados y las conclusiones"],
+    ["Introducción","2a","Antecedentes científicos y justificación"],
+    ["Introducción","2b","Objetivos específicos o hipótesis"],
+    ["Métodos","3a","Descripción del diseño (paralelo, factorial), incluida la razón de asignación"],
+    ["Métodos","3b","Cambios importantes en los métodos tras iniciar el ensayo, con las razones"],
+    ["Métodos","4a","Criterios de elegibilidad de los participantes"],
+    ["Métodos","4b","Procedencia y lugar donde se recogieron los datos"],
+    ["Métodos","5","Intervenciones de cada grupo con detalle suficiente para su replicación"],
+    ["Métodos","6a","Variables de resultado primarias y secundarias, con cómo y cuándo se midieron"],
+    ["Métodos","6b","Cambios en las variables de resultado tras iniciar el ensayo, con las razones"],
+    ["Métodos","7a","Cómo se determinó el tamaño muestral"],
+    ["Métodos","7b","Si procede, explicación de los análisis intermedios y los criterios de finalización"],
+    ["Métodos · Aleatorización","8a","Método utilizado para generar la secuencia de asignación aleatoria"],
+    ["Métodos · Aleatorización","8b","Tipo de aleatorización y detalles de cualquier restricción (bloques, tamaño)"],
+    ["Métodos · Aleatorización","9","Mecanismo de ocultación de la asignación y pasos para ocultarla hasta asignar"],
+    ["Métodos · Aleatorización","10","Quién generó la secuencia, quién reclutó y quién asignó a los participantes"],
+    ["Métodos","11a","Si se realizó, quién estaba cegado tras asignar las intervenciones y cómo"],
+    ["Métodos","11b","Si es relevante, descripción de la similitud de las intervenciones"],
+    ["Métodos","12a","Métodos estadísticos para comparar los grupos en las variables principales y secundarias"],
+    ["Métodos","12b","Métodos de análisis adicionales: subgrupos y análisis ajustados"],
+    ["Resultados","13a","Número de participantes aleatorizados, que recibieron la intervención y analizados"],
+    ["Resultados","13b","Pérdidas y exclusiones después de la aleatorización en cada grupo, con las razones"],
+    ["Resultados","14a","Fechas que definen los períodos de reclutamiento y de seguimiento"],
+    ["Resultados","14b","Causa de la finalización o la interrupción del ensayo"],
+    ["Resultados","15","Tabla con las características basales demográficas y clínicas de cada grupo"],
+    ["Resultados","16","Número de participantes incluidos en cada análisis y si el análisis fue por grupos originales"],
+    ["Resultados","17a","Resultados de cada grupo, tamaño del efecto estimado y su precisión (IC 95 %)"],
+    ["Resultados","17b","Para desenlaces binarios, presentación del tamaño del efecto absoluto y relativo"],
+    ["Resultados","18","Resultados de otros análisis realizados, distinguiendo preespecificados de exploratorios"],
+    ["Resultados","19","Todos los daños o efectos no intencionados en cada grupo"],
+    ["Discusión","20","Limitaciones: fuentes de sesgo, imprecisión y multiplicidad de análisis"],
+    ["Discusión","21","Generalizabilidad (validez externa, aplicabilidad) de los hallazgos"],
+    ["Discusión","22","Interpretación consistente con los resultados, balance entre beneficios y riesgos"],
+    ["Otra información","23","Número de registro y nombre del registro de ensayos"],
+    ["Otra información","24","Dónde puede accederse al protocolo completo"],
+    ["Otra información","25","Fuentes de financiación y otros apoyos, papel de los financiadores"]
+  ]},
+  strobe: { n:"STROBE", d:"Estudios observacionales: cohortes, casos y controles, transversales", url:"strobe-statement.org", items:[
+    ["Título y resumen","1a","Indicar el diseño del estudio en el título o el resumen"],
+    ["Título y resumen","1b","Resumen informativo y equilibrado de lo que se hizo y lo que se encontró"],
+    ["Introducción","2","Antecedentes y justificación científica de la investigación"],
+    ["Introducción","3","Objetivos específicos, incluidas las hipótesis preespecificadas"],
+    ["Métodos","4","Elementos clave del diseño del estudio al principio del apartado"],
+    ["Métodos","5","Ámbito, lugares y fechas relevantes: reclutamiento, exposición, seguimiento, recogida de datos"],
+    ["Métodos","6a","Criterios de elegibilidad, fuentes y métodos de selección de los participantes"],
+    ["Métodos","6b","En casos y controles, criterios de emparejamiento y número de controles por caso"],
+    ["Métodos","7","Definición de todas las variables: desenlaces, exposiciones, predictores, confusores, modificadores del efecto"],
+    ["Métodos","8","Fuentes de datos y métodos de medida para cada variable; comparabilidad entre grupos"],
+    ["Métodos","9","Medidas adoptadas para afrontar las fuentes potenciales de sesgo"],
+    ["Métodos","10","Cómo se determinó el tamaño de la muestra"],
+    ["Métodos","11","Tratamiento de las variables cuantitativas; agrupaciones y por qué"],
+    ["Métodos","12a","Métodos estadísticos, incluidos los de control de la confusión"],
+    ["Métodos","12b","Métodos utilizados para analizar subgrupos e interacciones"],
+    ["Métodos","12c","Cómo se han tratado los datos ausentes"],
+    ["Métodos","12d","Estrategia frente a las pérdidas de seguimiento, la selección de controles o el muestreo"],
+    ["Métodos","12e","Descripción de los análisis de sensibilidad"],
+    ["Resultados","13","Número de participantes en cada fase: elegibles, examinados, incluidos, con seguimiento, analizados"],
+    ["Resultados","14a","Características de los participantes y datos de exposiciones y confusores"],
+    ["Resultados","14b","Número de participantes con datos ausentes en cada variable de interés"],
+    ["Resultados","14c","En cohortes, tiempo de seguimiento total y medio"],
+    ["Resultados","15","Número de eventos, medidas resumen o incidencia según el diseño"],
+    ["Resultados","16a","Estimaciones no ajustadas y ajustadas por confusores, con su precisión (IC 95 %)"],
+    ["Resultados","16b","Límites de los intervalos si se han categorizado variables continuas"],
+    ["Resultados","16c","Si es útil, traducción del riesgo relativo a riesgo absoluto"],
+    ["Resultados","17","Otros análisis: subgrupos, interacciones y análisis de sensibilidad"],
+    ["Discusión","18","Resumen de los resultados principales en relación con los objetivos"],
+    ["Discusión","19","Limitaciones, con la dirección y la magnitud potencial de cada sesgo"],
+    ["Discusión","20","Interpretación global prudente, considerando la evidencia previa"],
+    ["Discusión","21","Generalizabilidad (validez externa) de los resultados"],
+    ["Otra información","22","Fuentes de financiación y papel de los financiadores"]
+  ]},
+  prisma: { n:"PRISMA 2020", d:"Revisiones sistemáticas y metaanálisis", url:"prisma-statement.org", items:[
+    ["Título","1","Identificar el informe como revisión sistemática"],
+    ["Resumen","2","Resumen estructurado según la lista PRISMA para resúmenes"],
+    ["Introducción","3","Justificación de la revisión en el contexto del conocimiento existente"],
+    ["Introducción","4","Objetivos o preguntas explícitas que la revisión aborda"],
+    ["Métodos","5","Criterios de inclusión y exclusión y cómo se agruparon los estudios en la síntesis"],
+    ["Métodos","6","Todas las fuentes buscadas, con la fecha de la última búsqueda"],
+    ["Métodos","7","Estrategia de búsqueda completa de todas las bases de datos y registros"],
+    ["Métodos","8","Métodos de selección de estudios: cuántos revisores, si trabajaron de forma independiente"],
+    ["Métodos","9","Métodos de extracción de datos, incluidos los procesos de confirmación con los autores"],
+    ["Métodos","10a","Lista y definición de todos los desenlaces buscados en cada estudio"],
+    ["Métodos","10b","Lista y definición de las demás variables extraídas"],
+    ["Métodos","11","Métodos de evaluación del riesgo de sesgo de los estudios incluidos"],
+    ["Métodos","12","Medida del efecto empleada en la síntesis o presentación de resultados"],
+    ["Métodos","13a","Proceso de decisión sobre qué estudios eran elegibles para cada síntesis"],
+    ["Métodos","13b","Métodos de preparación de los datos para la presentación o la síntesis"],
+    ["Métodos","13c","Métodos para presentar los resultados de los estudios individuales"],
+    ["Métodos","13d","Métodos de síntesis: modelo estadístico, heterogeneidad, paquete informático"],
+    ["Métodos","13e","Métodos para explorar las causas de heterogeneidad: subgrupos, metarregresión"],
+    ["Métodos","13f","Análisis de sensibilidad de la robustez de la síntesis"],
+    ["Métodos","14","Métodos de evaluación del riesgo de sesgo debido a resultados ausentes"],
+    ["Métodos","15","Métodos de evaluación de la certeza de la evidencia por desenlace (GRADE)"],
+    ["Resultados","16a","Número de registros identificados, cribados e incluidos, idealmente con diagrama de flujo"],
+    ["Resultados","16b","Estudios que parecían cumplir los criterios pero fueron excluidos, con las razones"],
+    ["Resultados","17","Citación de cada estudio incluido y presentación de sus características"],
+    ["Resultados","18","Evaluación del riesgo de sesgo de cada estudio incluido"],
+    ["Resultados","19","Todos los resultados de cada estudio para cada desenlace, con su precisión"],
+    ["Resultados","20a","Resumen de las características y del riesgo de sesgo de los estudios de cada síntesis"],
+    ["Resultados","20b","Resultado de cada síntesis estadística: estimación, IC y heterogeneidad"],
+    ["Resultados","20c","Resultado de las investigaciones sobre las causas de heterogeneidad"],
+    ["Resultados","20d","Resultado de los análisis de sensibilidad"],
+    ["Resultados","21","Riesgo de sesgo debido a resultados ausentes en cada síntesis"],
+    ["Resultados","22","Certeza de la evidencia de cada desenlace evaluado"],
+    ["Discusión","23a","Interpretación general de los resultados en el contexto de la evidencia"],
+    ["Discusión","23b","Limitaciones de la evidencia incluida"],
+    ["Discusión","23c","Limitaciones del proceso de revisión"],
+    ["Discusión","23d","Implicaciones para la práctica, la política y la investigación futura"],
+    ["Otra información","24","Registro y protocolo: número, dónde consultarlo y enmiendas"],
+    ["Otra información","25","Fuentes de apoyo financiero y papel de los financiadores"],
+    ["Otra información","26","Conflictos de intereses de los autores"],
+    ["Otra información","27","Disponibilidad de datos, código y otros materiales"]
+  ]},
+  spirit: { n:"SPIRIT 2013", d:"Protocolos de ensayos clínicos", url:"spirit-statement.org", items:[
+    ["Administrativa","1","Título descriptivo con diseño, población, intervención y, si procede, acrónimo"],
+    ["Administrativa","2a","Identificador del registro de ensayos"],
+    ["Administrativa","2b","Conjunto mínimo de datos registrados en la Organización Mundial de la Salud"],
+    ["Administrativa","3","Versión y fecha del protocolo"],
+    ["Administrativa","4","Fuentes y tipos de apoyo económico, material y de otra índole"],
+    ["Administrativa","5a","Filiaciones del promotor y de los investigadores"],
+    ["Administrativa","5b","Papel del promotor y de los financiadores en el diseño, el análisis y la publicación"],
+    ["Administrativa","5c","Composición y funciones del comité de coordinación y de dirección"],
+    ["Administrativa","5d","Composición del comité de monitorización de datos, con su papel y estructura de decisión"],
+    ["Introducción","6a","Justificación del ensayo, con la revisión de la evidencia disponible"],
+    ["Introducción","6b","Explicación de la elección de los comparadores"],
+    ["Introducción","7","Objetivos específicos o hipótesis"],
+    ["Introducción","8","Descripción del diseño y del marco (superioridad, no inferioridad) y razón de asignación"],
+    ["Métodos","9","Ámbito del estudio y lista de países y centros donde se recogerán los datos"],
+    ["Métodos","10","Criterios de elegibilidad de los participantes y de quienes aplican la intervención"],
+    ["Métodos","11a","Intervenciones de cada grupo con detalle suficiente para su replicación"],
+    ["Métodos","11b","Criterios de suspensión o modificación de la intervención asignada"],
+    ["Métodos","11c","Estrategias para mejorar la adherencia y procedimientos de monitorización"],
+    ["Métodos","11d","Cuidados y cointervenciones permitidos o prohibidos durante el ensayo"],
+    ["Métodos","12","Desenlaces primarios y secundarios, con métrica, método de agregación y momento"],
+    ["Métodos","13","Cronograma de inscripción, intervenciones, valoraciones y visitas"],
+    ["Métodos","14","Tamaño muestral previsto y cómo se determinó"],
+    ["Métodos","15","Estrategias para alcanzar el tamaño muestral objetivo"],
+    ["Métodos","16a","Método de generación de la secuencia de asignación"],
+    ["Métodos","16b","Mecanismo de ocultación de la asignación"],
+    ["Métodos","16c","Quién genera la secuencia, quién inscribe y quién asigna a los participantes"],
+    ["Métodos","17a","A quién se cegará tras la asignación y cómo"],
+    ["Métodos","17b","Circunstancias que permiten el desenmascaramiento y procedimiento"],
+    ["Métodos","18a","Métodos de valoración y recogida de los desenlaces, con la fiabilidad de los instrumentos"],
+    ["Métodos","18b","Planes para promover la retención de los participantes"],
+    ["Métodos","19","Gestión de los datos, control de calidad y protección de datos personales"],
+    ["Métodos","20a","Métodos estadísticos para analizar los desenlaces primarios y secundarios"],
+    ["Métodos","20b","Métodos de análisis adicionales: subgrupos y ajustados"],
+    ["Métodos","20c","Definición de la población de análisis y manejo de los datos ausentes"],
+    ["Métodos","21a","Composición y funcionamiento del comité de monitorización de datos"],
+    ["Métodos","21b","Descripción de los análisis intermedios y las reglas de interrupción"],
+    ["Métodos","22","Plan de recogida, valoración, notificación y manejo de los acontecimientos adversos"],
+    ["Métodos","23","Frecuencia y procedimientos de auditoría del ensayo"],
+    ["Ética y difusión","24","Aprobación por el comité de ética de la investigación"],
+    ["Ética y difusión","25","Procedimiento para comunicar las enmiendas relevantes al protocolo"],
+    ["Ética y difusión","26a","Quién obtendrá el consentimiento informado y cómo"],
+    ["Ética y difusión","26b","Consentimiento adicional para el uso futuro de datos y muestras biológicas"],
+    ["Ética y difusión","27","Medidas de protección de la confidencialidad de los datos personales"],
+    ["Ética y difusión","28","Conflictos de intereses financieros y de otro tipo"],
+    ["Ética y difusión","29","Quién tendrá acceso al conjunto de datos final"],
+    ["Ética y difusión","30","Cobertura asistencial y compensación por daños derivados de la participación"],
+    ["Ética y difusión","31a","Planes de comunicación de los resultados a participantes, profesionales y público"],
+    ["Ética y difusión","31b","Criterios de autoría y uso, en su caso, de redactores profesionales"],
+    ["Ética y difusión","31c","Acceso público al protocolo completo, a los datos individuales y al código estadístico"],
+    ["Anexos","32","Modelos de hoja de información al participante y de consentimiento informado"],
+    ["Anexos","33","Planes de recogida, conservación y uso futuro de muestras biológicas"]
+  ]},
+  stard: { n:"STARD 2015", d:"Estudios de precisión diagnóstica", url:"equator-network.org", items:[
+    ["Título y resumen","1","Identificación como estudio de precisión diagnóstica, con al menos una medida de precisión"],
+    ["Título y resumen","2","Resumen estructurado del diseño, los métodos, los resultados y las conclusiones"],
+    ["Introducción","3","Contexto científico y clínico, con el papel previsto de la prueba índice"],
+    ["Introducción","4","Objetivos e hipótesis del estudio"],
+    ["Métodos","5","Si la recogida de datos fue prospectiva o retrospectiva"],
+    ["Métodos","6","Criterios de elegibilidad de los participantes"],
+    ["Métodos","7","Dónde y cómo se identificaron los participantes potencialmente elegibles"],
+    ["Métodos","8","Dónde y cuándo se reclutaron los participantes elegibles"],
+    ["Métodos","9","Si el muestreo fue consecutivo, aleatorio o de conveniencia"],
+    ["Métodos","10a","Prueba índice, con detalle suficiente para permitir su replicación"],
+    ["Métodos","10b","Patrón de referencia, con detalle suficiente para permitir su replicación"],
+    ["Métodos","11","Justificación de la elección del patrón de referencia"],
+    ["Métodos","12a","Definición y justificación de los puntos de corte de la prueba índice, y si eran preespecificados"],
+    ["Métodos","12b","Definición y justificación de los puntos de corte del patrón de referencia"],
+    ["Métodos","13a","Si los evaluadores de la prueba índice conocían la información clínica y el patrón de referencia"],
+    ["Métodos","13b","Si los evaluadores del patrón de referencia conocían el resultado de la prueba índice"],
+    ["Métodos","14","Métodos de estimación o comparación de las medidas de precisión diagnóstica"],
+    ["Métodos","15","Cómo se manejaron los resultados indeterminados de la prueba índice o del patrón de referencia"],
+    ["Métodos","16","Cómo se manejaron los datos ausentes de la prueba índice y del patrón de referencia"],
+    ["Métodos","17","Análisis de la variabilidad de la precisión diagnóstica, distinguiendo preespecificados de exploratorios"],
+    ["Métodos","18","Tamaño muestral previsto y cómo se determinó"],
+    ["Resultados","19","Flujo de participantes, preferiblemente en un diagrama"],
+    ["Resultados","20","Características demográficas y clínicas basales de los participantes"],
+    ["Resultados","21a","Distribución de la gravedad de la enfermedad en los que la padecen"],
+    ["Resultados","21b","Distribución de los diagnósticos alternativos en los que no la padecen"],
+    ["Resultados","22","Intervalo temporal y cualquier intervención clínica entre la prueba índice y el patrón"],
+    ["Resultados","23","Tabla cruzada de los resultados de la prueba índice frente al patrón de referencia"],
+    ["Resultados","24","Estimaciones de la precisión diagnóstica con su precisión estadística (IC 95 %)"],
+    ["Resultados","25","Cualquier acontecimiento adverso derivado de la prueba índice o del patrón de referencia"],
+    ["Discusión","26","Limitaciones del estudio, con las fuentes de sesgo e imprecisión"],
+    ["Discusión","27","Implicaciones para la práctica, incluido el uso previsto y el papel clínico de la prueba"],
+    ["Otra información","28","Número de registro y nombre del registro"],
+    ["Otra información","29","Dónde puede accederse al protocolo completo"],
+    ["Otra información","30","Fuentes de financiación y papel de los financiadores"]
+  ]},
+  care: { n:"CARE", d:"Casos clínicos", url:"care-statement.org", items:[
+    ["Título","1","La palabra «caso clínico» junto con el fenómeno de mayor interés"],
+    ["Palabras clave","2","De dos a cinco palabras clave que identifiquen las áreas del caso"],
+    ["Resumen","3","Antecedentes, hallazgos y síntomas principales, diagnóstico, intervenciones, desenlaces y conclusión"],
+    ["Introducción","4","Breve resumen de los antecedentes del caso con referencias a la literatura médica"],
+    ["Información del paciente","5a","Información demográfica anonimizada del paciente"],
+    ["Información del paciente","5b","Principales síntomas y hallazgos del paciente"],
+    ["Información del paciente","5c","Historia médica, familiar y psicosocial, con dieta, estilo de vida y genética relevante"],
+    ["Información del paciente","5d","Comorbilidades e intervenciones previas y sus resultados"],
+    ["Hallazgos clínicos","6","Descripción de los hallazgos relevantes de la exploración física"],
+    ["Cronología","7","Fechas e hitos del episodio asistencial organizados en una línea temporal"],
+    ["Valoración diagnóstica","8a","Métodos diagnósticos: exploración, pruebas de laboratorio, imagen, cuestionarios"],
+    ["Valoración diagnóstica","8b","Retos diagnósticos: acceso, económicos, culturales"],
+    ["Valoración diagnóstica","8c","Razonamiento diagnóstico, incluido el diagnóstico diferencial"],
+    ["Valoración diagnóstica","8d","Características pronósticas cuando sean aplicables"],
+    ["Intervención terapéutica","9a","Tipos de intervención: farmacológica, quirúrgica, preventiva, de autocuidado"],
+    ["Intervención terapéutica","9b","Administración de la intervención: dosis, vía, duración"],
+    ["Intervención terapéutica","9c","Cambios en la intervención, con su justificación"],
+    ["Seguimiento y desenlaces","10a","Desenlaces evaluados por el clínico y por el paciente"],
+    ["Seguimiento y desenlaces","10b","Resultados relevantes de las pruebas de seguimiento"],
+    ["Seguimiento y desenlaces","10c","Adherencia y tolerabilidad de la intervención, y cómo se evaluaron"],
+    ["Seguimiento y desenlaces","10d","Acontecimientos adversos e imprevistos"],
+    ["Discusión","11a","Fortalezas y limitaciones del abordaje de este caso"],
+    ["Discusión","11b","Literatura médica relevante con referencias"],
+    ["Discusión","11c","Justificación de las conclusiones, incluida la valoración de las causas"],
+    ["Discusión","11d","Principales enseñanzas del caso clínico"],
+    ["Perspectiva del paciente","12","El paciente comparte su perspectiva sobre el episodio asistencial"],
+    ["Consentimiento","13","El paciente ha otorgado su consentimiento informado por escrito"]
+  ]},
+  arrive: { n:"ARRIVE 2.0", d:"Investigación con animales · ítems esenciales", url:"arriveguidelines.org", items:[
+    ["Diseño","1a","Grupos experimentales y de control, incluido el número de unidades experimentales"],
+    ["Diseño","1b","Unidad experimental: el animal, la jaula o el grupo"],
+    ["Tamaño muestral","2a","Número exacto de unidades experimentales asignadas a cada grupo y su total"],
+    ["Tamaño muestral","2b","Cómo se decidió el tamaño muestral, con los detalles del cálculo de la potencia"],
+    ["Inclusión y exclusión","3a","Criterios de inclusión y exclusión establecidos a priori"],
+    ["Inclusión y exclusión","3b","Número de animales excluidos del análisis en cada grupo y las razones"],
+    ["Inclusión y exclusión","3c","Si se aplicaron criterios de exclusión, si fueron preespecificados"],
+    ["Aleatorización","4a","Si la asignación de las unidades experimentales fue aleatoria, con el método"],
+    ["Aleatorización","4b","Estrategia de control de las variables de confusión: orden de tratamiento, ubicación"],
+    ["Cegamiento","5","Quién estaba cegado en cada fase: asignación, realización, evaluación, análisis"],
+    ["Variables de resultado","6","Definición de las variables de resultado primarias y secundarias"],
+    ["Métodos estadísticos","7a","Detalles de los métodos estadísticos empleados en cada análisis"],
+    ["Métodos estadísticos","7b","Cómo se evaluó el cumplimiento de los supuestos del método"],
+    ["Datos de los animales","8","Especie, cepa, sexo, edad, peso y estado sanitario y genético"],
+    ["Procedimientos","9","Descripción precisa de todos los procedimientos con detalle suficiente para replicarlos"],
+    ["Resultados","10","Resumen y estimación del tamaño del efecto con su medida de precisión para cada análisis"]
+  ]}
+};
+
+var SEL = "consort", R = {}, PG = {};
+
+/* ============ Interfaz ============ */
+function guias(){
+  var box = document.getElementById("guias");
+  box.innerHTML = "";
+  Object.keys(G).forEach(function(k){
+    var b = document.createElement("button");
+    b.className = k === SEL ? "on" : "";
+    b.innerHTML = '<span><b>' + G[k].n + '</b><small>' + G[k].d + '</small></span><span class="cnt">' + G[k].items.length + '</span>';
+    b.onclick = function(){ if(SEL !== k){ SEL = k; R = {}; PG = {}; render(); } };
+    box.appendChild(b);
+  });
+}
+function render(){
+  guias();
+  var g = G[SEL];
+  document.getElementById("g-title").textContent = g.n;
+  document.getElementById("g-sub").textContent = g.d + " · " + g.items.length + " ítems · " + g.url;
+  var box = document.getElementById("items");
+  box.innerHTML = "";
+  var last = null;
+  g.items.forEach(function(it, i){
+    if(it[0] !== last){
+      last = it[0];
+      var h = document.createElement("div");
+      h.className = "grp";
+      h.textContent = it[0];
+      box.appendChild(h);
+    }
+    var d = document.createElement("div");
+    d.className = "ci" + (R[i] === "si" || R[i] === "na" ? " ok" : R[i] === "no" ? " bad" : "");
+    d.innerHTML =
+      '<span class="num">' + it[1] + '</span>' +
+      '<span class="txt">' + esc(it[2]) + '</span>' +
+      '<span class="ctl"><span class="seg">' +
+        ["si","na","no"].map(function(v){
+          return '<button data-i="' + i + '" data-v="' + v + '"' + (R[i] === v ? ' class="on"' : "") + '>' +
+            ({si:"Sí", na:"N/A", no:"No"})[v] + '</button>';
+        }).join("") +
+      '</span><input class="pg" type="text" data-p="' + i + '" placeholder="pág." value="' + esc(PG[i] || "") + '"></span>';
+    box.appendChild(d);
+  });
+  box.querySelectorAll("button[data-i]").forEach(function(b){
+    b.onclick = function(){ R[b.dataset.i] = b.dataset.v; render(); };
+  });
+  box.querySelectorAll("input[data-p]").forEach(function(inp){
+    inp.oninput = function(){ PG[inp.dataset.p] = inp.value; };
+  });
+  prog(); verdict();
+}
+function prog(){
+  var n = G[SEL].items.length, done = Object.keys(R).length;
+  document.getElementById("bar").style.width = (100*done/n) + "%";
+  document.getElementById("prog-txt").textContent = done + " de " + n + " ítems revisados";
+  ["si","na","no"].forEach(function(v){
+    document.getElementById("t-" + v).textContent = Object.keys(R).filter(function(k){ return R[k] === v; }).length;
+  });
+}
+function pendientes(){
+  return G[SEL].items.map(function(it, i){ return R[i] === "no" ? { n:it[1], sec:it[0], t:it[2] } : null; }).filter(Boolean);
+}
+function verdict(){
+  var g = G[SEL], n = g.items.length, done = Object.keys(R).length;
+  var no = pendientes();
+  var box = document.getElementById("verdict");
+  if(!done){ box.innerHTML = '<div class="verdict"><p>Marca los ítems para obtener el veredicto.</p></div>'; return; }
+  var sinPag = Object.keys(R).filter(function(k){ return R[k] === "si" && !(PG[k] || "").trim(); }).length;
+  var txt;
+  if(done < n) txt = "Quedan " + (n - done) + " ítems sin revisar. El checklist solo tiene valor si se completa entero.";
+  else if(!no.length) txt = "El manuscrito cumple los " + n + " ítems aplicables de " + g.n + ". Adjunta este checklist con los números de página al enviarlo a la revista.";
+  else txt = "El manuscrito incumple " + no.length + " ítem(s) de " + g.n + ": " + no.map(function(x){ return x.n; }).join(", ") + ". Los editores y revisores comprueban precisamente estos puntos; corrígelos antes de enviar.";
+  if(sinPag) txt += " Además, " + sinPag + " ítem(s) marcados como cumplidos no indican la página: las revistas la exigen.";
+  box.innerHTML = '<div class="verdict ' + (no.length ? "bad" : (done < n ? "warn" : "")) + '"><div class="k">' + g.n + '</div><p>' + esc(txt) + '</p></div>';
+}
+document.getElementById("btn-todo").onclick = function(){ G[SEL].items.forEach(function(_, i){ R[i] = "si"; }); render(); };
+document.getElementById("btn-reset").onclick = function(){ R = {}; PG = {}; render(); };
+
+/* ============ IA ============ */
+var SYS = [
+  "Eres editor de una revista biomédica y experto en las guías de publicación de la red EQUATOR.",
+  "Recibes una lista de ítems de una guía que un manuscrito NO cumple.",
+  "Para cada uno, explica qué debe escribir exactamente el autor y en qué apartado del manuscrito, con un ejemplo de frase modelo.",
+  "No inventes datos del estudio: usa marcadores como [n], [IC 95 %] o [método].",
+  "Responde EXCLUSIVAMENTE con JSON, sin markdown, con este esquema:",
+  '{"prioridad":"qué ítem corregirías primero y por qué",',
+  '"soluciones":[{"item":"número","donde":"apartado del manuscrito","que_escribir":"instrucción concreta","ejemplo":"frase modelo con marcadores"}],',
+  '"riesgo_editorial":"1-2 frases sobre qué pasará en la revisión por pares si no se corrigen"}',
+  "Todo en español."
+].join(" ");
+
+document.getElementById("btn-ai").onclick = async function(){
+  var no = pendientes();
+  if(!no.length){ st("No hay ítems incumplidos. Marca alguno como «No».", true); return; }
+  var btn = this; btn.disabled = true;
+  st('<span class="spin"></span>Redactando las soluciones…');
+  try{
+    var j = await askAI(SYS, JSON.stringify({ guia: G[SEL].n, titulo: document.getElementById("tit").value, items_incumplidos: no }));
+    var out = document.getElementById("ai-out");
+    out.innerHTML =
+      '<h4>Por dónde empezar</h4><p>' + esc(j.prioridad || "—") + '</p>' +
+      '<h4>Soluciones ítem a ítem</h4><ul>' + (j.soluciones || []).map(function(s){
+        return "<li><b>Ítem " + esc(s.item) + "</b> · <i>" + esc(s.donde) + "</i><br>" + esc(s.que_escribir) +
+          '<br><span style="color:var(--ink-soft);font-style:italic">« ' + esc(s.ejemplo) + ' »</span></li>';
+      }).join("") + '</ul>' +
+      '<h4>Riesgo en la revisión por pares</h4><p>' + esc(j.riesgo_editorial || "—") + '</p>';
+    out.classList.remove("hidden");
+    st("Soluciones generadas.");
+  }catch(e){ st(e.message, true); }
+  finally{ btn.disabled = false; }
+};
+
+/* ============ PDF ============ */
+document.getElementById("btn-pdf").onclick = function(){
+  if(typeof window.jspdf === "undefined"){ st2("No se ha podido cargar la librería de PDF."); return; }
+  var g = G[SEL];
+  var doc = new window.jspdf.jsPDF({ unit:"mm", format:"a4" });
+  var W = 210, ml = 14, y = 18;
+
+  doc.setFont("helvetica", "bold"); doc.setFontSize(15);
+  doc.text("Checklist " + g.n, ml, y); y += 6;
+  doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.setTextColor(90);
+  doc.text(g.d, ml, y); y += 5;
+  var tit = document.getElementById("tit").value.trim();
+  if(tit){ doc.setTextColor(30); doc.setFontSize(9.5);
+    doc.splitTextToSize("Manuscrito: " + tit, W - 2*ml).forEach(function(l){ doc.text(l, ml, y); y += 4.4; }); }
+  y += 2;
+  doc.setDrawColor(200); doc.line(ml, y, W-ml, y); y += 6;
+
+  doc.setFontSize(7.5); doc.setTextColor(110); doc.setFont("helvetica","bold");
+  doc.text("Nº", ml, y); doc.text("ÍTEM", ml+11, y); doc.text("ESTADO", W-ml-32, y); doc.text("PÁG.", W-ml-11, y);
+  y += 2; doc.line(ml, y, W-ml, y); y += 4.5;
+
+  var last = null;
+  var LBL = { si:"Cumple", na:"No aplica", no:"NO CUMPLE" };
+  g.items.forEach(function(it, i){
+    if(y > 272){ doc.addPage(); y = 18; }
+    if(it[0] !== last){
+      last = it[0];
+      doc.setFont("helvetica","bold"); doc.setFontSize(7.6); doc.setTextColor(14,124,116);
+      doc.text(it[0].toUpperCase(), ml, y); y += 4.6;
+    }
+    doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(40);
+    var lines = doc.splitTextToSize(it[2], W - 2*ml - 48);
+    doc.setTextColor(14,124,116); doc.text(it[1], ml, y);
+    doc.setTextColor(40);
+    lines.forEach(function(l, j){ doc.text(l, ml+11, y + j*3.9); });
+    var est = R[i] ? LBL[R[i]] : "sin revisar";
+    if(R[i] === "no") doc.setTextColor(180,69,60);
+    else if(R[i] === "si") doc.setTextColor(14,124,116);
+    else doc.setTextColor(140);
+    doc.text(est, W-ml-32, y);
+    doc.setTextColor(60);
+    doc.text(String(PG[i] || "—"), W-ml-11, y);
+    y += Math.max(lines.length*3.9, 4.4) + 2.2;
+    doc.setDrawColor(238); doc.line(ml, y-1.2, W-ml, y-1.2);
+  });
+
+  if(y > 240){ doc.addPage(); y = 20; }
+  y += 8;
+  var si = Object.keys(R).filter(function(k){ return R[k]==="si"; }).length;
+  var na = Object.keys(R).filter(function(k){ return R[k]==="na"; }).length;
+  var no = Object.keys(R).filter(function(k){ return R[k]==="no"; }).length;
+  doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.setTextColor(30);
+  doc.text("Resumen: " + si + " cumplen · " + na + " no aplican · " + no + " no cumplen · " + (g.items.length - si - na - no) + " sin revisar", ml, y);
+  y += 12;
+  doc.setFont("helvetica","normal"); doc.setFontSize(8.5); doc.setTextColor(90);
+  doc.text("Firmado por: " + (document.getElementById("aut").value.trim() || "________________________"), ml, y); y += 5;
+  doc.text("Fecha: " + new Date().toLocaleDateString("es-ES"), ml, y); y += 5;
+  doc.text("Generado con CheckReporting·AI · Kit Metodológico UMH", ml, y);
+
+  doc.save("checklist-" + SEL + ".pdf");
+  st2("PDF descargado.");
+};
+
+document.getElementById("btn-md").onclick = function(){
+  var g = G[SEL];
+  var LBL = { si:"Cumple", na:"No aplica", no:"No cumple" };
+  var t = "# Checklist " + g.n + "\n\n" + g.d + "\n\n";
+  if(document.getElementById("tit").value.trim()) t += "**Manuscrito:** " + document.getElementById("tit").value.trim() + "\n\n";
+  t += "| Nº | Ítem | Estado | Página |\n|---|---|---|---|\n";
+  g.items.forEach(function(it, i){
+    t += "| " + it[1] + " | " + it[2] + " | " + (R[i] ? LBL[R[i]] : "sin revisar") + " | " + (PG[i] || "—") + " |\n";
+  });
+  t += "\nFirmado por " + (document.getElementById("aut").value.trim() || "—") + " el " + new Date().toLocaleDateString("es-ES") + "\n";
+  var b = new Blob([t], {type:"text/markdown;charset=utf-8"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "checklist-" + SEL + ".md"; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  st2("Descargado.");
+};
+
+function st(m, err){ var s = document.getElementById("st"); s.className = "status" + (err ? " err" : ""); s.innerHTML = m; if(!/spin/.test(m)) setTimeout(function(){ s.innerHTML = ""; }, 3000); }
+function st2(m){ var s = document.getElementById("st2"); s.textContent = m; setTimeout(function(){ s.textContent = ""; }, 2600); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+initKeyDialog(); render();
+</script>
+</body>
+</html>
